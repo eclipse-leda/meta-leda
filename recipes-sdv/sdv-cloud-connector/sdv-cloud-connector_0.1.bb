@@ -2,7 +2,7 @@ SUMMARY = "bitbake-layers recipe"
 DESCRIPTION = "Recipe created by bitbake-layers"
 LICENSE = "EPL"
 
-SRC_URI = "https://github.com/SoftwareDefinedVehicle/swdc-os-cloud-agent.git"
+SRC_URI = "git://github.com/SoftwareDefinedVehicle/swdc-os-cloud-agent.git"
 SRCREV = "28ce9e78a1fa5867c982e11d380f4f617fb97d60"
 
 # Replace 'xxx' after first build with correct value
