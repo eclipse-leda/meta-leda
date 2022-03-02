@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sdv-edge-log-and-trace
+spec:
+  restartPolicy: Always
+  hostAliases:
+  - ip: "10.42.0.1"
+    hostnames:
+    - "edgehost"
+  containers:
+    - name: log-and-trace
+      image: ghcr.io/softwaredefinedvehicle/swdc-os-otel/otel-collector:v0.0.1
+      imagePullPolicy: IfNotPresent

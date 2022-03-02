@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: seat-adjuster-app
+  annotations:
+    dapr.io/enabled: "true"
+    dapr.io/app-id: "seat-adjuster-app-ces"
+    dapr.io/app-port: "50008"
+    dapr.io/log-level: "debug"
+    dapr.io/app-protocol: "grpc"
+    dapr.io/config: "config"
+spec:
+  restartPolicy: Always
+  hostAliases:
+  - ip: "10.42.0.1"
+    hostnames:
+    - "edgehost"
+  containers:
+    - name: seat-adjuster-app-ces
+      image: swdceuwedevgsopscr.azurecr.io/seat-adjuster-app-ces:0.4.5
+      imagePullPolicy: IfNotPresent
+      ports:
+        - containerPort: 50008
+      env:
+        - name: SEATS_SERVICE_ADDRESS
+          value: "edgehost:50051"
