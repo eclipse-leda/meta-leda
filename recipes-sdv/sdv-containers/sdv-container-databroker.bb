@@ -13,9 +13,9 @@ RDEPENDS_${PN} = "skopeo bash"
 do_compile[noexec] = "1"
 
 do_fetch() {
-    if [ ! -f "${DL_DIR}/hello-world.oci" ];
+    if [ ! -f "${DL_DIR}/sdv-databroker.oci" ];
     then
-        if ! PATH=/usr/bin:${PATH} skopeo copy docker://hello-world:latest docker-archive:${DL_DIR}/hello-world.tar:library/registry:2 oci:${DL_DIR}/hello-world.oci; then
+        if ! PATH=/usr/bin:${PATH} skopeo copy docker://ghcr.io/softwaredefinedvehicle/swdc-os-vehicleapi/databroker:v0.6.0 oci:${DL_DIR}/sdv-databroker.oci; then
             bbfatal "Error copying container image"
         fi
     fi
@@ -23,11 +23,11 @@ do_fetch() {
 
 do_install() {
     install -d ${D}/var/lib/sdv
-    cp -R --no-dereference --preserve=mode,links -v ${DL_DIR}/hello-world.oci ${D}/var/lib/sdv
+    cp -R --no-dereference --preserve=mode,links -v ${DL_DIR}/sdv-databroker.oci ${D}/var/lib/sdv
 }
 
 FILES_${PN} += "${datadir}/${PN}/README.txt \
-                ${datadir}/${PN}/hello-world.oci \
+                ${datadir}/${PN}/sdv-databroker.oci \
                 ${datadir}/${PN}/LICENSE"
 
 PACKAGES = "${PN}"
