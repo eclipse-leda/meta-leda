@@ -15,7 +15,7 @@ do_compile[noexec] = "1"
 do_fetch() {
     if [ ! -f "${DL_DIR}/hello-world.oci" ];
     then
-        if ! PATH=/usr/bin:${PATH} skopeo copy docker://hello-world:latest oci:${DL_DIR}/hello-world.oci; then
+        if ! PATH=/usr/bin:${PATH} skopeo --override-arch ${TARGET_ARCH} copy docker://hello-world:latest oci:${DL_DIR}/hello-world.oci; then
             bbfatal "Error copying container image"
         fi
     fi

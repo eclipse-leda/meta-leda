@@ -15,7 +15,7 @@ do_compile[noexec] = "1"
 do_fetch() {
     if [ ! -f "${DL_DIR}/sdv-databroker.oci" ];
     then
-        if ! PATH=/usr/bin:${PATH} skopeo copy docker://ghcr.io/softwaredefinedvehicle/swdc-os-vehicleapi/databroker:v0.6.0 oci:${DL_DIR}/sdv-databroker.oci; then
+        if ! PATH=/usr/bin:${PATH} skopeo --override-arch ${TARGET_ARCH} copy docker://ghcr.io/softwaredefinedvehicle/swdc-os-vehicleapi/databroker:v0.6.0 oci:${DL_DIR}/sdv-databroker.oci; then
             bbfatal "Error copying container image"
         fi
     fi
