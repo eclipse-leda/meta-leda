@@ -1,19 +1,30 @@
 SUMMARY = "bitbake-layers recipe"
 DESCRIPTION = "Recipe created by bitbake-layers"
-LICENSE = "EPL"
+LICENSE = "EPL-1.0"
 
-SRC_URI = "git://github.com/SoftwareDefinedVehicle/swdc-os-cloud-agent.git"
+SRC_URI = "git://github.com/SoftwareDefinedVehicle/swdc-os-cloud-agent.git;branch=main"
 SRCREV = "28ce9e78a1fa5867c982e11d380f4f617fb97d60"
 
 # Replace 'xxx' after first build with correct value
-LIC_FILES_CHKSUM = "file://NOTICE;md5=xxx"
+LIC_FILES_CHKSUM = "file://${WORKDIR}/git/NOTICE;md5=b95389a3f134a33b445b438d337848f7"
 
-python do_display_banner() {
-    bb.plain("***********************************************");
-    bb.plain("*                                             *");
-    bb.plain("*  Example recipe created by bitbake-layers   *");
-    bb.plain("*                                             *");
-    bb.plain("***********************************************");
+#GO_IMPORT = "import"
+#GO_INSTALL = "${GO_IMPORT}/hello"
+#GO_WORKDIR = "${GO_INSTALL}"
+#export GO111MODULE="off"
+
+DEPENDS = "go-cross-${TARGET_ARCH}"
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
+S = "${WORKDIR}"
+
+inherit go
+inherit goarch
+
+do_compile() {
+  go build
 }
 
-addtask display_banner before do_build
+do_install() {
+  install -d "${D}/${bindir}"
+  install -m 0755 "${S}/helloworld" "${D}/${bindir}"
+}

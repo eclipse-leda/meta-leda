@@ -11,8 +11,8 @@
 # * SPDX-License-Identifier: EPL-2.0
 # ********************************************************************************/
 
-SUMMARY = "SDV Core Install Manager"
-DESCRIPTION = "SDV Core installation manager"
+SUMMARY = "SDV Core Self Update Agent"
+DESCRIPTION = "Bridge to RAUC Self Updater"
 
 SRC_URI = "git://github.com/SoftwareDefinedVehicle/sdv-edge-core-utils;branch=main"
 SRCREV = "5bc1f0c565c89ddea577ebe20df73a1a88557d5d"

@@ -1,5 +1,20 @@
+# /********************************************************************************
+# * Copyright (c) 2021 Contributors to the Eclipse Foundation
+# *
+# * See the NOTICE file(s) distributed with this work for additional
+# * information regarding copyright ownership.
+# *
+# * This program and the accompanying materials are made available under the
+# * terms of the Eclipse Public License 2.0 which is available at
+# * http://www.eclipse.org/legal/epl-2.0
+# *
+# * SPDX-License-Identifier: EPL-2.0
+# ********************************************************************************/
+
 SUMMARY = "Embed SDV container archives into the system"
 DESCRIPTION = "Pull the container images, save them in the rootfs."
+
+inherit sdv
 
 SRC_URI += "file://README.txt \
             file://LICENSE"
@@ -8,23 +23,11 @@ SRC_URI += "file://README.txt \
 LICENSE = "EPL-1.0"
 LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=d9fc0efef5228704e7f5b37f27192723"
 
-RDEPENDS_${PN} = "skopeo bash"
+# Define image to be pulled
+SDV_IMAGE_REF="docker://hello-world:latest"
 
-do_compile[noexec] = "1"
-
-do_fetch() {
-    if [ ! -f "${DL_DIR}/hello-world.oci" ];
-    then
-        if ! PATH=/usr/bin:${PATH} skopeo --override-arch ${TARGET_ARCH} copy docker://hello-world:latest oci:${DL_DIR}/hello-world.oci; then
-            bbfatal "Error copying container image"
-        fi
-    fi
-}
-
-do_install() {
-    install -d ${D}/var/lib/sdv
-    cp -R --no-dereference --preserve=mode,links -v ${DL_DIR}/hello-world.oci ${D}/var/lib/sdv
-}
+# Override container architecture. If not set, recipe tries autodetection for target machine architecture.
+#CONTAINER_ARCH="arm64"
 
 FILES_${PN} += "${datadir}/${PN}/README.txt \
                 ${datadir}/${PN}/hello-world.oci \

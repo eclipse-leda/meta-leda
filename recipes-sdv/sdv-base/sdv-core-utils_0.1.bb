@@ -1,7 +1,21 @@
+# /********************************************************************************
+# * Copyright (c) 2021 Contributors to the Eclipse Foundation
+# *
+# * See the NOTICE file(s) distributed with this work for additional
+# * information regarding copyright ownership.
+# *
+# * This program and the accompanying materials are made available under the
+# * terms of the Eclipse Public License 2.0 which is available at
+# * http://www.eclipse.org/legal/epl-2.0
+# *
+# * SPDX-License-Identifier: EPL-2.0
+# ********************************************************************************/
+
 SUMMARY = "SDV Core Utilities"
 DESCRIPTION = "Core shell scripts"
 
-SRC_URI = "git://github.com/SoftwareDefinedVehicle/sdv-edge-core-utils;branch=main;rev=main"
+SRC_URI = "git://github.com/SoftwareDefinedVehicle/sdv-edge-core-utils;branch=main"
+SRCREV = "5bc1f0c565c89ddea577ebe20df73a1a88557d5d"
 
 # According to https://wiki.yoctoproject.org/wiki/License_Infrastructure_Interest_Group
 LICENSE = "EPL-1.0"
@@ -11,7 +25,7 @@ LIC_FILES_CHKSUM = "file://${WORKDIR}/git/LICENSE;md5=2dd765ca47a05140be15ebafdd
 RDEPENDS:${PN} += " bash"
 
 # Force to refetch every time
-do_fetch[nostamp] = "1"
+#do_fetch[nostamp] = "1"
 
 # Skip the compilation tasks
 #do_compile[noexec] = "1"

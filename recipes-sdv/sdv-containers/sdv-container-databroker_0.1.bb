@@ -11,25 +11,26 @@
 # * SPDX-License-Identifier: EPL-2.0
 # ********************************************************************************/
 
-SUMMARY = "SDV Core Install Manager"
-DESCRIPTION = "SDV Core installation manager"
+SUMMARY = "Embed SDV container archives into the system"
+DESCRIPTION = "Pull the container images, save them in the rootfs."
 
-SRC_URI = "git://github.com/SoftwareDefinedVehicle/sdv-edge-core-utils;branch=main"
-SRCREV = "5bc1f0c565c89ddea577ebe20df73a1a88557d5d"
+inherit sdv
+
+SRC_URI += "file://README.txt \
+            file://LICENSE"
 
 # According to https://wiki.yoctoproject.org/wiki/License_Infrastructure_Interest_Group
 LICENSE = "EPL-1.0"
-LIC_FILES_CHKSUM = "file://${WORKDIR}/git/LICENSE;md5=2dd765ca47a05140be15ebafddbeadfe"
- 
-# Runtime Dependencies
-RDEPENDS:${PN} += "bash"
+LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=d9fc0efef5228704e7f5b37f27192723"
 
-do_install() {
-    install -d ${D}${bindir}
-    cp -R --no-dereference --preserve=mode,links -v ${WORKDIR}/git/src/bash/* ${D}${bindir}
-}
+# Define image to be pulled
+SDV_IMAGE_REF="docker://ghcr.io/softwaredefinedvehicle/swdc-os-vehicleapi/databroker:v0.6.0"
 
-FILES_${PN} += "${datadir}/${PN}/src/bash/ \
+# Override container architecture. If not set, recipe tries autodetection for target machine architecture.
+#CONTAINER_ARCH="arm64"
+
+FILES_${PN} += "${datadir}/${PN}/README.txt \
+                ${datadir}/${PN}/sdv-databroker.oci \
                 ${datadir}/${PN}/LICENSE"
 
 PACKAGES = "${PN}"
