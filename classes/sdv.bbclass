@@ -35,11 +35,10 @@ do_fetch_container() {
     SKOPEO_LOC=$(PATH=/usr/bin:${PATH} whereis skopeo)
     bbnote "Skopeo Location: ${SKOPEO_LOC}"
 
-    if ! PATH=/usr/bin:${PATH} skopeo login --get-login ghcr.io;
+    if ! PATH=/usr/bin:${PATH} skopeo login --authfile ~/auth.json ghcr.io
     then
         bbwarn "Not logged into ghcr.io, download of container image may fail"
     fi
-
 
     if [ -z "$CONTAINER_ARCH" ]
     then
