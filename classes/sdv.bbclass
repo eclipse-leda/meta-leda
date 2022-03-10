@@ -61,7 +61,7 @@ do_fetch_container() {
 
     if [ ! -f ${SDV_DL_FILE} ];
     then
-        if ! PATH=/usr/bin:${PATH} skopeo --override-arch ${CONTAINER_ARCH} --override-os ${CONTAINER_OS} copy ${SDV_IMAGE_REF} oci-archive:${SDV_DL_FILE};
+        if ! PATH=/usr/bin:${PATH} skopeo --override-arch ${CONTAINER_ARCH} --override-os ${CONTAINER_OS} copy --authfile ~/auth.json ${SDV_IMAGE_REF} docker-archive:${SDV_DL_FILE};
         then
             bbfatal "Error copying container image. Proxy is ${http_proxy}"
         fi
@@ -70,11 +70,8 @@ do_fetch_container() {
 
 do_unpack_container() {
     CONTAINER_SOURCE_FOLDER="${S}/container-image"
-    bbnote "Unpacking ${SDV_DL_FILE} to ${CONTAINER_SOURCE_FOLDER}"
-    if ! PATH=/usr/bin:${PATH} skopeo copy oci-archive:${SDV_DL_FILE} oci:${CONTAINER_SOURCE_FOLDER};
-    then
-        bbfatal "Error unpacking container image to ${CONTAINER_SOURCE_FOLDER}"
-    fi
+    bbnote "Copying ${SDV_DL_FILE} to ${CONTAINER_SOURCE_FOLDER}"
+    cp ${SDV_DL_FILE} ${CONTAINER_SOURCE_FOLDER}
 }
 
 # Todo: Move the layer blobs into the containerd storage
