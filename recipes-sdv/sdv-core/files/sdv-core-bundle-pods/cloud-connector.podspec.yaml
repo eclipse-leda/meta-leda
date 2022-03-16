@@ -10,5 +10,20 @@ spec:
     - "edgehost"
   containers:
     - name: cloudagent
-      image: ghcr.io/softwaredefinedvehicle/swdc-os-cloud-agent/cloud-agent:v0.0.1
+      image: ghcr.io/softwaredefinedvehicle/swdc-os-cloud-agent/cloudagent:v0.1
+      env:
+        - name: CONNECTION_STRING
+          valueFrom:
+          secretKeyRef:
+            name: cloudagent
+            key: PrimaryConnectionString
+            optional: false
+        - name: LOCAL_ADDRESS
+          value: tcp://10.42.0.1:1883
+        - name: LOG_FILE
+          value: ""
+        - name: CA_CERT_PATH
+          value: "/config/iothub.crt"
+        - name: MESSAGE_MAPPER_CONFIG
+          value: "/config/message-mapper-config.json"
       imagePullPolicy: IfNotPresent
