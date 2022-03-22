@@ -8,8 +8,6 @@ spec:
   - ip: "10.42.0.1"
     hostnames:
     - "edgehost"
-  imagePullSecrets:
-    - name: ghcr
   containers:
     - name: databroker
       image: ghcr.io/softwaredefinedvehicle/swdc-os-vehicleapi/databroker:v0.6.0

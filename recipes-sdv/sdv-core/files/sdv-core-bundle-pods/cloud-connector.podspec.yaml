@@ -14,10 +14,10 @@ spec:
       env:
         - name: CONNECTION_STRING
           valueFrom:
-          secretKeyRef:
-            name: cloudagent
-            key: PrimaryConnectionString
-            optional: false
+            secretKeyRef:
+              name: cloudagent
+              key: PrimaryConnectionString
+              optional: false
         - name: LOCAL_ADDRESS
           value: tcp://10.42.0.1:1883
         - name: LOG_FILE
