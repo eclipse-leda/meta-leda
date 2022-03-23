@@ -12,7 +12,7 @@ metadata:
 spec:
   restartPolicy: Always
   hostAliases:
-  - ip: "10.42.0.1"
+  - ip: "10.0.2.15"
     hostnames:
     - "edgehost"
   containers:
@@ -24,3 +24,5 @@ spec:
       env:
         - name: SEATS_SERVICE_ADDRESS
           value: "edgehost:50051"
+  imagePullSecrets:
+  - name: azurecr

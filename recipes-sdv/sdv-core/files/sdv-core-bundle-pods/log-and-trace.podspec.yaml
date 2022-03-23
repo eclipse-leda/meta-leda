@@ -5,10 +5,12 @@ metadata:
 spec:
   restartPolicy: Always
   hostAliases:
-  - ip: "10.42.0.1"
+  - ip: "10.0.2.15"
     hostnames:
     - "edgehost"
   containers:
     - name: log-and-trace
       image: ghcr.io/softwaredefinedvehicle/swdc-os-otel/otel-collector:v0.0.1
       imagePullPolicy: IfNotPresent
+  imagePullSecrets:
+  - name: ghcr-io

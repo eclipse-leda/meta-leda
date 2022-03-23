@@ -5,7 +5,7 @@ metadata:
 spec:
   restartPolicy: Always
   hostAliases:
-  - ip: "10.42.0.1"
+  - ip: "10.0.2.15"
     hostnames:
     - "edgehost"
   containers:
@@ -19,11 +19,13 @@ spec:
               key: PrimaryConnectionString
               optional: false
         - name: LOCAL_ADDRESS
-          value: tcp://10.42.0.1:1883
+          value: tcp://edgehost:1883
         - name: LOG_FILE
           value: ""
         - name: CA_CERT_PATH
-          value: "/config/iothub.crt"
+          value: "/app/iothub.crt"
         - name: MESSAGE_MAPPER_CONFIG
-          value: "/config/message-mapper-config.json"
+          value: "/app/message-mapper-config.json"
       imagePullPolicy: IfNotPresent
+  imagePullSecrets:
+  - name: ghcr-io

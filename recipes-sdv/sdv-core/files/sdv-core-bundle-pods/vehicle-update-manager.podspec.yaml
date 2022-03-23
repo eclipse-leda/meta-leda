@@ -5,10 +5,12 @@ metadata:
 spec:
   restartPolicy: Always
   hostAliases:
-  - ip: "10.42.0.1"
+  - ip: "10.0.2.15"
     hostnames:
     - "edgehost"
   containers:
     - name: edge-update-manager
       image: ghcr.io/softwaredefinedvehicle/swdc-edge-update-manager/update-manager:v0.0.1
       imagePullPolicy: IfNotPresent
+  imagePullSecrets:
+  - name: azurecr
