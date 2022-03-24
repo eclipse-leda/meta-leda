@@ -4,7 +4,7 @@ logger "starting initscript"
 
 # do some work here. Mount rootfs as rw if needed.
 export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
-dapr init -k
+dapr init -k --wait
 
 logger "initscript work done"
 

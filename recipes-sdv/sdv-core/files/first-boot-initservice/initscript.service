@@ -7,4 +7,7 @@ WantedBy=multi-user.target
 
 [Service]
 Type=simple
-ExecStart=/bin/sh -c 'sleep 5 ; /usr/sbin/initscript.sh'
+Restart=on-failure
+RestartSec=5s
+ExecStartPre=systemctl is-active k3s.service
+ExecStart=/usr/sbin/initscript.sh
