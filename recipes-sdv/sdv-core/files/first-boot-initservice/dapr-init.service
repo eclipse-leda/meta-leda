@@ -1,0 +1,8 @@
+[Unit]
+Description=Start dapr-init script upon first boot
+Requires=k3s.service
+After=k3s.service
+
+[Service]
+Type=simple
+ExecStart=/usr/sbin/dapr-init.sh
