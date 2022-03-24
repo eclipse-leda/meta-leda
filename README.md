@@ -6,6 +6,7 @@ This metalayer can be used to integrate core SDV.EDGE components into a Yocto ba
 
 This layer depends on
 - meta-virtualization
+- meta-rauc
 
 # License and Copyright
 
