@@ -1,0 +1,10 @@
+[Unit]
+Description=start initscript upon first boot
+After=k3s
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/bin/sh -c 'sleep 5 ; /usr/sbin/initscript.sh'
