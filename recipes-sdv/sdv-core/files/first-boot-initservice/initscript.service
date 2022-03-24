@@ -1,6 +1,6 @@
 [Unit]
 Description=start initscript upon first boot
-After=k3s
+After=k3s.service
 
 [Install]
 WantedBy=multi-user.target
