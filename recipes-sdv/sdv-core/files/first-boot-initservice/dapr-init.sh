@@ -12,10 +12,11 @@
 # * SPDX-License-Identifier: EPL-2.0
 # ********************************************************************************/
 #
+echo "Will call dapr init -k --wait"
 
-echo "Will call dapr init -k"
 export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
-dapr init -k --wait --timeout 600
+
+dapr init -k --wait
 
 echo "dapr inited"
 
