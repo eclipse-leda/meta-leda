@@ -6,7 +6,7 @@ spec:
   restartPolicy: Always
   containers:
     - name: cloudagent
-      image: ghcr.io/softwaredefinedvehicle/swdc-os-cloud-agent/cloudagent:v0.1
+      image: ghcr.io/softwaredefinedvehicle/swdc-os-cloud-agent/cloudagent:v0.2
       env:
         - name: CONNECTION_STRING
           valueFrom:
