@@ -22,6 +22,8 @@ spec:
           value: "/app/iothub.crt"
         - name: MESSAGE_MAPPER_CONFIG
           value: "/app/message-mapper-config.json"
+        - name: ALLOWED_CLOUD_MESSAGE_TYPES_LIST
+          value: "vss.setPosition,updateme,subscribeOnceCommand,vss.set"
       imagePullPolicy: IfNotPresent
   imagePullSecrets:
   - name: ghcr-io
