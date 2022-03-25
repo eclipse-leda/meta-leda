@@ -4,18 +4,14 @@ metadata:
   name: sdv-core-vehicle-update-manager-pod
 spec:
   restartPolicy: Always
-  hostAliases:
-  - ip: "10.0.2.15"
-    hostnames:
-    - "mosquitto"
   containers:
     - name: edge-update-manager
       image: ghcr.io/softwaredefinedvehicle/swdc-os-containers-management/vehicleupdatemanager:v0.1
       imagePullPolicy: IfNotPresent
-    - env:
+      env:
       - name: THINGS_CONN_BROKER
         value: tcp://mosquitto:1883
       - name: THINGS_FEATURES
-        value: ContainerOrchestrator
+        value: ContainerOrchestrator 
   imagePullSecrets:
   - name: ghcr-io
