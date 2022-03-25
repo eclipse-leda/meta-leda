@@ -10,7 +10,6 @@ Type=simple
 Restart=on-failure
 RestartSec=5s
 ExecStartPre=systemctl is-active k3s.service
-ExecStartPre=echo "will start dapr-init"
 ExecStart=/usr/sbin/dapr-init.sh
 
 
