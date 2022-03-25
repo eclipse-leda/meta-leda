@@ -12,7 +12,7 @@ spec:
     - name: edge-update-manager
       image: ghcr.io/softwaredefinedvehicle/swdc-os-containers-management/vehicleupdatemanager:v0.1
       imagePullPolicy: IfNotPresent
-    - env:
+      env:
       - name: THINGS_CONN_BROKER
         value: tcp://mosquitto:1883
       - name: THINGS_FEATURES
