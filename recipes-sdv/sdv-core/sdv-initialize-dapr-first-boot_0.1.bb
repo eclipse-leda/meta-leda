@@ -13,18 +13,18 @@ LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=d9fc0efef5228704e7f5b37f271927
 
 NATIVE_SYSTEMD_SUPPORT = "1"
 SYSTEMD_PACKAGES = "${PN}"
-SYSTEMD_SERVICE:${PN} = "initscript.service"
+SYSTEMD_SERVICE:${PN} = "dapr-init.service"
 SYSTEMD_AUTO_ENABLE:${PN} = "enable"
 
-FILES:${PN} += "${sbindir}/initscript.sh \
-                ${systemd_system_unitdir}/initscript.service"
+FILES:${PN} += "${sbindir}/dapr-init.sh \
+                ${systemd_system_unitdir}/dapr-init.service"
 
 REQUIRED_DISTRO_FEATURES = "systemd"
 
 do_install:append () {
     install -d ${D}/${sbindir}
-    install -m 0755 ${WORKDIR}/first-boot-initservice/initscript.sh ${D}/${sbindir}
+    install -m 0755 ${WORKDIR}/first-boot-initservice/dapr-init.sh ${D}/${sbindir}
 
     install -d ${D}${systemd_unitdir}/system/
-    install -m 0644 ${WORKDIR}/first-boot-initservice/initscript.service ${D}${systemd_system_unitdir}
+    install -m 0644 ${WORKDIR}/first-boot-initservice/dapr-init.service ${D}${systemd_system_unitdir}
 }
