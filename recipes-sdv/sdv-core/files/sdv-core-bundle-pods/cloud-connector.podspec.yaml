@@ -4,10 +4,6 @@ metadata:
   name: sdv-core-cloud-agent-pod
 spec:
   restartPolicy: Always
-  hostAliases:
-  - ip: "10.0.2.15"
-    hostnames:
-    - "edgehost"
   containers:
     - name: cloudagent
       image: ghcr.io/softwaredefinedvehicle/swdc-os-cloud-agent/cloudagent:v0.1
@@ -19,7 +15,7 @@ spec:
               key: PrimaryConnectionString
               optional: false
         - name: LOCAL_ADDRESS
-          value: tcp://edgehost:1883
+          value: tcp://mosquitto:1883
         - name: LOG_FILE
           value: ""
         - name: CA_CERT_PATH
