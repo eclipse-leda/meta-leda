@@ -10,7 +10,7 @@ spec:
     - "edgehost"
   containers:
     - name: databroker
-      image: ghcr.io/softwaredefinedvehicle/swdc-os-vehicleapi/databroker:v0.6.0
+      image: ghcr.io/softwaredefinedvehicle/swdc-os-vehicleapi/databroker:v0.12.0
       imagePullPolicy: IfNotPresent
       ports:
         - containerPort: 55555
@@ -22,7 +22,7 @@ spec:
         - name: PORT
           value: "55555"
     - name: seat-service
-      image: ghcr.io/softwaredefinedvehicle/swdc-os-vehicleapi/seat_service:v0.6.0
+      image: ghcr.io/softwaredefinedvehicle/swdc-os-vehicleapi/seat_service:v0.12.0
       imagePullPolicy: IfNotPresent
       ports:
         - containerPort: 50051
@@ -30,7 +30,7 @@ spec:
         - name: PORT
           value: "50051"
     - name: vehicle-api
-      image: ghcr.io/softwaredefinedvehicle/swdc-os-vehicleapi/swdc-os-vehapi-dev:v0.6.0
+      image: ghcr.io/softwaredefinedvehicle/swdc-os-vehicleapi/swdc-os-vehapi-dev:v0.12.0
       imagePullPolicy: IfNotPresent
   imagePullSecrets:
   - name: ghcr-io
