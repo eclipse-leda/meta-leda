@@ -15,7 +15,7 @@ SUMMARY = "SDV Core Self Update Agent"
 DESCRIPTION = "Bridge to RAUC Self Updater"
 
 SRC_URI = "git://github.com/SoftwareDefinedVehicle/sdv-edge-core-utils;branch=main"
-SRCREV = "5bc1f0c565c89ddea577ebe20df73a1a88557d5d"
+SRCREV = "cc8eadfd9421ac28c1847fa896a50e54c6ab33cb"
 
 # According to https://wiki.yoctoproject.org/wiki/License_Infrastructure_Interest_Group
 LICENSE = "EPL-1.0"
