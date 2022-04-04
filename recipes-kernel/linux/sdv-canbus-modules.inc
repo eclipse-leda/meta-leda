@@ -14,10 +14,9 @@
 SUMMARY = "SDV CAN Bus Kernel Configuration"
 DESCRIPTION = "Enables support for usual CAN Bus related Kernel modules"
 
-FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
-SRC_URI = "file://kernel-canbus-modules.cfg"
+FILESEXTRAPATHS:prepend := "${THISDIR}/linux-yocto:"
+SRC_URI:append = "file://can.cfg"
 
 # According to https://wiki.yoctoproject.org/wiki/License_Infrastructure_Interest_Group
 LICENSE = "EPL-1.0"
-LIC_FILES_CHKSUM = "file://LICENSE;md5=2dd765ca47a05140be15ebafddbeadfe"
-
+#LIC_FILES_CHKSUM = "file://LICENSE;md5=d9fc0efef5228704e7f5b37f27192723"
