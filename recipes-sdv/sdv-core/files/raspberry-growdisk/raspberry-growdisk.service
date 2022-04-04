@@ -1,0 +1,10 @@
+[Unit]
+Description=Grow SD-Card disk space
+Before=basic.target
+
+[Install]
+WantedBy=basic.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/raspberry-growdisk
