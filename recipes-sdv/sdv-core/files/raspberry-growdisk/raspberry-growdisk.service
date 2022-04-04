@@ -7,4 +7,4 @@ WantedBy=basic.target
 
 [Service]
 Type=oneshot
-ExecStart=/usr/sbin/raspberry-growdisk
+ExecStart=/usr/sbin/raspberry-growdisk.sh
