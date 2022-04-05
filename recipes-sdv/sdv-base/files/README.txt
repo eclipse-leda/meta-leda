@@ -1,1 +1,1 @@
-Hello
+THe SDV Base bundle contains the minimal components necessary to perform software updates.
