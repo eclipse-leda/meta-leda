@@ -29,8 +29,5 @@ spec:
       env:
         - name: PORT
           value: "50051"
-    - name: vehicle-api
-      image: ghcr.io/softwaredefinedvehicle/swdc-os-vehicleapi/swdc-os-vehapi-dev:v0.12.0
-      imagePullPolicy: IfNotPresent
   imagePullSecrets:
   - name: ghcr-io
