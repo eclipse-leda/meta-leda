@@ -15,7 +15,7 @@ SUMMARY = "SDV Core Install Manager"
 DESCRIPTION = "SDV Core installation manager"
 
 SRC_URI = "git://github.com/SoftwareDefinedVehicle/sdv-edge-core-utils;branch=main"
-SRCREV = "cc8eadfd9421ac28c1847fa896a50e54c6ab33cb"
+SRCREV = "0168b9efec3317328da1c5bdf454231268f6cb35"
 
 # According to https://wiki.yoctoproject.org/wiki/License_Infrastructure_Interest_Group
 LICENSE = "Apache-2.0"
