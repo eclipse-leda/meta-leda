@@ -16,11 +16,10 @@ echo "Will call dapr init -k --wait"
 
 export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 
-dapr init -k --wait
+dapr init -k --wait --timeout 600
+if [ "$?" = "0" ]; then
+    #job done, remove it from systemd services
+    systemctl disable dapr-init.service
 
-echo "dapr inited"
-
-#job done, remove it from systemd services
-systemctl disable dapr-init.service
-
-echo "dapr-init.service was disabled"
+    echo "Dapr installed successfully. dapr-init.service was disabled"
+fi
