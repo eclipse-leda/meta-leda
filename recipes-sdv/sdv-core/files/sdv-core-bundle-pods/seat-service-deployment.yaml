@@ -31,8 +31,6 @@ spec:
           env:
           - name: VEHICLEDATABROKER_DAPR_APP_ID
             value: vehicledatabroker
-          - name: PORT
-            value: "50051"
       imagePullSecrets:
         - name: ghcr-io
 ---

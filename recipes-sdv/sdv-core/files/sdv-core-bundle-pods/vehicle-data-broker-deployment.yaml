@@ -29,13 +29,6 @@ spec:
               containerPort: 55555
               protocol: TCP
           args: ["--dummy-metadata"]              
-          env:
-            - name: RUST_LOG
-              value: "info,vehicle_data_broker=info"
-            - name: HOST
-              value: "0.0.0.0"
-            - name: PORT
-              value: "55555"
       imagePullSecrets:
         - name: ghcr-io          
 
