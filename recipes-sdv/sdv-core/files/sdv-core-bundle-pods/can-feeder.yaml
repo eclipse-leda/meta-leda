@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: feedercan
+  labels:
+    app: feedercan
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: feedercan
+  template:
+    metadata:
+      labels:
+        app: feedercan
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "feedercan"
+        dapr.io/log-level: "info"
+        dapr.io/app-protocol: "grpc"
+    spec:
+      containers:
+        - name: feedercan
+          image: ghcr.io/softwaredefinedvehicle/swdc-os-vehicleapi/feeder_can:v0.14.0
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: VEHICLEDATABROKER_DAPR_APP_ID
+              value: vehicledatabroker
+            - name: LOG_LEVEL
+              value: "info,databroker=info,dbcfeeder.broker_client=info,dbcfeeder=info"
+      imagePullSecrets:
+        - name: ghcr-io

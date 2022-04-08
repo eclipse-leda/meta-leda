@@ -6,9 +6,8 @@ metadata:
     dapr.io/enabled: "true"
     dapr.io/app-id: "seat-adjuster-app-ces"
     dapr.io/app-port: "50008"
-    dapr.io/log-level: "debug"
+    dapr.io/log-level: "info"
     dapr.io/app-protocol: "grpc"
-    dapr.io/config: "config"
 spec:
   restartPolicy: Always
   hostAliases:
