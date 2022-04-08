@@ -11,6 +11,10 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
+# Ensure file gets updated on each build
+do_install[nostamp] = "1"
+do_install_basefilesissue[nostamp] = "1"
+
 # Overwrite /etc/issue with a custom version of it
 do_install_basefilesissue:append() {
     LAYER_REV=$(git describe --tags)
