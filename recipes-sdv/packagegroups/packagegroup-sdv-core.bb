@@ -11,19 +11,21 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-require conf/distro/poky.conf 
+SUMMARY = "SDV core packages"
+DESCRIPTION = "Packages required to set up a basic working SDV system"
 
-require conf/distro/include/buildinfo.inc
-require conf/distro/include/kastro-distro-features.inc
-require conf/distro/include/kastro-install-packages.inc
+inherit packagegroup
 
-DISTRO = "kastro"
-DISTRO_NAME="Eclipse Kastro"
-DISTRO_VERSION="2022"
-DISTRO_CODENAME="Hockenheim"
-
-MAINTAINER = "Mike Haller <mike.haller@bosch.com>"
-
-# Ensure timestamp of rootfs and kernel are updated (non-reproducable-build)
-BUILD_REPRODUCIBLE_BINARIES = "0"
-REPRODUCIBLE_TIMESTAMP_ROOTFS = ""
+RDEPENDS:${PN} = "\
+    packagegroup-k3s-host \
+    kernel-modules \
+    ca-certificates \
+    rauc \
+    rauc-hawkbit-updater \
+    sdv-dapr-binaries \
+    sdv-initialize-dapr-first-boot \
+    sdv-helm-binaries \
+    sdv-core-bundle-pods \
+    sdv-container-databroker \
+    kernel-modules \
+    "

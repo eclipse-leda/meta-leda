@@ -11,19 +11,22 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-require conf/distro/poky.conf 
+SUMMARY = "SDV examples packages"
+DESCRIPTION = "Packages SDV examples (Seat Service)"
 
-require conf/distro/include/buildinfo.inc
-require conf/distro/include/kastro-distro-features.inc
-require conf/distro/include/kastro-install-packages.inc
+inherit packagegroup
 
-DISTRO = "kastro"
-DISTRO_NAME="Eclipse Kastro"
-DISTRO_VERSION="2022"
-DISTRO_CODENAME="Hockenheim"
-
-MAINTAINER = "Mike Haller <mike.haller@bosch.com>"
-
-# Ensure timestamp of rootfs and kernel are updated (non-reproducable-build)
-BUILD_REPRODUCIBLE_BINARIES = "0"
-REPRODUCIBLE_TIMESTAMP_ROOTFS = ""
+RDEPENDS:${PN} = "\
+    sdv-container-helloworld \
+    sdv-container-seatservice \
+    can-utils \
+    can-utils-access \
+    can-utils-isotp \
+    can-utils-j1939 \
+    can-utils-cantest \
+    can-utils-slcan \
+    can-utils-log \
+    "
+KERNEL_MODULE_AUTOLOAD += "can"
+KERNEL_MODULE_AUTOLOAD += "vcan"
+KERNEL_MODULE_AUTOLOAD += "vxcan"
