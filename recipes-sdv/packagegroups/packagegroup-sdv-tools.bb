@@ -20,7 +20,6 @@ RDEPENDS:${PN} = "\
     mosquitto-clients \
     nano \
     sudo \
-    sdv-databroker-cli \
     openssh-sftp-server \
     sdv-core-utils \
     openssh \
