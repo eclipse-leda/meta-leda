@@ -12,4 +12,5 @@
 # ********************************************************************************/
 
 require sdv-canbus-modules.inc
+require sdv-misc-kernel-config.inc
 

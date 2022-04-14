@@ -11,19 +11,12 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-require conf/distro/poky.conf 
+SUMMARY = "SDV Misc Kernel Configuration"
+DESCRIPTION = "Modify some general Kernel defaults"
 
-require conf/distro/include/buildinfo.inc
-require conf/distro/include/kastro-distro-features.inc
-require conf/distro/include/kastro-install-packages.inc
+FILESEXTRAPATHS:prepend := "${THISDIR}/linux-yocto:"
+SRC_URI:append = " file://kernel-loglevel.cfg"
 
-DISTRO = "kastro"
-DISTRO_NAME="Eclipse Kastro"
-DISTRO_VERSION="2022"
-DISTRO_CODENAME="Hockenheim"
-
-MAINTAINER = "Mike Haller <mike.haller@bosch.com>"
-
-# Ensure timestamp of rootfs and kernel are updated (non-reproducable-build)
-BUILD_REPRODUCIBLE_BINARIES = "0"
-REPRODUCIBLE_TIMESTAMP_ROOTFS = ""
+# According to https://wiki.yoctoproject.org/wiki/License_Infrastructure_Interest_Group
+LICENSE = "Apache-2.0"
+#LIC_FILES_CHKSUM = "file://LICENSE;md5=d9fc0efef5228704e7f5b37f27192723"
