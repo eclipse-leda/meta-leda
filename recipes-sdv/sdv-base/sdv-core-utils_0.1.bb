@@ -15,7 +15,7 @@ SUMMARY = "SDV Core Utilities"
 DESCRIPTION = "Core shell scripts"
 
 SRC_URI = "git://github.com/SoftwareDefinedVehicle/sdv-edge-core-utils;branch=main"
-SRCREV = "0168b9efec3317328da1c5bdf454231268f6cb35"
+SRCREV = "${AUTOREV}"
 
 # According to https://wiki.yoctoproject.org/wiki/License_Infrastructure_Interest_Group
 LICENSE = "Apache-2.0"
@@ -25,7 +25,8 @@ LIC_FILES_CHKSUM = "file://${WORKDIR}/git/LICENSE;md5=2dd765ca47a05140be15ebafdd
 RDEPENDS:${PN} += " bash"
 
 # Force to refetch every time
-#do_fetch[nostamp] = "1"
+do_fetch[nostamp] = "1"
+do_install[nostamp] = "1"
 
 # Skip the compilation tasks
 #do_compile[noexec] = "1"
@@ -34,10 +35,18 @@ RDEPENDS:${PN} += " bash"
 
 do_install() {
     install -d ${D}${bindir}
-    cp -R --no-dereference --preserve=mode,links -v ${WORKDIR}/git/src/bash/* ${D}${bindir}
+    install -d ${D}/etc/sdv
+    cp -R --no-dereference --preserve=mode,links -v ${WORKDIR}/git/src/bash/can-forward ${D}${bindir}
+    cp -R --no-dereference --preserve=mode,links -v ${WORKDIR}/git/src/bash/sdv-device-info ${D}${bindir}
+    cp -R --no-dereference --preserve=mode,links -v ${WORKDIR}/git/src/bash/sdv-health ${D}${bindir}
+    cp -R --no-dereference --preserve=mode,links -v ${WORKDIR}/git/src/bash/sdv-motd ${D}${bindir}
+    cp -R --no-dereference --preserve=mode,links -v ${WORKDIR}/git/src/bash/sdv.conf ${D}/etc/sdv/
 }
 
-FILES_${PN} += "${bindir}/${PN}/src/bash/ \
-                ${bindir}/${PN}/LICENSE"
+FILES_${PN} += "${bindir}/can-forward"
+FILES_${PN} += "${bindir}/sdv-device-info"
+FILES_${PN} += "${bindir}/sdv-health"
+FILES_${PN} += "${bindir}/sdv-motd"
+FILES_${PN} += "/etc/sdv/sdv.conf"
 
 PACKAGES = "${PN}"
