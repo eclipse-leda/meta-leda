@@ -11,20 +11,7 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-require conf/distro/poky.conf 
-
-require conf/distro/include/buildinfo.inc
-require conf/distro/include/kastro-distro-features.inc
-require conf/distro/include/kastro-install-packages.inc
-require conf/distro/include/kastro-selfupdate-rauc.inc
-
-DISTRO = "kastro"
-DISTRO_NAME="Eclipse Kastro"
-DISTRO_VERSION="2022"
-DISTRO_CODENAME="Hockenheim"
-
-MAINTAINER = "Mike Haller <mike.haller@bosch.com>"
-
-# Ensure timestamp of rootfs and kernel are updated (non-reproducable-build)
-BUILD_REPRODUCIBLE_BINARIES = "0"
-REPRODUCIBLE_TIMESTAMP_ROOTFS = ""
+# Enable GRUB Bootloader, so that we can chose which partition to boot.
+#MACHINE_FEATURES:append = " pcbios efi"
+#EXTRA_IMAGEDEPENDS += "ovmf"
+#PREFERRED_RPROVIDER_virtual-grub-bootconf = "rauc-qemu-grubconf"
