@@ -19,7 +19,7 @@ do_compile() {
 
 do_install() {
   install -d "${D}/${bindir}"
-  install -m 0755 "${B}/software-update" "${D}/${bindir}"
+  install -m 0755 "${B}/connector" "${D}/${bindir}"
 }
 
 
