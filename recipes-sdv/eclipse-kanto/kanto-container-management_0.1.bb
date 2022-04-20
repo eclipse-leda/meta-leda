@@ -1,6 +1,6 @@
 DESCRIPTION = "Eclipse Kanto - Container Management"
 LICENSE = "EPL-2.0"
-LIC_FILES_CHKSUM = "file://${WORKDIR}/${PN}-${PV}/src/${GO_IMPORT}/LICENSE;md5=c7cc8aa73fb5717f8291fcec5ce9ed6c"
+LIC_FILES_CHKSUM = "file://${WORKDIR}/git/src/${GO_IMPORT}/LICENSE;md5=c7cc8aa73fb5717f8291fcec5ce9ed6c"
 
 SRC_URI = "git://github.com/eclipse-kanto/container-management;protocol=https;branch=main"
 SRCREV = "${AUTOREV}"
@@ -8,56 +8,28 @@ PV = "0.1+git${SRCPV}"
 
 GO_IMPORT = "github.com/eclipse-kanto/container-management"
 
-INSANE_SKIP:${PN} += "ldflags textrel"
+S = "${WORKDIR}/git"
 
-inherit goarch
-inherit go
+PREFERRED_VERSION_go ?= "1.18"
 
-#S = "${WORKDIR}/git"
-#GO_WORKDIR ?= "${GO_IMPORT}"
-#do_compile[dirs] = "${S}"
-#inherit goarch
-#inherit pkgconfig
-#RDEPENDS:${PN} += "github.com-sirupsen-logrus"
+inherit go-mod
 
 do_compile() {
-  
-	export GOARCH="${TARGET_GOARCH}"
-	export GOROOT="${STAGING_LIBDIR_NATIVE}/${TARGET_SYS}/go"
-	export GOPATH="${S}/src/${GO_IMPORT}:${S}/src/${GO_IMPORT}/vendor"
-  export GOFLAGS="-mod=readonly -v"
-
-  echo "Current PWD: ${PWD}"
-  echo "Current S: ${S}"
-  echo "Current B: ${B}"
-  echo "Current WORKDIR: ${WORKDIR}"
-  echo "Current GOROOT: ${GOROOT}"
-  echo "Current GOPATH: ${GOPATH}"
-  echo "Current GO_IMPORT: ${GO_IMPORT}"
-  echo "Current GOBIN: ${GOBIN}"
-  echo "Current GOOS: ${GOOS}"
-  echo "Current GOARCH: ${GOARCH}"
-  echo "Current GOFLAGS: ${GOFLAGS}"
-
-	export CGO_ENABLED="1"
-	export CFLAGS=""
-	export LDFLAGS=""
-	export CGO_CFLAGS="${BUILDSDK_CFLAGS} --sysroot=${STAGING_DIR_TARGET}"
-	export CGO_LDFLAGS="${BUILDSDK_LDFLAGS} --sysroot=${STAGING_DIR_TARGET}"
-	export GO111MODULE=off
-
-  cd ${S}/src/${GO_IMPORT}
-
-  #cd ${S}/src
-  
-  env GOOS=$GOOS GOARCH=$GOARCH ${GO} build $GOFLAGS ./things/...
-  env GOOS=$GOOS GOARCH=$GOARCH ${GO} build $GOFLAGS ./rollouts/...
-  env GOOS=$GOOS GOARCH=$GOARCH ${GO} build $GOFLAGS ./containerm/...
-
+  cd ${B}/src/${GO_IMPORT}
+  ${GO} build ${GOBUILDFLAGS} ./things/...
+  ${GO} build ${GOBUILDFLAGS} ./rollouts/...
+  ${GO} build ${GOBUILDFLAGS} -o ${B}/edgecontainerd ./containerm/daemon
+  ${GO} build ${GOBUILDFLAGS} -o ${B}/edgectr ./containerm/cli
 }
 
 do_install() {
-  #install -d "${D}/${bindir}"
-  #install -m 0755 "${S}/src/${GO_IMPORT}/edgecontainerd" "${D}/${bindir}"
+  install -d "${D}/${bindir}"
+  install -m 0755 "${B}/edgecontainerd" "${D}/${bindir}"
+  install -m 0755 "${B}/edgectr" "${D}/${bindir}"
 }
+
+#@env GOOS=${GOOS} GOARCH=${GOARCH} go build ${GOFLAGS} -ldflags ${DEFAULT_LDFLAGS} ${GOBUILD_TAGS} -o ${INSTALL_ROOT}/${GOOS}_${GOARCH}/${DAEMON_BINARY_NAME} bosch.io/edge/containerm/daemon || exit 1
+#@env GOOS=${GOOS} GOARCH=${GOARCH} go build ${GOFLAGS} -ldflags ${DEFAULT_LDFLAGS} ${GOBUILD_TAGS} -o ${INSTALL_ROOT}/${GOOS}_${GOARCH}/${CLI_BINARY_NAME} bosch.io/edge/containerm/cli || exit 1
+
+
 
