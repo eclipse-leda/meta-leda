@@ -28,4 +28,8 @@ RDEPENDS:${PN} = "\
     sdv-core-bundle-pods \
     sdv-container-databroker \
     kernel-modules \
+    kanto-container-management \
+    kanto-file-upload \
+    kanto-software-update \
+    kanto-suite-connector
     "
