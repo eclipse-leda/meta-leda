@@ -24,4 +24,7 @@ RDEPENDS:${PN} = "\
     sdv-core-utils \
     openssh \
     jq \
+    nerdctl \
+    skopeo \
+    k9s \
     "

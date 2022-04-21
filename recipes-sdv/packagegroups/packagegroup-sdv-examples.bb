@@ -19,6 +19,8 @@ inherit packagegroup
 RDEPENDS:${PN} = "\
     sdv-container-helloworld \
     sdv-container-seatservice \
+    sdv-container-databroker \
+    sdv-container-feedercan \
     can-utils \
     can-utils-access \
     can-utils-isotp \

@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: vehicledatabroker
-          image: ghcr.io/softwaredefinedvehicle/swdc-os-vehicleapi/databroker:v0.14.0
+          image: ghcr.io/softwaredefinedvehicle/swdc-os-vehicleapi/databroker:latest
           imagePullPolicy: IfNotPresent
           ports:
             - name: default

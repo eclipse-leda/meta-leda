@@ -18,6 +18,7 @@ inherit packagegroup
 
 RDEPENDS:${PN} = "\
     packagegroup-k3s-host \
+    sdv-k3s-config \
     kernel-modules \
     ca-certificates \
     rauc \
@@ -27,9 +28,10 @@ RDEPENDS:${PN} = "\
     sdv-helm-binaries \
     sdv-core-bundle-pods \
     sdv-container-databroker \
+    sdv-container-cloudagent \
     kernel-modules \
     kanto-container-management \
     kanto-file-upload \
     kanto-software-update \
-    kanto-suite-connector
+    kanto-suite-connector \
     "

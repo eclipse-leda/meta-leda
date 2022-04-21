@@ -22,7 +22,9 @@ SRC_URI += "file://README.txt \
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=d9fc0efef5228704e7f5b37f27192723"
 
+# Rebuild every time
 do_compile[noexec] = "1"
+do_install[nostamp] = "1"
 
 do_install() {
     # Auto-Deploy Pods: https://rancher.com/docs/k3s/latest/en/advanced/#auto-deploying-manifests
