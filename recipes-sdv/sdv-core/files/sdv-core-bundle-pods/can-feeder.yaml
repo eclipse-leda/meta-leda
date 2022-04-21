@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: feedercan
-          image: ghcr.io/softwaredefinedvehicle/swdc-os-vehicleapi/feeder_can:v0.14.0
+          image: ghcr.io/softwaredefinedvehicle/swdc-os-vehicleapi/feeder_can:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: VEHICLEDATABROKER_DAPR_APP_ID
