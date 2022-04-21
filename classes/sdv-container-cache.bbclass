@@ -36,9 +36,18 @@ do_fetch_container() {
     SKOPEO_LOC=$(PATH=/usr/bin:${PATH} whereis skopeo)
     bbnote "Skopeo Location: ${SKOPEO_LOC}"
 
-    if ! PATH=/usr/bin:${PATH} skopeo login --authfile ~/auth.json ghcr.io
+    bbnote "Container Image Ref: ${SDV_IMAGE_REF}"
+    CONTAINER_REGISTRY=""
+    if printf '%s\n' "${SDV_IMAGE_REF}" | grep -Fqe "/"
     then
-        bbwarn "Not logged into ghcr.io, download of container image may fail"
+        CONTAINER_REGISTRY="$(echo "${SDV_IMAGE_REF}" | cut -f1 -d'/')"
+    else
+        CONTAINER_REGISTRY="docker.io"
+    fi
+    bbnote "Container Registry: ${CONTAINER_REGISTRY}"
+    if ! PATH=/usr/bin:${PATH} skopeo login --authfile ~/auth.json ${CONTAINER_REGISTRY} ;
+    then
+        bbwarn "Not logged into ${CONTAINER_REGISTRY}, download of container image ${SDV_IMAGE_REF} may fail!"
     fi
 
     if [ -z "$CONTAINER_ARCH" ]
@@ -59,6 +68,12 @@ do_fetch_container() {
     bbnote "Target container architecture: ${CONTAINER_ARCH}"
     bbnote "Target container operating system: ${CONTAINER_OS}"
     bbnote "Storing to: ${SDV_DL_FILE}"
+
+    if [ -f ${SDV_DL_FILE} ] && [ ! -s ${SDV_DL_FILE} ];
+    then
+        bbwarn "Downloaded file is zero size: ${SDV_DL_FILE}, deleting it."
+        rm ${SDV_DL_FILE}
+    fi
 
     if [ ! -f ${SDV_DL_FILE} ];
     then
@@ -81,11 +96,6 @@ do_fetch_container() {
     if [ ! -f ${SDV_DL_FILE} ];
     then
         bbfatal "Unable to find expected downloaded file: ${SDV_DL_FILE}"
-    fi
-
-    if [ ! -s ${SDV_DL_FILE} ];
-    then
-        bbfatal "Downloaded file is zero size: ${SDV_DL_FILE}"
     fi
 
     TAGS_IN_TAR=$(tar -xOf ${SDV_DL_FILE} manifest.json | jq -r .[0].RepoTags[])
