@@ -16,6 +16,7 @@ DESCRIPTION = "Make control plane to autodeploy SDV Core Bundle Pods"
 
 SRC_URI += "file://README.txt \
             file://sdv-core-bundle-pods/ \
+            file://sdv-core-bundle-pods/dapr/components \
             file://LICENSE"
 
 # According to https://wiki.yoctoproject.org/wiki/License_Infrastructure_Interest_Group
@@ -32,6 +33,7 @@ do_install() {
 
 FILES_${PN} += "${datadir}/${PN}/README.txt \
                 ${datadir}/${PN}/sdv-core-bundle-pods/ \
+                ${datadir}/${PN}/sdv-core-bundle-pods/dapr/components \
                 ${datadir}/${PN}/LICENSE"
 
 PACKAGES = "${PN}"
