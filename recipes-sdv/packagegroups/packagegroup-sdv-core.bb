@@ -31,5 +31,5 @@ RDEPENDS:${PN} = "\
     kanto-container-management \
     kanto-file-upload \
     kanto-software-update \
-    kanto-suite-connector
+    kanto-suite-connector \
     "
