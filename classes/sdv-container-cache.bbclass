@@ -17,19 +17,20 @@ export CONTAINER_ARCH
 CONTAINER_OS ??= "linux"
 SDV_DL_FILE ??= "${DL_DIR}/${PN}-${PV}.oci"
 
+K3S_AGENT_PRELOAD_DIR ??= "/var/lib/rancher/k3s/agent/images/"
+
 # Documentation of configuration variables
 CONTAINER_ARCH[doc] = "Specify the container machine architecture, e.g. amd64, arm64"
 CONTAINER_OS[doc] = "Specify the container operatin system, e.g. linux"
 SDV_DL_FILE[doc] = "Specify how the archive is downloaded"
 
-# DEPENDS = "skopeo"
-# RDEPENDS:${PN} = "containerd"
-
-do_compile[noexec] = "1"
+do_fetch_container[depends] += "skopeo-native:do_populate_sysroot"
+do_fetch_container[depends] += "jq-native:do_populate_sysroot"
 
 # Refetch containers every time for now during development
-# do_fetch_container[nostamp] = "1"
-# do_unpack_container[nostamp] = "1"
+do_compile[noexec] = "1"
+do_fetch_container[nostamp] = "1"
+do_unpack_container[nostamp] = "1"
 
 do_fetch_container() {   
     SKOPEO_LOC=$(PATH=/usr/bin:${PATH} whereis skopeo)
@@ -61,11 +62,39 @@ do_fetch_container() {
 
     if [ ! -f ${SDV_DL_FILE} ];
     then
-        if ! PATH=/usr/bin:${PATH} skopeo --override-arch ${CONTAINER_ARCH} --override-os ${CONTAINER_OS} copy --authfile ~/auth.json ${SDV_IMAGE_REF} docker-archive:${SDV_DL_FILE};
+        if ! PATH=/usr/bin:${PATH} \
+            skopeo \
+            --override-arch ${CONTAINER_ARCH} \
+            --override-os ${CONTAINER_OS} \
+            copy \
+            --authfile ~/auth.json \
+            --additional-tag ${SDV_IMAGE_REF}:${SDV_IMAGE_TAG} \
+            docker://${SDV_IMAGE_REF}:${SDV_IMAGE_TAG} \
+            docker-archive:${SDV_DL_FILE}:${SDV_IMAGE_REF} ;
         then
-            bbfatal "Error copying container image. Proxy is ${http_proxy}"
+            RC_SKOPEO=$?
+            bbfatal "Error copying container image. ${RC_SKOPEO}"
         fi
     fi
+
+    # Sanity check of downloaded file
+    if [ ! -f ${SDV_DL_FILE} ];
+    then
+        bbfatal "Unable to find expected downloaded file: ${SDV_DL_FILE}"
+    fi
+
+    if [ ! -s ${SDV_DL_FILE} ];
+    then
+        bbfatal "Downloaded file is zero size: ${SDV_DL_FILE}"
+    fi
+
+    TAGS_IN_TAR=$(tar -xOf ${SDV_DL_FILE} manifest.json | jq -r .[0].RepoTags[])
+    if ! echo "${TAGS_IN_TAR}" | grep -q "${SDV_IMAGE_REF}:${SDV_IMAGE_TAG}" ;
+    then
+        bbfatal "Container image is missing expected tag: ${SDV_IMAGE_REF}:${SDV_IMAGE_TAG}"
+        bbfatal "Container image contains the following tags: ${TAGS_IN_TAR}"
+    fi
+
 }
 
 do_unpack_container() {
@@ -76,9 +105,15 @@ do_unpack_container() {
 
 # Todo: Move the layer blobs into the containerd storage
 do_install() {
-    install -d ${D}/var/lib/sdv
-    cp -R --no-dereference --preserve=mode,links -v ${S}/container-image ${D}/var/lib/sdv/${PN}
+    install -d ${D}${K3S_AGENT_PRELOAD_DIR}
+    cp -R --no-dereference --preserve=mode,links -v ${S}/container-image ${D}${K3S_AGENT_PRELOAD_DIR}/${PN}.tar
 }
 
 addtask do_fetch_container before do_unpack_container after do_fetch 
 addtask do_unpack_container before do_install after do_fetch_container 
+
+FILES_${PN} += "${datadir}/${PN}/README.txt \
+                ${datadir}/${PN}/container-image \
+                ${datadir}/${PN}/LICENSE"
+
+PACKAGES = "${PN}"

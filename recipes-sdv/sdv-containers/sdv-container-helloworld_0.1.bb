@@ -14,7 +14,7 @@
 SUMMARY = "Embed SDV container archives into the system"
 DESCRIPTION = "Pull the container images, save them in the rootfs."
 
-inherit sdv
+inherit sdv-container-cache
 
 SRC_URI += "file://README.txt \
             file://LICENSE"
@@ -24,13 +24,8 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=d9fc0efef5228704e7f5b37f27192723"
 
 # Define image to be pulled
-SDV_IMAGE_REF="docker://hello-world:latest"
+SDV_IMAGE_REF="hello-world"
+SDV_IMAGE_TAG="latest"
 
 # Override container architecture. If not set, recipe tries autodetection for target machine architecture.
 #CONTAINER_ARCH="arm64"
-
-FILES_${PN} += "${datadir}/${PN}/README.txt \
-                ${datadir}/${PN}/hello-world.oci \
-                ${datadir}/${PN}/LICENSE"
-
-PACKAGES = "${PN}"

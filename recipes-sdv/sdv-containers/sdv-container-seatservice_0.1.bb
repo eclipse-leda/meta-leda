@@ -14,7 +14,7 @@
 SUMMARY = "SDV Example Seat Service"
 DESCRIPTION = "Example seat service"
 
-inherit sdv
+inherit sdv-container-cache
 
 SRC_URI += "file://README.txt \
             file://LICENSE"
@@ -24,15 +24,10 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=d9fc0efef5228704e7f5b37f27192723"
 
 # Define image to be pulled
-SDV_IMAGE_REF="docker://ghcr.io/softwaredefinedvehicle/swdc-os-vehicleapi/seat_service:v0.6.0"
+SDV_IMAGE_REF="ghcr.io/softwaredefinedvehicle/swdc-os-vehicleapi/seat_service"
+SDV_IMAGE_TAG="v0.15.0"
 
 # Override container architecture. If not set, recipe tries autodetection for target machine architecture.
 #CONTAINER_ARCH="arm64"
-
-FILES_${PN} += "${datadir}/${PN}/README.txt \
-                ${datadir}/${PN}/container-image \
-                ${datadir}/${PN}/LICENSE"
-
-PACKAGES = "${PN}"
 
 
