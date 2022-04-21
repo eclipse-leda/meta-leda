@@ -16,10 +16,12 @@ DESCRIPTION = "Packages SDV examples (Seat Service)"
 
 inherit packagegroup
 
+# Temporarily disabled packages:
+# - sdv-container-seatapp
+
 RDEPENDS:${PN} = "\
     sdv-container-helloworld \
     sdv-container-seatservice \
-    sdv-container-seatapp \
     sdv-container-databroker \
     sdv-container-feedercan \
     can-utils \
