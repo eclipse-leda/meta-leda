@@ -36,6 +36,9 @@ do_fetch_container() {
     SKOPEO_LOC=$(PATH=/usr/bin:${PATH} whereis skopeo)
     bbnote "Skopeo Location: ${SKOPEO_LOC}"
 
+    JQ_LOC=$(PATH=/usr/bin:${PATH} whereis jq)
+    bbnote "jq location: ${JQ_LOC}"
+
     bbnote "Container Image Ref: ${SDV_IMAGE_REF}"
     CONTAINER_REGISTRY=""
     if printf '%s\n' "${SDV_IMAGE_REF}" | grep -Fqe "/"
@@ -69,9 +72,9 @@ do_fetch_container() {
     bbnote "Target container operating system: ${CONTAINER_OS}"
     bbnote "Storing to: ${SDV_DL_FILE}"
 
-    if [ -f ${SDV_DL_FILE} ] && [ ! -s ${SDV_DL_FILE} ];
+    # Redownload containers every time
+    if [ -f ${SDV_DL_FILE} ];
     then
-        bbwarn "Downloaded file is zero size: ${SDV_DL_FILE}, deleting it."
         rm ${SDV_DL_FILE}
     fi
 
