@@ -15,6 +15,6 @@
 echo "Enlarging SD Card partition"
 
 parted /dev/mmcblk0 resizepart 4 100%
-resize2fs /dev/mmcblk0p2
+resize2fs /dev/mmcblk0p4
 
 echo "raspberry-growdisk.service was disabled"
