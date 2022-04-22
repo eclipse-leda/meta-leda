@@ -1,0 +1,17 @@
+### Shell environment set up for builds. ###
+Welcome to Eclipse Kastro Build Environment.
+
+You can now run 'bitbake <target>'
+Common targets are:
+    core-image-minimal
+
+You can also run generated qemu images with a command like 'runqemu qemux86-64'.
+
+    runqemu core-image-minimal wic nographic ovmf slirp qemuparams="-m 2048"
+
+    # With CAN-Bus support:
+    runqemu core-image-minimal wic nographic ovmf slirp qemuparams="-m 2048 -object can-bus,id=canbus0 -device kvaser_pci,canbus=canbus0"
+
+After the image has started, provision the device:
+
+    ../scripts/provision-device.sh
