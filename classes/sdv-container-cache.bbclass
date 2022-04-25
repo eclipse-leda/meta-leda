@@ -73,10 +73,10 @@ do_fetch_container() {
     bbnote "Storing to: ${SDV_DL_FILE}"
 
     # Redownload containers every time
-    if [ -f ${SDV_DL_FILE} ];
-    then
-        rm ${SDV_DL_FILE}
-    fi
+    #if [ -f ${SDV_DL_FILE} ];
+    #then
+    #    rm ${SDV_DL_FILE}
+    #fi
 
     if [ ! -f ${SDV_DL_FILE} ];
     then
@@ -91,21 +91,21 @@ do_fetch_container() {
             docker-archive:${SDV_DL_FILE}:${SDV_IMAGE_REF} ;
         then
             RC_SKOPEO=$?
-            bbfatal "Error copying container image. ${RC_SKOPEO}"
+            bbwarn "Error copying container image. ${RC_SKOPEO}"
         fi
     fi
 
     # Sanity check of downloaded file
     if [ ! -f ${SDV_DL_FILE} ];
     then
-        bbfatal "Unable to find expected downloaded file: ${SDV_DL_FILE}"
+        bbwarn "Unable to find expected downloaded file: ${SDV_DL_FILE}"
     fi
 
     TAGS_IN_TAR=$(tar -xOf ${SDV_DL_FILE} manifest.json | jq -r .[0].RepoTags[])
     if ! echo "${TAGS_IN_TAR}" | grep -q "${SDV_IMAGE_REF}:${SDV_IMAGE_TAG}" ;
     then
-        bbfatal "Container image is missing expected tag: ${SDV_IMAGE_REF}:${SDV_IMAGE_TAG}"
-        bbfatal "Container image contains the following tags: ${TAGS_IN_TAR}"
+        bbwarn "Container image is missing expected tag: ${SDV_IMAGE_REF}:${SDV_IMAGE_TAG}"
+        bbwarn "Container image contains the following tags: ${TAGS_IN_TAR}"
     fi
 
 }
