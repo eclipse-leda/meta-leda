@@ -11,6 +11,8 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
+FILESEXTRAPATHS:prepend := "${THISDIR}/${BPN}:"
+
 # Ensure file gets updated on each build
 do_install[nostamp] = "1"
 do_install_basefilesissue[nostamp] = "1"
