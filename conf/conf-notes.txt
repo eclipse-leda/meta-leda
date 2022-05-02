@@ -3,7 +3,8 @@ Welcome to Eclipse Kastro Build Environment.
 
 You can now run 
 
-    bitbake core-image-minimal
+    Root disk images:       bitbake core-image-minimal
+    RAUC Update bundle:     bitbake sdv-rauc-bundle
 
 After the build finished, you can run generated qemu image:
 

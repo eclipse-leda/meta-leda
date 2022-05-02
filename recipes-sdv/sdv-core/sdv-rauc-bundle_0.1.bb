@@ -13,8 +13,11 @@
 
 inherit bundle
 
-RAUC_BUNDLE_SLOTS = "rootfs"
-RAUC_SLOT_rootfs = "my-rootfs-recipe"
+RAUC_BUNDLE_COMPATIBLE = "Eclipse Kastro qemu86-64"
 
-RAUC_KEY_FILE = "path/to/development-1.key.pem"
-RAUC_CERT_FILE = "path/to/development-1.cert.pem"
+RAUC_BUNDLE_SLOTS = "rootfs"
+RAUC_SLOT_rootfs = "core-image-minimal"
+
+# These are set in site.conf
+# RAUC_KEY_FILE = "${THISDIR}/path/to/development-1.key.pem"
+# RAUC_CERT_FILE = "${THISDIR}/path/to/development-1.cert.pem"
