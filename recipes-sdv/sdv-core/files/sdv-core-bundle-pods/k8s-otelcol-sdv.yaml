@@ -1,0 +1,266 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: otelcol-sdv
+  labels:
+    app.kubernetes.io/name: opentelemetry-collector
+    app.kubernetes.io/instance: sdv
+    app.kubernetes.io/version: "0.49.0"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: otelcol-sdv
+  labels:
+    app.kubernetes.io/name: opentelemetry-collector
+    app.kubernetes.io/instance: sdv
+    app.kubernetes.io/version: "0.49.0"
+data:
+  relay: |
+    exporters:
+      logging: {}
+      file/metrics:
+        path: /otel-data/otel-metrics.json
+      file/containerlogs:
+        path: /otel-data/otel-container-logs.json  
+      file/servicelogs:
+        path: /otel-data/otel-service-logs.json        
+    processors:
+      batch: {}
+    receivers:
+      filelog:
+        exclude: []
+        include:
+        - /var/log/pods/*/*/*.log
+        include_file_name: false
+        include_file_path: true
+        operators:
+        - type: regex_parser
+          id: parser-containerd
+          parse_to: body
+          output: extract_metadata_from_filepath
+          regex: '^(?P<time>[^\+^-^ ^Z]*(Z|[\+-]\d{2}:\d{2})?) (?P<stream>stdout|stderr) (?P<logtag>[^ ]*) (?P<log>.*)$'
+          timestamp:
+            layout_type: gotime
+            layout: '2006-01-02T15:04:05.999-07:00'
+            parse_from: body.time
+        - type: regex_parser
+          id: extract_metadata_from_filepath
+          parse_from: attributes["log.file.path"]
+          parse_to: body
+          regex: '^.*\/(?P<namespace>[^_]+)_(?P<pod_name>[^_]+)_(?P<uid>[a-f0-9\-]+)\/(?P<container_name>[^\._]+)\/(?P<run_id>\d+)\.log$'
+        - type: move
+          from: body.container_name
+          to: resource["k8s.container.name"]
+        - type: move
+          from: body.namespace
+          to: resource["k8s.namespace.name"]    
+        - type: move
+          from: body.pod_name
+          to: resource["k8s.pod.name"]
+        - type: move
+          from: body.uid
+          to: resource["k8s.pod.uid"]
+        - type: regex_parser
+          id: parser-cloud-connector
+          if: 'resource["k8s.container.name"] == "cloudagent" && body.log startsWith "2"'
+          parse_to: body
+          parse_from: body.log
+          regex: '^(?P<time>\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}:\d{2}\.\d{6})  \[(?P<component>.*)\]  (?P<severity>.{5})  (?P<log>.*)$'
+          timestamp:
+            parse_from: body.time
+            layout: '%Y/%m/%d %H:%M:%S.%f'
+          severity:
+            parse_from: body.severity
+            mapping:
+              error: 'ERROR'
+              warn: 'WARN '
+              info: 'INFO '
+              debug: 'DEBUG'
+              trace: 'TRACE'
+        - type: move
+          from: attributes["log.file.path"]
+          to: body["log.file.path"]
+        - type: move
+          id: clean-up-log-body
+          from: body.log
+          to: body
+        start_at: beginning
+      hostmetrics:
+        scrapers:
+          cpu:
+            metrics:
+              system.cpu.time:
+                enabled: false
+              system.cpu.utilization:
+                enabled: true
+          memory:
+            metrics:
+              system.memory.usage:
+                enabled: true
+              system.memory.utilization:
+                enabled: true   
+      journald:
+        units:
+          - ssh
+          - k3s
+          - containerd
+        priority: debug
+        directory: /var/log/journal
+        operators:
+          - type: severity_parser
+            parse_from: body.PRIORITY
+            mapping:
+              fatal: 0
+              error3: 1
+              error2: 2
+              error: 3
+              warn: 4
+              info2: 5
+              info: 6
+              debug: 7
+          - type: move
+            to: resource["service.name"]
+            from: body["_SYSTEMD_UNIT"]
+          - type: move
+            to: resource["host.name"]
+            from: body["_HOSTNAME"]
+          - type: move
+            to: resource.source
+            from: body["_TRANSPORT"]
+          - type: move
+            from: body.MESSAGE
+            to: body                    
+      otlp:
+        protocols:
+          grpc:
+            endpoint: 0.0.0.0:4317
+    service:
+      telemetry:
+        logs:
+          level: "debug"
+      pipelines:
+        logs/containers:
+          exporters:
+          - file/containerlogs
+          processors:
+          - batch
+          receivers:
+          - filelog
+        logs/services:
+          exporters:
+          - file/servicelogs
+          processors:
+          - batch
+          receivers:
+          - journald
+        metrics:
+          exporters:
+          - file/metrics
+          processors:
+          - batch
+          receivers:
+          - hostmetrics
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: otelcol-sdv
+  labels:
+    app.kubernetes.io/name: opentelemetry-collector
+    app.kubernetes.io/instance: sdv
+    app.kubernetes.io/version: "0.49.0"
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: opentelemetry-collector
+      app.kubernetes.io/instance: sdv
+      component: agent-collector
+  template:
+    metadata:
+      annotations:
+        
+      labels:
+        app.kubernetes.io/name: opentelemetry-collector
+        app.kubernetes.io/instance: sdv
+        component: agent-collector
+        
+    spec:
+      
+      serviceAccountName: otelcol-sdv
+      securityContext:
+        {}
+      containers:
+        - name: opentelemetry-collector
+          command:
+            - /otelcol-sdv
+            - --config=/conf/relay.yaml
+          securityContext:
+            {}
+          image: "ghcr.io/softwaredefinedvehicle/sdv-edge-otel/otelcol-sdv-ext:latest"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: otlp
+              containerPort: 4317
+              protocol: TCP
+              hostPort: 4317
+          env:
+            - name: MY_POD_IP
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: status.podIP
+            - name: HOST_PROC
+              value: /hostfs/proc
+            - name: HOST_SYS
+              value: /hostfs/sys
+            - name: HOST_ETC
+              value: /hostfs/etc
+            - name: HOST_VAR
+              value: /hostfs/var
+            - name: HOST_RUN
+              value: /hostfs/run
+            - name: HOST_DEV
+              value: /hostfs/dev
+          volumeMounts:
+            - mountPath: /conf
+              name: opentelemetry-collector-configmap
+            - name: hostfs
+              mountPath: /hostfs
+              readOnly: true
+              mountPropagation: HostToContainer
+            - name: otel-data
+              mountPath: /otel-data
+            - name: varlogpods
+              mountPath: /var/log/pods
+              readOnly: true
+            - name: varlibdockercontainers
+              mountPath: /var/lib/docker/containers
+              readOnly: true
+            - name: varlogjournal
+              mountPath: /var/log/journal
+              readOnly: true
+      volumes:
+        - name: opentelemetry-collector-configmap
+          configMap:
+            name: otelcol-sdv
+            items:
+              - key: relay
+                path: relay.yaml
+        - name: hostfs
+          hostPath:
+            path: /
+        - name: otel-data
+          hostPath:
+            path: /tmp
+        - name: varlogpods
+          hostPath:
+            path: /var/log/pods
+        - name: varlibdockercontainers
+          hostPath:
+            path: /var/lib/docker/containers
+        - name: varlogjournal
+          hostPath:
+            path: /var/log/journal
+      hostNetwork: false          
