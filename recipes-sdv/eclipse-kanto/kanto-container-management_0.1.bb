@@ -14,6 +14,12 @@ PREFERRED_VERSION_go ?= "1.18"
 
 inherit go-mod
 
+GO_EXTRA_LDFLAGS:append = " -X github.com/eclipse-kanto/container-management/containerm/version.GitCommit=${AUTOREV}"
+GO_EXTRA_LDFLAGS:append = " -X github.com/eclipse-kanto/container-management/containerm/version.ProjectVersion=${PV}"
+GO_EXTRA_LDFLAGS:append = " -X github.com/eclipse-kanto/container-management/containerm/version.APIVersion=${PV}"
+GO_EXTRA_LDFLAGS:append = " -X github.com/eclipse-kanto/container-management/containerm/version.BuildTime=${BUILDNAME}"
+
+
 do_compile() {
   cd ${B}/src/${GO_IMPORT}
   ${GO} build ${GOBUILDFLAGS} ./things/...
