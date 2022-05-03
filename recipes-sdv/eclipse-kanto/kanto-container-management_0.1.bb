@@ -17,7 +17,7 @@ inherit go-mod
 GO_EXTRA_LDFLAGS:append = " -X github.com/eclipse-kanto/container-management/containerm/version.GitCommit=${AUTOREV}"
 GO_EXTRA_LDFLAGS:append = " -X github.com/eclipse-kanto/container-management/containerm/version.ProjectVersion=${PV}"
 GO_EXTRA_LDFLAGS:append = " -X github.com/eclipse-kanto/container-management/containerm/version.APIVersion=${PV}"
-GO_EXTRA_LDFLAGS:append = " -X github.com/eclipse-kanto/container-management/containerm/version.BuildTime=${BUILDNAME}"
+# GO_EXTRA_LDFLAGS:append = " -X github.com/eclipse-kanto/container-management/containerm/version.BuildTime=${BUILDNAME}"
 
 
 do_compile() {
