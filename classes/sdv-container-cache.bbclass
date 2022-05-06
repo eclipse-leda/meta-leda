@@ -73,10 +73,13 @@ do_fetch_container() {
     bbnote "Storing to: ${SDV_DL_FILE}"
 
     # Bugfix: Redownload if container has zero size (skopeo creates empty files on error)
-    if [ ! -s ${SDV_DL_FILE} ];
+    if [ -f ${SDV_DL_FILE} ];
     then
-        bbwarn "Deleting zero-size container image file: ${SDV_DL_FILE}"
-        rm ${SDV_DL_FILE}
+        if [ ! -s ${SDV_DL_FILE} ];
+        then
+            bbwarn "Deleting zero-size container image file: ${SDV_DL_FILE}"
+            rm ${SDV_DL_FILE}
+        fi
     fi
 
     if [ ! -f ${SDV_DL_FILE} ];
