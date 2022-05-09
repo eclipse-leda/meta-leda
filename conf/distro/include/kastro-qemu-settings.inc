@@ -8,6 +8,6 @@ QB_OPT_APPEND:append = " -serial mon:stdio -serial null -nographic"
 QB_OPT_APPEND:append = " -object can-bus,id=canbus0 "
 QB_OPT_APPEND:append = " -device kvaser_pci,canbus=canbus0"
 
-QB_DEFAULT_FSTYPE = "wic"
+QB_DEFAULT_FSTYPE = "wic.qcow2"
 
 # wic nogaphic ovmf

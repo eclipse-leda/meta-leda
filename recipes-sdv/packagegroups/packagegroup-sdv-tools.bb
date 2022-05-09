@@ -27,4 +27,5 @@ RDEPENDS:${PN} = "\
     nerdctl \
     skopeo \
     k9s \
+    htop \
     "
