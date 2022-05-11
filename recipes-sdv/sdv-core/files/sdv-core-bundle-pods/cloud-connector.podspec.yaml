@@ -24,6 +24,8 @@ spec:
           value: "/app/message-mapper-config.json"
         - name: ALLOWED_CLOUD_MESSAGE_TYPES_LIST
           value: "vss.setPosition,updateme,subscribeOnceCommand,vss.set"
+        - name: ALLOWED_LOCAL_TOPICS_LIST
+          value: "cloudConnector/#"          
       imagePullPolicy: IfNotPresent
   imagePullSecrets:
   - name: ghcr-io

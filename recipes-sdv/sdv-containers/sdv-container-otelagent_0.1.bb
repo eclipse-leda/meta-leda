@@ -11,7 +11,7 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-SUMMARY = "SDV OpenTelemetry Collector"
+SUMMARY = "SDV OpenTelemetry Collector Agent"
 DESCRIPTION = "Collecting system and applications log as well as system metrics"
 
 inherit sdv-container-cache
