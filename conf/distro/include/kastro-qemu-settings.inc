@@ -10,4 +10,7 @@ QB_OPT_APPEND:append = " -device kvaser_pci,canbus=canbus0"
 
 QB_DEFAULT_FSTYPE = "wic.qcow2"
 
+# Fall back to ext4 for now, as wic for qemuarm does not yet contain u-boot
+QB_DEFAULT_FSTYPE:qemuarm = "ext4"
+
 # wic nogaphic ovmf
