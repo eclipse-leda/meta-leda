@@ -152,7 +152,7 @@ data:
           - k3s
           - containerd
         priority: debug
-        directory: /run/log/journal
+        directory: /var/log/journal
         operators:
           - type: severity_parser
             parse_from: body.PRIORITY
@@ -276,7 +276,8 @@ spec:
             path: /var/lib/docker/containers
         - name: varlogjournal
           hostPath:
-            path: /var/log/journal
+            path: /run/log/journal
       hostNetwork: false
       imagePullSecrets:
         - name: ghcr-io
+
