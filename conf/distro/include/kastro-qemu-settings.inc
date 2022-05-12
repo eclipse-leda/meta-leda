@@ -12,5 +12,6 @@ QB_DEFAULT_FSTYPE = "wic.qcow2"
 
 # Fall back to ext4 for now, as wic for qemuarm does not yet contain u-boot
 QB_DEFAULT_FSTYPE:qemuarm = "ext4"
+QB_FSINFO:qemuarm = "wic:no-kernel-in-fs"
 
 # wic nogaphic ovmf
