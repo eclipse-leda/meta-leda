@@ -11,6 +11,12 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-require sdv-canbus-modules.inc
-require sdv-misc-kernel-config.inc
-require sdv-qemu-virtio.inc
+SUMMARY = "SDV QEMU Virtual Device Support"
+DESCRIPTION = "Enables support for QEMU emulated devices"
+
+FILESEXTRAPATHS:prepend := "${THISDIR}/linux-yocto:"
+SRC_URI:append = " file://qemu-virtio.cfg"
+
+# According to https://wiki.yoctoproject.org/wiki/License_Infrastructure_Interest_Group
+LICENSE = "Apache-2.0"
+#LIC_FILES_CHKSUM = "file://LICENSE;md5=d9fc0efef5228704e7f5b37f27192723"
