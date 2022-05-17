@@ -9,5 +9,3 @@ QB_OPT_APPEND:append = " -object can-bus,id=canbus0 "
 QB_OPT_APPEND:append = " -device kvaser_pci,canbus=canbus0"
 
 QB_DEFAULT_FSTYPE = "wic"
-
-# wic nogaphic ovmf
