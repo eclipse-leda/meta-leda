@@ -11,21 +11,11 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-SUMMARY = "SDV core packages"
-DESCRIPTION = "Packages required to set up a basic working SDV system"
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
+SRC_URI:append := "file://01-k3s.service"
 
-inherit packagegroup
-
-RDEPENDS:${PN} = "\
-    mosquitto-clients \
-    nano \
-    sudo \
-    openssh-sftp-server \
-    sdv-core-utils \
-    openssh \
-    jq \
-    nerdctl \
-    skopeo \
-    k9s \
-    htop \
-    "
+do_install:append() {
+        if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)}; then
+                install -D -m 0644 "${WORKDIR}/01-k3s.service" "${D}${systemd_system_unitdir}/k3s.service"
+        fi
+}

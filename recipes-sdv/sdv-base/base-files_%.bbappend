@@ -17,6 +17,15 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/${BPN}:"
 do_install[nostamp] = "1"
 do_install_basefilesissue[nostamp] = "1"
 
+# Create some additionally needed directories in root filesystem:
+# - /data for RAUC Statusfile
+# - /grubenv to hold GRUB Bootloader status information
+# - /k3s is mount point for separate partition for Rancher K3S data-dir
+dirs755 += "/data"
+dirs755 += "/grubenv"
+dirs755 += "/k3s"
+dirs755 += "/rescue"
+
 # Overwrite /etc/issue with a custom version of it
 do_install_basefilesissue:append() {
     LAYER_REV=$(git describe --tags)

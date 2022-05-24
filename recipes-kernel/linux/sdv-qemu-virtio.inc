@@ -11,21 +11,12 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-SUMMARY = "SDV core packages"
-DESCRIPTION = "Packages required to set up a basic working SDV system"
+SUMMARY = "SDV QEMU Virtual Device Support"
+DESCRIPTION = "Enables support for QEMU emulated devices"
 
-inherit packagegroup
+FILESEXTRAPATHS:prepend := "${THISDIR}/linux-yocto:"
+SRC_URI:append = " file://qemu-virtio.cfg"
 
-RDEPENDS:${PN} = "\
-    mosquitto-clients \
-    nano \
-    sudo \
-    openssh-sftp-server \
-    sdv-core-utils \
-    openssh \
-    jq \
-    nerdctl \
-    skopeo \
-    k9s \
-    htop \
-    "
+# According to https://wiki.yoctoproject.org/wiki/License_Infrastructure_Interest_Group
+LICENSE = "Apache-2.0"
+#LIC_FILES_CHKSUM = "file://LICENSE;md5=d9fc0efef5228704e7f5b37f27192723"

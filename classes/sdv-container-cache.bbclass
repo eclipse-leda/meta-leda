@@ -17,7 +17,7 @@ export CONTAINER_ARCH
 CONTAINER_OS ??= "linux"
 SDV_DL_FILE ??= "${DL_DIR}/${PN}-${PV}.oci"
 
-K3S_AGENT_PRELOAD_DIR ??= "/var/lib/rancher/k3s/agent/images/"
+K3S_AGENT_PRELOAD_DIR ??= "/var/lib/rancher/k3s/agent/images"
 
 # Documentation of configuration variables
 CONTAINER_ARCH[doc] = "Specify the container machine architecture, e.g. amd64, arm64"
@@ -138,8 +138,6 @@ do_install() {
 addtask do_fetch_container before do_unpack_container after do_fetch 
 addtask do_unpack_container before do_install after do_fetch_container 
 
-FILES_${PN} += "${datadir}/${PN}/README.txt \
-                ${datadir}/${PN}/container-image \
-                ${datadir}/${PN}/LICENSE"
+FILES:${PN} += "${K3S_AGENT_PRELOAD_DIR}/${PN}.tar"
 
 PACKAGES = "${PN}"

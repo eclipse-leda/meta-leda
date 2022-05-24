@@ -16,7 +16,13 @@ inherit bundle
 RAUC_BUNDLE_COMPATIBLE = "Eclipse Kastro qemu86-64"
 
 RAUC_BUNDLE_SLOTS = "rootfs"
+
+# The name of the image to use, this could later be "sdv-core-image-minimal"
 RAUC_SLOT_rootfs = "core-image-minimal"
+
+# Override the rootfs fstype for rauc, otherwise rauc will bundle "wic.qcow2" file,
+# which cannot be used from within the guest. RAUC would fail on installing a "wic.qcow2" file.
+RAUC_SLOT_rootfs[fstype] = "ext4"
 
 # These are set in site.conf
 # RAUC_KEY_FILE = "${THISDIR}/path/to/development-1.key.pem"
