@@ -5,20 +5,23 @@
 # * information regarding copyright ownership.
 # *
 # * This program and the accompanying materials are made available under the
-# * terms of the Apache License 2.0 which is available at
-# * https://www.apache.org/licenses/LICENSE-2.0
+# * terms of the Eclipse Public License 2.0 which is available at
+# * http://www.eclipse.org/legal/epl-2.0
 # *
-# * SPDX-License-Identifier: Apache-2.0
+# * SPDX-License-Identifier: EPL-2.0
 # ********************************************************************************/
+#
 
-SUMMARY = "SDV core-native packages"
-DESCRIPTION = "Packages required to set up a basic working SDV system without Kubernetes"
+[Unit]
+Description=SDV cloud connector
+After=network.service
 
-inherit packagegroup
+[Install]
+WantedBy=multi-user.target
 
-RDEPENDS:${PN} = "\
-    kernel-modules \
-    ca-certificates \
-    rauc \
-    sdv-cloud-connector \
-    "
+[Service]
+Restart=on-failure
+RestartSec=30s
+ExecStart=/usr/bin/cloudagent -connectionString XXX
+
+

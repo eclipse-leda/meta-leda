@@ -11,6 +11,7 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
+# Moved to sdv-image-xxx.bb
 #IMAGE_INSTALL:append += " packagegroup-sdv-core"
 #IMAGE_INSTALL:append += " packagegroup-sdv-tools"
 #IMAGE_INSTALL:append += " packagegroup-sdv-examples"
