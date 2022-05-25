@@ -19,19 +19,13 @@ inherit packagegroup
 RDEPENDS:${PN} = "\
     packagegroup-k3s-host \
     sdv-k3s-config \
+    kernel-image \
     kernel-modules \
     ca-certificates \
     rauc \
-    rauc-hawkbit-updater \
-    sdv-dapr-binaries \
-    sdv-initialize-dapr-first-boot \
-    sdv-helm-binaries \
     sdv-core-bundle-pods \
-    sdv-container-databroker \
     sdv-container-cloudagent \
-    kernel-modules \
-    kanto-container-management \
-    kanto-file-upload \
-    kanto-software-update \
-    kanto-suite-connector \
+    sdv-core-utils \
+    openssh-sftp-server \
+    openssh \
     "

@@ -12,7 +12,8 @@
 # ********************************************************************************/
 
 # Enable needed distro features
-DISTRO_FEATURES:append = " virtualization k8s"
+DISTRO_FEATURES:append = " virtualization"
+DISTRO_FEATURES:append = " k8s"
 DISTRO_FEATURES:append = " seccomp"
 DISTRO_FEATURES:append = " rauc"
 DISTRO_FEATURES:append = " security"
@@ -23,7 +24,10 @@ VIRTUAL-RUNTIME_init_manager = "systemd"
 DISTRO_FEATURES_BACKFILL_CONSIDERED = "sysvinit"
 
 # Disable unneeded distro features inherited from poky.
+DISTRO_FEATURES:remove = "alsa"
 DISTRO_FEATURES:remove = "bluetooth"
+DISTRO_FEATURES:remove = "cramfs"
+DISTRO_FEATURES:remove = "directfb"
 DISTRO_FEATURES:remove = "3g"
 DISTRO_FEATURES:remove = "opengl"
 DISTRO_FEATURES:remove = "wayland"
@@ -33,3 +37,5 @@ DISTRO_FEATURES:remove = "nfs"
 DISTRO_FEATURES:remove = "ext2"
 DISTRO_FEATURES:remove = "pcmcia"
 DISTRO_FEATURES:remove = "pulseaudio"
+DISTRO_FEATURES:remove = "ppp"
+DISTRO_FEATURES:remove = "smbfs"
