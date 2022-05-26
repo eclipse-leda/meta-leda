@@ -13,7 +13,7 @@
 
 inherit bundle
 
-RAUC_BUNDLE_COMPATIBLE = "Eclipse Kastro qemu86-64"
+RAUC_BUNDLE_COMPATIBLE = "Eclipse Leda qemu86-64"
 
 RAUC_BUNDLE_SLOTS = "rootfs"
 

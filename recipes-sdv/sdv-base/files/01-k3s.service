@@ -1,4 +1,4 @@
-# Eclipse Kastro - Derived from the k3s install.sh's create_systemd_service_file() function
+# Eclipse Leda - Derived from the k3s install.sh's create_systemd_service_file() function
 [Unit]
 Description=Lightweight Kubernetes
 Documentation=https://k3s.io

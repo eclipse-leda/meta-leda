@@ -1,4 +1,4 @@
-Welcome to Eclipse Kastro Build Environment.
+Welcome to Eclipse Leda Build Environment.
 You can now run 
 
     1) Build:           bitbake core-image-minimal sdv-rauc-bundle
