@@ -17,15 +17,15 @@ DESCRIPTION = "Packages required to set up a basic working SDV system"
 inherit packagegroup
 
 RDEPENDS:${PN} = "\
+    ca-certificates \
     packagegroup-k3s-host \
-    sdv-k3s-config \
     kernel-image \
     kernel-modules \
-    ca-certificates \
+    openssh \
+    openssh-sftp-server \
     rauc \
+    sdv-k3s-config \
     sdv-core-bundle-pods \
     sdv-container-cloudagent \
     sdv-core-utils \
-    openssh-sftp-server \
-    openssh \
     "

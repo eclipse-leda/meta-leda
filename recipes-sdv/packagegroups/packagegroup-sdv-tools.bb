@@ -17,15 +17,13 @@ DESCRIPTION = "Packages required to set up a basic working SDV system"
 inherit packagegroup
 
 RDEPENDS:${PN} = "\
+    htop \
+    jq \
+    k9s \
     mosquitto-clients \
     nano \
-    sudo \
-    openssh-sftp-server \
-    sdv-core-utils \
-    openssh \
-    jq \
     nerdctl \
+    sdv-core-utils \
     skopeo \
-    k9s \
-    htop \
+    sudo \
     "

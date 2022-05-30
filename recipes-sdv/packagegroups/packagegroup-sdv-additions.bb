@@ -17,13 +17,13 @@ DESCRIPTION = "Packages required to set up a basic working demo SDV system, but 
 inherit packagegroup
 
 RDEPENDS:${PN} = "\
+    kanto-container-management \
+    kanto-file-upload \
+    kanto-software-update \
+    kanto-suite-connector \
     rauc-hawkbit-updater \
     sdv-dapr-binaries \
     sdv-initialize-dapr-first-boot \
     sdv-helm-binaries \
     sdv-container-databroker \
-    kanto-container-management \
-    kanto-file-upload \
-    kanto-software-update \
-    kanto-suite-connector \
     "

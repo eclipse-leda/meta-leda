@@ -17,9 +17,9 @@ DESCRIPTION = "Packages required to set up a basic working SDV system without Ku
 inherit packagegroup
 
 RDEPENDS:${PN} = "\
+    ca-certificates \
     kernel-modules \
     kernel-image \
-    ca-certificates \
     rauc \
     sdv-cloud-connector \
     "

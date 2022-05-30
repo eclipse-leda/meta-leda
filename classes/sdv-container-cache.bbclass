@@ -15,6 +15,7 @@
 export CONTAINER_ARCH
 
 CONTAINER_OS ??= "linux"
+CONTAINER_REGISTRY_REQUIRES_AUTH ??= "1"
 SDV_DL_FILE ??= "${DL_DIR}/${PN}-${PV}.oci"
 
 K3S_AGENT_PRELOAD_DIR ??= "/var/lib/rancher/k3s/agent/images"
@@ -22,6 +23,7 @@ K3S_AGENT_PRELOAD_DIR ??= "/var/lib/rancher/k3s/agent/images"
 # Documentation of configuration variables
 CONTAINER_ARCH[doc] = "Specify the container machine architecture, e.g. amd64, arm64"
 CONTAINER_OS[doc] = "Specify the container operatin system, e.g. linux"
+CONTAINER_REGISTRY_REQUIRES_AUTH[doc] = "Specify if the container registry requires authentication: 1=true (default) and 0=false"
 SDV_DL_FILE[doc] = "Specify how the archive is downloaded"
 
 do_fetch_container[depends] += "skopeo-native:do_populate_sysroot"
@@ -48,9 +50,13 @@ do_fetch_container() {
         CONTAINER_REGISTRY="docker.io"
     fi
     bbnote "Container Registry: ${CONTAINER_REGISTRY}"
-    if ! PATH=/usr/bin:${PATH} skopeo login --authfile ~/auth.json ${CONTAINER_REGISTRY} ;
+
+    if [ ${CONTAINER_REGISTRY_REQUIRES_AUTH} -eq 1 ]
     then
-        bbwarn "Not logged into ${CONTAINER_REGISTRY}, download of container image ${SDV_IMAGE_REF} may fail!"
+        if ! PATH=/usr/bin:${PATH} skopeo login --authfile ~/auth.json ${CONTAINER_REGISTRY} ;
+        then
+            bbwarn "Not logged into ${CONTAINER_REGISTRY}, download of container image ${SDV_IMAGE_REF} may fail!"
+        fi
     fi
 
     if [ -z "$CONTAINER_ARCH" ]

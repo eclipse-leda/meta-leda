@@ -28,3 +28,12 @@ inherit core-image
 
 IMAGE_ROOTFS_SIZE ?= "8192"
 IMAGE_ROOTFS_EXTRA_SPACE:append = "${@bb.utils.contains("DISTRO_FEATURES", "systemd", " + 4096", "", d)}"
+
+# Fall back to ext4 for now, as wic for qemuarm does not yet contain u-boot
+#QB_ROOTFS_OPT = "-drive id=disk0,file=@ROOTFS@,if=none,format=raw -device virtio-blk-device,drive=disk0"
+QB_FSINFO = "wic:no-kernel-in-fs"
+
+QB_KERNEL_ROOT = "/dev/vda"
+QB_DRIVE_TYPE="/dev/vd"
+
+QB_KERNEL_CMDLINE_APPEND = "console=ttyS0,115200 net.ifnames=0 panic=5 ip=dhcp ip=192.168.7.2::192.168.7.1:255.255.255.0 rootwait"
