@@ -16,7 +16,7 @@ export CONTAINER_ARCH
 
 CONTAINER_OS ??= "linux"
 CONTAINER_REGISTRY_REQUIRES_AUTH ??= "1"
-SDV_DL_FILE ??= "${DL_DIR}/${PN}-${PV}.oci"
+SDV_DL_FILE ??= "${DL_DIR}/${PN}-${PV}-${TARGET_ARCH}.oci"
 
 K3S_AGENT_PRELOAD_DIR ??= "/var/lib/rancher/k3s/agent/images"
 
