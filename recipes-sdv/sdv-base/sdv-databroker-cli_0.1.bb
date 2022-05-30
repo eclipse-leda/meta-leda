@@ -14,14 +14,6 @@
 SUMMARY = "SDV: Vehicle Data Broker CLI"
 DESCRIPTION = "A command line tool for interacting with the Vehicle Data Broker"
 
-SRC_URI = "file://bin_release_databroker_aarch64.tar.gz \ 
-           file://bin_release_databroker_x86_64.tar.gz \
-           file://swdc-os-vehicleapi-0.14.0.zip"
-
-SRC_URI[bin_release_databroker_aarch64.tar.gz.sha256sum] = "0f603de51381d0657dcc91fbd85f222566c99e3ca89e64331e19ed38d2e4761e"
-SRC_URI[bin_release_databroker_x86_64.tar.gz.sha256sum] = "0f603de51381d0657dcc91fbd85f222566c99e3ca89e64331e19ed38d2e4761e"
-SRC_URI[swdc-os-vehicleapi-0.14.0.zip.sha256sum] = "0f603de51381d0657dcc91fbd85f222566c99e3ca89e64331e19ed38d2e4761e"
-
 do_fetch() {
     GH_LOC=$(PATH=/usr/bin:${PATH} whereis gh)
     bbnote "GitHub CLI Location: ${GH_LOC}"
@@ -60,4 +52,4 @@ do_install () {
 
 }
 
-FILES:${PN} = "${bindir}/*"
+FILES:${PN} = "${bindir}/vehicle-data-cli"
