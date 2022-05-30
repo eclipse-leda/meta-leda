@@ -18,6 +18,14 @@ RDEPENDS:${PN} = "sdv-image-full sdv-image-minimal sdv-image-rescue"
 
 inherit core-image
 
+# Ensure efi-boot.vfat is built
+do_image_wic[depends] += "boot-image:do_deploy"
+
+# Ensure WICVARS are being built for each of the images before the WIC Image Type is trying to find them
+do_image_wic[depends] += "sdv-image-rescue:do_rootfs_wicenv"
+do_image_wic[depends] += "sdv-image-minimal:do_rootfs_wicenv"
+do_image_wic[depends] += "sdv-image-full:do_rootfs_wicenv"
+
 IMAGE_FSTYPES = "wic.qcow2"
 QB_DEFAULT_FSTYPE = "wic.qcow2"
 
