@@ -40,6 +40,7 @@ do_install() {
     cp -R --no-dereference --preserve=mode,links -v ${WORKDIR}/git/src/bash/sdv-device-info ${D}${bindir}
     cp -R --no-dereference --preserve=mode,links -v ${WORKDIR}/git/src/bash/sdv-health ${D}${bindir}
     cp -R --no-dereference --preserve=mode,links -v ${WORKDIR}/git/src/bash/sdv-motd ${D}${bindir}
+    cp -R --no-dereference --preserve=mode,links -v ${WORKDIR}/git/src/bash/sdv-provision ${D}${bindir}
     cp -R --no-dereference --preserve=mode,links -v ${WORKDIR}/git/src/bash/sdv.conf ${D}/etc/sdv/
 }
 
@@ -47,6 +48,7 @@ FILES_${PN} += "${bindir}/can-forward"
 FILES_${PN} += "${bindir}/sdv-device-info"
 FILES_${PN} += "${bindir}/sdv-health"
 FILES_${PN} += "${bindir}/sdv-motd"
+FILES_${PN} += "${bindir}/sdv-provision"
 FILES_${PN} += "/etc/sdv/sdv.conf"
 
 PACKAGES = "${PN}"
