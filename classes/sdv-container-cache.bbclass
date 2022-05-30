@@ -132,6 +132,7 @@ do_fetch_container() {
 do_unpack_container() {
     CONTAINER_SOURCE_FOLDER="${S}/container-image"
     bbnote "Copying ${SDV_DL_FILE} to ${CONTAINER_SOURCE_FOLDER}"
+    mkdir -p ${CONTAINER_SOURCE_FOLDER}
     cp ${SDV_DL_FILE} ${CONTAINER_SOURCE_FOLDER}
 }
 
