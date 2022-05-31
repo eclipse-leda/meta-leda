@@ -8,12 +8,12 @@ SRC_URI:append:qemuarm64 = " file://boot.cmd.in"
 UBOOT_ENV_SUFFIX = "cmd"
 UBOOT_ENV = "boot"
 
-UBOOT_EXTLINUX_LABELS ??= "full minimal rescue"
+UBOOT_EXTLINUX_LABELS = "full minimal rescue"
 
-UBOOT_EXTLINUX_DEFAULT_LABEL ??= "full"
-UBOOT_EXTLINUX_TIMEOUT ??= "30"
+UBOOT_EXTLINUX_DEFAULT_LABEL = "full"
+UBOOT_EXTLINUX_TIMEOUT = "30"
 
-UBOOT_EXTLINUX_KERNEL_IMAGE_full ??= "/boot/Image"
+UBOOT_EXTLINUX_KERNEL_IMAGE_full = "/boot/Image"
 UBOOT_EXTLINUX_MENU_DESCRIPTION_full ??= "SDV Full"
 UBOOT_EXTLINUX_KERNEL_ARGS_full = "root=/dev/vda4 rootwait loglevel=7 rauc.slot=rootfs_full"
 
