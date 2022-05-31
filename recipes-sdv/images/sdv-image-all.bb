@@ -14,12 +14,12 @@
 SUMMARY = "A full quickstart image with all features and convenience tools enabled."
 LICENSE = "EPL"
 
-RDEPENDS:${PN} = "sdv-image-full sdv-image-minimal sdv-image-rescue"
+RDEPENDS:${PN} = "sdv-image-full sdv-image-minimal sdv-image-rescue sdc-rauc-bundle"
 
 inherit core-image
 
 # Ensure efi-boot.vfat is built
-do_image_wic[depends] += "boot-image:do_deploy"
+#do_image_wic[depends] += "boot-image:do_deploy"
 
 # Ensure WICVARS are being built for each of the images before the WIC Image Type is trying to find them
 do_image_wic[depends] += "sdv-image-rescue:do_rootfs_wicenv"
@@ -32,6 +32,9 @@ QB_DEFAULT_FSTYPE = "wic.qcow2"
 # Fall back to ext4 for now, as wic for qemuarm does not yet contain u-boot
 QB_ROOTFS_OPT:qemuarm = "-drive id=disk0,file=@ROOTFS@,if=none,format=qcow2 -device virtio-blk-device,drive=disk0"
 QB_FSINFO:qemuarm = "wic:no-kernel-in-fs"
+
+QB_ROOTFS_OPT:qemuarm64 = "-drive id=disk0,file=@ROOTFS@,if=none,format=qcow2 -device virtio-blk-device,drive=disk0"
+QB_FSINFO:qemuarm64 = "wic:no-kernel-in-fs"
 
 # Must be in sync with:
 #  GRUB Config: meta-sdv/recipes-bsp/grub/files/grub.cfg
