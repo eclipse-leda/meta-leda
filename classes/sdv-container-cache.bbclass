@@ -138,7 +138,7 @@ do_unpack_container() {
 
 # Todo: Move the layer blobs into the containerd storage
 do_install() {
-    install -d ${D}${K3S_AGENT_PRELOAD_DIR}
+    mkdir -p ${D}${K3S_AGENT_PRELOAD_DIR}
     cp -R --no-dereference --preserve=mode,links -v ${S}/container-image ${D}${K3S_AGENT_PRELOAD_DIR}/${PN}.tar
 }
 
