@@ -18,6 +18,12 @@ spec:
     - name: seat-adjuster-app-ces
       image: swdceuwedevgsopscr.azurecr.io/seat-adjuster-app-ces:0.4.5
       imagePullPolicy: IfNotPresent
+      resources:
+        requests:
+          cpu: "50m"
+        limits:
+          memory: "128Mi"
+          cpu: "500m"
       ports:
         - containerPort: 50008
       env:
