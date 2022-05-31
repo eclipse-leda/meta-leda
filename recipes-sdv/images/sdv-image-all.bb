@@ -14,7 +14,7 @@
 SUMMARY = "A full quickstart image with all features and convenience tools enabled."
 LICENSE = "EPL"
 
-RDEPENDS:${PN} = "sdv-image-full sdv-image-minimal sdv-image-rescue sdc-rauc-bundle"
+RDEPENDS:${PN} = "sdv-image-full sdv-image-minimal sdv-image-rescue sdv-rauc-bundle"
 
 inherit core-image
 
