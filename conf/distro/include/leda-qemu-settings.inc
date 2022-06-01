@@ -1,5 +1,6 @@
 # Increase memory for k3s to at least 2GB or more
 QB_MEM = "-m 4096"
+QB_MEM:qemuarm = "-m 2048"
 
 # No graphical user interface
 QB_OPT_APPEND:append = " -serial mon:stdio -serial null -nographic"
