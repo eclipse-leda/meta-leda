@@ -16,14 +16,15 @@ spec:
     spec:
       containers:
         - name: suaservice
-          image: ghcr.io/softwaredefinedvehicle/sdv-self-update-agent:sua-pod 
+          image: ghcr.io/softwaredefinedvehicle/sdv-self-update-agent/sua
           imagePullPolicy: IfNotPresent 
-          resources:
-            requests:
-              cpu: "50m"
-            limits:
-              memory: "128Mi"
-              cpu: "500m"
+# Commented out for big memory limits
+#          resources:
+#            requests:
+#              cpu: "50m"
+#            limits:
+#              memory: "128Mi"
+#              cpu: "500m"
           volumeMounts:                                                      
           - mountPath: /var/run/dbus/system_bus_socket                       
             name: system-dbus-socket                                         
@@ -41,7 +42,7 @@ spec:
           path: /var/run/dbus/system_bus_socket                            
         name: system-dbus-socket                                           
       - hostPath:                                                          
-          path: /data
+          path: /data/selfupdates
         name: shared-rauc-vol 
 ---
 apiVersion: v1

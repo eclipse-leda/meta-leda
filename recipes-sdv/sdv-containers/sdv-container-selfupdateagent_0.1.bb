@@ -24,7 +24,7 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=d9fc0efef5228704e7f5b37f27192723"
 
 # Define image to be pulled
-SDV_IMAGE_REF="ghcr.io/softwaredefinedvehicle/sdv-self-update-agent:msg-currentstate"
+SDV_IMAGE_REF="ghcr.io/softwaredefinedvehicle/sdv-self-update-agent/sua"
 SDV_IMAGE_TAG="latest"
 
 # Override container architecture. If not set, recipe tries autodetection for target machine architecture.
