@@ -1,6 +1,6 @@
 fdt addr ${fdt_addr} && fdt get value bootargs /chosen bootargs
 
-setenv bootargs "${bootargs} root=/dev/vda3 loglevel=7 rauc.slot=rootfs_full"
+setenv bootargs "${bootargs} root=/dev/vda3 loglevel=7 rauc.slot=SDV_A"
 
 load virtio 0:2 ${kernel_addr_r} /boot/Image
 booti ${kernel_addr_r} - ${fdt_addr}
