@@ -3,7 +3,7 @@ do_image_wic[depends] += "mtools-native:do_populate_sysroot dosfstools-native:do
 
 #SERIAL_CONSOLES = "115200;ttyS0"
 
-KERNEL_IMAGETYPE = "uImage"
+KERNEL_IMAGETYPE = "Image"
 KERNEL_EXTRA_ARGS += "LOADADDR=${UBOOT_ENTRYPOINT}"
 
 UBOOT_SUFFIX = "bin"
