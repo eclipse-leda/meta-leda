@@ -28,6 +28,10 @@ do_image_wic[depends] += "sdv-image-minimal:do_rootfs_wicenv"
 do_image_wic[depends] += "sdv-image-full:do_rootfs_wicenv"
 
 IMAGE_FSTYPES = "wic.qcow2"
+
+# Raspberry Pi needs a plain WIC file (not qcow2) to be flashed to SD-Card
+IMAGE_FSTYPES:raspberrypi4-64 += "wic.bz2 wic.bmap"
+
 QB_DEFAULT_FSTYPE = "wic.qcow2"
 
 # Fall back to ext4 for now, as wic for qemuarm does not yet contain u-boot
