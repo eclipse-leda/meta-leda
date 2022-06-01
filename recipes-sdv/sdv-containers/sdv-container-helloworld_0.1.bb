@@ -32,3 +32,6 @@ SDV_IMAGE_TAG="latest"
 
 # This is a public available container
 CONTAINER_REGISTRY_REQUIRES_AUTH = "0"
+
+# Skip pre-caching of a container if target architecture does not exist
+CONTAINER_SKIP_MISSING_ARCH="1"
