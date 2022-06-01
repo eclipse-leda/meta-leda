@@ -25,7 +25,7 @@
 #
 #part u-boot --source rawcopy --sourceparams="file=u-boot.bin" --ondisk mmcblk0 --no-table --align 1
 
-bootloader --ptable gpt --configfile="qemuarm64.cfg"
+bootloader --ptable gpt --configfile="qemuarm.cfg"
 
 part /boot --source bootimg-partition --ondisk vda --fstype=vfat --label boot --active --align 4 --size 16 --sourceparams="loader=u-boot" --use-uuid
 # Second Bootloader Partition (empty, for future updates)
