@@ -27,7 +27,11 @@ do_image_wic[depends] += "sdv-image-rescue:do_rootfs_wicenv"
 do_image_wic[depends] += "sdv-image-minimal:do_rootfs_wicenv"
 do_image_wic[depends] += "sdv-image-full:do_rootfs_wicenv"
 
-IMAGE_FSTYPES = "wic.qcow2"
+# For qemu, we produce disk images in qcow2 format (faster and smaller than raw or ext4 images)
+IMAGE_FSTYPES = " wic.qcow2"
+
+# For scancode, we'll produce tar files of the rootfs
+IMAGE_FSTYPES += " tar.bz2"
 
 # Raspberry Pi needs a plain WIC file (not qcow2) to be flashed to SD-Card
 IMAGE_FSTYPES:raspberrypi4-64 += "wic.bz2 wic.bmap"
