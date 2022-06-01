@@ -8,7 +8,7 @@ SRC_URI:append:qemuarm64 = " file://boot.cmd.in"
 UBOOT_ENV_SUFFIX = "cmd"
 UBOOT_ENV = "boot"
 
-do_compile:append() {
+do_compile:append:qemuarm64() {
     ${B}/tools/mkimage -C none -A arm64 -T script -d ${WORKDIR}/boot.cmd.in ${WORKDIR}/${UBOOT_ENV_BINARY}
 }
 
