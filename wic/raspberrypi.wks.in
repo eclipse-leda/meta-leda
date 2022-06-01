@@ -12,6 +12,8 @@
 # ********************************************************************************/
 #
 
+bootloader --ptable gpt --configfile="raspberrypi4-64.cfg"
+
 part /boot --source bootimg-partition --ondisk mmcblk0 --fstype=vfat --label boot --active --align 4096 --size 100
 
 #part / --source rootfs --ondisk mmcblk0 --fstype=ext4 --label rootfs_A --align 4096
@@ -19,7 +21,7 @@ part /boot --source bootimg-partition --ondisk mmcblk0 --fstype=vfat --label boo
 #part /home --source rootfs --rootfs-dir=${IMAGE_ROOTFS}/home --ondisk mmcblk0 --fstype=ext4 --label homefs --align 1024 --size 500 --fsoptions "x-systemd.growfs"
 
 # GRUB environment to store info about retries, mounted for showcase
-part /grubenv --fixed-size 10M --source rawcopy --sourceparams="file=grubenv.vfat" --fstype=vfat --ondisk vda --label grubenv --align 1024
+part /grubenv --fixed-size 10M --fstype=vfat --ondisk vda --label grubenv --align 1024
 
 part --fixed-size 150M --source rootfs --rootfs-dir=sdv-image-rescue --ondisk mmcblk0 --fstype=ext4 --label rescue --align 1024
 part / --fixed-size 1500M --source rootfs --rootfs-dir=sdv-image-full --ondisk mmcblk0 --fstype=ext4 --label root_a --align 4096
