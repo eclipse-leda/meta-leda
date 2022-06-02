@@ -29,6 +29,7 @@ RDEPENDS:${PN} = "\
     sdv-core-bundle-pods \
     sdv-container-databroker \
     sdv-container-cloudagent \
+    sdv-container-vehicleupdatemanager \
     kernel-modules \
     kanto-container-management \
     kanto-file-upload \

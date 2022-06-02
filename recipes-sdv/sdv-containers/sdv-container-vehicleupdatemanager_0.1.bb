@@ -11,8 +11,8 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-SUMMARY = "SDV Cloud Connector container"
-DESCRIPTION = "Docker container of the Eclipse Kanto Cloud Connector"
+SUMMARY = "SDV Vehicle Update Manager container"
+DESCRIPTION = "Docker container of the SDV Vehicle Update Manager"
 
 inherit sdv-container-cache
 
@@ -24,8 +24,8 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=d9fc0efef5228704e7f5b37f27192723"
 
 # Define image to be pulled
-SDV_IMAGE_REF="ghcr.io/softwaredefinedvehicle/swdc-os-cloud-agent/cloudagent"
-SDV_IMAGE_TAG="v0.3"
+SDV_IMAGE_REF="ghcr.io/softwaredefinedvehicle/swdc-os-containers-management/vehicleupdatemanager"
+SDV_IMAGE_TAG="v0.4"
 
 # Override container architecture. If not set, recipe tries autodetection for target machine architecture.
 #CONTAINER_ARCH="arm64"
