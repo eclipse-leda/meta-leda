@@ -34,7 +34,7 @@ IMAGE_FSTYPES = " wic.qcow2"
 IMAGE_FSTYPES += " tar.bz2"
 
 # Raspberry Pi needs a plain WIC file (not qcow2) to be flashed to SD-Card
-IMAGE_FSTYPES:raspberrypi4-64 += "wic.bz2 wic.bmap"
+IMAGE_FSTYPES:raspberrypi4-64 += " tar.bz2 wic.bz2 wic.bmap"
 
 QB_DEFAULT_FSTYPE = "wic.qcow2"
 
