@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: suaservice
-          image: ghcr.io/softwaredefinedvehicle/sdv-self-update-agent/sua
+          image: ghcr.io/softwaredefinedvehicle/sdv-self-update-agent/sua:v0.1.2
           imagePullPolicy: IfNotPresent 
 # Commented out for big memory limits
 #          resources:
