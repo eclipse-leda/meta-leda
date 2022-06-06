@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: seatservice
-          image: ghcr.io/softwaredefinedvehicle/swdc-os-vehicleapi/seat_service:latest
+          image: ghcr.io/softwaredefinedvehicle/swdc-os-vehicleapi/seat_service:v0.17.0
           imagePullPolicy: IfNotPresent
           ports:
           - name: default

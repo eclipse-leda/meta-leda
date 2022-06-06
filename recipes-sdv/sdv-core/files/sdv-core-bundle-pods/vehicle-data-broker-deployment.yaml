@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: vehicledatabroker
-          image: ghcr.io/softwaredefinedvehicle/swdc-os-vehicleapi/databroker:latest
+          image: ghcr.io/softwaredefinedvehicle/swdc-os-vehicleapi/databroker:v0.17.0
           imagePullPolicy: IfNotPresent
           ports:
             - name: default
@@ -30,7 +30,7 @@ spec:
               protocol: TCP
           args: ["--dummy-metadata"]              
       imagePullSecrets:
-        - name: ghcr-io          
+        - name: ghcr-io
 
 ---
 apiVersion: v1
