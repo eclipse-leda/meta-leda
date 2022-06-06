@@ -27,8 +27,10 @@ RDEPENDS:${PN} = "\
     sdv-initialize-dapr-first-boot \
     sdv-helm-binaries \
     sdv-core-bundle-pods \
-    sdv-container-databroker \
     sdv-container-cloudagent \
+    sdv-container-databroker \
+    sdv-container-otelagent \
+    sdv-container-otelexporter \    
     sdv-container-vehicleupdatemanager \
     kernel-modules \
     kanto-container-management \
