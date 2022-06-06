@@ -17,22 +17,22 @@ DESCRIPTION = "Binary releases of the dapr.io runtime"
 inherit bin_package
 
 # The sources contain the license file
-SRC_URI = "https://github.com/dapr/cli/archive/refs/tags/v1.6.0.tar.gz;name=dapr-sources"
-SRC_URI[dapr-sources.sha256sum] = "2dfe446f472448b33cf3feb2293d8bb896f50c82a110b2e69b09b759559995ab"
-
+SRC_URI = "https://github.com/dapr/cli/archive/refs/tags/v1.7.1.tar.gz;name=dapr-sources"
+SRC_URI[dapr-sources.sha256sum] = "41e14d8e1d711e062db328be96c6e196478137bfc1ac0b029c2e4d3b9b682673"
+                                
 # The DAPR CLI binaries
-SRC_URI += "https://github.com/dapr/cli/releases/download/v1.6.0/dapr_linux_arm64.tar.gz;name=dapr-binaries-arm64;subdir=${WORKDIR}/dapr-binaries/arm64"
-SRC_URI[dapr-binaries-arm64.sha256sum] = "f54c4d068957e9c3ba12548a914f9b5ea1906cd4a5b5ecf90d3b15077ec558a3"
+SRC_URI += "https://github.com/dapr/cli/releases/download/v1.7.1/dapr_linux_arm64.tar.gz;name=dapr-binaries-arm64;subdir=${WORKDIR}/dapr-binaries/arm64"
+SRC_URI[dapr-binaries-arm64.sha256sum] = "e441f27e9870c61d7a078fecdb9d54836d25915245e4c4c62ed7858324f544c1"
 
-SRC_URI += "https://github.com/dapr/cli/releases/download/v1.6.0/dapr_linux_arm.tar.gz;name=dapr-binaries-arm;subdir=${WORKDIR}/dapr-binaries/arm"
-SRC_URI[dapr-binaries-arm.sha256sum] = "ef88f7670bcb7486a6f57d81167c3f6611c9310419f5405faa999460cedc341c"
+SRC_URI += "https://github.com/dapr/cli/releases/download/v1.7.1/dapr_linux_arm.tar.gz;name=dapr-binaries-arm;subdir=${WORKDIR}/dapr-binaries/arm"
+SRC_URI[dapr-binaries-arm.sha256sum] = "c5b2e6457013bc945f75810578f8ea95a5721d38d43350d972aea887b3f38e1a"
 
-SRC_URI += "https://github.com/dapr/cli/releases/download/v1.6.0/dapr_linux_amd64.tar.gz;name=dapr-binaries-x86_64;subdir=${WORKDIR}/dapr-binaries/x86_64"
-SRC_URI[dapr-binaries-x86_64.sha256sum] = "a1b4dbb3a8bf9746951f5c9889d8ddb08f28f931c10c396b82ce4362eea92198"
+SRC_URI += "https://github.com/dapr/cli/releases/download/v1.7.1/dapr_linux_amd64.tar.gz;name=dapr-binaries-x86_64;subdir=${WORKDIR}/dapr-binaries/x86_64"
+SRC_URI[dapr-binaries-x86_64.sha256sum] = "896f1d7b1c244f06311354162b53b048885152df93c1a94abf06c76ac6837de6"
 
 # According to https://wiki.yoctoproject.org/wiki/License_Infrastructure_Interest_Group
 LICENSE = "Apache-2.0"
-LIC_FILES_CHKSUM = "file://${WORKDIR}/cli-1.6.0/LICENSE;md5=04c18f3bbbc4178e5056fbfd678c8d9d"
+LIC_FILES_CHKSUM = "file://${WORKDIR}/cli-1.7.1/LICENSE;md5=04c18f3bbbc4178e5056fbfd678c8d9d"
 
 do_install () {
     install -d ${D}${bindir}

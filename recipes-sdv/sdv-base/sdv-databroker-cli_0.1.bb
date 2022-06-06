@@ -16,19 +16,19 @@ DESCRIPTION = "A command line tool for interacting with the Vehicle Data Broker"
 
 SRC_URI = "file://bin_release_databroker_aarch64.tar.gz \ 
            file://bin_release_databroker_x86_64.tar.gz \
-           file://swdc-os-vehicleapi-0.14.0.zip"
+           file://swdc-os-vehicleapi-0.17.0.zip"
 
 do_fetch() {
     GH_LOC=$(PATH=/usr/bin:${PATH} whereis gh)
     bbnote "GitHub CLI Location: ${GH_LOC}"
     PATH=/usr/bin:${PATH}
    
-    gh release download v0.14.0 \
+    gh release download v0.17.0 \
         --archive=zip \
         --repo SoftwareDefinedVehicle/swdc-os-vehicleapi \
         --dir ${DL_DIR} || true
     
-    gh release download v0.14.0 \
+    gh release download v0.17.0 \
         --pattern 'bin_release_databroker_*.tar.gz' \
         --repo SoftwareDefinedVehicle/swdc-os-vehicleapi \
         --dir ${DL_DIR} || true
@@ -36,7 +36,7 @@ do_fetch() {
 
 # According to https://wiki.yoctoproject.org/wiki/License_Infrastructure_Interest_Group
 LICENSE = "Apache-2.0"
-LIC_FILES_CHKSUM = "file://${WORKDIR}/swdc-os-vehicleapi-0.14.0/LICENSE;md5=2b42edef8fa55315f34f2370b4715ca9"
+LIC_FILES_CHKSUM = "file://${WORKDIR}/swdc-os-vehicleapi-0.17.0/LICENSE;md5=2b42edef8fa55315f34f2370b4715ca9"
 
 INSANE_SKIP:${PN} = "already-stripped"
 
