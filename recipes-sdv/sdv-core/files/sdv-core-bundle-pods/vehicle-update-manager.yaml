@@ -45,7 +45,7 @@ spec:
       serviceAccountName: vehicle-update-manager
       containers:
         - name: vehicle-update-manager
-          image: ghcr.io/softwaredefinedvehicle/swdc-os-containers-management/vehicleupdatemanager:v0.4
+          image: ghcr.io/softwaredefinedvehicle/swdc-os-containers-management/vehicleupdatemanager:v0.5
           imagePullPolicy: IfNotPresent
           env:
             - name: DEBUG0
