@@ -30,7 +30,7 @@ RDEPENDS:${PN} = "\
     sdv-container-cloudagent \
     sdv-container-databroker \
     sdv-container-otelagent \
-    sdv-container-otelcol-sdv-exporter \
+    sdv-container-otelexporter \
     sdv-container-vehicleupdatemanager \
     kernel-modules \
     kanto-container-management \
