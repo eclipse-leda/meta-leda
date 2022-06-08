@@ -16,7 +16,7 @@ DESCRIPTION = "Customized fork of Eclipse Kanto azure-connector with additional 
 LICENSE = "Apache-2.0"
 
 SRC_URI = "git://github.com/SoftwareDefinedVehicle/swdc-os-cloud-agent.git;branch=main"
-SRCREV = "${AUTOREV}"
+SRCREV = "86aabb2712157414398d786d323bed1ff752b666"
 
 # Replace 'xxx' after first build with correct value
 LIC_FILES_CHKSUM = "file://${WORKDIR}/git/NOTICE;md5=b95389a3f134a33b445b438d337848f7"
