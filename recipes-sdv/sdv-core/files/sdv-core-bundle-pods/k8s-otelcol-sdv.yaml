@@ -229,12 +229,6 @@ spec:
             {}
           image: ghcr.io/softwaredefinedvehicle/sdv-edge-otel/otelcol-sdv-ext:latest
           imagePullPolicy: IfNotPresent
-          resources:
-            requests:
-              cpu: "50m"
-            limits:
-              memory: "128Mi"
-              cpu: "500m"
           env:
             - name: HOST_PROC
               value: /hostfs/proc
