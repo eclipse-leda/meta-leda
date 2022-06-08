@@ -24,12 +24,6 @@ spec:
         - name: vehicledatabroker
           image: ghcr.io/softwaredefinedvehicle/swdc-os-vehicleapi/databroker:v0.17.0
           imagePullPolicy: IfNotPresent
-          resources:
-            requests:
-              cpu: "50m"
-            limits:
-              memory: "128Mi"
-              cpu: "500m"
           ports:
             - name: default
               containerPort: 55555
