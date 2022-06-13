@@ -21,6 +21,9 @@ SDV_DL_FILE ??= "${DL_DIR}/${PN}-${PV}-${TARGET_ARCH}.oci"
 
 K3S_AGENT_PRELOAD_DIR ??= "/var/lib/rancher/k3s/agent/images"
 
+FALSE = "0"
+TRUE = "1"
+
 # Documentation of configuration variables
 CONTAINER_ARCH[doc] = "Specify the container machine architecture, e.g. amd64, arm64"
 CONTAINER_OS[doc] = "Specify the container operatin system, e.g. linux"
@@ -36,7 +39,22 @@ do_compile[noexec] = "1"
 do_fetch_container[nostamp] = "1"
 do_unpack_container[nostamp] = "1"
 
-do_fetch_container() {   
+
+contains_tag() {
+    retvalue="${TRUE}"
+    TAGS_IN_TAR=$(tar -xOf ${SDV_DL_FILE} manifest.json | jq -r .[0].RepoTags[])
+    if ! echo "${TAGS_IN_TAR}" | grep -q "${SDV_IMAGE_REF}:${SDV_IMAGE_TAG}" ;
+    then
+        bbwarn "Container image is missing expected tag: ${SDV_IMAGE_REF}:${SDV_IMAGE_TAG}"
+        bbwarn "Container image contains the following tags: ${TAGS_IN_TAR}"
+        CONTAINER_MANIFEST=$(tar -xOf ${SDV_DL_FILE} manifest.json)
+        bbwarn "Container image manifest: ${CONTAINER_MANIFEST}"
+        retvalue="${FALSE}"
+    fi
+    echo "${retvalue}"
+}
+
+do_fetch_container() {
     SKOPEO_LOC=$(PATH=/usr/bin:${PATH} whereis skopeo)
     bbnote "Skopeo Location: ${SKOPEO_LOC}"
 
@@ -80,11 +98,19 @@ do_fetch_container() {
     bbnote "Target container operating system: ${CONTAINER_OS}"
     bbnote "Storing to: ${SDV_DL_FILE}"
 
-    # Bugfix: Redownload if container has zero size (skopeo creates empty files on error)
-    if [ -f ${SDV_DL_FILE} -a ! -s ${SDV_DL_FILE} ];
-    then
-        bbwarn "Deleting zero-size container image file: ${SDV_DL_FILE}"
-        rm ${SDV_DL_FILE}
+    if [ -f ${SDV_DL_FILE} ]; 
+    then 
+        if [ ! -s ${SDV_DL_FILE} ];
+        then
+            # Bugfix: Redownload if container has zero size (skopeo creates empty files on error)
+            bbwarn "Deleting zero-size container image file: ${SDV_DL_FILE}. Will redownload."
+            rm ${SDV_DL_FILE}
+        elif [ $( contains_tag ) = "${FALSE}" ];
+        then
+            # Redownload when updating container version
+            bbwarn "Deleting previously existing ${SDV_DL_FILE} with mismatching tag. Will redownload."
+            rm ${SDV_DL_FILE}
+        fi
     fi
 
     if [ ! -f ${SDV_DL_FILE} ];
@@ -125,14 +151,7 @@ do_fetch_container() {
         bbwarn "Downloaded container has zero size: ${SDV_DL_FILE}"
     fi
 
-    TAGS_IN_TAR=$(tar -xOf ${SDV_DL_FILE} manifest.json | jq -r .[0].RepoTags[])
-    if ! echo "${TAGS_IN_TAR}" | grep -q "${SDV_IMAGE_REF}:${SDV_IMAGE_TAG}" ;
-    then
-        bbwarn "Container image is missing expected tag: ${SDV_IMAGE_REF}:${SDV_IMAGE_TAG}"
-        bbwarn "Container image contains the following tags: ${TAGS_IN_TAR}"
-        CONTAINER_MANIFEST=$(tar -xOf ${SDV_DL_FILE} manifest.json)
-        bbwarn "Container image manifest: ${CONTAINER_MANIFEST}"
-    fi
+    contains_tag
 
     exit 0
 }

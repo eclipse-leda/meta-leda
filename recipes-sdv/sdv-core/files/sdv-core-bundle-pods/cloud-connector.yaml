@@ -1,26 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cloudagent
+  name: cloud-connector
 spec:
-  replicas: 1
   selector:
     matchLabels:
-      component: cloudagent
+      app: cloud-connector
   template:
     metadata:
       labels:
-        component: cloudagent
+        app: cloud-connector
     spec:
       containers:
         - name: cloudagent
           image: ghcr.io/softwaredefinedvehicle/swdc-os-cloud-agent/cloudagent:v0.3
-          resources:
-            requests:
-              cpu: "50m"
-            limits:
-              memory: "128Mi"
-              cpu: "500m"
+          imagePullPolicy: IfNotPresent
           env:
             - name: CONNECTION_STRING
               valueFrom:
@@ -31,15 +25,17 @@ spec:
             - name: LOCAL_ADDRESS
               value: tcp://mosquitto:1883
             - name: LOG_FILE
-              value: ""
+              value: ''
+            - name: LOG_LEVEL
+              value: DEBUG
             - name: CA_CERT_PATH
-              value: "/app/iothub.crt"
+              value: '/app/iothub.crt'
             - name: MESSAGE_MAPPER_CONFIG
-              value: "/app/message-mapper-config.json"
+              value: '/app/message-mapper-config.json'
             - name: ALLOWED_CLOUD_MESSAGE_TYPES_LIST
-              value: "vss.setPosition,updateme,subscribeOnceCommand,vss.set"
+              value: 'vss.setPosition,updateme,subscribeOnceCommand,vss.set'
             - name: ALLOWED_LOCAL_TOPICS_LIST
-              value: "cloudConnector/#"          
-          imagePullPolicy: IfNotPresent
+              value: 'cloudConnector/#'
       imagePullSecrets:
-      - name: ghcr-io
+        - name: ghcr-io
+---

@@ -21,7 +21,8 @@ SRC_URI =  " \
     file://cloudagent-systemd/ \
 "
 
-SRCREV = "28ce9e78a1fa5867c982e11d380f4f617fb97d60"
+SRC_URI = "git://github.com/SoftwareDefinedVehicle/swdc-os-cloud-agent.git;branch=main"
+SRCREV = "86aabb2712157414398d786d323bed1ff752b666"
 
 GO_IMPORT = "bosch.io/cloud-agent"
 

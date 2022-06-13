@@ -11,25 +11,23 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-SUMMARY = "SDV Core Self Update Agent"
-DESCRIPTION = "Bridge to RAUC Self Updater"
+SUMMARY = "SDV Self Update Agent"
+DESCRIPTION = "The self update agent (SUA) is a component reposible for the OS Update process."
 
-SRC_URI = "git://github.com/SoftwareDefinedVehicle/sdv-edge-core-utils;branch=main"
-SRCREV = "0168b9efec3317328da1c5bdf454231268f6cb35"
+inherit sdv-container-cache
+
+SRC_URI += "file://README.txt \
+            file://LICENSE"
 
 # According to https://wiki.yoctoproject.org/wiki/License_Infrastructure_Interest_Group
 LICENSE = "Apache-2.0"
-LIC_FILES_CHKSUM = "file://${WORKDIR}/git/LICENSE;md5=2dd765ca47a05140be15ebafddbeadfe"
- 
-# Runtime Dependencies
-RDEPENDS:${PN} += "bash"
+LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=d9fc0efef5228704e7f5b37f27192723"
 
-do_install() {
-    install -d ${D}${bindir}
-    cp -R --no-dereference --preserve=mode,links -v ${WORKDIR}/git/src/bash/* ${D}${bindir}
-}
+# Define image to be pulled
+SDV_IMAGE_REF="ghcr.io/softwaredefinedvehicle/sdv-self-update-agent/sua"
+SDV_IMAGE_TAG="v0.1.2"
 
-FILES_${PN} += "${datadir}/${PN}/src/bash/ \
-                ${datadir}/${PN}/LICENSE"
+# Override container architecture. If not set, recipe tries autodetection for target machine architecture.
+#CONTAINER_ARCH="arm64"
 
-PACKAGES = "${PN}"
+

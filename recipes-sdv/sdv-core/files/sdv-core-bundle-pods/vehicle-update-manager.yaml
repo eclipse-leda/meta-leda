@@ -1,0 +1,59 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: vehicle-update-manager
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: vehicle-update-manager
+rules:
+- apiGroups:
+  - '*'
+  resources:
+  - '*'
+  verbs:
+  - '*'
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: vehicle-update-manager
+subjects:
+- kind: ServiceAccount
+  name: vehicle-update-manager
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: vehicle-update-manager
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vehicle-update-manager
+spec:
+  selector:
+    matchLabels:
+      component: vehicle-update-manager
+  template:
+    metadata:
+      labels:
+        component: vehicle-update-manager
+    spec:
+      restartPolicy: Always
+      serviceAccountName: vehicle-update-manager
+      containers:
+        - name: vehicle-update-manager
+          image: ghcr.io/softwaredefinedvehicle/swdc-os-containers-management/vehicleupdatemanager:v0.5
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: DEBUG0
+              value: --debug=true
+            - name: THINGS_CONN_BROKER
+              value: tcp://mosquitto:1883
+            - name: THINGS_FEATURES
+              value: ContainerOrchestrator
+      imagePullSecrets:
+        - name: ghcr-io
+---
