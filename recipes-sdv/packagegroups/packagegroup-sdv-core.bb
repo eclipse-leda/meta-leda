@@ -17,24 +17,15 @@ DESCRIPTION = "Packages required to set up a basic working SDV system"
 inherit packagegroup
 
 RDEPENDS:${PN} = "\
-    packagegroup-k3s-host \
-    sdv-k3s-config \
-    kernel-modules \
     ca-certificates \
+    packagegroup-k3s-host \
+    kernel-image \
+    kernel-modules \
+    openssh \
+    openssh-sftp-server \
     rauc \
-    rauc-hawkbit-updater \
-    sdv-dapr-binaries \
-    sdv-initialize-dapr-first-boot \
-    sdv-helm-binaries \
+    sdv-k3s-config \
     sdv-core-bundle-pods \
     sdv-container-cloudagent \
-    sdv-container-databroker \
-    sdv-container-otelagent \
-    sdv-container-otelexporter \
-    sdv-container-vehicleupdatemanager \
-    kernel-modules \
-    kanto-container-management \
-    kanto-file-upload \
-    kanto-software-update \
-    kanto-suite-connector \
+    sdv-core-utils \
     "

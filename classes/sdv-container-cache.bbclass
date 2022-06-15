@@ -15,7 +15,9 @@
 export CONTAINER_ARCH
 
 CONTAINER_OS ??= "linux"
-SDV_DL_FILE ??= "${DL_DIR}/${PN}-${PV}.oci"
+CONTAINER_REGISTRY_REQUIRES_AUTH ??= "1"
+CONTAINER_SKIP_MISSING_ARCH ??= "0"
+SDV_DL_FILE ??= "${DL_DIR}/${PN}-${PV}-${TARGET_ARCH}.oci"
 
 K3S_AGENT_PRELOAD_DIR ??= "/var/lib/rancher/k3s/agent/images"
 
@@ -25,6 +27,8 @@ TRUE = "1"
 # Documentation of configuration variables
 CONTAINER_ARCH[doc] = "Specify the container machine architecture, e.g. amd64, arm64"
 CONTAINER_OS[doc] = "Specify the container operatin system, e.g. linux"
+CONTAINER_REGISTRY_REQUIRES_AUTH[doc] = "Specify if the container registry requires authentication: 1=true (default) and 0=false"
+CONTAINER_SKIP_MISSING_ARCH[doc] = "Set to 1 to ignore errors due to missing container image architecture in remote container registry: 1=skip 0=fail build"
 SDV_DL_FILE[doc] = "Specify how the archive is downloaded"
 
 do_fetch_container[depends] += "skopeo-native:do_populate_sysroot"
@@ -66,9 +70,13 @@ do_fetch_container() {
         CONTAINER_REGISTRY="docker.io"
     fi
     bbnote "Container Registry: ${CONTAINER_REGISTRY}"
-    if ! PATH=/usr/bin:${PATH} skopeo login --authfile ~/auth.json ${CONTAINER_REGISTRY} ;
+
+    if [ ${CONTAINER_REGISTRY_REQUIRES_AUTH} -eq 1 ]
     then
-        bbwarn "Not logged into ${CONTAINER_REGISTRY}, download of container image ${SDV_IMAGE_REF} may fail!"
+        if ! PATH=/usr/bin:${PATH} skopeo login --authfile ~/auth.json ${CONTAINER_REGISTRY} ;
+        then
+            bbwarn "Not logged into ${CONTAINER_REGISTRY}, download of container image ${SDV_IMAGE_REF} may fail!"
+        fi
     fi
 
     if [ -z "$CONTAINER_ARCH" ]
@@ -119,7 +127,13 @@ do_fetch_container() {
             docker-archive:${SDV_DL_FILE}:${SDV_IMAGE_REF} ;
         then
             RC_SKOPEO=$?
-            bbwarn "Error copying container image. rc=${RC_SKOPEO}"
+            if [ ${CONTAINER_SKIP_MISSING_ARCH} -eq 0 ]
+            then
+                bbwarn "Error copying container image. rc=${RC_SKOPEO}"
+            else
+                bbwarn "Ignoring error copying container image due to CONTAINER_SKIP_MISSING_ARCH=1 (skopeo rc=${RC_SKOPEO})"
+                exit 0
+            fi
         else 
             RC_SKOPEO=$?
             bbnote "Stored container. rc=${RC_SKOPEO}"
@@ -145,12 +159,13 @@ do_fetch_container() {
 do_unpack_container() {
     CONTAINER_SOURCE_FOLDER="${S}/container-image"
     bbnote "Copying ${SDV_DL_FILE} to ${CONTAINER_SOURCE_FOLDER}"
+    mkdir -p ${CONTAINER_SOURCE_FOLDER}
     cp ${SDV_DL_FILE} ${CONTAINER_SOURCE_FOLDER}
 }
 
 # Todo: Move the layer blobs into the containerd storage
 do_install() {
-    install -d ${D}${K3S_AGENT_PRELOAD_DIR}
+    mkdir -p ${D}${K3S_AGENT_PRELOAD_DIR}
     cp -R --no-dereference --preserve=mode,links -v ${S}/container-image ${D}${K3S_AGENT_PRELOAD_DIR}/${PN}.tar
 }
 

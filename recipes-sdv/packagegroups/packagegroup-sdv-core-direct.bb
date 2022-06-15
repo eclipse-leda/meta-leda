@@ -11,19 +11,15 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-SUMMARY = "SDV core packages"
-DESCRIPTION = "Packages required to set up a basic working SDV system"
+SUMMARY = "SDV core-native packages"
+DESCRIPTION = "Packages required to set up a basic working SDV system without Kubernetes"
 
 inherit packagegroup
 
 RDEPENDS:${PN} = "\
-    htop \
-    jq \
-    k9s \
-    mosquitto-clients \
-    nano \
-    nerdctl \
-    sdv-core-utils \
-    skopeo \
-    sudo \
+    ca-certificates \
+    kernel-modules \
+    kernel-image \
+    rauc \
+    sdv-cloud-connector \
     "

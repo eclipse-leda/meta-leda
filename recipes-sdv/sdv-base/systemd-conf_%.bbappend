@@ -10,20 +10,16 @@
 # *
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
+#
+# Enable CAN bus network by default
+#
+FILESEXTRAPATHS:prepend := "${THISDIR}/systemd-conf-files:"
 
-SUMMARY = "SDV core packages"
-DESCRIPTION = "Packages required to set up a basic working SDV system"
+SRC_URI += " file://can0.network"
 
-inherit packagegroup
+FILES:${PN} += " ${sysconfdir}/systemd/network/can0.network"
 
-RDEPENDS:${PN} = "\
-    htop \
-    jq \
-    k9s \
-    mosquitto-clients \
-    nano \
-    nerdctl \
-    sdv-core-utils \
-    skopeo \
-    sudo \
-    "
+do_install:append() {
+    install -d ${D}${sysconfdir}/systemd/network
+    install -m 0644 ${WORKDIR}/can0.network ${D}${sysconfdir}/systemd/network
+}

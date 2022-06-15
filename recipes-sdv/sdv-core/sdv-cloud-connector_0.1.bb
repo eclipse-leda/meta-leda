@@ -14,30 +14,40 @@
 SUMMARY = "SDV Cloud Connector"
 DESCRIPTION = "Customized fork of Eclipse Kanto azure-connector with additional support of Eclipse Backend Function Bindings and Azure C2D messages"
 LICENSE = "Apache-2.0"
+LIC_FILES_CHKSUM = "file://${WORKDIR}/git/src/bosch.io/cloud-agent/NOTICE;md5=b95389a3f134a33b445b438d337848f7"
 
-SRC_URI = "git://github.com/SoftwareDefinedVehicle/swdc-os-cloud-agent.git;branch=main"
+SRC_URI =  " \
+    git://github.com/SoftwareDefinedVehicle/swdc-os-cloud-agent.git;branch=main \
+    file://cloudagent-systemd/ \
+"
 SRCREV = "86aabb2712157414398d786d323bed1ff752b666"
 
-# Replace 'xxx' after first build with correct value
-LIC_FILES_CHKSUM = "file://${WORKDIR}/git/NOTICE;md5=b95389a3f134a33b445b438d337848f7"
+GO_IMPORT = "bosch.io/cloud-agent"
 
-#GO_IMPORT = "import"
-#GO_INSTALL = "${GO_IMPORT}/hello"
-#GO_WORKDIR = "${GO_INSTALL}"
-#export GO111MODULE="off"
+S = "${WORKDIR}/git"
 
-DEPENDS = "go-cross-${TARGET_ARCH}"
-FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
-S = "${WORKDIR}"
+inherit go-mod
+inherit systemd features_check
 
-inherit go
-inherit goarch
+NATIVE_SYSTEMD_SUPPORT = "1"
+SYSTEMD_PACKAGES = "${PN}"
+SYSTEMD_SERVICE:${PN} = "cloudagent.service"
+SYSTEMD_AUTO_ENABLE:${PN} = "enable"
+
+FILES:${PN} += "${bindir}/cloudagent \
+                ${systemd_system_unitdir}/cloudagent.service"
+
+REQUIRED_DISTRO_FEATURES = "systemd"
 
 do_compile() {
-  go build
+  cd ${B}/src/${GO_IMPORT}
+  ${GO} build ${GOBUILDFLAGS} -o ${B}/cloudagent ./cmd/
 }
 
 do_install() {
   install -d "${D}/${bindir}"
-  install -m 0755 "${S}/helloworld" "${D}/${bindir}"
+  install -m 0755 "${B}/cloudagent" "${D}/${bindir}"
+
+  install -d ${D}${systemd_unitdir}/system/
+  install -m 0644 ${WORKDIR}/cloudagent-systemd/cloudagent.service ${D}${systemd_system_unitdir}
 }

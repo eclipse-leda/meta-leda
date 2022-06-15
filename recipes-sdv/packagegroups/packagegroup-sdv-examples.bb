@@ -20,10 +20,6 @@ inherit packagegroup
 # - sdv-container-seatapp
 
 RDEPENDS:${PN} = "\
-    sdv-container-helloworld \
-    sdv-container-seatservice \
-    sdv-container-databroker \
-    sdv-container-feedercan \
     can-utils \
     can-utils-access \
     can-utils-isotp \
@@ -31,6 +27,10 @@ RDEPENDS:${PN} = "\
     can-utils-cantest \
     can-utils-slcan \
     can-utils-log \
+    sdv-container-helloworld \
+    sdv-container-seatservice \
+    sdv-container-databroker \
+    sdv-container-feedercan \
     "
 KERNEL_MODULE_AUTOLOAD += "can"
 KERNEL_MODULE_AUTOLOAD += "vcan"

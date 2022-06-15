@@ -23,7 +23,6 @@ do_install_basefilesissue[nostamp] = "1"
 # - /k3s is mount point for separate partition for Rancher K3S data-dir
 dirs755 += "/data"
 dirs755 += "/grubenv"
-dirs755 += "/k3s"
 dirs755 += "/rescue"
 
 # Overwrite /etc/issue with a custom version of it

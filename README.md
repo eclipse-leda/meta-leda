@@ -5,8 +5,12 @@ This metalayer can be used to integrate core SDV.EDGE components into a Yocto ba
 # Dependencies
 
 This layer depends on
+- poky
 - meta-virtualization
 - meta-rauc
+- meta-openembedded
+- meta-security
+- meta-rauc-community
 
 # License and Copyright
 
