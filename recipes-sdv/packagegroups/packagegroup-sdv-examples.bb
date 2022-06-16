@@ -18,7 +18,12 @@ inherit packagegroup
 
 # Temporarily disabled packages:
 # - sdv-container-seatapp
-
+SDV_EXTERNAL_DEPENDS = "\
+    sdv-container-helloworld \
+    sdv-container-seatservice \
+    sdv-container-databroker \
+    sdv-container-feedercan \
+    "
 RDEPENDS:${PN} = "\
     can-utils \
     can-utils-access \
@@ -27,11 +32,9 @@ RDEPENDS:${PN} = "\
     can-utils-cantest \
     can-utils-slcan \
     can-utils-log \
-    sdv-container-helloworld \
-    sdv-container-seatservice \
-    sdv-container-databroker \
-    sdv-container-feedercan \
     "
+RDEPENDS:${PN} += "${@'${SDV_EXTERNAL_DEPENDS}' if d.getVar('INCLUDE_SDV') == '1' else ''}"    
+
 KERNEL_MODULE_AUTOLOAD += "can"
 KERNEL_MODULE_AUTOLOAD += "vcan"
 KERNEL_MODULE_AUTOLOAD += "vxcan"

@@ -16,14 +16,20 @@ DESCRIPTION = "Packages required to set up a basic working demo SDV system, but 
 
 inherit packagegroup
 
+SDV_EXTERNAL_DEPENDS = "\
+    sdv-container-databroker \
+    sdv-dapr-binaries \
+    sdv-initialize-dapr-first-boot \
+    sdv-helm-binaries \
+    "
+
 RDEPENDS:${PN} = "\
     kanto-container-management \
     kanto-file-upload \
     kanto-software-update \
     kanto-suite-connector \
     rauc-hawkbit-updater \
-    sdv-dapr-binaries \
-    sdv-initialize-dapr-first-boot \
-    sdv-helm-binaries \
-    sdv-container-databroker \
     "
+
+RDEPENDS:${PN} += "${@'${SDV_EXTERNAL_DEPENDS}' if d.getVar('INCLUDE_SDV') == '1' else ''}"
+
