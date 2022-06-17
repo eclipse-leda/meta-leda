@@ -25,4 +25,4 @@ RDEPENDS:${PN} = "\
     kernel-image \
     rauc "
 
-RDEPENDS:${PN} += "${@'${SDV_EXTERNAL_DEPENDS}' if d.getVar('INCLUDE_SDV') == '1' else ''}"
+RDEPENDS:${PN} += "${@bb.utils.contains("DISTRO_FEATURES", "sdv", "${SDV_EXTERNAL_DEPENDS}", "", d)}"

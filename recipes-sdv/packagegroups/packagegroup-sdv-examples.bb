@@ -33,7 +33,7 @@ RDEPENDS:${PN} = "\
     can-utils-slcan \
     can-utils-log \
     "
-RDEPENDS:${PN} += "${@'${SDV_EXTERNAL_DEPENDS}' if d.getVar('INCLUDE_SDV') == '1' else ''}"    
+RDEPENDS:${PN} += "${@bb.utils.contains("DISTRO_FEATURES", "sdv", "${SDV_EXTERNAL_DEPENDS}", "", d)}"
 
 KERNEL_MODULE_AUTOLOAD += "can"
 KERNEL_MODULE_AUTOLOAD += "vcan"
