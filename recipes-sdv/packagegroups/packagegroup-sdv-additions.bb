@@ -17,10 +17,10 @@ DESCRIPTION = "Packages required to set up a basic working demo SDV system, but 
 inherit packagegroup
 
 SDV_EXTERNAL_DEPENDS = "\
-    sdv-container-databroker \
     sdv-dapr-binaries \
     sdv-initialize-dapr-first-boot \
     sdv-helm-binaries \
+    sdv-container-databroker \
     "
 
 RDEPENDS:${PN} = "\
