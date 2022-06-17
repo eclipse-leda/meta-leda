@@ -17,6 +17,7 @@ DISTRO_FEATURES:append = " k8s"
 DISTRO_FEATURES:append = " seccomp"
 DISTRO_FEATURES:append = " rauc"
 DISTRO_FEATURES:append = " security"
+DISTRO_FEATURES:append = " sdv"
 
 # Enable systemd as init process
 DISTRO_FEATURES:append = " systemd"

@@ -16,6 +16,12 @@ DESCRIPTION = "Packages required to set up a basic working SDV system"
 
 inherit packagegroup
 
+SDV_EXTERNAL_DEPENDS = "\
+    sdv-k3s-config \
+    sdv-core-bundle-pods \
+    sdv-container-cloudagent \
+    "
+
 RDEPENDS:${PN} = "\
     ca-certificates \
     packagegroup-k3s-host \
@@ -24,8 +30,7 @@ RDEPENDS:${PN} = "\
     openssh \
     openssh-sftp-server \
     rauc \
-    sdv-k3s-config \
-    sdv-core-bundle-pods \
-    sdv-container-cloudagent \
     sdv-core-utils \
     "
+
+RDEPENDS:${PN} += "${@bb.utils.contains("DISTRO_FEATURES", "sdv", "${SDV_EXTERNAL_DEPENDS}", "", d)}"
