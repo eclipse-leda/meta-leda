@@ -14,12 +14,21 @@
 
 bootloader --ptable gpt --configfile="raspberrypi4-64.cfg"
 
+# /dev/mmcblk0p1 - Boot partition
 part /boot --source bootimg-partition --ondisk mmcblk0 --fstype=vfat --label boot --active --align 4096 --size 100
 
 # GRUB environment to store info about retries, mounted for showcase
+# /dev/mmcblk0p2 - Boot partition
 part /grubenv --fixed-size 10M --fstype=vfat --ondisk mmcblk0 --label grubenv --align 1024
 
+# /dev/mmcblk0p3 - Rescue partition
 part --fixed-size 200M --source rootfs --rootfs-dir=sdv-image-rescue --ondisk mmcblk0 --fstype=ext4 --label rescue --align 1024
+
+# /dev/mmcblk0p4 - SDV Full partition
 part / --fixed-size 1500M --source rootfs --rootfs-dir=sdv-image-full --ondisk mmcblk0 --fstype=ext4 --label root_a --align 4096
+
+# /dev/mmcblk0p5 - SDV Minimal partition
 part --fixed-size 500M --source rootfs --rootfs-dir=sdv-image-minimal  --ondisk mmcblk0 --fstype=ext4 --label root_b --align 4096
+
+# /dev/mmcblk0p6 - Kubernetes Data partition
 part /data --fixed-size 4096M --ondisk mmcblk0 --fstype=ext4 --label data --align 4096  --fsoptions "x-systemd.growfs"
