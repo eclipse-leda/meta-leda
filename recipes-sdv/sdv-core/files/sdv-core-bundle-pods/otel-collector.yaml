@@ -1,8 +1,22 @@
----
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: otelcol-sdv
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: zipkin
+  labels:
+    component: otelcol-sdv-agent
+spec:
+  ports:
+  - name: zipkin
+    port: 9411
+    protocol: TCP
+    targetPort: 9411
+  selector:
+    component: otelcol-sdv-agent
 ---
 apiVersion: v1
 kind: Service
@@ -25,7 +39,6 @@ kind: Deployment
 metadata:
   name: otelcol-sdv-exporter
 spec:
-  replicas: 1
   selector:
     matchLabels:
       component: otelcol-sdv-exporter
@@ -43,7 +56,7 @@ spec:
             - ./otel-sdv-exporter
           securityContext:
             {}
-          image: ghcr.io/softwaredefinedvehicle/sdv-edge-otel/otelcol-sdv-exporter:latest
+          image: ghcr.io/softwaredefinedvehicle/sdv-edge-otel/otelcol-sdv-exporter:v0.0.1
           imagePullPolicy: IfNotPresent
           ports:
             - name: otlp
@@ -74,6 +87,8 @@ data:
         send_batch_size: 1600
         timeout: 30s
     receivers:
+      zipkin:
+        endpoint: 0.0.0.0:9411
       filelog:
         exclude: []
         include:
@@ -101,7 +116,7 @@ data:
           to: resource["k8s.container.name"]
         - type: move
           from: body.namespace
-          to: resource["k8s.namespace.name"]    
+          to: resource["k8s.namespace.name"]
         - type: move
           from: body.pod_name
           to: resource["k8s.pod.name"]
@@ -110,7 +125,7 @@ data:
           to: resource["k8s.pod.uid"]
         - type: regex_parser
           id: parser-cloud-connector
-          if: 'resource["k8s.container.name"] == "cloudagent" && body.log startsWith "2"'
+          if: body.log matches "^(\\d{4}\\/\\d{2}\\/\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d{6})  \\[(.*)\\]  (.{5})  (.*)$"
           parse_to: body
           parse_from: body.log
           regex: '^(?P<time>\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}:\d{2}\.\d{6})  \[(?P<component>.*)\]  (?P<severity>.{5})  (?P<log>.*)$'
@@ -125,6 +140,56 @@ data:
               info: 'INFO '
               debug: 'DEBUG'
               trace: 'TRACE'
+        - type: recombine
+          id: multiline-vapp
+          combine_field: body.log
+          is_first_entry: body.log matches "^(\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2},\\d{3}) .*" || body.log matches "^(\\d{2}\\/\\d{2}\\/\\d{4} \\d{2}:\\d{2}:\\d{2}\\ [AP]M) - (.*) - [A-Z]+ - (.*)$"
+          source_identifier: resource["k8s.container.name"]
+          combine_with: "\\n"
+        - type: regex_parser
+          id: parser-vapp
+          if: body.log matches "^(\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2},\\d{3}) .*"
+          parse_to: body
+          parse_from: body.log
+          regex: '^(?P<time>\d{2}\/\d{2}\/\d{4} \d{2}:\d{2}:\d{2}\ [AP]M) - (?P<component>.*) - (?P<severity>[a-zA-Z]+) - (?P<log>.*)$'
+          severity:
+            parse_from: body.severity
+            mapping:
+              fatal: 'CRITICAL'
+              error: 'ERROR'
+              warn: 'WARNING'
+              info: 'INFO'
+              debug: 'DEBUG'
+        - type: regex_parser
+          id: parser-vapp-old
+          if: body.log matches "^(\\d{2}\\/\\d{2}\\/\\d{4} \\d{2}:\\d{2}:\\d{2}\\ [AP]M) - (.*) - [A-Z]+ - (.*)$"
+          parse_to: body
+          parse_from: body.log
+          regex: '^(?P<time>\d{2}\/\d{2}\/\d{4} \d{2}:\d{2}:\d{2}\ [AP]M) - (?P<component>.*) - (?P<severity>[A-Z]+) - (?P<log>.*)$'
+          severity:
+            parse_from: body.severity
+            mapping:
+              fatal: 'CRITICAL'
+              error: 'ERROR'
+              warn: 'WARNING'
+              info: 'INFO'
+              debug: 'DEBUG'
+        - type: regex_parser
+          id: parser-daprd
+          if: body.log matches '^time=\\"(?P<time>\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d+)Z\\" level=(?P<severity>[a-zA-Z]+) (?P<log>.*) type=(?P<type>[a-zA-Z]+) ver=(?P<version>\\d+\\.\\d+\\.\\d+)$'
+          parse_to: body
+          parse_from: body.log
+          regex: '^time=\"(?P<time>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d+)Z\" level=(?P<severity>[a-zA-Z]+) (?P<log>.*) type=(?P<type>[a-zA-Z]+) ver=(?P<version>\d+\.\d+\.\d+)$'
+          timestamp:
+            parse_from: body.time
+            layout: '%Y-%m-%dT%H:%M:%S.%f'
+          severity:
+            parse_from: body.severity
+            mapping:
+              error: 'error'
+              warn: 'warn'
+              info: 'info'
+              debug: 'debug'
         - type: move
           from: attributes["log.file.path"]
           to: body["log.file.path"]
@@ -145,7 +210,7 @@ data:
               system.memory.usage:
                 enabled: true
               system.memory.utilization:
-                enabled: true   
+                enabled: true
       journald:
         units:
           - ssh
@@ -176,36 +241,43 @@ data:
             from: body["_TRANSPORT"]
           - type: move
             from: body.MESSAGE
-            to: body                    
+            to: body
     service:
       telemetry:
         logs:
           level: "debug"
       pipelines:
-        logs/containers:
+        traces:
           exporters:
           - otlp
           processors:
           - batch
           receivers:
-          - filelog
-        logs/services:
-          exporters:
-          - otlp
-          processors:
-          - batch
-          receivers:
-          - journald
-        metrics:
-          exporters:
-          - otlp
-          processors:
-          - batch
-          receivers:
-          - hostmetrics
+          - zipkin
+        # logs/containers:
+        #   exporters:
+        #   - otlp
+        #   processors:
+        #   - batch
+        #   receivers:
+        #   - filelog
+        # logs/services:
+        #   exporters:
+        #   - otlp
+        #   processors:
+        #   - batch
+        #   receivers:
+        #   - journald
+        # metrics:
+        #   exporters:
+        #   - otlp
+        #   processors:
+        #   - batch
+        #   receivers:
+        #   - hostmetrics
 ---
 apiVersion: apps/v1
-kind: DaemonSet
+kind: Deployment
 metadata:
   name: otelcol-sdv-agent
 spec:
@@ -227,8 +299,10 @@ spec:
             - --config=/conf/relay.yaml
           securityContext:
             {}
-          image: ghcr.io/softwaredefinedvehicle/sdv-edge-otel/otelcol-sdv-ext:latest
+          image: ghcr.io/softwaredefinedvehicle/sdv-edge-otel/otelcol-sdv-ext:v0.0.1
           imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 9411
           env:
             - name: HOST_PROC
               value: /hostfs/proc
@@ -280,4 +354,3 @@ spec:
       hostNetwork: false
       imagePullSecrets:
         - name: ghcr-io
-
