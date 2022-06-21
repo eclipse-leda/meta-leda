@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: suaservice
+  name: selfupdateagent
   labels:
-    app: suaservice
+    app: selfupdateagent
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: suaservice
+      app: selfupdateagent
   template:
     metadata:
       labels:
-        app: suaservice
+        app: selfupdateagent
     spec:
       containers:
-        - name: suaservice
+        - name: selfupdateagent
           image: ghcr.io/softwaredefinedvehicle/sdv-self-update-agent/sua:v0.1.2
           imagePullPolicy: IfNotPresent 
 # Commented out for big memory limits
@@ -48,11 +48,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: suaservice-nodeport
+  name: selfupdateagent-nodeport
 spec:
   type: NodePort
   selector:
-    app: suaservice
+    app: selfupdateagent
   ports:
     - port: 50052
       targetPort: 50052
