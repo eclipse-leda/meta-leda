@@ -151,7 +151,12 @@ data:
           if: body.log matches "^(\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2},\\d{3}) .*"
           parse_to: body
           parse_from: body.log
-          regex: '^(?P<time>\d{2}\/\d{2}\/\d{4} \d{2}:\d{2}:\d{2}\ [AP]M) - (?P<component>.*) - (?P<severity>[a-zA-Z]+) - (?P<log>.*)$'
+          regex: '^(?P<time>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3}) (?P<severity>[A-Z]*) \[(?P<function>\S*)] \[(?P<component>\S*)] \[trace_id=(?P<trace_id>\S+) span_id=(?P<span_id>\S+) resource.service.name=(?P<resource>\S+)] - (?P<log>.*)$'
+          trace:
+            trace_id:
+              parse_from: body.trace_id
+            span_id:
+              parse_from: body.span_id
           severity:
             parse_from: body.severity
             mapping:
