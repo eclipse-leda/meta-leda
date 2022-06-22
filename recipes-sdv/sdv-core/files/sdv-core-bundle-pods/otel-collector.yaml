@@ -254,20 +254,20 @@ data:
           - batch
           receivers:
           - zipkin
-        # logs/containers:
-        #   exporters:
-        #   - otlp
-        #   processors:
-        #   - batch
-        #   receivers:
-        #   - filelog
-        # logs/services:
-        #   exporters:
-        #   - otlp
-        #   processors:
-        #   - batch
-        #   receivers:
-        #   - journald
+        logs/containers:
+          exporters:
+          - otlp
+          processors:
+          - batch
+          receivers:
+          - filelog
+        logs/services:
+          exporters:
+          - otlp
+          processors:
+          - batch
+          receivers:
+          - journald
         # metrics:
         #   exporters:
         #   - otlp
