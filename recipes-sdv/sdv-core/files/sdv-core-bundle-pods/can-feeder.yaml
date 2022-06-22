@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: feedercan
-          image: ghcr.io/softwaredefinedvehicle/swdc-os-vehicleapi/feeder_can:latest
+          image: ghcr.io/softwaredefinedvehicle/swdc-os-vehicleapi/feeder_can:v0.18.0
           resources:
             requests:
               cpu: "50m"

@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: cloudagent
-          image: ghcr.io/softwaredefinedvehicle/swdc-os-cloud-agent/cloudagent:v0.3
+          image: ghcr.io/softwaredefinedvehicle/swdc-os-cloud-agent/cloudagent:v0.4
           imagePullPolicy: IfNotPresent
           env:
             - name: CONNECTION_STRING
