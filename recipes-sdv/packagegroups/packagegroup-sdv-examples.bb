@@ -19,7 +19,6 @@ inherit packagegroup
 # Temporarily disabled packages:
 # - sdv-container-seatapp
 SDV_EXTERNAL_DEPENDS = "\
-    sdv-container-helloworld \
     sdv-container-seatservice \
     sdv-container-databroker \
     sdv-container-feedercan \
