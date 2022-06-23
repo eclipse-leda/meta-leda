@@ -14,7 +14,9 @@
 #
 echo "Enlarging SD Card partition"
 
-parted /dev/mmcblk0 resizepart 4 100%
-resize2fs /dev/mmcblk0p4
+# Last partition on our image is supposed to be "6"
+LAST_PARTITION_NUMBER=$(cat /proc/partitions | grep mmcblk0p | wc -l)
 
-echo "raspberry-growdisk.service was disabled"
+sgdisk /dev/mmcblk0 --move-second-header
+parted --script /dev/mmcblk0 resizepart ${LAST_PARTITION_NUMBER} 100%
+resize2fs /dev/mmcblk0p${LAST_PARTITION_NUMBER}
