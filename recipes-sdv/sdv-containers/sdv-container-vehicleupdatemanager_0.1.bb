@@ -25,7 +25,7 @@ LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=d9fc0efef5228704e7f5b37f271927
 
 # Define image to be pulled
 SDV_IMAGE_REF="ghcr.io/softwaredefinedvehicle/swdc-os-containers-management/vehicleupdatemanager"
-SDV_IMAGE_TAG="v0.6"
+SDV_IMAGE_TAG="v0.7"
 
 # Override container architecture. If not set, recipe tries autodetection for target machine architecture.
 #CONTAINER_ARCH="arm64"

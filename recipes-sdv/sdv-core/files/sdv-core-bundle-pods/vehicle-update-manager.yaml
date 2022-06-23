@@ -41,17 +41,28 @@ spec:
       labels:
         component: vehicle-update-manager
     spec:
-      restartPolicy: Always
       serviceAccountName: vehicle-update-manager
       containers:
         - name: vehicle-update-manager
-          image: ghcr.io/softwaredefinedvehicle/swdc-os-containers-management/vehicleupdatemanager:v0.6
+          image: ghcr.io/softwaredefinedvehicle/swdc-os-containers-management/vehicleupdatemanager:v0.7
           imagePullPolicy: IfNotPresent
+          securityContext:
+            privileged: true
           env:
+            - name: SELF_UPDATE_TIMEOUT
+              value: 30m
+            - name: SELF_UPDATE_ENABLE_REBOOT
+              value: "true"
             - name: THINGS_CONN_BROKER
               value: tcp://mosquitto:1883
             - name: THINGS_FEATURES
               value: ContainerOrchestrator
+          volumeMounts:
+          - mountPath: /proc
+            name: proc
+      volumes:
+      - hostPath:
+          path: /proc
+        name: proc
       imagePullSecrets:
         - name: ghcr-io
----
