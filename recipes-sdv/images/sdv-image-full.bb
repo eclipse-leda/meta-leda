@@ -20,6 +20,7 @@ IMAGE_INSTALL = "packagegroup-core-boot ${CORE_IMAGE_EXTRA_INSTALL}"
 IMAGE_INSTALL:append = " packagegroup-sdv-core"
 IMAGE_INSTALL:append = " packagegroup-sdv-additions"
 IMAGE_INSTALL:append = " packagegroup-sdv-tools"
+IMAGE_INSTALL:append = " packagegroup-sdv-airgap"
 IMAGE_INSTALL:append = " packagegroup-sdv-examples"
 
 IMAGE_LINGUAS = " "
