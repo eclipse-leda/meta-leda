@@ -17,7 +17,8 @@ export CONTAINER_ARCH
 CONTAINER_OS ??= "linux"
 CONTAINER_REGISTRY_REQUIRES_AUTH ??= "1"
 CONTAINER_SKIP_MISSING_ARCH ??= "0"
-SDV_DL_FILE ??= "${DL_DIR}/${PN}-${PV}-${TARGET_ARCH}.oci"
+SDV_DL_FILENAME ??= "${PN}-${PV}-${TARGET_ARCH}-${SDV_IMAGE_TAG}.tar"
+SDV_DL_FILE ??= "${DL_DIR}/${SDV_DL_FILENAME}"
 
 K3S_AGENT_PRELOAD_DIR ??= "/var/lib/rancher/k3s/agent/images"
 
@@ -157,21 +158,18 @@ do_fetch_container() {
 }
 
 do_unpack_container() {
-    CONTAINER_SOURCE_FOLDER="${S}/container-image"
-    bbnote "Copying ${SDV_DL_FILE} to ${CONTAINER_SOURCE_FOLDER}"
-    mkdir -p ${CONTAINER_SOURCE_FOLDER}
-    cp ${SDV_DL_FILE} ${CONTAINER_SOURCE_FOLDER}
+    cp ${SDV_DL_FILE} ${S}/${SDV_DL_FILENAME}
 }
 
 # Todo: Move the layer blobs into the containerd storage
 do_install() {
     mkdir -p ${D}${K3S_AGENT_PRELOAD_DIR}
-    cp -R --no-dereference --preserve=mode,links -v ${S}/container-image ${D}${K3S_AGENT_PRELOAD_DIR}/${PN}.tar
+    cp --no-dereference --preserve=mode,links -v ${S}/${SDV_DL_FILENAME} ${D}${K3S_AGENT_PRELOAD_DIR}/
 }
 
 addtask do_fetch_container before do_unpack_container after do_fetch 
 addtask do_unpack_container before do_install after do_fetch_container 
 
-FILES:${PN} += "${K3S_AGENT_PRELOAD_DIR}/${PN}.tar"
+FILES:${PN} += "${K3S_AGENT_PRELOAD_DIR}/${SDV_DL_FILENAME}"
 
 PACKAGES = "${PN}"
