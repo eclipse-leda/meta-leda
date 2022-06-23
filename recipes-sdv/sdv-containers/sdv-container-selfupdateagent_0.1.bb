@@ -12,7 +12,7 @@
 # ********************************************************************************/
 
 SUMMARY = "SDV Self Update Agent"
-DESCRIPTION = "The self update agent (SUA) is a component reposible for the OS Update process."
+DESCRIPTION = "The self update agent (SUA) is a component responsible for the OS Update process."
 
 inherit sdv-container-cache
 
@@ -25,7 +25,7 @@ LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=d9fc0efef5228704e7f5b37f271927
 
 # Define image to be pulled
 SDV_IMAGE_REF="ghcr.io/softwaredefinedvehicle/sdv-self-update-agent/sua"
-SDV_IMAGE_TAG="v0.1.2"
+SDV_IMAGE_TAG="v0.1.13"
 
 # Override container architecture. If not set, recipe tries autodetection for target machine architecture.
 #CONTAINER_ARCH="arm64"
