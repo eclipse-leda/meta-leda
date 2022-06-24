@@ -30,7 +30,7 @@ https://www.apache.org/licenses/LICENSE-2.0
 
 The project maintains the following source code repositories:
 
-* https://github.com/SoftwareDefinedVehicle/
+* https://github.com/eclipse-leda/
 
 ## Cryptography
 
