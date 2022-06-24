@@ -11,27 +11,20 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-SUMMARY = "SDV examples packages"
-DESCRIPTION = "Packages SDV examples (Seat Service)"
+SUMMARY = "SDV Air-Gap Installation"
+DESCRIPTION = "Pre-Load Container Images for Offline installation"
 
 inherit packagegroup
 
-# Temporarily disabled packages:
-# - sdv-container-seatapp
-SDV_EXTERNAL_DEPENDS = "\
+RDEPENDS:${PN} += "\
+    sdv-container-cloudagent \
+    sdv-container-databroker \
+    sdv-container-feedercan \
+    sdv-container-otelagent \
+    sdv-container-otelexporter \
     sdv-container-seatservice \
+    sdv-container-selfupdateagent \
+    sdv-container-vehicleupdatemanager \
     "
-RDEPENDS:${PN} = "\
-    can-utils \
-    can-utils-access \
-    can-utils-isotp \
-    can-utils-j1939 \
-    can-utils-cantest \
-    can-utils-slcan \
-    can-utils-log \
-    "
-RDEPENDS:${PN} += "${@bb.utils.contains("DISTRO_FEATURES", "sdv", "${SDV_EXTERNAL_DEPENDS}", "", d)}"
 
-KERNEL_MODULE_AUTOLOAD += "can"
-KERNEL_MODULE_AUTOLOAD += "vcan"
-KERNEL_MODULE_AUTOLOAD += "vxcan"
+
