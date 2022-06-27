@@ -4,7 +4,7 @@ metadata:
   name: seat-adjuster-app
   annotations:
     dapr.io/enabled: "true"
-    dapr.io/app-id: "seat-adjuster-app-ces"
+    dapr.io/app-id: "seat-adjuster-app"
     dapr.io/app-port: "50008"
     dapr.io/log-level: "info"
     dapr.io/app-protocol: "grpc"
@@ -15,8 +15,8 @@ spec:
     hostnames:
     - "edgehost"
   containers:
-    - name: seat-adjuster-app-ces
-      image: swdceuwedevgsopscr.azurecr.io/seat-adjuster-app-ces:0.4.5
+    - name: seat-adjuster-app
+      image: mycustomregistry.azurecr.io/seat-adjuster-app:latest
       imagePullPolicy: IfNotPresent
       ports:
         - containerPort: 50008
@@ -24,4 +24,4 @@ spec:
         - name: SEATS_SERVICE_ADDRESS
           value: "edgehost:50051"
   imagePullSecrets:
-  - name: azurecr
+  - name: mycustomregistry

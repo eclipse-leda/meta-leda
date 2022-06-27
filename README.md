@@ -1,6 +1,8 @@
 # OpenEmbedded Meta-Layer for Software Defined Vehicles components
 
-This metalayer can be used to integrate core SDV.EDGE components into a Yocto based build. It is based on the guidelines documented in https://docs.yoctoproject.org/3.1.13/brief-yoctoprojectqs/brief-yoctoprojectqs.html#creating-your-own-general-layer
+This metalayer can be used to integrate software-defined vehicle open source components into a Yocto based build.
+
+It is based on the guidelines documented in the [Yocto Project Documentation](https://docs.yoctoproject.org/3.1.13/brief-yoctoprojectqs/brief-yoctoprojectqs.html#creating-your-own-general-layer)
 
 # Dependencies
 
