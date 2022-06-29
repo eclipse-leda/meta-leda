@@ -10,8 +10,6 @@ It is based on the guidelines documented in the [Yocto Project Documentation](ht
 - BSP for QEMU and Raspberry Pi: `meta-sdv/meta-sdv-bsp`
 - SDV Component Recipes: `meta-sdv/meta-sdv-components`
 
-Note: `meta-sdv` is a [container layer](https://docs.yoctoproject.org/ref-manual/terms.html#term-Container-Layer).
-
 # Dependencies
 
 This layer depends on
