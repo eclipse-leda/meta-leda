@@ -1,0 +1,8 @@
+Welcome to Eclipse Leda Build Environment for Application Containers
+You can now run 
+
+    1) Build:
+            bitbake sdv-image-container
+
+    2) Import Container to Docker:  
+            skopeo copy oci:$(find tmp/deploy/images -name "*.rootfs-oci" -type d):latest docker-daemon:leda-container-base:latest
