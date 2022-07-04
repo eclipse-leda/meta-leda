@@ -7,9 +7,9 @@ tmpfs                /run                 tmpfs      mode=0755,nodev,nosuid,stri
 tmpfs                /var/volatile        tmpfs      defaults              0  0
 
 # Add mount for boot, grubenv and data partition
-/dev/mmcblk0p1       /boot                vfat       defaults,sync,auto,nofail,noatime  0  0
-/dev/mmcblk0p2       /grubenv             auto       defaults,sync,auto,nofail,noatime  0  0
-/dev/mmcblk0p6       /data                auto       defaults,sync,auto,nofail,noatime  0  0
+/dev/mmcblk0p1       /boot                vfat       defaults,nofail,noatime  0  0
+/dev/mmcblk0p2       /grubenv             auto       defaults,nofail,noatime  0  0
+/dev/mmcblk0p6       /data                auto       defaults,nofail,noatime  0  2
 
 # Mount pre-cached container images and manifests to the new data directory of k3s
 # The partition (/dev/vda6) is empty on startup, but k3s requires
