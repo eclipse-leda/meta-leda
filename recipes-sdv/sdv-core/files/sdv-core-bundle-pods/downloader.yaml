@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: downloader
+spec:
+  selector:
+    matchLabels:
+      app: downloader
+  template:
+    metadata:
+      labels:
+        app: downloader
+    spec:
+      containers:
+        - env:
+            - name: GRPC_SERVER_ADDRESS
+              value: 0.0.0.0:50051
+            - name: STORAGE_DIR
+              value: /tmp/downloader
+            - name: RUST_LOG
+              value: info
+          image: ghcr.io/softwaredefinedvehicle/sdv-edge-downloader/downloader:v0.1
+          imagePullPolicy: IfNotPresent
+          name: downloader
+          ports:
+            - name: default
+              containerPort: 50051
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /tmp/downloader                
+            name: host-mount
+      imagePullSecrets:
+        - name: ghcr-io
+      volumes:
+        - name: host-mount
+          hostPath:
+            path: /data/downloader
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: downloader-nodeport
+spec:
+  type: NodePort
+  selector:
+    app: downloader
+  ports:
+    - port: 50051
+      targetPort: 50051
+      nodePort: 30051
