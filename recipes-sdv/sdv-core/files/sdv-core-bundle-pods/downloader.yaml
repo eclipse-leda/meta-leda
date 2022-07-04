@@ -27,8 +27,8 @@ spec:
               containerPort: 50051
               protocol: TCP
           volumeMounts:
-            - mountPath: /tmp/downloader                
-            name: host-mount
+            - name: host-mount
+              mountPath: /tmp/downloader                
       imagePullSecrets:
         - name: ghcr-io
       volumes:
