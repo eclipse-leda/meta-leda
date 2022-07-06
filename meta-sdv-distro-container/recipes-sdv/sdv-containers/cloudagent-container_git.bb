@@ -22,7 +22,7 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=d9fc0efef5228704e7f5b37f27192723"
 
 # Ensure we're building a container image
-require images/sdv-image-container.bb
+include images/sdv-image-container.bb
 
 # Shell may be needed
 IMAGE_INSTALL += " \
