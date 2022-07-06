@@ -15,7 +15,7 @@ SUMMARY = "SDV Core Utilities"
 DESCRIPTION = "Core shell scripts"
 
 SRC_URI = "git://github.com/SoftwareDefinedVehicle/sdv-edge-core-utils;branch=main"
-SRCREV = "414b1d085624631dbb670d346807f4e552a90905"
+SRCREV = "ef862d3268a491d3c0029682134fe8622a0be15b"
 
 # According to https://wiki.yoctoproject.org/wiki/License_Infrastructure_Interest_Group
 LICENSE = "Apache-2.0"
