@@ -12,6 +12,6 @@
 # ********************************************************************************/
 
 # Enable GRUB Bootloader, so that we can chose which partition to boot.
-#MACHINE_FEATURES:append = " pcbios efi"
-#EXTRA_IMAGEDEPENDS += "ovmf"
-#PREFERRED_RPROVIDER_virtual-grub-bootconf = "rauc-qemu-grubconf"
+MACHINE_FEATURES:append = " pcbios efi"
+EXTRA_IMAGEDEPENDS += "ovmf"
+PREFERRED_RPROVIDER_virtual-grub-bootconf = "rauc-qemu-grubconf"
