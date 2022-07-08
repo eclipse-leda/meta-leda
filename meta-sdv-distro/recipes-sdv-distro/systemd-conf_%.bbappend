@@ -13,7 +13,7 @@
 #
 # Enable CAN bus network by default
 #
-FILESEXTRAPATHS:prepend := "${THISDIR}/systemd-conf-files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/files/systemd-conf-files:"
 
 SRC_URI += " file://can0.network"
 
