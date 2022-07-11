@@ -30,4 +30,5 @@ SDV_IMAGE_TAG="v0.1.16"
 # Override container architecture. If not set, recipe tries autodetection for target machine architecture.
 #CONTAINER_ARCH="arm64"
 
-
+# Skip pre-caching of a container if target architecture does not exist
+CONTAINER_SKIP_MISSING_ARCH="1"
