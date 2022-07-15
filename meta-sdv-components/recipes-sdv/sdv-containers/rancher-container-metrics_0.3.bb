@@ -26,3 +26,6 @@ LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=d9fc0efef5228704e7f5b37f271927
 # Define image to be pulled
 SDV_IMAGE_REF = "rancher/metrics-server"
 SDV_IMAGE_TAG = "v0.3.6"
+
+# Skip pre-caching of a container if target architecture does not exist
+CONTAINER_SKIP_MISSING_ARCH="1"
