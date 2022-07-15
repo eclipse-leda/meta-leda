@@ -25,6 +25,13 @@ RDEPENDS:${PN} += "\
     sdv-container-seatservice \
     sdv-container-selfupdateagent \
     sdv-container-vehicleupdatemanager \
+    sdv-containers-dapr \
+    rancher-container-coredns \
+    rancher-container-klipper \
+    rancher-container-local-path-provisioner \
+    rancher-container-metrics \
+    rancher-container-traefik \
+    sdv-kuksa-val-databroker \
     "
 
 
