@@ -158,10 +158,10 @@ do_fetch_container() {
 }
 
 do_unpack_container() {
+    mkdir -p ${S}
     cp ${SDV_DL_FILE} ${S}/${SDV_DL_FILENAME}
 }
 
-# Todo: Move the layer blobs into the containerd storage
 do_install() {
     mkdir -p ${D}${K3S_AGENT_PRELOAD_DIR}
     cp --no-dereference --preserve=mode,links -v ${S}/${SDV_DL_FILENAME} ${D}${K3S_AGENT_PRELOAD_DIR}/

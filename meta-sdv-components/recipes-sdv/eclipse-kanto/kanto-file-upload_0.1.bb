@@ -16,7 +16,7 @@ LICENSE = "EPL-2.0"
 LIC_FILES_CHKSUM = "file://${WORKDIR}/git/src/${GO_IMPORT}/LICENSE;md5=c7cc8aa73fb5717f8291fcec5ce9ed6c"
 
 SRC_URI = "git://github.com/eclipse-kanto/file-upload;protocol=https;branch=main"
-SRCREV = "${AUTOREV}"
+SRCREV = "0451bb103ccf1e75ee92fcf7412ae01b71508d68"
 PV = "0.1+git${SRCPV}"
 
 GO_IMPORT = "github.com/eclipse-kanto/file-upload"

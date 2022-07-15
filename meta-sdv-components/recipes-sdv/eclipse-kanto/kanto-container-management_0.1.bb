@@ -16,7 +16,7 @@ LICENSE = "EPL-2.0"
 LIC_FILES_CHKSUM = "file://${WORKDIR}/git/src/${GO_IMPORT}/LICENSE;md5=c7cc8aa73fb5717f8291fcec5ce9ed6c"
 
 SRC_URI = "git://github.com/eclipse-kanto/container-management;protocol=https;branch=main"
-SRCREV = "${AUTOREV}"
+SRCREV = "d9509ccbb92a510e8b9b665a4490c8d1ca09a797"
 PV = "0.1+git${SRCPV}"
 
 GO_IMPORT = "github.com/eclipse-kanto/container-management"
