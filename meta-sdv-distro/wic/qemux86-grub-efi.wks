@@ -37,7 +37,7 @@ part --fixed-size 150M --source rootfs --rootfs-dir=sdv-image-rescue --ondisk vd
 
 # First Root Partition (active, pre-installed), mounted readonly to show that root fs can be readonly
 # and all container-apps in cluster are contained on /data
-part --fixed-size 1700M --source rootfs --rootfs-dir=sdv-image-full --ondisk vda --fstype=ext4 --label root_a
+part --fixed-size 2000M --source rootfs --rootfs-dir=sdv-image-full --ondisk vda --fstype=ext4 --label root_a
 
 # Second Root Partition (empty, not mounted) to show the self-update mechanism
 part --fixed-size 700M --source rootfs --rootfs-dir=sdv-image-minimal --ondisk vda --fstype=ext4 --label root_b
