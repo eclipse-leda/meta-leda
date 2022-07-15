@@ -22,8 +22,6 @@ WantedBy=multi-user.target
 [Service]
 Type=simple
 Restart=on-failure
-RestartSec=5s
+RestartSec=15s
 ExecStartPre=systemctl is-active k3s.service
 ExecStart=/usr/sbin/dapr-init.sh
-
-

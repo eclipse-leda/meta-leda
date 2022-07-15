@@ -16,10 +16,24 @@ echo "Will call dapr init -k --wait"
 
 export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 
-dapr init -k --wait --timeout 600
-if [ "$?" = "0" ]; then
-    #job done, remove it from systemd services
+if ! dapr status -k;
+then
+    kubectl delete namespace dapr-system
+    dapr init -k --wait --timeout 6000
+    if [ "$?" = "0" ];
+    then
+        if ! dapr status -k;
+        then
+        # DAPR initialized successfully, remove initialization from systemd
+            systemctl disable dapr-init.service
+            echo "Dapr installed successfully. dapr-init.service was disabled"
+            exit 0
+        fi
+    fi
+else
     systemctl disable dapr-init.service
-
-    echo "Dapr installed successfully. dapr-init.service was disabled"
+    echo "dapr status indicates dapr is installed and currently activating"
+    exit 0
 fi
+
+exit 1

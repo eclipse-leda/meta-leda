@@ -8,7 +8,12 @@ tmpfs                /var/volatile        tmpfs      defaults              0  0
 
 # Add mount for boot, grubenv and data partition
 /dev/vda2            /grubenv             auto       defaults,sync,auto,nofail,noatime  0  0
-/dev/vda6            /data                auto       defaults,auto,nofail,noatime  0  0
+
+# Experiment: Using tmpfs for the data-dir to improve performance
+/dev/vda6            /data                auto       defaults,async,auto,nofail,noatime  0  0
+
+#tmpfs            /data                tmpfs       defaults,async,auto,nofail,noatime,size=2048M  0  0
+tmpfs /data/agent tmpfs X-mount.mkdir 0 0
 
 # Mount pre-cached container images and manifests to the new data directory of k3s
 # The partition (/dev/vda6) is empty on startup, but k3s requires
@@ -16,5 +21,5 @@ tmpfs                /var/volatile        tmpfs      defaults              0  0
 #
 # Auto-Create Mount Points by using "X-mount.mkdir"
 #
-/var/lib/rancher/k3s/agent/images /data/agent/images none default,nofail,bind,X-mount.mkdir 0 0
-/var/lib/rancher/k3s/server/manifests /data/server/manifests none default,nofail,bind,X-mount.mkdir 0 0
+/var/lib/rancher/k3s/agent/images /data/agent/images none defaults,nofail,bind,X-mount.mkdir,ro 0 0
+/var/lib/rancher/k3s/server/manifests /data/server/manifests none defaults,nofail,bind,X-mount.mkdir 0 0
