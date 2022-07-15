@@ -7,12 +7,9 @@ tmpfs                /run                 tmpfs      mode=0755,nodev,nosuid,stri
 tmpfs                /var/volatile        tmpfs      defaults              0  0
 
 # Add mount for boot, grubenv and data partition
-/dev/vda2            /grubenv             auto       defaults,sync,auto,nofail,noatime  0  0
+/dev/vda2            /grubenv             auto       defaults,nofail,noatime  0  0
+/dev/vda6            /data                auto       defaults,nofail,noatime  0  2
 
-# Experiment: Using tmpfs for the data-dir to improve performance
-/dev/vda6            /data                auto       defaults,async,auto,nofail,noatime  0  0
-
-#tmpfs            /data                tmpfs       defaults,async,auto,nofail,noatime,size=2048M  0  0
 tmpfs /data/agent tmpfs X-mount.mkdir 0 0
 
 # Mount pre-cached container images and manifests to the new data directory of k3s
