@@ -19,7 +19,7 @@ export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 if ! dapr status -k;
 then
     kubectl delete namespace dapr-system
-    dapr init -k --wait --timeout 600
+    dapr init -k --wait --timeout 600 --runtime-version 1.8.1
     if [ "$?" = "0" ];
     then
         if ! dapr status -k;
