@@ -26,3 +26,7 @@ IMAGE_BOOT_FILES = "u-boot.${UBOOT_SUFFIX} ${KERNEL_IMAGETYPE}"
 IMAGE_CLASSES += "qemuboot"
 
 QB_DEFAULT_BIOS = "u-boot.bin"
+
+# Disable Audio driver so that alsa-lib-native is not being included in the rootfs
+QB_AUDIO_DRV = ""
+QB_AUDIO_OPT = ""
