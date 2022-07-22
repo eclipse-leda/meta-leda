@@ -11,15 +11,21 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-# We have a conf and classes directory, add to BBPATH
-BBPATH .= ":${LAYERDIR}"
+SUMMARY = "SDV Cloud Connector container image"
+DESCRIPTION = "Docker container of the Eclipse Kanto Cloud Connector for IoT Suite"
 
-# We have recipes-* directories, add to BBFILES
-BBFILES += "${LAYERDIR}/recipes-*/*/*.bb \
-            ${LAYERDIR}/recipes-*/*/*.bbappend"
+SRC_URI += "file://README.txt \
+            file://LICENSE"
 
-BBFILE_COLLECTIONS += "meta-sdv"
-BBFILE_PATTERN_meta-sdv := "^${LAYERDIR}/"
-BBFILE_PRIORITY_meta-sdv = "7"
-LAYERDEPENDS_meta-sdv += "core meta-sdv-bsp meta-sdv-components meta-sdv-distro"
-LAYERSERIES_COMPAT_meta-sdv = "honister"
+# According to https://wiki.yoctoproject.org/wiki/License_Infrastructure_Interest_Group
+LICENSE = "Apache-2.0"
+LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=d9fc0efef5228704e7f5b37f27192723"
+
+# Ensure we're building a container image
+include images/sdv-image-container.bb
+
+# Shell may be needed
+IMAGE_INSTALL += " \
+    busybox \
+    kanto-suite-connector \
+    "

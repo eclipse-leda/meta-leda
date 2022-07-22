@@ -11,15 +11,4 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-# We have a conf and classes directory, add to BBPATH
-BBPATH .= ":${LAYERDIR}"
-
-# We have recipes-* directories, add to BBFILES
-BBFILES += "${LAYERDIR}/recipes-*/*/*.bb \
-            ${LAYERDIR}/recipes-*/*/*.bbappend"
-
-BBFILE_COLLECTIONS += "meta-sdv"
-BBFILE_PATTERN_meta-sdv := "^${LAYERDIR}/"
-BBFILE_PRIORITY_meta-sdv = "7"
-LAYERDEPENDS_meta-sdv += "core meta-sdv-bsp meta-sdv-components meta-sdv-distro"
-LAYERSERIES_COMPAT_meta-sdv = "honister"
+# Enable GRUB Bootloader, so that we can chose which partition to boot.

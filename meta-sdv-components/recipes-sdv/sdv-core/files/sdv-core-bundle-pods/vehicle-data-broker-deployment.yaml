@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vehicledatabroker
+  labels:
+    app: vehicledatabroker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vehicledatabroker
+  template:
+    metadata:
+      labels:
+        app: vehicledatabroker
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "vehicledatabroker"
+        dapr.io/app-port: "55555"
+        dapr.io/log-level: "info"
+        dapr.io/app-protocol: "grpc"
+    spec:
+      containers:
+        - name: vehicledatabroker
+          image: ghcr.io/eclipse/kuksa.val/databroker:v0.17.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: default
+              containerPort: 55555
+              protocol: TCP
+          args: ["--dummy-metadata"]              
+      imagePullSecrets:
+        - name: ghcr-io
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vehicledatabroker-nodeport
+spec:
+  type: NodePort
+  selector:
+    app: vehicledatabroker
+  ports:
+    - port: 55555
+      targetPort: 55555
+      nodePort: 30555

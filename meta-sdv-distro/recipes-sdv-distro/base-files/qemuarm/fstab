@@ -1,0 +1,25 @@
+# Eclipse Leda - fstab for qemuarm RAUC redundant boot setup
+
+/dev/root            /                    auto       defaults,noatime              1  1
+proc                 /proc                proc       defaults              0  0
+devpts               /dev/pts             devpts     mode=0620,ptmxmode=0666,gid=5      0  0
+tmpfs                /run                 tmpfs      mode=0755,nodev,nosuid,strictatime 0  0
+tmpfs                /var/volatile        tmpfs      defaults              0  0
+
+# Add mount for boot, grubenv and data partition
+/dev/vda1            /boot                auto       defaults,nofail,noatime,ro  0  0
+/dev/vda2            /grubenv             auto       defaults,nofail,noatime  0  0
+/dev/vda6            /data                auto       defaults,nofail,noatime  0  2
+
+# Experiment: Using tmpfs for agent data-dir to improve performance
+# Agent redeployment on restart may be faster than constant disk i/o
+# tmpfs /data/agent tmpfs X-mount.mkdir 0 0 
+
+# Mount pre-cached container images and manifests to the new data directory of k3s
+# The partition (/dev/vda6) is empty on startup, but k3s requires
+# both folders to be present there.
+#
+# Auto-Create Mount Points by using "X-mount.mkdir"
+#
+/var/lib/rancher/k3s/agent/images /data/agent/images none default,nofail,bind,X-mount.mkdir,x-systemd.requires=/data 0 0
+/var/lib/rancher/k3s/server/manifests /data/server/manifests none default,nofail,bind,X-mount.mkdir,x-systemd.requires=/data 0 0

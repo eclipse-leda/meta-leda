@@ -10,16 +10,16 @@
 # *
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
+#
+# Enable CAN bus network by default
+#
+FILESEXTRAPATHS:prepend := "${THISDIR}/files/systemd-conf-files:"
 
-# We have a conf and classes directory, add to BBPATH
-BBPATH .= ":${LAYERDIR}"
+SRC_URI += " file://can0.network"
 
-# We have recipes-* directories, add to BBFILES
-BBFILES += "${LAYERDIR}/recipes-*/*/*.bb \
-            ${LAYERDIR}/recipes-*/*/*.bbappend"
+FILES:${PN} += " ${sysconfdir}/systemd/network/can0.network"
 
-BBFILE_COLLECTIONS += "meta-sdv"
-BBFILE_PATTERN_meta-sdv := "^${LAYERDIR}/"
-BBFILE_PRIORITY_meta-sdv = "7"
-LAYERDEPENDS_meta-sdv += "core meta-sdv-bsp meta-sdv-components meta-sdv-distro"
-LAYERSERIES_COMPAT_meta-sdv = "honister"
+do_install:append() {
+    install -d ${D}${sysconfdir}/systemd/network
+    install -m 0644 ${WORKDIR}/can0.network ${D}${sysconfdir}/systemd/network
+}
