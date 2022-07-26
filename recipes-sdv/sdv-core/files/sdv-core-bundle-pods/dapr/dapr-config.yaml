@@ -1,0 +1,12 @@
+apiVersion: dapr.io/v1alpha1
+kind: Configuration
+metadata:
+  name: daprsystem
+  namespace: dapr-system
+spec:
+  metric:
+    enabled: false
+  mtls:
+    allowedClockSkew: 15m
+    enabled: false
+    workloadCertTTL: 24h
