@@ -11,15 +11,15 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-# We have a conf and classes directory, add to BBPATH
-BBPATH .= ":${LAYERDIR}"
+# Increase memory for k3s to at least 2GB or more
+QB_MEM = "-m 4096"
+QB_MEM:qemuarm = "-m 2048"
 
-# We have recipes-* directories, add to BBFILES
-BBFILES += "${LAYERDIR}/recipes-*/*/*.bb \
-            ${LAYERDIR}/recipes-*/*/*.bbappend"
+# No graphical user interface
+QB_OPT_APPEND:append = " -serial mon:stdio -serial null -nographic"
 
-BBFILE_COLLECTIONS += "meta-leda"
-BBFILE_PATTERN_meta-leda := "^${LAYERDIR}/"
-BBFILE_PRIORITY_meta-leda = "7"
-LAYERDEPENDS_meta-leda += "core meta-sdv-bsp meta-sdv-components meta-sdv-distro"
-LAYERSERIES_COMPAT_meta-leda = "honister"
+# Emulate a CAN-Bus device
+QB_OPT_APPEND:append = " -object can-bus,id=canbus0 "
+QB_OPT_APPEND:append = " -device kvaser_pci,canbus=canbus0"
+
+QB_DEFAULT_FSTYPE = "ext4"
