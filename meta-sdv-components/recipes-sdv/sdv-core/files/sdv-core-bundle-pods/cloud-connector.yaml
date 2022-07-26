@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloud-connector
+spec:
+  selector:
+    matchLabels:
+      app: cloud-connector
+  template:
+    metadata:
+      labels:
+        app: cloud-connector
+    spec:
+      containers:
+        - name: cloudagent
+          image: ghcr.io/softwaredefinedvehicle/swdc-os-cloud-agent/cloudagent:v0.4
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: cloudagent
+                  key: PrimaryConnectionString
+                  optional: false
+            - name: LOCAL_ADDRESS
+              value: tcp://mosquitto:1883
+            - name: LOG_FILE
+              value: ''
+            - name: LOG_LEVEL
+              value: INFO
+            - name: CA_CERT_PATH
+              value: '/app/iothub.crt'
+            - name: MESSAGE_MAPPER_CONFIG
+              value: '/app/message-mapper-config.json'
+            - name: ALLOWED_CLOUD_MESSAGE_TYPES_LIST
+              value: 'vss.setPosition,updateme,subscribeOnceCommand,vss.set'
+            - name: ALLOWED_LOCAL_TOPICS_LIST
+              value: 'cloudConnector/#'
+      imagePullSecrets:
+        - name: ghcr-io
+---
