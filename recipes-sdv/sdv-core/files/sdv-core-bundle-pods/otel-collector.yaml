@@ -1,0 +1,361 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: otelcol-sdv
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: zipkin
+  labels:
+    component: otelcol-sdv-agent
+spec:
+  ports:
+  - name: zipkin
+    port: 9411
+    protocol: TCP
+    targetPort: 9411
+  selector:
+    component: otelcol-sdv-agent
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: otelcol-sdv
+  labels:
+    component: otelcol-sdv-exporter
+spec:
+  type: ClusterIP
+  ports:
+    - name: otlp
+      port: 4317
+      targetPort: otlp
+      protocol: TCP
+  selector:
+    component: otelcol-sdv-exporter
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: otelcol-sdv-exporter
+spec:
+  selector:
+    matchLabels:
+      component: otelcol-sdv-exporter
+  template:
+    metadata:
+      labels:
+        component: otelcol-sdv-exporter
+    spec:
+      serviceAccountName: otelcol-sdv
+      securityContext:
+        {}
+      containers:
+        - name: otelcol-sdv-exporter
+          command:
+            - ./otel-sdv-exporter
+          securityContext:
+            {}
+          image: ghcr.io/eclipse-leda/leda-incubator-otel/otelcol-sdv-exporter:v0.0.1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: otlp
+              containerPort: 4317
+              protocol: TCP
+          env:
+            - name: RUST_LOG
+              value: info
+            - name: MQTT_BROKER_HOST
+              value: mosquitto
+      imagePullSecrets:
+        - name: ghcr-io
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: otelcol-sdv
+data:
+  relay: |
+    exporters:
+      otlp:
+        endpoint: otelcol-sdv:4317
+        tls:
+          insecure: true
+        compression: none
+    processors:
+      batch:
+        send_batch_size: 1600
+        timeout: 30s
+    receivers:
+      zipkin:
+        endpoint: 0.0.0.0:9411
+      filelog:
+        exclude: []
+        include:
+        - /var/log/pods/default_*/*/*.log
+        include_file_name: false
+        include_file_path: true
+        start_at: beginning
+        operators:
+        - type: regex_parser
+          id: parser-containerd
+          parse_to: body
+          output: extract_metadata_from_filepath
+          regex: '^(?P<time>[^\+^-^ ^Z]*(Z|[\+-]\d{2}:\d{2})?) (?P<stream>stdout|stderr) (?P<logtag>[^ ]*) ?(?P<log>.*)$'
+          timestamp:
+            layout_type: gotime
+            layout: '2006-01-02T15:04:05.999Z07:00'
+            parse_from: body.time
+        - type: regex_parser
+          id: extract_metadata_from_filepath
+          parse_from: attributes["log.file.path"]
+          parse_to: body
+          regex: '^.*\/(?P<namespace>[^_]+)_(?P<pod_name>[^_]+)_(?P<uid>[a-f0-9\-]+)\/(?P<container_name>[^\._]+)\/(?P<run_id>\d+)\.log$'
+        - type: move
+          from: body.container_name
+          to: resource["k8s.container.name"]
+        - type: move
+          from: body.namespace
+          to: resource["k8s.namespace.name"]
+        - type: move
+          from: body.pod_name
+          to: resource["k8s.pod.name"]
+        - type: move
+          from: body.uid
+          to: resource["k8s.pod.uid"]
+        - type: regex_parser
+          id: parser-cloud-connector
+          if: body.log matches "^(\\d{4}\\/\\d{2}\\/\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d{6})  \\[(.*)\\]  (.{5})  (.*)$"
+          parse_to: body
+          parse_from: body.log
+          regex: '^(?P<time>\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}:\d{2}\.\d{6})  \[(?P<component>.*)\]  (?P<severity>.{5})  (?P<log>.*)$'
+          timestamp:
+            parse_from: body.time
+            layout: '%Y/%m/%d %H:%M:%S.%f'
+          severity:
+            parse_from: body.severity
+            mapping:
+              error: 'ERROR'
+              warn: 'WARN '
+              info: 'INFO '
+              debug: 'DEBUG'
+              trace: 'TRACE'
+        - type: recombine
+          id: multiline-vapp
+          combine_field: body.log
+          is_first_entry: body.log matches "^(\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2},\\d{3}) .*" || body.log matches "^(\\d{2}\\/\\d{2}\\/\\d{4} \\d{2}:\\d{2}:\\d{2}\\ [AP]M) - (.*) - [A-Z]+ - (.*)$"
+          source_identifier: resource["k8s.container.name"]
+          combine_with: "\\n"
+        - type: regex_parser
+          id: parser-vapp
+          if: body.log matches "^(\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2},\\d{3}) .*"
+          parse_to: body
+          parse_from: body.log
+          regex: '^(?P<time>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3}) (?P<severity>[A-Z]*) \[(?P<function>\S*)] \[(?P<component>\S*)] \[trace_id=(?P<trace_id>\S+) span_id=(?P<span_id>\S+) resource.service.name=(?P<resource>\S+)] - (?P<log>.*)$'
+          trace:
+            trace_id:
+              parse_from: body.trace_id
+            span_id:
+              parse_from: body.span_id
+          severity:
+            parse_from: body.severity
+            mapping:
+              fatal: 'CRITICAL'
+              error: 'ERROR'
+              warn: 'WARNING'
+              info: 'INFO'
+              debug: 'DEBUG'
+        - type: regex_parser
+          id: parser-vapp-old
+          if: body.log matches "^(\\d{2}\\/\\d{2}\\/\\d{4} \\d{2}:\\d{2}:\\d{2}\\ [AP]M) - (.*) - [A-Z]+ - (.*)$"
+          parse_to: body
+          parse_from: body.log
+          regex: '^(?P<time>\d{2}\/\d{2}\/\d{4} \d{2}:\d{2}:\d{2}\ [AP]M) - (?P<component>.*) - (?P<severity>[A-Z]+) - (?P<log>.*)$'
+          severity:
+            parse_from: body.severity
+            mapping:
+              fatal: 'CRITICAL'
+              error: 'ERROR'
+              warn: 'WARNING'
+              info: 'INFO'
+              debug: 'DEBUG'
+        - type: regex_parser
+          id: parser-daprd
+          if: body.log matches '^time=\\"(?P<time>\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d+)Z\\" level=(?P<severity>[a-zA-Z]+) (?P<log>.*) type=(?P<type>[a-zA-Z]+) ver=(?P<version>\\d+\\.\\d+\\.\\d+)$'
+          parse_to: body
+          parse_from: body.log
+          regex: '^time=\"(?P<time>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d+)Z\" level=(?P<severity>[a-zA-Z]+) (?P<log>.*) type=(?P<type>[a-zA-Z]+) ver=(?P<version>\d+\.\d+\.\d+)$'
+          timestamp:
+            parse_from: body.time
+            layout: '%Y-%m-%dT%H:%M:%S.%f'
+          severity:
+            parse_from: body.severity
+            mapping:
+              error: 'error'
+              warn: 'warn'
+              info: 'info'
+              debug: 'debug'
+        - type: move
+          from: attributes["log.file.path"]
+          to: body["log.file.path"]
+        - type: move
+          id: clean-up-log-body
+          from: body.log
+          to: body
+      hostmetrics:
+        scrapers:
+          cpu:
+            metrics:
+              system.cpu.time:
+                enabled: false
+              system.cpu.utilization:
+                enabled: true
+          memory:
+            metrics:
+              system.memory.usage:
+                enabled: true
+              system.memory.utilization:
+                enabled: true
+      journald:
+        units:
+          - ssh
+          - k3s
+          - containerd
+        priority: debug
+        directory: /var/log/journal
+        operators:
+          - type: severity_parser
+            parse_from: body.PRIORITY
+            mapping:
+              fatal: 0
+              error3: 1
+              error2: 2
+              error: 3
+              warn: 4
+              info2: 5
+              info: 6
+              debug: 7
+          - type: move
+            to: resource["service.name"]
+            from: body["_SYSTEMD_UNIT"]
+          - type: move
+            to: resource["host.name"]
+            from: body["_HOSTNAME"]
+          - type: move
+            to: resource.source
+            from: body["_TRANSPORT"]
+          - type: move
+            from: body.MESSAGE
+            to: body
+    service:
+      telemetry:
+        logs:
+          level: "debug"
+      pipelines:
+        traces:
+          exporters:
+          - otlp
+          processors:
+          - batch
+          receivers:
+          - zipkin
+        logs/containers:
+          exporters:
+          - otlp
+          processors:
+          - batch
+          receivers:
+          - filelog
+        logs/services:
+          exporters:
+          - otlp
+          processors:
+          - batch
+          receivers:
+          - journald
+        # metrics:
+        #   exporters:
+        #   - otlp
+        #   processors:
+        #   - batch
+        #   receivers:
+        #   - hostmetrics
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: otelcol-sdv-agent
+spec:
+  selector:
+    matchLabels:
+      component: otelcol-sdv-agent
+  template:
+    metadata:
+      labels:
+        component: otelcol-sdv-agent
+    spec:
+      serviceAccountName: otelcol-sdv
+      securityContext:
+        {}
+      containers:
+        - name: otelcol-sdv-agent
+          command:
+            - /otelcol-sdv
+            - --config=/conf/relay.yaml
+          securityContext:
+            {}
+          image: ghcr.io/eclipse-leda/leda-incubator-otel/otelcol-sdv-ext:v0.0.1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 9411
+          env:
+            - name: HOST_PROC
+              value: /hostfs/proc
+            - name: HOST_SYS
+              value: /hostfs/sys
+            - name: HOST_ETC
+              value: /hostfs/etc
+            - name: HOST_VAR
+              value: /hostfs/var
+            - name: HOST_RUN
+              value: /hostfs/run
+            - name: HOST_DEV
+              value: /hostfs/dev
+          volumeMounts:
+            - mountPath: /conf
+              name: otelcol-sdv-configmap
+            - name: hostfs
+              mountPath: /hostfs
+              readOnly: true
+              mountPropagation: HostToContainer
+            - name: varlogpods
+              mountPath: /var/log/pods
+              readOnly: true
+            - name: varlibdockercontainers
+              mountPath: /var/lib/docker/containers
+              readOnly: true
+            - name: varlogjournal
+              mountPath: /var/log/journal
+              readOnly: true
+      volumes:
+        - name: otelcol-sdv-configmap
+          configMap:
+            name: otelcol-sdv
+            items:
+              - key: relay
+                path: relay.yaml
+        - name: hostfs
+          hostPath:
+            path: /
+        - name: varlogpods
+          hostPath:
+            path: /var/log/pods
+        - name: varlibdockercontainers
+          hostPath:
+            path: /var/lib/docker/containers
+        - name: varlogjournal
+          hostPath:
+            path: /run/log/journal
+      hostNetwork: false
+      imagePullSecrets:
+        - name: ghcr-io

@@ -1,0 +1,7 @@
+Welcome to Eclipse Leda Build Environment.
+You can now run 
+
+    1) Build:           bitbake sdv-image-all
+    2) Start:           leda
+    3) Provision:       provision-device.sh
+    4) SSH into device: ssh root@192.168.7.2
