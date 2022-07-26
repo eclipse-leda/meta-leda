@@ -11,15 +11,18 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-# We have a conf and classes directory, add to BBPATH
-BBPATH .= ":${LAYERDIR}"
+SUMMARY = "Rancher Metrics Server Air-Gap Installation"
+DESCRIPTION = "Pre-load Rancher K3S core containers to the device filesystem"
 
-# We have recipes-* directories, add to BBFILES
-BBFILES += "${LAYERDIR}/recipes-*/*/*.bb \
-            ${LAYERDIR}/recipes-*/*/*.bbappend"
+inherit sdv-container-cache
 
-BBFILE_COLLECTIONS += "meta-leda"
-BBFILE_PATTERN_meta-leda := "^${LAYERDIR}/"
-BBFILE_PRIORITY_meta-leda = "7"
-LAYERDEPENDS_meta-leda += "core meta-sdv-bsp meta-sdv-components meta-sdv-distro"
-LAYERSERIES_COMPAT_meta-leda = "honister"
+SRC_URI += "file://README.txt \
+            file://LICENSE"
+
+# According to https://wiki.yoctoproject.org/wiki/License_Infrastructure_Interest_Group
+LICENSE = "Apache-2.0"
+LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=d9fc0efef5228704e7f5b37f27192723"
+
+# Define image to be pulled
+SDV_IMAGE_REF = "rancher/metrics-server"
+SDV_IMAGE_TAG = "v0.3.6"
