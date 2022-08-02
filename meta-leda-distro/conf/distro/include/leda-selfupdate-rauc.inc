@@ -11,15 +11,7 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-# We have a conf and classes directory, add to BBPATH
-BBPATH .= ":${LAYERDIR}"
-
-# We have recipes-* directories, add to BBFILES
-BBFILES += "${LAYERDIR}/recipes-*/*/*.bb \
-            ${LAYERDIR}/recipes-*/*/*.bbappend"
-
-BBFILE_COLLECTIONS += "meta-leda"
-BBFILE_PATTERN_meta-leda := "^${LAYERDIR}/"
-BBFILE_PRIORITY_meta-leda = "7"
-LAYERDEPENDS_meta-leda += "core meta-sdv-bsp meta-sdv-components meta-sdv-distro"
-LAYERSERIES_COMPAT_meta-leda = "honister"
+# Enable GRUB Bootloader, so that we can chose which partition to boot.
+MACHINE_FEATURES:append = " pcbios efi"
+EXTRA_IMAGEDEPENDS += "ovmf"
+PREFERRED_RPROVIDER_virtual-grub-bootconf = "rauc-qemu-grubconf"
