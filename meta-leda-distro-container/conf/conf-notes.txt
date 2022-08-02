@@ -1,0 +1,25 @@
+Welcome to Eclipse Leda Build Environment for Application Containers
+You can now run 
+
+    1) Build:
+            bitbake sdv-image-builder sdv-image-container
+
+    2) Import Container to Docker:  
+            skopeo copy oci:$(find tmp/deploy/images -name "sdv-image-container-*.rootfs-oci" -type d):latest docker-daemon:leda-container-base:latest
+            skopeo copy oci:$(find tmp/deploy/images -name "sdv-image-builder-*.rootfs-oci" -type d):latest docker-daemon:leda-builder:latest
+
+    3) Run Container Image:
+            docker run --rm -it leda-container-base
+            docker run --rm -it leda-builder
+
+    4) Use it as a parent image in your Dockerfile:
+
+            FROM leda-builder AS builder
+            RUN git clone https://github.com/SoftwareDefinedVehicle/sdv-self-update-agent
+            RUN cmake
+
+            FROM leda-container-base
+            COPY --from=builder /dist/bin/sdv-self-update-agent /app/sdv-self-update-agent
+            WORKDIR /app
+            ENTRYPOINT "/app/sdv-self-update-agent"
+

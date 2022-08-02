@@ -1,0 +1,38 @@
+# /********************************************************************************
+# * Copyright (c) 2022 Contributors to the Eclipse Foundation
+# *
+# * See the NOTICE file(s) distributed with this work for additional
+# * information regarding copyright ownership.
+# *
+# * This program and the accompanying materials are made available under the
+# * terms of the Apache License 2.0 which is available at
+# * https://www.apache.org/licenses/LICENSE-2.0
+# *
+# * SPDX-License-Identifier: Apache-2.0
+# ********************************************************************************/
+#
+# short-description: Create Qemu disk image
+# long-description: Creates a partitioned Qemu disk image for use with the RAUC
+# update tool. The partitionging scheme provides:
+# * a grub environment partition
+# * a rescue partition
+# * a bootloader partition with extra space for a shadow copy for atomic bootloader updates
+# * two root file system partitions for atomic updates
+# * a common data partition
+
+#
+# --source bootimg-partition
+#
+#part u-boot --source rawcopy --sourceparams="file=u-boot.bin" --ondisk mmcblk0 --no-table --align 1
+
+bootloader --ptable gpt --configfile="qemuarm64.cfg"
+
+part --source bootimg-partition --ondisk vda --fstype=vfat --label boot --active --align 4 --size 16 --sourceparams="loader=u-boot" --use-uuid
+# Second Bootloader Partition (empty, for future updates)
+part --fixed-size 10M --ondisk vda --align 4096 --no-table
+# Empty partition (on x86, this is grubenv - we store RAUC Status here as well)
+part --fixed-size 10M --ondisk vda --align 4096
+part --fixed-size 150M --source rootfs --rootfs-dir=sdv-image-rescue --ondisk vda --fstype=ext4 --label rescue --align 1024
+part --fixed-size 2000M --source rootfs --rootfs-dir=sdv-image-full --ondisk vda --fstype=ext4 --label root_a --align 4096
+part --fixed-size 700M --source rootfs --rootfs-dir=sdv-image-minimal  --ondisk vda --fstype=ext4 --label root_b --align 4096
+part --fixed-size 4096M --ondisk vda --fstype=ext4 --label data --align 4096

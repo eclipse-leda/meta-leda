@@ -10,8 +10,6 @@ It is based on the guidelines documented in the [Yocto Project Documentation](ht
 - BSP for QEMU and Raspberry Pi: `meta-leda/meta-sdv-bsp`
 - SDV Component Recipes: `meta-leda/meta-sdv-components`
 
-Note: `meta-leda` is a [container layer](https://docs.yoctoproject.org/ref-manual/terms.html#term-Container-Layer).
-
 # Dependencies
 
 This layer depends on

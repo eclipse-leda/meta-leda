@@ -11,15 +11,18 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-# We have a conf and classes directory, add to BBPATH
-BBPATH .= ":${LAYERDIR}"
+SUMMARY = "SDV Cloud Connector"
+DESCRIPTION = "Customized fork of Eclipse Kanto azure-connector with additional support of Eclipse Backend Function Bindings and Azure C2D messages"
+LICENSE = "Apache-2.0"
+LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=b95389a3f134a33b445b438d337848f7"
 
-# We have recipes-* directories, add to BBFILES
-BBFILES += "${LAYERDIR}/recipes-*/*/*.bb \
-            ${LAYERDIR}/recipes-*/*/*.bbappend"
+SRC_URI = "git://github.com/SoftwareDefinedVehicle/sdv-self-update-agent;branch=main"
+SRCREV = "c664a7f46f2bccf84acdfdda5a9af07776583eda"
 
-BBFILE_COLLECTIONS += "meta-leda"
-BBFILE_PATTERN_meta-leda := "^${LAYERDIR}/"
-BBFILE_PRIORITY_meta-leda = "7"
-LAYERDEPENDS_meta-leda += "core meta-sdv-bsp meta-sdv-components meta-sdv-distro"
-LAYERSERIES_COMPAT_meta-leda = "honister"
+S = "${WORKDIR}/git"
+
+inherit cmake
+
+#CFLAGS += "  "
+
+
