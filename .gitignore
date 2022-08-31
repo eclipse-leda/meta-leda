@@ -1,1 +1,6 @@
 build/
+meta-openembedded
+meta-rauc
+meta-rauc-community
+meta-virtualization
+poky
