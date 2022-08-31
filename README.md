@@ -12,6 +12,9 @@ It is based on the guidelines documented in the [Yocto Project Documentation](ht
 
 Note: `meta-leda` is a [container layer](https://docs.yoctoproject.org/ref-manual/terms.html#term-Container-Layer).
 
+# Yocto Release Compatibility
+- Honister
+
 # Dependencies
 
 This layer depends on
