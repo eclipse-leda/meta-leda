@@ -4,3 +4,7 @@ Run the following command in the root of the project to check out all dependenci
 
     kas build
 
+To build a specific target, recipe or image, execute this:
+
+    kas build --target packagegroup-sdv-core
+
