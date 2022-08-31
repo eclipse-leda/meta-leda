@@ -11,6 +11,12 @@ machine: qemux86-64
 # The distro name as it is written into the `local.conf` of bitbake.
 distro: leda
 target: sdv-image-all
+local_conf_header:
+  meta-leda: |
+    INHERIT:append = " rm_work"
+    INHERIT:remove = " archiver"
+    INHERIT:remove = " cve-check"
+    INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
 repos:
   # This entry includes the repository where the config file is located
   # to the bblayers.conf:
