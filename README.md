@@ -1,3 +1,7 @@
+![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/eclipse-leda/meta-leda/BitBake%20DryRun/main?label=main)
+![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/eclipse-leda/meta-leda/BitBake%20DryRun/kirkstone?label=kirkstone)
+![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/eclipse-leda/meta-leda/BitBake%20DryRun/honister?label=honister)
+
 # OpenEmbedded Meta-Layer for Software Defined Vehicles components
 
 This metalayer can be used to integrate software-defined vehicle open source components into a Yocto based build.
