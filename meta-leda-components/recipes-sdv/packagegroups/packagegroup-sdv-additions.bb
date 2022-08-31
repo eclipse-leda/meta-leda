@@ -20,7 +20,7 @@ SDV_EXTERNAL_DEPENDS = "\
     sdv-dapr-binaries \
     sdv-initialize-dapr-first-boot \
     sdv-helm-binaries \
-    sdv-container-databroker \
+    sdv-kuksa-val-databroker \
     "
 
 RDEPENDS:${PN} = "\
