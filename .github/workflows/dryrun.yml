@@ -13,10 +13,12 @@
 
 name: BitBake DryRun
 on:
+  push:
   workflow_dispatch:
 
 jobs:
-  dryrun:
+  mybranch:
+    name: Yocto (This Branch)
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -27,33 +29,3 @@ jobs:
       run: sudo pip3 install kas
     - name: DryRun sdv-image-all
       run: kas build --target sdv-image-all -- --dry-run
-
-  leda-utils:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: Install tools
-      run: sudo apt-get install -y --no-install-recommends socat file gawk wget git diffstat unzip texinfo gcc build-essential chrpath socat cpio python3 python3-pip python3-pexpect xz-utils debianutils iputils-ping python3-git python3-jinja2 libegl1-mesa libsdl1.2-dev pylint3 xterm python3-subunit mesa-common-dev zstd liblz4-tool tmux mc skopeo fdisk ruby-full jq libvirt-clients libvirt-daemon-system qemu-system-x86 qemu-system-arm qemu-kvm squashfs-tools rauc python3-newt ca-certificates curl gnupg lsb-release
-    - name: Install kas
-      run: sudo pip3 install kas
-    - name: Cache Downloads
-      id: cache-downloads
-      uses: actions/cache@v3
-      with:
-        path: build/downloads
-        key: bb-downloads
-    - name: Cache SState
-      id: cache-sstate
-      uses: actions/cache@v3
-      with:
-        path: build/sstate-cache
-        key: bb-sstate-cache
-    - name: Cache Local
-      id: cache-local
-      uses: actions/cache@v3
-      with:
-        path: build/cache
-        key: bb-cache-local
-    - name: Build leda-utils
-      run: kas build --target sdv-core-utils
