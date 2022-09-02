@@ -1,3 +1,16 @@
+# /********************************************************************************
+# * Copyright (c) 2022 Contributors to the Eclipse Foundation
+# *
+# * See the NOTICE file(s) distributed with this work for additional
+# * information regarding copyright ownership.
+# *
+# * This program and the accompanying materials are made available under the
+# * terms of the Apache License 2.0 which is available at
+# * https://www.apache.org/licenses/LICENSE-2.0
+# *
+# * SPDX-License-Identifier: Apache-2.0
+# ********************************************************************************/
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -22,7 +35,7 @@ spec:
     spec:
       containers:
         - name: vehicledatabroker
-          image: ghcr.io/eclipse-leda/leda-incubator-vehicleapi/databroker:v0.18.0
+          image: ghcr.io/eclipse/kuksa.val/databroker:v0.17.0
           imagePullPolicy: IfNotPresent
           ports:
             - name: default
