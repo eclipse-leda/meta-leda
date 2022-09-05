@@ -16,7 +16,8 @@ QB_MEM = "-m 4096"
 QB_MEM:qemuarm = "-m 2048"
 
 # No graphical user interface
-QB_OPT_APPEND:append = " -serial mon:stdio -serial null -nographic"
+# QB_OPT_APPEND:append = " -serial mon:stdio -serial null"
+QB_OPT_APPEND:append = " -nographic"
 
 # Emulate a CAN-Bus device
 QB_OPT_APPEND:append = " -object can-bus,id=canbus0 "
