@@ -6,9 +6,9 @@ It is based on the guidelines documented in the [Yocto Project Documentation](ht
 
 # Structure
 
-- Eclipse Leda Quickstart Distribution: `meta-leda/meta-sdv-distro`
-- BSP for QEMU and Raspberry Pi: `meta-leda/meta-sdv-bsp`
-- SDV Component Recipes: `meta-leda/meta-sdv-components`
+- Eclipse Leda Quickstart Distribution: `meta-leda/meta-leda-distro`
+- BSP for QEMU and Raspberry Pi: `meta-leda/meta-leda-bsp`
+- SDV Component Recipes: `meta-leda/meta-leda-components`
 
 Note: `meta-leda` is a [container layer](https://docs.yoctoproject.org/ref-manual/terms.html#term-Container-Layer).
 
