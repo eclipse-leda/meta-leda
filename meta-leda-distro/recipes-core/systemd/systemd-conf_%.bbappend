@@ -13,13 +13,13 @@
 #
 # Enable CAN bus network by default
 #
-FILESEXTRAPATHS:prepend := "${THISDIR}/systemd-conf-files:"
+
+FILESEXTRAPATHS:prepend := "${THISDIR}/${BPN}:"
 
 SRC_URI += " file://can0.network"
 
 FILES:${PN} += " ${sysconfdir}/systemd/network/can0.network"
 
 do_install:append() {
-    install -d ${D}${sysconfdir}/systemd/network
-    install -m 0644 ${WORKDIR}/can0.network ${D}${sysconfdir}/systemd/network
+    install -D -m 0644 ${WORKDIR}/can0.network ${D}${systemd_unitdir}/network
 }
