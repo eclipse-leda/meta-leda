@@ -10,9 +10,12 @@
 # *
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
-
+#
+# Customized k3s systemd unit file to start
+# k3s with a custom data-dir on a separate partition.
+#
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
-SRC_URI:append := "file://01-k3s.service"
+SRC_URI:append := " file://01-k3s.service"
 
 do_install:append() {
         if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)}; then
