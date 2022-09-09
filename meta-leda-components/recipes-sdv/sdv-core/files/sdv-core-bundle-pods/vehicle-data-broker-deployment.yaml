@@ -42,8 +42,6 @@ spec:
               containerPort: 55555
               protocol: TCP
           args: ["--dummy-metadata"]              
-      imagePullSecrets:
-        - name: ghcr-io
 
 ---
 apiVersion: v1
