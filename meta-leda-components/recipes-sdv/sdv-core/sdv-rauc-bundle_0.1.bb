@@ -31,6 +31,9 @@ RAUC_SLOT_rootfs = "sdv-image-minimal"
 # which cannot be used from within the guest. RAUC would fail on installing a "wic.qcow2" file.
 RAUC_SLOT_rootfs[fstype] = "ext4"
 
+# Set RAUC bundle version to git tag or git commit in case no tag is available
+RAUC_BUNDLE_VERSION = "${@bb.process.run('GIT_CEILING_DIRECTORIES= git describe --tags --always')[0]}"
+
 # These are set in site.conf
 # RAUC_KEY_FILE = "${THISDIR}/path/to/development-1.key.pem"
 # RAUC_CERT_FILE = "${THISDIR}/path/to/development-1.cert.pem"
