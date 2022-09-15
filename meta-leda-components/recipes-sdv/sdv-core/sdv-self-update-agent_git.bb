@@ -11,15 +11,20 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-DESCRIPTION = "Native build for self-update-agent."
+SUMMARY = "Self Update Agent offers remote OS updates for edge devices using RAUC"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=a832eda17114b48ae16cda6a500941c2"
 
-DEPENDS += " pod2man "
+# Required by OpenSSL documentation build: pod2man
+DEPENDS += "perl-native"
+
+# Required by glib build
+DEPENDS += "meson-native"
 
 # Use the gitsm fetcher to initialize submodules
 SRC_URI = "gitsm://github.com/SoftwareDefinedVehicle/sdv-self-update-agent.git;branch=main;protocol=https"
-SRCREV  = "844406d9392efa2487723b539925b5354adf3cb2"
+SRC_URI += "file://self-update-agent/self-update-agent.service"
+SRCREV  = "6715892eabeb5d4ee72929361e5dbddeeeeba661"
 
 S = "${WORKDIR}/git"
 
@@ -27,7 +32,9 @@ do_packagedata[noexec] = "1"
 do_package_qa[noexec] = "1"
 do_package_write_ipk[noexec] = "1"
 
-# TODO: FILES:${PN} += "..."
+FILES:${PN} += "${bindir}/self-update-agent"
+FILES:${PN} += "${sysconfdir}/systemd/.../self-update-agent.service"
+
 
 do_compile() {
     cd ${S}
