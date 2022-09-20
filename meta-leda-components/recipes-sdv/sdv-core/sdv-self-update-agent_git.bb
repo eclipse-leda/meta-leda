@@ -15,83 +15,44 @@ SUMMARY = "Self Update Agent offers remote OS updates for edge devices using RAU
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=a832eda17114b48ae16cda6a500941c2"
 
-# Required by OpenSSL documentation build: pod2man
-DEPENDS += "perl-native"
+# Dependencies of Self Update Agent
+DEPENDS += "glib-2.0"
+DEPENDS += "glib-networking"
+DEPENDS += "openssl"
+DEPENDS += "curl"
+DEPENDS += "paho-mqtt-c"
+DEPENDS += "paho-mqtt-cpp"
 
-# Required by glib build
-DEPENDS += "meson-native"
+DEPENDS += "dbus"
+DEPENDS += "dbus-glib"
 
 # Use the gitsm fetcher to initialize submodules
 SRC_URI = "gitsm://github.com/SoftwareDefinedVehicle/sdv-self-update-agent.git;branch=main;protocol=https"
 SRC_URI += "file://self-update-agent/self-update-agent.service"
+SRC_URI += "file://self-update-agent/CMakeLists-3rdparty.txt"
+SRC_URI += "file://self-update-agent/CMakeLists-src.txt"
+SRC_URI += "file://self-update-agent/CMakeLists-root.txt"
 SRCREV  = "6715892eabeb5d4ee72929361e5dbddeeeeba661"
 
 S = "${WORKDIR}/git"
 
-do_packagedata[noexec] = "1"
-do_package_qa[noexec] = "1"
-do_package_write_ipk[noexec] = "1"
+OECMAKE_GENERATOR = "Unix Makefiles"
 
-FILES:${PN} += "${bindir}/self-update-agent"
-FILES:${PN} += "${sysconfdir}/systemd/.../self-update-agent.service"
+inherit cmake gio-module-cache gobject-introspection pkgconfig
+
+FILES:${PN} += "${systemd_unitdir}/system/self-update-agent.service"
 FILES:${PN} += "${bindir}/sdv-self-update-agent"
-FILES:${PN} += "${libdir}/libcrypto.so.3"
-FILES:${PN} += "${libdir}/libcurl.so"
-FILES:${PN} += "${libdir}/libgmock_main.so"
-FILES:${PN} += "${libdir}/libgmock_main.so.1.11.0"
-FILES:${PN} += "${libdir}/libgmock.so"
-FILES:${PN} += "${libdir}/libgmock.so.1.11.0"
-FILES:${PN} += "${libdir}/libgtest_main.so"
-FILES:${PN} += "${libdir}/libgtest_main.so.1.11.0"
-FILES:${PN} += "${libdir}/libgtest.so"
-FILES:${PN} += "${libdir}/libgtest.so.1.11.0"
 FILES:${PN} += "${libdir}/libmini-yaml.so"
-FILES:${PN} += "${libdir}/libpaho-mqtt3a.so"
-FILES:${PN} += "${libdir}/libpaho-mqtt3a.so.1"
-FILES:${PN} += "${libdir}/libpaho-mqtt3a.so.1.3.10"
-FILES:${PN} += "${libdir}/libpaho-mqtt3c.so"
-FILES:${PN} += "${libdir}/libpaho-mqtt3c.so.1"
-FILES:${PN} += "${libdir}/libpaho-mqtt3c.so.1.3.10"
-FILES:${PN} += "${libdir}/libpaho-mqttpp3.so"
-FILES:${PN} += "${libdir}/libpaho-mqttpp3.so.1"
-FILES:${PN} += "${libdir}/libpaho-mqttpp3.so.1.2.0"
-FILES:${PN} += "${libdir}/libssl.so.3"
 
-do_compile() {
-    cd ${S}
-    case ${TARGET_ARCH} in
-        aarch64*)    
-            ./scripts/build_openssl_arm64.sh
-            ./scripts/build_glib_arm64.sh
-            cd build_arm64
-            cmake -DCMAKE_INSTALL_PREFIX=../dist_arm64 -DCMAKE_TOOLCHAIN_FILE=../cmake/linux/arm64/toolchain.cmake -DOPENSSL_ROOT_DIR=../build_arm64 -DOPENSSL_CRYPTO_LIBRARY=../build_arm64/lib/libcrypto.so ..
-            make install
-			;;
-        x86_64*)
-            ./scripts/build_openssl_amd64.sh
-            ./scripts/build_glib_amd64.sh
-            cd build_amd64
-            cmake -DCMAKE_INSTALL_PREFIX=../dist_amd64 -DCMAKE_TOOLCHAIN_FILE=../cmake/linux/amd64/toolchain.cmake -DOPENSSL_ROOT_DIR=../build_amd64 -DOPENSSL_CRYPTO_LIBRARY=../build_amd64/lib/libcrypto.so ..
-            make install
-			;;
-        *)
-            bbfatal "Recipe has no target-arch mapping for '${TARGET_ARCH}'."
-            ;;
-    esac
+do_compile:prepend() {
+    # Hacky overwrite
+    cp ${B}/../self-update-agent/CMakeLists-3rdparty.txt ${S}/3rdparty/CMakeLists.txt
+    cp ${B}/../self-update-agent/CMakeLists-src.txt ${S}/src/CMakeLists.txt
+    cp ${B}/../self-update-agent/CMakeLists-root.txt ${S}/CMakeLists.txt
 }
 
 do_install() {
-    cd ${S}
-    install -d ${D}/usr
-    case ${TARGET_ARCH} in
-        aarch64*)    
-            cp -r dist_arm64 ${D}/usr/sua
-            ;;
-        x86_64*)
-            cp -r dist_amd64 ${D}/usr/sua
-            ;;
-        *)
-            bbfatal "Recipe has no target-arch mapping for '${TARGET_ARCH}'."
-            ;;
-    esac
+    install -m 0644 ${WORKDIR}/self-update-agent.service ${D}${systemd_unitdir}/system
+    install -D -m 755 ${B}/src/sdv-self-update-agent ${D}${bindir}
+    install -D -m 755 ${B}/3rdparty/libmini-yaml.so ${D}${libdir}
 }
