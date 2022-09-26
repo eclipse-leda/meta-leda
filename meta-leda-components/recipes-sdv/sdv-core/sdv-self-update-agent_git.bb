@@ -22,6 +22,7 @@ DEPENDS += "openssl"
 DEPENDS += "curl"
 DEPENDS += "paho-mqtt-c"
 DEPENDS += "paho-mqtt-cpp"
+DEPENDS += "libconfig"
 
 DEPENDS += "dbus"
 DEPENDS += "dbus-glib"
@@ -40,6 +41,8 @@ OECMAKE_GENERATOR = "Unix Makefiles"
 
 inherit cmake gio-module-cache gobject-introspection pkgconfig
 
+PACKAGES = "${PN}"
+
 FILES:${PN} += "${systemd_unitdir}/system/self-update-agent.service"
 FILES:${PN} += "${bindir}/sdv-self-update-agent"
 FILES:${PN} += "${libdir}/libmini-yaml.so"
@@ -52,7 +55,12 @@ do_compile:prepend() {
 }
 
 do_install() {
-    install -m 0644 ${WORKDIR}/self-update-agent.service ${D}${systemd_unitdir}/system
-    install -D -m 755 ${B}/src/sdv-self-update-agent ${D}${bindir}
-    install -D -m 755 ${B}/3rdparty/libmini-yaml.so ${D}${libdir}
+    install -d ${D}${systemd_unitdir}/system/
+    install -m 0644 ${WORKDIR}/self-update-agent/self-update-agent.service ${D}${systemd_unitdir}/system
+
+    install -d ${D}${bindir}
+    install -m 755 ${B}/src/sdv-self-update-agent ${D}${bindir}
+
+    install -d ${D}${libdir}
+    install -m 755 ${B}/3rdparty/libmini-yaml.so ${D}${libdir}
 }
