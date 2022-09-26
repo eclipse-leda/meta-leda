@@ -18,6 +18,7 @@ DISTRO_FEATURES:append = " seccomp"
 DISTRO_FEATURES:append = " rauc"
 DISTRO_FEATURES:append = " security"
 DISTRO_FEATURES:append = " sdv"
+DISTRO_FEATURES:append = " ldconfig"
 
 # Enable systemd as init process
 DISTRO_FEATURES:append = " systemd"
