@@ -20,6 +20,11 @@ IMAGE_INSTALL:append = " packagegroup-sdv-core-direct"
 
 IMAGE_FEATURES:append = " read-only-rootfs"
 
+# Debug tweaks
+IMAGE_FEATURES:append = " debug-tweaks"
+IMAGE_FEATURES:append = " allow-empty-password"
+IMAGE_FEATURES:append = " empty-root-password"
+
 IMAGE_LINGUAS = " "
 
 LICENSE = "EPL"
