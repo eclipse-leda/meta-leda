@@ -27,6 +27,11 @@ IMAGE_LINGUAS = " "
 
 LICENSE = "EPL"
 
+# Debug tweaks
+IMAGE_FEATURES:append = " debug-tweaks"
+IMAGE_FEATURES:append = " allow-empty-password"
+IMAGE_FEATURES:append = " empty-root-password"
+
 inherit core-image
 
 IMAGE_ROOTFS_SIZE ?= "8192"
