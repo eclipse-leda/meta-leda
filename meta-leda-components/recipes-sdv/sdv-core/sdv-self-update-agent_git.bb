@@ -22,7 +22,6 @@ DEPENDS += "openssl"
 DEPENDS += "curl"
 DEPENDS += "paho-mqtt-c"
 DEPENDS += "paho-mqtt-cpp"
-DEPENDS += "libconfig"
 
 DEPENDS += "dbus"
 DEPENDS += "dbus-glib"
