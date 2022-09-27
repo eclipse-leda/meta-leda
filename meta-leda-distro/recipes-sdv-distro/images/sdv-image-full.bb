@@ -14,6 +14,7 @@
 SUMMARY = "A full quickstart image with all features and convenience tools enabled."
 
 IMAGE_INSTALL = "packagegroup-core-boot ${CORE_IMAGE_EXTRA_INSTALL}"
+IMAGE_INSTALL:append = " kernel-image kernel-modules"
 
 # SDV Full Image contains all package groups
 

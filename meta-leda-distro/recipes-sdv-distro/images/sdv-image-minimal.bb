@@ -14,6 +14,7 @@
 SUMMARY = "A minimal quickstart image with only core SDV packages installed."
 
 IMAGE_INSTALL = "packagegroup-core-boot ${CORE_IMAGE_EXTRA_INSTALL}"
+IMAGE_INSTALL:append = " kernel-image kernel-modules"
 
 # SDV Minimal
 IMAGE_INSTALL:append = " packagegroup-sdv-core"
