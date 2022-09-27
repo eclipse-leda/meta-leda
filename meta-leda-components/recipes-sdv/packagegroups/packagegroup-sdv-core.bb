@@ -19,7 +19,6 @@ inherit packagegroup
 SDV_EXTERNAL_DEPENDS = "\
     sdv-k3s-config \
     sdv-core-bundle-pods \
-    sdv-container-cloudagent \
     "
 
 RDEPENDS:${PN} = "\
