@@ -25,8 +25,6 @@ SDV_EXTERNAL_DEPENDS = "\
 RDEPENDS:${PN} = "\
     ca-certificates \
     packagegroup-k3s-host \
-    kernel-image \
-    kernel-modules \
     openssh \
     openssh-sftp-server \
     rauc \
