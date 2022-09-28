@@ -40,7 +40,7 @@ This layer depends on
   - Branch: kirkstone
 - meta-rauc-community
   - URI: https://github.com/rauc/meta-rauc-community.git
-  - Branch: krikstone **(Note the typo in the branch name)**
+  - Branch: kirkstone
   - Layers:
     - meta-rauc-qemux86
 - meta-rauc:

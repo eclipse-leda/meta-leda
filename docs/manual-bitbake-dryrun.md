@@ -27,7 +27,7 @@ Check out dependencies for the meta-leda metalayer:
 
     cd ${CODESPACE_VSCODE_FOLDER}
     git clone -b kirkstone https://github.com/rauc/meta-rauc.git meta-rauc
-    git clone -b krikstone https://github.com/rauc/meta-rauc-community.git meta-rauc-community
+    git clone -b kirkstone https://github.com/rauc/meta-rauc-community.git meta-rauc-community
     git clone -b kirkstone https://git.yoctoproject.org/meta-virtualization meta-virtualization
     git clone -b kirkstone https://git.openembedded.org/meta-openembedded meta-openembedded
 
