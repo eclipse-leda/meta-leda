@@ -47,5 +47,3 @@ QB_FSINFO = "wic:no-kernel-in-fs"
 
 QB_KERNEL_ROOT = "/dev/vda"
 QB_DRIVE_TYPE="/dev/vd"
-
-QB_KERNEL_CMDLINE_APPEND = "console=ttyS0,115200 net.ifnames=0 panic=5 ip=dhcp ip=192.168.7.2::192.168.7.1:255.255.255.0 rootwait"
