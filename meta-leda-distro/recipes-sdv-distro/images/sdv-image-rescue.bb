@@ -14,11 +14,17 @@
 SUMMARY = "A minimalistic rescue-system image for a reset-device-to-factory-defaults showcase."
 
 IMAGE_INSTALL = "packagegroup-core-boot ${CORE_IMAGE_EXTRA_INSTALL}"
+IMAGE_INSTALL:append = " kernel-image kernel-modules"
 
 # Rescue system only contains self-update-agent and cloud connector
 IMAGE_INSTALL:append = " packagegroup-sdv-core-direct"
 
 IMAGE_FEATURES:append = " read-only-rootfs"
+
+# Debug tweaks
+IMAGE_FEATURES:append = " debug-tweaks"
+IMAGE_FEATURES:append = " allow-empty-password"
+IMAGE_FEATURES:append = " empty-root-password"
 
 IMAGE_LINGUAS = " "
 

@@ -29,6 +29,9 @@ local_conf_header:
     INHERIT:remove = " archiver"
     INHERIT:remove = " cve-check"
     INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
+  meta-rauc: |
+    RAUC_KEY_FILE = "${COREBASE}/../examples/rauc/development-1.key.pem"
+    RAUC_CERT_FILE = "${COREBASE}/../examples/rauc/development-1.cert.pem"
 repos:
   # This entry includes the repository where the config file is located
   # to the bblayers.conf:
@@ -43,7 +46,7 @@ repos:
       meta-yocto-bsp:
   meta-rauc-community:
     url: "https://github.com/rauc/meta-rauc-community.git"
-    refspec: krikstone
+    refspec: kirkstone
     layers:
       meta-rauc-qemux86:
   meta-rauc:

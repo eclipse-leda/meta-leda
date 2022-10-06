@@ -14,18 +14,27 @@
 SUMMARY = "A full quickstart image with all features and convenience tools enabled."
 
 IMAGE_INSTALL = "packagegroup-core-boot ${CORE_IMAGE_EXTRA_INSTALL}"
+IMAGE_INSTALL:append = " kernel-image kernel-modules"
 
 # SDV Full Image contains all package groups
 
 IMAGE_INSTALL:append = " packagegroup-sdv-core"
 IMAGE_INSTALL:append = " packagegroup-sdv-additions"
 IMAGE_INSTALL:append = " packagegroup-sdv-tools"
-IMAGE_INSTALL:append = " packagegroup-sdv-airgap"
 IMAGE_INSTALL:append = " packagegroup-sdv-examples"
+
+# TODO: Temporarily disabled AirGap container installations
+# until projects have released containers
+# IMAGE_INSTALL:append = " packagegroup-sdv-airgap"
 
 IMAGE_LINGUAS = " "
 
 LICENSE = "EPL"
+
+# Debug tweaks
+IMAGE_FEATURES:append = " debug-tweaks"
+IMAGE_FEATURES:append = " allow-empty-password"
+IMAGE_FEATURES:append = " empty-root-password"
 
 inherit core-image
 
