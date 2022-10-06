@@ -14,6 +14,11 @@
 SUMMARY = "A full quickstart image with all features and convenience tools enabled."
 LICENSE = "EPL"
 
+# Debug tweaks
+IMAGE_FEATURES:append = " debug-tweaks"
+IMAGE_FEATURES:append = " allow-empty-password"
+IMAGE_FEATURES:append = " empty-root-password"
+
 # The image dependencies are actually both types: build-time and run-time dependency
 RDEPENDS:${PN} = "sdv-image-full sdv-image-minimal sdv-image-rescue sdv-rauc-bundle"
 DEPENDS = "sdv-image-full sdv-image-minimal sdv-image-rescue sdv-rauc-bundle"
