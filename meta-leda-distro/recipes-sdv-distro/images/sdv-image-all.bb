@@ -27,7 +27,7 @@ inherit core-image
 
 # Ensure efi-boot.vfat is built
 # Must only be run for qemux86_86
-do_image_wic[depends] += "boot-image:do_deploy"
+# do_image_wic[depends] += "boot-image:do_deploy"
 
 # Ensure WICVARS are being built for each of the images before the WIC Image Type is trying to find them
 do_image_wic[depends] += "sdv-image-rescue:do_rootfs_wicenv"

@@ -32,6 +32,7 @@ GO_EXTRA_LDFLAGS:append = " -X github.com/eclipse-kanto/container-management/con
 GO_EXTRA_LDFLAGS:append = " -X github.com/eclipse-kanto/container-management/containerm/version.APIVersion=${PV}"
 # GO_EXTRA_LDFLAGS:append = " -X github.com/eclipse-kanto/container-management/containerm/version.BuildTime=${BUILDNAME}"
 
+do_compile[network] = "1"
 
 do_compile() {
   cd ${B}/src/${GO_IMPORT}
