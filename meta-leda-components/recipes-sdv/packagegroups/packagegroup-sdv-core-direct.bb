@@ -16,13 +16,13 @@ DESCRIPTION = "Packages required to set up a basic working SDV system without Ku
 
 inherit packagegroup
 SDV_EXTERNAL_DEPENDS = "\
-    sdv-cloud-connector \
     "
+# TODO: Not done yet
+#    sdv-cloud-connector
+
 
 RDEPENDS:${PN} = "\
     ca-certificates \
-    kernel-modules \
-    kernel-image \
     rauc "
 
 RDEPENDS:${PN} += "${@bb.utils.contains("DISTRO_FEATURES", "sdv", "${SDV_EXTERNAL_DEPENDS}", "", d)}"
