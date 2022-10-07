@@ -7,10 +7,15 @@ tmpfs                /run                 tmpfs      mode=0755,nodev,nosuid,stri
 tmpfs                /var/volatile        tmpfs      defaults              0  0
 
 # Add mount for boot, grubenv and data partition
-/dev/vda2            /grubenv             auto       defaults,sync,auto,nofail,noatime  0  0
+LABEL=boot           /boot                auto       defaults,nofail,noatime  0  0
+LABEL=grubenv        /grubenv             auto       defaults,nofail,noatime  0  0
+LABEL=data           /data                auto       defaults,nofail,noatime  0  2
+
+# Add mount for boot, grubenv and data partition
+#/dev/vda2            /grubenv             auto       defaults,sync,auto,nofail,noatime  0  0
 
 # Experiment: Using tmpfs for the data-dir to improve performance
-/dev/vda6            /data                auto       defaults,async,auto,nofail,noatime  0  0
+#/dev/vda6            /data                auto       defaults,async,auto,nofail,noatime  0  0
 
 #tmpfs            /data                tmpfs       defaults,async,auto,nofail,noatime,size=2048M  0  0
 tmpfs /data/agent tmpfs X-mount.mkdir 0 0
