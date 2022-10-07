@@ -17,6 +17,8 @@ PREFERRED_VERSION_go ?= "1.18"
 
 inherit go-mod
 
+do_compile[network] = "1"
+
 do_compile() {
   cd ${B}/src/${GO_IMPORT}
   ${GO} build ${GOBUILDFLAGS} -o ${B}/k9s .

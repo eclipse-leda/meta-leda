@@ -32,7 +32,7 @@ RAUC_SLOT_rootfs = "sdv-image-minimal"
 RAUC_SLOT_rootfs[fstype] = "ext4"
 
 # Set RAUC bundle version to git tag or git commit in case no tag is available
-RAUC_BUNDLE_VERSION = "${@bb.process.run('GIT_CEILING_DIRECTORIES= git describe --tags --always')[0]}"
+RAUC_BUNDLE_VERSION = "${VERSION_ID}"
 
 # These are set in site.conf
 # RAUC_KEY_FILE = "${THISDIR}/path/to/development-1.key.pem"
