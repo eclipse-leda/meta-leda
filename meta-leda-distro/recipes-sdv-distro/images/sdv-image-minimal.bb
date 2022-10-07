@@ -38,4 +38,4 @@ IMAGE_ROOTFS_EXTRA_SPACE:append = "${@bb.utils.contains("DISTRO_FEATURES", "syst
 QB_FSINFO = "wic:no-kernel-in-fs"
 
 QB_KERNEL_ROOT = "/dev/vda"
-QB_DRIVE_TYPE="/dev/vd"
+QB_DRIVE_TYPE = "/dev/vd"

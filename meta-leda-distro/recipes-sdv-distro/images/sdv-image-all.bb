@@ -56,4 +56,4 @@ QB_FSINFO:qemuarm64 = "wic:no-kernel-in-fs"
 #  GRUB Config: meta-leda/recipes-bsp/grub/files/grub.cfg
 #  WIC Kickstarter File: build-sdv-arm-qemu/wic/qemuarm-grub.wks
 QB_KERNEL_ROOT = "/dev/vda4"
-QB_DRIVE_TYPE="/dev/vd"
+QB_DRIVE_TYPE = "/dev/vd"
