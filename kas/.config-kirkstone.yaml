@@ -52,6 +52,13 @@ repos:
   meta-virtualization:
     url: "https://git.yoctoproject.org/meta-virtualization"
     refspec: kirkstone
+  meta-arm:
+    url: "https://github.com/jonmason/meta-arm.git"
+    refspec: kirkstone
+    layers:
+      meta-arm:
+      meta-arm-bsp:
+      meta-arm-toolchain:
   meta-openembedded:
     url: "https://git.openembedded.org/meta-openembedded"
     refspec: kirkstone
