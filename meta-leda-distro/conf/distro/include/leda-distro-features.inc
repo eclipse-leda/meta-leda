@@ -20,6 +20,9 @@ DISTRO_FEATURES:append = " security"
 DISTRO_FEATURES:append = " sdv"
 DISTRO_FEATURES:append = " ldconfig"
 
+# Enable Xen to ensure kernel configuration included in Leda.
+DISTRO_FEATURES:append:generic-arm64 = " xen"
+
 # Enable systemd as init process
 DISTRO_FEATURES:append = " systemd"
 VIRTUAL-RUNTIME_init_manager = "systemd"

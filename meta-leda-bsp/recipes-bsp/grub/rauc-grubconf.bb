@@ -6,10 +6,15 @@ include conf/image-uefi.conf
 
 RPROVIDES:${PN} += "virtual-grub-bootconf"
 
-SRC_URI += " \
-    file://grub.cfg \
-    file://grubenv \
-    "
+SRC_URI:qemux86-64 += " \
+    file://qemux86-64/grub.cfg \
+    file://qemux86-64/grubenv \
+"
+
+SRC_URI:generic-arm64 += " \
+    file://xenarm64/grub.cfg \
+    file://xenarm64/grubenv \
+"
 
 S = "${WORKDIR}"
 
