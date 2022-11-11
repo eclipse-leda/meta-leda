@@ -19,7 +19,6 @@ inherit packagegroup
 # Temporarily disabled packages:
 # - sdv-container-seatapp
 SDV_EXTERNAL_DEPENDS = "\
-    sdv-container-seatservice \
     "
 RDEPENDS:${PN} = "\
     can-utils \

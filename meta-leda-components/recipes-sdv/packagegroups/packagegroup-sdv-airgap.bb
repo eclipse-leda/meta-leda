@@ -22,7 +22,6 @@ RDEPENDS:${PN} += "\
     sdv-container-feedercan \
     sdv-container-otelagent \
     sdv-container-otelexporter \
-    sdv-container-seatservice \
     sdv-container-selfupdateagent \
     sdv-container-vehicleupdatemanager \
     sdv-containers-dapr \

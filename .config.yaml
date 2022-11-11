@@ -25,7 +25,6 @@ distro: leda
 target: sdv-image-all
 local_conf_header:
   meta-leda: |
-    INHERIT:append = " rm_work"
     INHERIT:remove = " archiver"
     INHERIT:remove = " cve-check"
     INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
@@ -39,30 +38,37 @@ repos:
   # bblayers.conf:
   poky:
     url: "https://git.yoctoproject.org/git/poky"
-    refspec: kirkstone
+    refspec: hardknott
     layers:
       meta:
       meta-poky:
       meta-yocto-bsp:
   meta-rauc-community:
     url: "https://github.com/rauc/meta-rauc-community.git"
-    refspec: kirkstone
+    refspec: master
     layers:
       meta-rauc-qemux86:
   meta-rauc:
     url: "https://github.com/rauc/meta-rauc.git"
-    refspec: kirkstone
+    refspec: hardknott
   meta-virtualization:
     url: "https://git.yoctoproject.org/meta-virtualization"
-    refspec: kirkstone
+    refspec: hardknott
   meta-openembedded:
     url: "https://git.openembedded.org/meta-openembedded"
-    refspec: kirkstone
+    refspec: hardknott
     layers:
       meta-oe:
       meta-filesystems:
       meta-python:
       meta-networking:
+      meta-perl:
+  meta-rust:
+    url: "https://github.com/meta-rust/meta-rust.git"
+    refspec: hardknott
+  meta-security:
+    url: "https://git.yoctoproject.org/meta-security"
+    refspec: hardknott
   meta-leda:
     path: ./
     layers:
