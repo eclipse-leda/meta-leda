@@ -17,7 +17,7 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${WORKDIR}/git/src/github.com/eclipse-leda/leda-incubator-cloudagent/NOTICE;md5=b95389a3f134a33b445b438d337848f7"
 
 SRC_URI =  " \
-    git://github.com/eclipse-leda/leda-incubator-cloudagent.git;branch=main \
+    git://github.com/eclipse-leda/leda-contrib-cloud-connector;branch=main \
     file://cloudagent-systemd/ \
 "
 SRCREV = "86aabb2712157414398d786d323bed1ff752b666"

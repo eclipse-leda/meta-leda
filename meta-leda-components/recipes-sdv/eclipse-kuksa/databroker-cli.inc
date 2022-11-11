@@ -11,14 +11,6 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 #
-# Customized k3s systemd unit file to start
-# k3s with a custom data-dir on a separate partition.
-#
-FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
-SRC_URI:append := " file://01-k3s.service"
+# Include file for Kuksa Databroker Command Line Tool
 
-do_install:append() {
-        if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)}; then
-                install -D -m 0644 "${WORKDIR}/01-k3s.service" "${D}${systemd_system_unitdir}/k3s.service"
-        fi
-}
+DESCRIPTION = "Eclipse Kuksa - DataBroker command line tool to interact with the databroker server"

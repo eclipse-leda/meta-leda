@@ -20,8 +20,9 @@ SDV_EXTERNAL_DEPENDS = "\
     sdv-dapr-binaries \
     sdv-initialize-dapr-first-boot \
     sdv-helm-binaries \
-    sdv-kuksa-val-databroker \
     "
+# TODO:
+#    sdv-kuksa-val-databroker
 
 RDEPENDS:${PN} = "\
     kanto-container-management \

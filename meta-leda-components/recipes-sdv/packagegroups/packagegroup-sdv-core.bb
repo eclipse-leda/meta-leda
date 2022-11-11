@@ -19,14 +19,11 @@ inherit packagegroup
 SDV_EXTERNAL_DEPENDS = "\
     sdv-k3s-config \
     sdv-core-bundle-pods \
-    sdv-container-cloudagent \
     "
 
 RDEPENDS:${PN} = "\
     ca-certificates \
     packagegroup-k3s-host \
-    kernel-image \
-    kernel-modules \
     openssh \
     openssh-sftp-server \
     rauc \

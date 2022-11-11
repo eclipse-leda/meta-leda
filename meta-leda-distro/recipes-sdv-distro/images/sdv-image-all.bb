@@ -14,6 +14,11 @@
 SUMMARY = "A full quickstart image with all features and convenience tools enabled."
 LICENSE = "EPL"
 
+# Debug tweaks
+IMAGE_FEATURES:append = " debug-tweaks"
+IMAGE_FEATURES:append = " allow-empty-password"
+IMAGE_FEATURES:append = " empty-root-password"
+
 # The image dependencies are actually both types: build-time and run-time dependency
 RDEPENDS:${PN} = "sdv-image-full sdv-image-minimal sdv-image-rescue sdv-rauc-bundle"
 DEPENDS = "sdv-image-full sdv-image-minimal sdv-image-rescue sdv-rauc-bundle"
@@ -22,7 +27,7 @@ inherit core-image
 
 # Ensure efi-boot.vfat is built
 # Must only be run for qemux86_86
-do_image_wic[depends] += "boot-image:do_deploy"
+# do_image_wic[depends] += "boot-image:do_deploy"
 
 # Ensure WICVARS are being built for each of the images before the WIC Image Type is trying to find them
 do_image_wic[depends] += "sdv-image-rescue:do_rootfs_wicenv"
@@ -51,4 +56,4 @@ QB_FSINFO:qemuarm64 = "wic:no-kernel-in-fs"
 #  GRUB Config: meta-leda/recipes-bsp/grub/files/grub.cfg
 #  WIC Kickstarter File: build-sdv-arm-qemu/wic/qemuarm-grub.wks
 QB_KERNEL_ROOT = "/dev/vda4"
-QB_DRIVE_TYPE="/dev/vd"
+QB_DRIVE_TYPE = "/dev/vd"

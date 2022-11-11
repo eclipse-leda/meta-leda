@@ -35,15 +35,13 @@ spec:
     spec:
       containers:
         - name: vehicledatabroker
-          image: ghcr.io/eclipse/kuksa.val/databroker:v0.17.0
+          image: ghcr.io/eclipse/kuksa.val/databroker:0.2.5
           imagePullPolicy: IfNotPresent
           ports:
             - name: default
               containerPort: 55555
               protocol: TCP
           args: ["--dummy-metadata"]              
-      imagePullSecrets:
-        - name: ghcr-io
 
 ---
 apiVersion: v1

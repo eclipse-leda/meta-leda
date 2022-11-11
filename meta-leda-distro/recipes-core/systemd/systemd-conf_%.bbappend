@@ -11,14 +11,15 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 #
-# Customized k3s systemd unit file to start
-# k3s with a custom data-dir on a separate partition.
+# Enable CAN bus network by default
 #
-FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
-SRC_URI:append := " file://01-k3s.service"
+
+FILESEXTRAPATHS:prepend := "${THISDIR}/${BPN}:"
+
+SRC_URI += " file://can0.network"
+
+FILES:${PN} += " ${sysconfdir}/systemd/network/can0.network"
 
 do_install:append() {
-        if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)}; then
-                install -D -m 0644 "${WORKDIR}/01-k3s.service" "${D}${systemd_system_unitdir}/k3s.service"
-        fi
+    install -D -m 0644 ${WORKDIR}/can0.network ${D}${systemd_unitdir}/network
 }

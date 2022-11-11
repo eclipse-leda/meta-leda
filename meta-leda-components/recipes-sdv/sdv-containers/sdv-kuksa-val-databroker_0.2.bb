@@ -10,15 +10,20 @@
 # *
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
-#
-# Customized k3s systemd unit file to start
-# k3s with a custom data-dir on a separate partition.
-#
-FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
-SRC_URI:append := " file://01-k3s.service"
 
-do_install:append() {
-        if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)}; then
-                install -D -m 0644 "${WORKDIR}/01-k3s.service" "${D}${systemd_system_unitdir}/k3s.service"
-        fi
-}
+SUMMARY = "Eclipse Kuksa.Val Databroker Air-Gap Installation"
+DESCRIPTION = "Pre-load Eclipse Kuksa core containers to the device filesystem"
+
+inherit sdv-container-cache
+
+SRC_URI += "file://README.txt \
+            file://LICENSE"
+
+# According to https://wiki.yoctoproject.org/wiki/License_Infrastructure_Interest_Group
+LICENSE = "Apache-2.0"
+LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=d9fc0efef5228704e7f5b37f27192723"
+
+# Define image to be pulled
+SDV_IMAGE_REF = "ghcr.io/eclipse/kuksa.val/databroker"
+SDV_IMAGE_TAG = "0.2.5"
+

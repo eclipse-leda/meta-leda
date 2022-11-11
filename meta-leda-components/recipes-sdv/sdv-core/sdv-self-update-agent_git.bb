@@ -11,18 +11,55 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-SUMMARY = "SDV Cloud Connector"
-DESCRIPTION = "Customized fork of Eclipse Kanto azure-connector with additional support of Eclipse Backend Function Bindings and Azure C2D messages"
+SUMMARY = "Self Update Agent offers remote OS updates for edge devices using RAUC"
 LICENSE = "Apache-2.0"
-LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=b95389a3f134a33b445b438d337848f7"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=a832eda17114b48ae16cda6a500941c2"
 
-SRC_URI = "git://github.com/SoftwareDefinedVehicle/sdv-self-update-agent;branch=main"
-SRCREV = "c664a7f46f2bccf84acdfdda5a9af07776583eda"
+# Dependencies of Self Update Agent
+DEPENDS += "glib-2.0"
+DEPENDS += "glib-networking"
+DEPENDS += "openssl"
+DEPENDS += "curl"
+DEPENDS += "paho-mqtt-c"
+DEPENDS += "paho-mqtt-cpp"
+
+DEPENDS += "dbus"
+DEPENDS += "dbus-glib"
+
+# Use the gitsm fetcher to initialize submodules
+SRC_URI = "gitsm://github.com/SoftwareDefinedVehicle/sdv-self-update-agent.git;branch=main;protocol=https"
+SRC_URI += "file://self-update-agent/self-update-agent.service"
+SRC_URI += "file://self-update-agent/CMakeLists-3rdparty.txt"
+SRC_URI += "file://self-update-agent/CMakeLists-src.txt"
+SRC_URI += "file://self-update-agent/CMakeLists-root.txt"
+SRCREV  = "6715892eabeb5d4ee72929361e5dbddeeeeba661"
 
 S = "${WORKDIR}/git"
 
-inherit cmake
+OECMAKE_GENERATOR = "Unix Makefiles"
 
-#CFLAGS += "  "
+inherit cmake gio-module-cache gobject-introspection pkgconfig
 
+PACKAGES = "${PN}"
 
+FILES:${PN} += "${systemd_unitdir}/system/self-update-agent.service"
+FILES:${PN} += "${bindir}/sdv-self-update-agent"
+FILES:${PN} += "${libdir}/libmini-yaml.so"
+
+do_compile:prepend() {
+    # Hacky overwrite
+    cp ${B}/../self-update-agent/CMakeLists-3rdparty.txt ${S}/3rdparty/CMakeLists.txt
+    cp ${B}/../self-update-agent/CMakeLists-src.txt ${S}/src/CMakeLists.txt
+    cp ${B}/../self-update-agent/CMakeLists-root.txt ${S}/CMakeLists.txt
+}
+
+do_install() {
+    install -d ${D}${systemd_unitdir}/system/
+    install -m 0644 ${WORKDIR}/self-update-agent/self-update-agent.service ${D}${systemd_unitdir}/system
+
+    install -d ${D}${bindir}
+    install -m 755 ${B}/src/sdv-self-update-agent ${D}${bindir}
+
+    install -d ${D}${libdir}
+    install -m 755 ${B}/3rdparty/libmini-yaml.so ${D}${libdir}
+}

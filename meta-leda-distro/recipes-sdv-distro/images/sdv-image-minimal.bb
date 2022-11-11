@@ -14,6 +14,7 @@
 SUMMARY = "A minimal quickstart image with only core SDV packages installed."
 
 IMAGE_INSTALL = "packagegroup-core-boot ${CORE_IMAGE_EXTRA_INSTALL}"
+IMAGE_INSTALL:append = " kernel-image kernel-modules"
 
 # SDV Minimal
 IMAGE_INSTALL:append = " packagegroup-sdv-core"
@@ -21,6 +22,11 @@ IMAGE_INSTALL:append = " packagegroup-sdv-core"
 IMAGE_LINGUAS = " "
 
 LICENSE = "EPL"
+
+# Debug tweaks
+IMAGE_FEATURES:append = " debug-tweaks"
+IMAGE_FEATURES:append = " allow-empty-password"
+IMAGE_FEATURES:append = " empty-root-password"
 
 inherit core-image
 
@@ -32,6 +38,4 @@ IMAGE_ROOTFS_EXTRA_SPACE:append = "${@bb.utils.contains("DISTRO_FEATURES", "syst
 QB_FSINFO = "wic:no-kernel-in-fs"
 
 QB_KERNEL_ROOT = "/dev/vda"
-QB_DRIVE_TYPE="/dev/vd"
-
-QB_KERNEL_CMDLINE_APPEND = "console=ttyS0,115200 net.ifnames=0 panic=5 ip=dhcp ip=192.168.7.2::192.168.7.1:255.255.255.0 rootwait"
+QB_DRIVE_TYPE = "/dev/vd"
