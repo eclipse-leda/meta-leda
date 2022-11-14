@@ -1,0 +1,73 @@
+# /********************************************************************************
+# * Copyright (c) 2022 Contributors to the Eclipse Foundation
+# *
+# * See the NOTICE file(s) distributed with this work for additional
+# * information regarding copyright ownership.
+# *
+# * This program and the accompanying materials are made available under the
+# * terms of the Apache License 2.0 which is available at
+# * https://www.apache.org/licenses/LICENSE-2.0
+# *
+# * SPDX-License-Identifier: Apache-2.0
+# ********************************************************************************/
+# Eclipse Leda
+
+# Directory where containers are mounted
+run_dir = "/var/run/northstar"
+# Directory for `persist` mounts of containers
+data_dir = "/data/northstar"
+# Log directory for debug logs and traces
+log_dir = "/var/log/northstar"
+# Top level cgroup name
+cgroup = "northstar"
+# Event loop buffer size
+event_buffer_size = 256
+# Notification buffer size
+notification_buffer_size = 64
+# Device mapper device timeout
+device_mapper_device_timeout = "2s"
+# Token timeout
+token_validity = "1m"
+# Loop device timeout
+loop_device_timeout = "5s"
+
+# Debug TCP console on localhost with full access
+[consoles."tcp://localhost:4200"]
+permissions = "full"
+
+# Example console with notification access only
+[consoles."tcp://localhost:4201"]
+permissions = ["notifications"]
+
+# Start a `strace -p PID ...` instance after a container is started.
+# The execution of the application is deferred until strace is attached.
+# [debug.strace]
+# Configure the output of the strace instance attached to a started
+# application. "file" for a file named strace-<PID>-name.log or "log"
+# to forward the strace output to the runtimes log.
+# output = "log"
+# Optional additional flags passed to `strace`
+# flags = "-f -s 256"
+# Optional path to the strace binary
+# path = /bin/strace
+# Include the runtime system calls prior to exeve
+# include_runtime = true
+
+# Start a `perf record -p PID -o LOG_DIR/perf-PID-NAME.perf FLAGS` instance
+# after a container is started.
+# [debug.perf]
+# Optional path to the perf binary
+# path = "/bin/perf"
+# Optional additional flags passed to `perf`
+# flags = ""
+
+# NPK Repository `memory` configuration. This is a not persistent in memory repository
+[repositories.memory]
+key = "/etc/northstar/examples/northstar.pub"
+type = "mem"
+
+# NPK Repository `default` in `dir`
+[repositories.default]
+mount_on_start = true
+key = "/etc/northstar/examples/northstar.pub"
+type = { fs = { dir = "/data/northstar/repository" }}
