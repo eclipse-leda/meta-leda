@@ -20,8 +20,8 @@ IMAGE_FEATURES:append = " allow-empty-password"
 IMAGE_FEATURES:append = " empty-root-password"
 
 # The image dependencies are actually both types: build-time and run-time dependency
-RDEPENDS:${PN} = "sdv-image-full sdv-image-minimal sdv-image-rescue sdv-rauc-bundle"
-DEPENDS = "sdv-image-full sdv-image-minimal sdv-image-rescue sdv-rauc-bundle"
+RDEPENDS:${PN} = "sdv-image-full sdv-image-minimal sdv-image-rescue"
+DEPENDS = "sdv-image-full sdv-image-minimal sdv-image-rescue"
 
 inherit core-image
 
