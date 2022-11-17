@@ -14,8 +14,7 @@
 SUMMARY = "SDV Cloud Connector container image"
 DESCRIPTION = "Docker container of the Eclipse Kanto Cloud Connector for IoT Suite"
 
-SRC_URI += "file://README.txt \
-            file://LICENSE"
+SRC_URI += "file://LICENSE"
 
 # According to https://wiki.yoctoproject.org/wiki/License_Infrastructure_Interest_Group
 LICENSE = "Apache-2.0"
