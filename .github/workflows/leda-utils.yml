@@ -32,4 +32,4 @@ jobs:
         git clone https://github.com/openembedded/bitbake
         bitbake/bin/bitbake-hashserv -b :1234 &
     - name: Build leda-utils
-      run: kas build ./.config.yaml:kas/mirrors.yaml --target sdv-core-utils
+      run: kas build kas/.config-kirkstone.yaml:kas/mirrors.yaml --target sdv-core-utils
