@@ -8,3 +8,6 @@ meta-rauc
 meta-rauc-community
 meta-virtualization
 poky
+
+# BitBake Hash Equivalence Server database
+hashserv.db*
