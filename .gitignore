@@ -5,9 +5,12 @@ build/
 # want to commit them as git submodules.
 meta-openembedded
 meta-rauc
+meta-kanto
 meta-rauc-community
 meta-virtualization
 poky
 
 # BitBake Hash Equivalence Server database
+bitbake
 hashserv.db*
+azure-sstate-cache
