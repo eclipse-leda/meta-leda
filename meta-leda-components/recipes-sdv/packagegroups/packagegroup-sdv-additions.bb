@@ -27,8 +27,10 @@ SDV_EXTERNAL_DEPENDS = "\
 RDEPENDS:${PN} = "\
     container-management \
     file-upload \
+    file-backup \
     software-update \
     suite-connector \
+    system-metrics \
     rauc-hawkbit-updater \
     "
 
