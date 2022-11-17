@@ -25,10 +25,12 @@ SDV_EXTERNAL_DEPENDS = "\
 #    sdv-kuksa-val-databroker
 
 RDEPENDS:${PN} = "\
-    kanto-container-management \
-    kanto-file-upload \
-    kanto-software-update \
-    kanto-suite-connector \
+    container-management \
+    file-upload \
+    file-backup \
+    software-update \
+    suite-connector \
+    system-metrics \
     rauc-hawkbit-updater \
     "
 

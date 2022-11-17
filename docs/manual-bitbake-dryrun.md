@@ -50,4 +50,4 @@ Dry-run a build of one of the Leda recipes:
 
 Perform a real build of one of the targets, e.g. the Eclipse Kanto Container Management recipe:
 
-    DISTRO=leda bitbake kanto-container-management
+    DISTRO=leda bitbake container-management
