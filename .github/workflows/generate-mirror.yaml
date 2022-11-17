@@ -12,7 +12,7 @@ jobs:
     - name: Install kas
       run: sudo pip3 install kas
     - name: Fetch all
-      run: kas shell -c 'bitbake --runall=fetch sdv-image-all' kas/generate-mirror.yaml
+      run: kas shell -c 'bitbake --runall=fetch sdv-image-all' kas/generate-mirrors.yaml
     - uses: LanceMcCarthy/Action-AzureBlobUpload@v2
       name: Update remote download mirror
       with:
