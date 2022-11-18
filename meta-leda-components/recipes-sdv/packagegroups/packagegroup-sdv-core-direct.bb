@@ -12,17 +12,10 @@
 # ********************************************************************************/
 
 SUMMARY = "SDV core-native packages"
-DESCRIPTION = "Packages required to set up a basic working SDV system without Kubernetes"
+DESCRIPTION = "Packages required to set up a basic working SDV system"
 
 inherit packagegroup
-SDV_EXTERNAL_DEPENDS = "\
-    "
-# TODO: Not done yet
-#    sdv-cloud-connector
-
 
 RDEPENDS:${PN} = "\
     ca-certificates \
     rauc "
-
-RDEPENDS:${PN} += "${@bb.utils.contains("DISTRO_FEATURES", "sdv", "${SDV_EXTERNAL_DEPENDS}", "", d)}"
