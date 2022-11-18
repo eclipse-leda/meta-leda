@@ -46,6 +46,9 @@ This layer depends on
 - meta-rauc:
   - URI: https://github.com/rauc/meta-rauc.git
   - Branch: kirkstone
+- meta-kanto:
+  - URI: https://github.com/eclipse-kanto/meta-kanto.git
+  - Branch: kirkstone
 - meta-virtualization:
   - URI: https://git.yoctoproject.org/meta-virtualization
   - Branch: kirkstone
