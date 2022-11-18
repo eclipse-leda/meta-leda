@@ -11,3 +11,5 @@ poky
 
 # BitBake Hash Equivalence Server database
 hashserv.db*
+azure-sstate-cache
+bitbake
