@@ -51,3 +51,11 @@ jobs:
         bitbake/bin/bitbake-hashserv -b :1234 &
     - name: Build leda-utils
       run: kas build kas/.config-kirkstone.yaml:kas/mirrors.yaml --target sdv-core-utils
+    - name: Update remote download mirror
+      if: always()
+      uses: LanceMcCarthy/Action-AzureBlobUpload@v2
+      with:
+        connection_string: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
+        container_name: yocto-sstate-cache
+        source_folder: build/sstate-cache/
+        destination_folder: sstate-cache/
