@@ -16,11 +16,6 @@ DESCRIPTION = "Packages SDV examples (Seat Service)"
 
 inherit packagegroup
 
-# Temporarily disabled packages:
-# - sdv-container-seatapp
-SDV_EXTERNAL_DEPENDS = "\
-    sdv-container-seatservice \
-    "
 RDEPENDS:${PN} = "\
     can-utils \
     can-utils-access \
@@ -30,7 +25,6 @@ RDEPENDS:${PN} = "\
     can-utils-slcan \
     can-utils-log \
     "
-RDEPENDS:${PN} += "${@bb.utils.contains("DISTRO_FEATURES", "sdv", "${SDV_EXTERNAL_DEPENDS}", "", d)}"
 
 KERNEL_MODULE_AUTOLOAD += "can"
 KERNEL_MODULE_AUTOLOAD += "vcan"

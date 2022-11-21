@@ -29,6 +29,9 @@ local_conf_header:
     INHERIT:remove = " archiver"
     INHERIT:remove = " cve-check"
     INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
+  sign_conf: |
+    RAUC_KEY_FILE="${TOPDIR}/../examples/rauc/development-1.key.pem"
+    RAUC_CERT_FILE="${TOPDIR}/../examples/rauc/development-1.cert.pem"
 repos:
   # This entry includes the repository where the config file is located
   # to the bblayers.conf:
@@ -48,6 +51,9 @@ repos:
       meta-rauc-qemux86:
   meta-rauc:
     url: "https://github.com/rauc/meta-rauc.git"
+    refspec: kirkstone
+  meta-kanto:
+    url: "https://github.com/eclipse-kanto/meta-kanto.git"
     refspec: kirkstone
   meta-virtualization:
     url: "https://git.yoctoproject.org/meta-virtualization"

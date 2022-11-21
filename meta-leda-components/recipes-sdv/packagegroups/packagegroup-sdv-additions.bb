@@ -16,20 +16,12 @@ DESCRIPTION = "Packages required to set up a basic working demo SDV system, but 
 
 inherit packagegroup
 
-SDV_EXTERNAL_DEPENDS = "\
-    sdv-dapr-binaries \
-    sdv-initialize-dapr-first-boot \
-    sdv-helm-binaries \
-    "
-# TODO:
-#    sdv-kuksa-val-databroker
-
 RDEPENDS:${PN} = "\
-    kanto-container-management \
-    kanto-file-upload \
-    kanto-software-update \
-    kanto-suite-connector \
+    container-management \
+    file-upload \
+    file-backup \
+    software-update \
+    suite-connector \
+    system-metrics \
     rauc-hawkbit-updater \
     "
-
-RDEPENDS:${PN} += "${@bb.utils.contains("DISTRO_FEATURES", "sdv", "${SDV_EXTERNAL_DEPENDS}", "", d)}"
