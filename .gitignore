@@ -3,6 +3,7 @@ build/
 
 # Metalayer folders are created by running "kas build" and we don't
 # want to commit them as git submodules.
+meta-kanto
 meta-openembedded
 meta-rauc
 meta-kanto
@@ -14,3 +15,5 @@ poky
 bitbake
 hashserv.db*
 azure-sstate-cache
+azure-downloads-cache
+bitbake
