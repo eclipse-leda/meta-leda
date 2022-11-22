@@ -8,9 +8,12 @@ meta-rauc
 meta-kanto
 meta-rauc-community
 meta-virtualization
+meta-raspberrypi
+meta-rust
 poky
 
 # BitBake Hash Equivalence Server database
 bitbake
 hashserv.db*
 azure-sstate-cache
+azure-downloads-cache
