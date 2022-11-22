@@ -19,10 +19,8 @@ inherit packagegroup
 RDEPENDS:${PN} = "\
     htop \
     jq \
-    k9s \
     mosquitto-clients \
     nano \
-    nerdctl \
     sdv-core-utils \
     skopeo \
     sudo \

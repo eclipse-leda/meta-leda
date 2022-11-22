@@ -58,10 +58,10 @@ python do_compile:prepend() {
         layerRev = d.getVar("DISTRO_VERSION")
         path = d.getVar("TOPDIR") or d.getVar("BUILD_DIR")
         try:
-            ver = exec_git_run("git describe --tags", path)
+            ver = exec_git_run("git describe --always --tags", path)
             layerRev = ver
         except Exception as exc:
-            bb.warn('Exception executing git, falling back to DISTRO_VERSION', exc)
+            bb.warn('Exception executing git, falling back to DISTRO_VERSION')
 
         d.setVar("VERSION_CODENAME", d.getVar("DISTRO_CODENAME"))
         d.setVar("IMAGE_VERSION", layerRev)
