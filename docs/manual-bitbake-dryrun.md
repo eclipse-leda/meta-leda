@@ -51,3 +51,7 @@ Dry-run a build of one of the Leda recipes:
 Perform a real build of one of the targets, e.g. the Eclipse Kanto Container Management recipe:
 
     DISTRO=leda bitbake container-management
+
+To build a specific machine, set the KAS_MACHINE environment variable:
+
+    KAS_MACHINE=raspberrypi4-64 kas build kas/.config-kirkstone-rpi4.yaml:kas/mirrors.yaml --target sdv-raspberry-growdisk
