@@ -19,7 +19,7 @@ header:
   # is increased on every format change.
   version: 12
   includes:
-    - .config-kirkstone.yaml
+    - kas/.config-kirkstone.yaml
 # The machine as it is written into the `local.conf` of bitbake.
 task: fetch
 target: sdv-image-all
