@@ -1,0 +1,39 @@
+on:
+  pull_request:
+    branches:
+      - main
+    types: ["closed"]
+
+jobs:
+  cherry_pick_kirkstone:
+    runs-on: ubuntu-latest
+    name: Cherry pick into kirkstone
+    if: contains(github.event.pull_request.labels.*.name, 'kirkstone')
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Cherry pick into kirkstone
+        uses: carloscastrojumo/github-cherry-pick-action@v1.0.4
+        with:
+          branch: kirkstone
+          labels: |
+            cherry-pick
+  cherry_pick_honister:
+    runs-on: ubuntu-latest
+    name: Cherry pick into honister
+    if: contains(github.event.pull_request.labels.*.name, 'honister')
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Cherry pick into honister
+        uses: carloscastrojumo/github-cherry-pick-action@v1.0.4
+        with:
+          branch: honister
+          labels: |
+            cherry-pick
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
