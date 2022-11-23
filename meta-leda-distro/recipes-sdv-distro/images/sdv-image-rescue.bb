@@ -12,6 +12,7 @@
 # ********************************************************************************/
 
 SUMMARY = "A minimalistic rescue-system image for a reset-device-to-factory-defaults showcase."
+LICENSE = "Apache-2.0"
 
 IMAGE_INSTALL = "packagegroup-core-boot ${CORE_IMAGE_EXTRA_INSTALL}"
 
@@ -22,7 +23,6 @@ IMAGE_FEATURES:append = " read-only-rootfs"
 
 IMAGE_LINGUAS = " "
 
-LICENSE = "EPL"
 
 inherit core-image
 

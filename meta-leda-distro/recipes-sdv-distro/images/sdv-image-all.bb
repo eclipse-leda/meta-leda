@@ -12,7 +12,7 @@
 # ********************************************************************************/
 
 SUMMARY = "A full quickstart image with all features and convenience tools enabled."
-LICENSE = "EPL"
+LICENSE = "Apache-2.0"
 
 # The image dependencies are actually both types: build-time and run-time dependency
 RDEPENDS:${PN} = "sdv-image-full sdv-image-minimal sdv-image-rescue sdv-rauc-bundle"
