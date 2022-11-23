@@ -12,6 +12,7 @@
 # ********************************************************************************/
 
 SUMMARY = "A full quickstart image with all features and convenience tools enabled."
+LICENSE = "Apache-2.0"
 
 IMAGE_INSTALL = "packagegroup-core-boot ${CORE_IMAGE_EXTRA_INSTALL}"
 
@@ -25,7 +26,6 @@ IMAGE_INSTALL:append = " packagegroup-sdv-examples"
 
 IMAGE_LINGUAS = " "
 
-LICENSE = "EPL"
 
 inherit core-image
 
