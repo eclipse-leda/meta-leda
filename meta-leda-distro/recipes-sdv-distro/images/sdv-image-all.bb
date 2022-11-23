@@ -12,7 +12,7 @@
 # ********************************************************************************/
 
 SUMMARY = "A full quickstart image with all features and convenience tools enabled."
-LICENSE = "EPL"
+LICENSE = "Apache-2.0"
 
 # Debug tweaks
 IMAGE_FEATURES:append = " debug-tweaks"
