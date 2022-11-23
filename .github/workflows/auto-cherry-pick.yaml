@@ -6,7 +6,7 @@ on:
 
 jobs:
   cherry_pick_kirkstone:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     name: Cherry pick into kirkstone
     if: contains(github.event.pull_request.labels.*.name, 'kirkstone')
     steps:
@@ -21,7 +21,7 @@ jobs:
           labels: |
             cherry-pick
   cherry_pick_honister:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     name: Cherry pick into honister
     if: contains(github.event.pull_request.labels.*.name, 'honister')
     steps:
