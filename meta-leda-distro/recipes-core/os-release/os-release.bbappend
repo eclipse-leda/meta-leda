@@ -61,7 +61,7 @@ python do_compile:prepend() {
             ver = exec_git_run("git describe --tags", path)
             layerRev = ver
         except Exception as exc:
-            bb.warn('Exception executing git, falling back to DISTRO_VERSION', exc)
+            bb.warn('Exception executing git, falling back to DISTRO_VERSION', str(exc))
 
         d.setVar("VERSION_CODENAME", d.getVar("DISTRO_CODENAME"))
         d.setVar("IMAGE_VERSION", layerRev)
