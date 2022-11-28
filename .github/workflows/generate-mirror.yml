@@ -31,7 +31,7 @@ name: Generate Yocto Mirror
 on:
   workflow_dispatch:
   schedule:
-    - cron: '37 13 * * SUN'
+    - cron: '35 13 * * SUN'
 
 jobs:
   generate-mirror:
@@ -47,6 +47,9 @@ jobs:
     - name: Fetch all
       continue-on-error: true
       run: kas shell -c 'bitbake --continue --runall=fetch sdv-image-all' kas/generate-mirror.yaml
+    - name: List archives
+      continue-on-error: true
+      run: ls -al build/downloads/
     - uses: bacongobbler/azure-blob-storage-upload@v3.0.0
       if: ${{ github.repository_owner == 'SoftwareDefinedVehicle' }}
       with:
