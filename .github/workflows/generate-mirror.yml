@@ -58,6 +58,6 @@ jobs:
       with:
         source_dir: 'build/downloads/'
         container_name: 'downloads'
-        extra_args: '--pattern *.tar.*'
+        extra_args: '--pattern *.tar.*[!done]'
         overwrite: 'sync'
         connection_string: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
