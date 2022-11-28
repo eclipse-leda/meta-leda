@@ -15,7 +15,7 @@ SUMMARY = "SDV Core Utilities"
 DESCRIPTION = "Core shell scripts"
 
 SRC_URI = "git://github.com/eclipse-leda/leda-utils;branch=main;protocol=https"
-SRCREV = "64ad53ff4b952735ebc5e051e00aad39938ca4a0"
+SRCREV = "586ef6da1b841efd76fb06b9821bae4277e325e0"
 
 # According to https://wiki.yoctoproject.org/wiki/License_Infrastructure_Interest_Group
 LICENSE = "Apache-2.0"
