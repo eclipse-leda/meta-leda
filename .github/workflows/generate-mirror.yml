@@ -46,7 +46,10 @@ jobs:
       run: sudo pip3 install kas
     - name: Fetch all
       continue-on-error: true
-      run: kas shell -c 'bitbake --continue --runall=fetch sdv-image-all' kas/generate-mirror.yaml
+      run: |
+        KAS_MACHINE=qemux86-64 kas shell -c 'bitbake --continue --runall=fetch sdv-image-all' kas/generate-mirror.yaml
+        KAS_MACHINE=qemuarm64 kas shell -c 'bitbake --continue --runall=fetch sdv-image-all' kas/generate-mirror.yaml
+        KAS_MACHINE=raspberrypi4-64 kas shell -c 'bitbake --continue --runall=fetch sdv-image-all' kas/generate-mirror.yaml
     - name: List archives
       continue-on-error: true
       run: ls -al build/downloads/
@@ -55,6 +58,6 @@ jobs:
       with:
         source_dir: 'build/downloads/'
         container_name: 'downloads'
-        extra_args: '--pattern *.tar.gz'
-        overwrite: 'true'
+        extra_args: '--pattern *.tar.*'
+        overwrite: 'sync'
         connection_string: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
