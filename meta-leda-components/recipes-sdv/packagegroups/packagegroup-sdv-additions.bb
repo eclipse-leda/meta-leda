@@ -26,5 +26,5 @@ RDEPENDS:${PN} = "\
     rauc-hawkbit-updater \
     "
 
- #  kanto-auto-deployer
+#  kanto-auto-deployer
  
