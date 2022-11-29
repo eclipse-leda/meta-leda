@@ -16,27 +16,13 @@ inherit cargo
 
 RDEPENDS_${PN} += " grpc protobuf nativesdk-protobuf"
 DEPENDS += " protobuf protobuf-native grpc"
-# If this is git based prefer versioned ones if they exist
-# DEFAULT_PREFERENCE = "-1"
 
-# how to get kanto-auto-deployer could be as easy as but default to a git checkout:
-#SRC_URI += "crate://crates.io/kanto-auto-deployer/0.1.0"
-SRC_URI = "gitsm://github.com/SoftwareDefinedVehicle/leda-utils-fork;protocol=https;nobranch=1;branch=kanto-auto-deployer"
-SRCREV = "5b7d76a343baaee925e70bda865a148cac2e4801"
-#DL_DIR ?= "${TOPDIR}/downloads"
-#SRC_URI += "file://src/rust/kanto-auto-deployer/container-management/containerm/api/services/containers/containers.proto"
-#SRC_URI += "file://src/rust/kanto-auto-deployer"
-#SRC_URI += "api/services/containers/containers.proto"
-#	path = src/rust/kanto-auto-deployer/container-management
-#SRC_URI += "https://github.com/eclipse-kanto/container-management;protocol=https;nobranch=1;branch=main"
-#SRC_URI[sha256sum] = "d6b6b75102a629a1c7da68842548f39ac37e7e302c232d40d979bfc486b351cb"
+
+SRC_URI = "gitsm://github.com/SoftwareDefinedVehicle/leda-utils-fork;protocol=https;nobranch=0;branch=kanto-auto-deployer"
+SRCREV = "44171444af61e0c6a7a0cda2c8aeb7f6f2e27f29"
 
 S = "${WORKDIR}/git"
-##S = "${WORKDIR}/git"
-#do_configure:prepend() {
-#  cd ${WORKDIR}/git
-#  git submodule update --init --recursive
-#}
+
 
 CARGO_SRC_DIR = "src/rust/kanto-auto-deployer"
 PV:append = ".AUTOINC+5b7d76a343"
@@ -115,12 +101,12 @@ SRC_URI += " \
     crate://crates.io/regex/1.7.0 \
     crate://crates.io/remove_dir_all/0.5.3 \
     crate://crates.io/ryu/1.0.11 \
-    crate://crates.io/serde/1.0.147 \
-    crate://crates.io/serde_derive/1.0.147 \
+    crate://crates.io/serde/1.0.148 \
+    crate://crates.io/serde_derive/1.0.148 \
     crate://crates.io/serde_json/1.0.89 \
     crate://crates.io/slab/0.4.7 \
     crate://crates.io/socket2/0.4.7 \
-    crate://crates.io/syn/1.0.103 \
+    crate://crates.io/syn/1.0.104 \
     crate://crates.io/sync_wrapper/0.1.1 \
     crate://crates.io/tempfile/3.3.0 \
     crate://crates.io/tokio-io-timeout/1.2.0 \
