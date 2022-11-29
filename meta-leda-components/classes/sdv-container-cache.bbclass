@@ -13,14 +13,19 @@
 
 # Define defaults, which can be overridden within the recipe
 export CONTAINER_ARCH
+export SKOPEO_AUTH_PARAMETER
 
 CONTAINER_OS ??= "linux"
-CONTAINER_REGISTRY_REQUIRES_AUTH ??= "1"
+CONTAINER_REGISTRY_REQUIRES_AUTH ??= "0"
 CONTAINER_SKIP_MISSING_ARCH ??= "0"
 SDV_DL_FILENAME ??= "${PN}-${PV}-${TARGET_ARCH}-${SDV_IMAGE_TAG}.tar"
 SDV_DL_FILE ??= "${DL_DIR}/${SDV_DL_FILENAME}"
 
-K3S_AGENT_PRELOAD_DIR ??= "/var/lib/rancher/k3s/agent/images"
+CONTAINERS_TARGET_PATH ??= "/var/containers/images"
+
+# Override this to specify a different location
+SKOPEO_AUTH_JSON_FILE ??= "${TOPDIR}/auth.json"
+SKOPEO_AUTH_PARAMETER = ""
 
 FALSE = "0"
 TRUE = "1"
@@ -30,6 +35,7 @@ CONTAINER_ARCH[doc] = "Specify the container machine architecture, e.g. amd64, a
 CONTAINER_OS[doc] = "Specify the container operatin system, e.g. linux"
 CONTAINER_REGISTRY_REQUIRES_AUTH[doc] = "Specify if the container registry requires authentication: 1=true (default) and 0=false"
 CONTAINER_SKIP_MISSING_ARCH[doc] = "Set to 1 to ignore errors due to missing container image architecture in remote container registry: 1=skip 0=fail build"
+CONTAINERS_TARGET_PATH[doc] = "The location on the rootfs to store container archives"
 SDV_DL_FILE[doc] = "Specify how the archive is downloaded"
 
 do_fetch_container[depends] += "skopeo-native:do_populate_sysroot"
@@ -39,7 +45,7 @@ do_fetch_container[depends] += "jq-native:do_populate_sysroot"
 do_compile[noexec] = "1"
 do_fetch_container[nostamp] = "1"
 do_unpack_container[nostamp] = "1"
-
+do_fetch_container[network] = "1"
 
 contains_tag() {
     retvalue="${TRUE}"
@@ -74,10 +80,24 @@ do_fetch_container() {
 
     if [ ${CONTAINER_REGISTRY_REQUIRES_AUTH} -eq 1 ]
     then
-        if ! PATH=/usr/bin:${PATH} skopeo login --authfile ~/auth.json ${CONTAINER_REGISTRY} ;
+        if [ -z "${SKOPEO_AUTH_JSON_FILE}" ]
         then
-            bbwarn "Not logged into ${CONTAINER_REGISTRY}, download of container image ${SDV_IMAGE_REF} may fail!"
-        fi
+            bbfatal "Auth file for skopeo not set, please set SKOPEO_AUTH_JSON_FILE"
+            exit 1
+        else
+            if [ ! -r "${SKOPEO_AUTH_JSON_FILE}" ]
+            then
+                bbfatal "Auth file as set by SKOPEO_AUTH_JSON_FILE not found: ${SKOPEO_AUTH_JSON_FILE}"
+                exit 2
+            fi
+            SKOPEO_AUTH_PARAMETER="--authfile ${SKOPEO_AUTH_JSON_FILE}"
+            if ! PATH=/usr/bin:${PATH} skopeo login ${SKOPEO_AUTH_PARAMETER} ${CONTAINER_REGISTRY} ;
+            then
+                bbwarn "Not logged into ${CONTAINER_REGISTRY}, download of container image ${SDV_IMAGE_REF} may fail!"
+            fi
+        fi 
+    else
+        SKOPEO_AUTH_PARAMETER=""
     fi
 
     if [ -z "$CONTAINER_ARCH" ]
@@ -122,7 +142,7 @@ do_fetch_container() {
             --override-arch ${CONTAINER_ARCH} \
             --override-os ${CONTAINER_OS} \
             copy \
-            --authfile ~/auth.json \
+            ${SKOPEO_AUTH_PARAMETER} \
             --additional-tag ${SDV_IMAGE_REF}:${SDV_IMAGE_TAG} \
             docker://${SDV_IMAGE_REF}:${SDV_IMAGE_TAG} \
             docker-archive:${SDV_DL_FILE}:${SDV_IMAGE_REF} ;
@@ -163,13 +183,13 @@ do_unpack_container() {
 }
 
 do_install() {
-    mkdir -p ${D}${K3S_AGENT_PRELOAD_DIR}
-    cp --no-dereference --preserve=mode,links -v ${S}/${SDV_DL_FILENAME} ${D}${K3S_AGENT_PRELOAD_DIR}/
+    mkdir -p ${D}${CONTAINERS_TARGET_PATH}
+    cp --no-dereference --preserve=mode,links -v ${S}/${SDV_DL_FILENAME} ${D}${CONTAINERS_TARGET_PATH}/
 }
 
 addtask do_fetch_container before do_unpack_container after do_fetch 
 addtask do_unpack_container before do_install after do_fetch_container 
 
-FILES:${PN} += "${K3S_AGENT_PRELOAD_DIR}/${SDV_DL_FILENAME}"
+FILES:${PN} += "${CONTAINERS_TARGET_PATH}/${SDV_DL_FILENAME}"
 
 PACKAGES = "${PN}"
