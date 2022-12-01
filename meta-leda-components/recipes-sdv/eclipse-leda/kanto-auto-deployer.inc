@@ -11,9 +11,17 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
+
+PACKAGES = "${PN}"
+FILES:${PN} += "${bindir}/kanto-auto-deployer"
+FILES:${PN} += "${systemd_unitdir}/system/kanto-auto-deployer.service"
+
+#containers
+FILES:${PN} += "/manifests/databroker.json"
+
 do_install:append() {
-	bbwarn "HERE WE GO"
 	cargo_do_install
+	install_containers
 }
 
 cargo_do_install () {
@@ -48,4 +56,16 @@ cargo_do_install () {
 	if ! $have_installed; then
 		die "Did not find anything to install"
 	fi
+
 }
+
+install_containers() {
+    install -d ${D}${systemd_unitdir}/system/
+    install -m 0644 ${THISDIR}/files/kanto-auto-deployer.service ${D}${systemd_unitdir}/system
+    install -d ${D}/manifests
+	
+	#containers
+    install ${THISDIR}/kanto-containers/databroker.json ${D}/manifests
+}
+
+
