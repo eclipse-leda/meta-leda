@@ -17,11 +17,12 @@ DESCRIPTION = "Pull the container images, save them in the rootfs."
 inherit sdv-container-cache
 
 SRC_URI += "file://README.txt \
-            file://LICENSE"
+            git://github.com/docker-library/hello-world/;protocol=https;branch=master"
+SRCREV = "${AUTOREV}"
 
 # According to https://wiki.yoctoproject.org/wiki/License_Infrastructure_Interest_Group
-LICENSE = "Apache-2.0"
-LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=d9fc0efef5228704e7f5b37f27192723"
+LICENSE = "MIT"
+LIC_FILES_CHKSUM = "file://${WORKDIR}/git/LICENSE;md5=4c512a2a4a9c2efd5e63d5865e1e9fcb"
 
 # Define image to be pulled
 SDV_IMAGE_REF="hello-world"

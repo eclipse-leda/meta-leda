@@ -13,7 +13,6 @@
 
 # Enable needed distro features
 DISTRO_FEATURES:append = " virtualization"
-DISTRO_FEATURES:append = " k8s"
 DISTRO_FEATURES:append = " seccomp"
 DISTRO_FEATURES:append = " rauc"
 DISTRO_FEATURES:append = " security"
