@@ -26,8 +26,8 @@ inherit cargo
 RDEPENDS_${PN} += " grpc protobuf nativesdk-protobuf"
 DEPENDS += " protobuf protobuf-native grpc"
 
-SRCREV = "7a5e81905c6604e4513195a35f6048edcb3b4822"
-PV:append = ".AUTOINC+7a5e81905c"
+SRCREV = "1a7ccb4d37c6ca6bbfce2d915c31aa4478623791"
+PV:append = ".AUTOINC+1a7ccb4d37"
 SRC_URI = "gitsm://github.com/eclipse-leda/leda-utils;protocol=https;nobranch=0;branch=main"
 
 S = "${WORKDIR}/git"
