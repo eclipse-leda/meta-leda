@@ -10,20 +10,5 @@
 # *
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
-
-SUMMARY = "SDV core additional packages"
-DESCRIPTION = "Packages required to set up a basic working demo SDV system, but may contain temporary or additional packages"
-
-inherit packagegroup
-
-RDEPENDS:${PN} = "\
-    container-management \
-    file-upload \
-    file-backup \
-    software-update \
-    suite-connector \
-    system-metrics \
-    rauc-hawkbit-updater \
-    kanto-auto-deployer \
-    sdv-default-containers \
-"
+#
+KANTO_MANIFESTS_DIR ??= "/var/containers/manifests"
