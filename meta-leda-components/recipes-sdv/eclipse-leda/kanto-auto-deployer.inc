@@ -64,7 +64,7 @@ install_containers() {
     install -m 0644 ${THISDIR}/files/kanto-auto-deployer.service ${D}${systemd_unitdir}/system
     install -d ${D}/var/containers/manifests
 	
-	#containers
+    #containers
     install ${THISDIR}/kanto-containers/databroker.json ${D}/var/containers/manifests
 }
 
