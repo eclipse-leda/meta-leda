@@ -20,4 +20,6 @@ Wants=network-online.target
 WantedBy=multi-user.target
 
 [Service]
-ExecStart=/usr/bin/kanto-auto-deployer /manifests
+Restart=on-failure
+RestartSec=5s
+ExecStart=/usr/bin/kanto-auto-deployer /var/containers/manifests

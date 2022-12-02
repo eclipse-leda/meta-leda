@@ -26,13 +26,13 @@ inherit cargo
 RDEPENDS_${PN} += " grpc protobuf nativesdk-protobuf"
 DEPENDS += " protobuf protobuf-native grpc"
 
-SRC_URI = "gitsm://github.com/SoftwareDefinedVehicle/leda-utils-fork;protocol=https;nobranch=0;branch=kanto-auto-deployer"
-SRCREV = "44171444af61e0c6a7a0cda2c8aeb7f6f2e27f29"
+SRCREV = "7a5e81905c6604e4513195a35f6048edcb3b4822"
+PV:append = ".AUTOINC+7a5e81905c"
+SRC_URI = "gitsm://github.com/eclipse-leda/leda-utils;protocol=https;nobranch=0;branch=main"
 
 S = "${WORKDIR}/git"
 
 CARGO_SRC_DIR = "src/rust/kanto-auto-deployer"
-PV:append = ".AUTOINC+44171444af"
 
 RUSTC = "rustc"
 PROTOC = "protoc --proto_path=/src/rust/kanto-auto-deployer/container-management/containerm"
@@ -45,8 +45,8 @@ SRC_URI += " \
     crate://crates.io/async-stream/0.3.3 \
     crate://crates.io/async-trait/0.1.59 \
     crate://crates.io/autocfg/1.1.0 \
-    crate://crates.io/axum-core/0.3.0 \
-    crate://crates.io/axum/0.6.1 \
+    crate://crates.io/axum-core/0.2.9 \
+    crate://crates.io/axum/0.5.17 \
     crate://crates.io/base64/0.13.1 \
     crate://crates.io/bitflags/1.3.2 \
     crate://crates.io/bytes/1.3.0 \
@@ -80,7 +80,7 @@ SRC_URI += " \
     crate://crates.io/lazy_static/1.4.0 \
     crate://crates.io/libc/0.2.137 \
     crate://crates.io/log/0.4.17 \
-    crate://crates.io/matchit/0.7.0 \
+    crate://crates.io/matchit/0.5.0 \
     crate://crates.io/memchr/2.5.0 \
     crate://crates.io/mime/0.3.16 \
     crate://crates.io/mio/0.8.5 \
@@ -108,14 +108,13 @@ SRC_URI += " \
     crate://crates.io/regex-syntax/0.6.28 \
     crate://crates.io/regex/1.7.0 \
     crate://crates.io/remove_dir_all/0.5.3 \
-    crate://crates.io/rustversion/1.0.9 \
     crate://crates.io/ryu/1.0.11 \
     crate://crates.io/serde/1.0.148 \
     crate://crates.io/serde_derive/1.0.148 \
     crate://crates.io/serde_json/1.0.89 \
     crate://crates.io/slab/0.4.7 \
     crate://crates.io/socket2/0.4.7 \
-    crate://crates.io/syn/1.0.104 \
+    crate://crates.io/syn/1.0.105 \
     crate://crates.io/sync_wrapper/0.1.1 \
     crate://crates.io/tempfile/3.3.0 \
     crate://crates.io/tokio-io-timeout/1.2.0 \
@@ -124,7 +123,7 @@ SRC_URI += " \
     crate://crates.io/tokio-util/0.7.4 \
     crate://crates.io/tokio/1.22.0 \
     crate://crates.io/tonic-build/0.8.4 \
-    crate://crates.io/tonic/0.8.3 \
+    crate://crates.io/tonic/0.8.2 \
     crate://crates.io/tower-http/0.3.4 \
     crate://crates.io/tower-layer/0.3.2 \
     crate://crates.io/tower-service/0.3.2 \

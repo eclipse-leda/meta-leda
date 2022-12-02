@@ -17,7 +17,7 @@ FILES:${PN} += "${bindir}/kanto-auto-deployer"
 FILES:${PN} += "${systemd_unitdir}/system/kanto-auto-deployer.service"
 
 #containers
-FILES:${PN} += "/manifests/databroker.json"
+FILES:${PN} += "/var/containers/manifests/databroker.json"
 
 do_install:append() {
 	cargo_do_install
@@ -60,12 +60,12 @@ cargo_do_install () {
 }
 
 install_containers() {
-    install -d ${D}${systemd_unitdir}/system/
+    install -d ${D}${systemd_unitdir}/system
     install -m 0644 ${THISDIR}/files/kanto-auto-deployer.service ${D}${systemd_unitdir}/system
-    install -d ${D}/manifests
+    install -d ${D}/var/containers/manifests
 	
 	#containers
-    install ${THISDIR}/kanto-containers/databroker.json ${D}/manifests
+    install ${THISDIR}/kanto-containers/databroker.json ${D}/var/containers/manifests
 }
 
 
