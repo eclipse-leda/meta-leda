@@ -31,7 +31,7 @@ name: Generate Yocto Mirror
 on:
   workflow_dispatch:
   schedule:
-    - cron: '37 13 * * SUN'
+    - cron: '35 13 * * SUN'
 
 jobs:
   generate-mirror:
@@ -46,12 +46,18 @@ jobs:
       run: sudo pip3 install kas
     - name: Fetch all
       continue-on-error: true
-      run: kas shell -c 'bitbake --continue --runall=fetch sdv-image-all' kas/generate-mirror.yaml
+      run: |
+        KAS_MACHINE=qemux86-64 kas shell -c 'bitbake --continue --runall=fetch sdv-image-all' kas/generate-mirror.yaml
+        KAS_MACHINE=qemuarm64 kas shell -c 'bitbake --continue --runall=fetch sdv-image-all' kas/generate-mirror.yaml
+        KAS_MACHINE=raspberrypi4-64 kas shell -c 'bitbake --continue --runall=fetch sdv-image-all' kas/generate-mirror.yaml
+    - name: List archives
+      continue-on-error: true
+      run: ls -al build/downloads/
     - uses: bacongobbler/azure-blob-storage-upload@v3.0.0
       if: ${{ github.repository_owner == 'SoftwareDefinedVehicle' }}
       with:
         source_dir: 'build/downloads/'
         container_name: 'downloads'
-        extra_args: '--pattern *.tar.gz'
-        overwrite: 'true'
+        extra_args: '--pattern *.tar.*[!done]'
+        overwrite: 'sync'
         connection_string: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}

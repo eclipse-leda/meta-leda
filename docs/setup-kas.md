@@ -17,3 +17,14 @@ To build a specific target, recipe or image, execute this:
 
     kas build --target packagegroup-sdv-core
 
+To use a downloads and hashserv mirror, include the mirror configuration:
+
+    kas build kas/.config-kirkstone.yaml:kas/mirrors.yaml
+
+To perform a dry-run of the build:
+
+    kas build kas/.config-kirkstone.yaml:kas/mirrors.yaml -- --dryrun
+
+To execute QEMU:
+
+    kas shell -c "runqemu kvm ovmf nographic" kas/.config-kirkstone.yaml

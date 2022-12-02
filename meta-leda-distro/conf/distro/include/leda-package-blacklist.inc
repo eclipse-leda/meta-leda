@@ -10,19 +10,7 @@
 # *
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
+# A list of packages which will not be included in a Leda distribution
 
-SUMMARY = "Rancher Klipper Air-Gap Installation"
-DESCRIPTION = "Pre-load Rancher K3S core containers to the device filesystem"
-
-inherit sdv-container-cache
-
-SRC_URI += "file://README.txt \
-            file://LICENSE"
-
-# According to https://wiki.yoctoproject.org/wiki/License_Infrastructure_Interest_Group
-LICENSE = "Apache-2.0"
-LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=d9fc0efef5228704e7f5b37f27192723"
-
-# Define image to be pulled
-SDV_IMAGE_REF = "rancher/klipper-lb"
-SDV_IMAGE_TAG = "v0.2.0"
+SKIP_RECIPE[alsa] ?= "ALSA is blacklisted to save build time and storage"
+PACKAGE_EXCLUDE += "alsa"
