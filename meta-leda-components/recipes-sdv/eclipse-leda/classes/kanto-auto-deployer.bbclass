@@ -10,17 +10,5 @@
 # *
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
-# Eclipse Leda
-[Unit]
-Description=Kanto Auto Deployer
-After=network-online.target container-management.service
-Wants=network-online.target container-management.service
-Requires=container-management.service
-
-[Install]
-WantedBy=multi-user.target
-
-[Service]
-Restart=on-failure
-RestartSec=5s
-ExecStart=/usr/bin/kanto-auto-deployer /var/containers/manifests
+#
+KANTO_MANIFESTS_DIR ??= "/var/containers/manifests"

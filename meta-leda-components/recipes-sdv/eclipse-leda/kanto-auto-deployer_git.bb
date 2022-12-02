@@ -21,10 +21,10 @@ SYSTEMD_SERVICE:${PN} = "${@bb.utils.contains('DISTRO_FEATURES','systemd','kanto
 PROVIDES:${PN} += "kanto-auto-deployer"
 RPROVIDES:${PN} += "kanto-auto-deployer"
 
-inherit cargo
+inherit cargo kanto-auto-deployer
 
 RDEPENDS_${PN} += " grpc protobuf nativesdk-protobuf"
-DEPENDS += " protobuf protobuf-native grpc"
+DEPENDS += " protobuf protobuf-native grpc git-native"
 
 SRCREV = "1a7ccb4d37c6ca6bbfce2d915c31aa4478623791"
 PV:append = ".AUTOINC+1a7ccb4d37"

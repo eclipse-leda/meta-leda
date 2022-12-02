@@ -10,17 +10,19 @@
 # *
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
-# Eclipse Leda
-[Unit]
-Description=Kanto Auto Deployer
-After=network-online.target container-management.service
-Wants=network-online.target container-management.service
-Requires=container-management.service
+#
+inherit kanto-auto-deployer
 
-[Install]
-WantedBy=multi-user.target
+DESCRIPTION = "Kanto Default Containers"
+SRC_URI += "file://LICENSE"
+LICENSE = "Apache-2.0"
+LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57"
 
-[Service]
-Restart=on-failure
-RestartSec=5s
-ExecStart=/usr/bin/kanto-auto-deployer /var/containers/manifests
+do_install:append() {
+    install -d ${D}${KANTO_MANIFESTS_DIR}
+    install ${THISDIR}/kanto-containers/databroker.json ${D}${KANTO_MANIFESTS_DIR}
+}
+
+PACKAGES = "${PN}"
+FILES:${PN} += "${KANTO_MANIFESTS_DIR}/databroker.json"
+
