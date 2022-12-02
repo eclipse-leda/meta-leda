@@ -16,12 +16,9 @@ PACKAGES = "${PN}"
 FILES:${PN} += "${bindir}/kanto-auto-deployer"
 FILES:${PN} += "${systemd_unitdir}/system/kanto-auto-deployer.service"
 
-#containers
-FILES:${PN} += "/var/containers/manifests/databroker.json"
-
 do_install:append() {
 	cargo_do_install
-	install_containers
+	install_service
 }
 
 cargo_do_install () {
@@ -59,13 +56,18 @@ cargo_do_install () {
 
 }
 
-install_containers() {
-    install -d ${D}${systemd_unitdir}/system
-    install -m 0644 ${THISDIR}/files/kanto-auto-deployer.service ${D}${systemd_unitdir}/system
-    install -d ${D}/var/containers/manifests
-	
-    #containers
-    install ${THISDIR}/kanto-containers/databroker.json ${D}/var/containers/manifests
+KANTO_SERVICE_DIR = "${systemd_unitdir}/system"
+
+install_service() {
+    install -d ${D}${KANTO_SERVICE_DIR}
+    install -m 0644 ${THISDIR}/files/kanto-auto-deployer.service.template ${D}${KANTO_SERVICE_DIR}/kanto-auto-deployer.service
+
+    # fill in the kanto auto deployer service template with the result configurations
+    sed -e 's,@KD_BIN_DD@,${bindir},g' \
+        -e 's,@KD_CFG_DD@,${KANTO_MANIFESTS_DIR},g' \
+    -i ${D}${KANTO_SERVICE_DIR}/kanto-auto-deployer.service
+
+    install -d ${D}${KANTO_MANIFESTS_DIR}
 }
 
 

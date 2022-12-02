@@ -10,20 +10,17 @@
 # *
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
+# Eclipse Leda
+[Unit]
+Description=Kanto Auto Deployer
+After=network-online.target container-management.service
+Wants=network-online.target container-management.service
+Requires=container-management.service
 
-SUMMARY = "SDV core additional packages"
-DESCRIPTION = "Packages required to set up a basic working demo SDV system, but may contain temporary or additional packages"
+[Install]
+WantedBy=multi-user.target
 
-inherit packagegroup
-
-RDEPENDS:${PN} = "\
-    container-management \
-    file-upload \
-    file-backup \
-    software-update \
-    suite-connector \
-    system-metrics \
-    rauc-hawkbit-updater \
-    kanto-auto-deployer \
-    sdv-default-containers \
-"
+[Service]
+Restart=on-failure
+RestartSec=5s
+ExecStart=@KD_BIN_DD@/kanto-auto-deployer @KD_CFG_DD@
