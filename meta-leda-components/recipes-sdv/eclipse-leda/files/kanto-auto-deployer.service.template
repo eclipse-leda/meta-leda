@@ -23,4 +23,4 @@ WantedBy=multi-user.target
 [Service]
 Restart=on-failure
 RestartSec=5s
-ExecStart=/usr/bin/kanto-auto-deployer /var/containers/manifests
+ExecStart=@KD_BIN_DD@/kanto-auto-deployer @KD_CFG_DD@

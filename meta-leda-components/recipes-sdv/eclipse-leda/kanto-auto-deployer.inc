@@ -56,9 +56,17 @@ cargo_do_install () {
 
 }
 
+KANTO_SERVICE_DIR = "${systemd_unitdir}/system"
+
 install_service() {
-    install -d ${D}${systemd_unitdir}/system
-    install -m 0644 ${THISDIR}/files/kanto-auto-deployer.service ${D}${systemd_unitdir}/system
+    install -d ${D}${KANTO_SERVICE_DIR}
+    install -m 0644 ${THISDIR}/files/kanto-auto-deployer.service.template ${D}${KANTO_SERVICE_DIR}/kanto-auto-deployer.service
+
+    # fill in the kanto auto deployer service template with the result configurations
+    sed -e 's,@KD_BIN_DD@,${bindir},g' \
+        -e 's,@KD_CFG_DD@,${KANTO_MANIFESTS_DIR},g' \
+    -i ${D}${KANTO_SERVICE_DIR}/kanto-auto-deployer.service
+
     install -d ${D}${KANTO_MANIFESTS_DIR}
 }
 
