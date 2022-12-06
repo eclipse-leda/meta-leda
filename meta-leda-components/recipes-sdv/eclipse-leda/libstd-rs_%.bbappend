@@ -11,20 +11,8 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-SUMMARY = "SDV core additional packages"
-DESCRIPTION = "Packages required to set up a basic working demo SDV system, but may contain temporary or additional packages"
+# ACKNOWLEDGMENT: Thanks to Joel Winarske for his helpful GitHub comment
+# https://github.com/meta-rust/meta-rust/issues/266#issuecomment-1125477963
+# FIXES: built in proc_macros not being imported properly by rustc in meta-rust
 
-inherit packagegroup
-
-RDEPENDS:${PN} = "\
-    container-management \
-    file-upload \
-    file-backup \
-    software-update \
-    suite-connector \
-    system-metrics \
-    rauc-hawkbit-updater \
-    kanto-auto-deployer \
-    sdv-default-containers \
-    kantui \
-"
+S = "${RUSTSRC}/library/test"
