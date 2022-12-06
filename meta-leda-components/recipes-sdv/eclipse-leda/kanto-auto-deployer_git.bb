@@ -26,8 +26,8 @@ inherit cargo kanto-auto-deployer
 RDEPENDS_${PN} += " grpc protobuf nativesdk-protobuf"
 DEPENDS += " protobuf protobuf-native grpc git-native"
 
-SRCREV = "1a7ccb4d37c6ca6bbfce2d915c31aa4478623791"
-PV:append = ".AUTOINC+1a7ccb4d37"
+SRCREV = "e4882a8e64f6d172f212a241c58aa66e58faa741"
+PV:append = ".AUTOINC+e4882a8e64f"
 SRC_URI = "gitsm://github.com/eclipse-leda/leda-utils;protocol=https;nobranch=0;branch=main"
 
 S = "${WORKDIR}/git"
