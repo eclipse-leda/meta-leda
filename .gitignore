@@ -9,3 +9,7 @@ meta-rauc
 meta-rauc-community
 meta-virtualization
 poky
+
+# Azure Cache
+azure-sstate-cache
+bitbake
