@@ -21,8 +21,14 @@ LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd
 do_install:append() {
     install -d ${D}${KANTO_MANIFESTS_DIR}
     install ${THISDIR}/kanto-containers/databroker.json ${D}${KANTO_MANIFESTS_DIR}
+    install ${THISDIR}/kanto-containers/seatservice.json ${D}${KANTO_MANIFESTS_DIR}
+    install ${THISDIR}/kanto-containers/vum.json ${D}${KANTO_MANIFESTS_DIR}
+    install ${THISDIR}/kanto-containers/sua.json ${D}${KANTO_MANIFESTS_DIR}
 }
 
 PACKAGES = "${PN}"
 FILES:${PN} += "${KANTO_MANIFESTS_DIR}/databroker.json"
+FILES:${PN} += "${KANTO_MANIFESTS_DIR}/seatservice.json"
+FILES:${PN} += "${KANTO_MANIFESTS_DIR}/vum.json"
+FILES:${PN} += "${KANTO_MANIFESTS_DIR}/sua.json"
 
