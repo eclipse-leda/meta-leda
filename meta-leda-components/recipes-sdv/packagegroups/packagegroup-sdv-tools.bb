@@ -24,4 +24,6 @@ RDEPENDS:${PN} = "\
     sdv-core-utils \
     skopeo \
     sudo \
+    kantui \
+    northstar-nstar \
     "

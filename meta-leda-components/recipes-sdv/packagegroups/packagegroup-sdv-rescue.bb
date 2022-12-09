@@ -18,4 +18,5 @@ inherit packagegroup
 
 RDEPENDS:${PN} = "\
     ca-certificates \
+    openssh \
     rauc "

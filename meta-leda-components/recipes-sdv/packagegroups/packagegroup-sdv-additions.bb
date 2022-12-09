@@ -17,14 +17,14 @@ DESCRIPTION = "Packages required to set up a basic working demo SDV system, but 
 inherit packagegroup
 
 RDEPENDS:${PN} = "\
-    container-management \
     file-upload \
     file-backup \
     software-update \
     suite-connector \
     system-metrics \
     rauc-hawkbit-updater \
-    kanto-auto-deployer \
-    sdv-default-containers \
-    kantui \
+    openssh \
+    openssh-sftp-server \
+    openvpn \
+    northstar \
 "

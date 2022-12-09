@@ -18,9 +18,9 @@ inherit packagegroup
 
 RDEPENDS:${PN} = "\
     ca-certificates \
-    openssh \
-    openssh-sftp-server \
     rauc \
-    sdv-core-utils \
-    openvpn \
+    mosquitto \
+    container-management \
+    kanto-auto-deployer \
+    sdv-default-containers \
     "
