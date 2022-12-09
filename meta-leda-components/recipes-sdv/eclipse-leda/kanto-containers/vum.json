@@ -1,8 +1,8 @@
 {
     "id": "",
-    "name": "databroker",
+    "name": "vum",
     "image": {
-        "name": "ghcr.io/eclipse/kuksa.val/databroker:0.2.5",
+        "name": "ghcr.io/eclipse-leda/leda-contrib-vehicle-update-manager/vehicleupdatemanager:main-1d8dca55a755c4b3c7bc06eabfa06ad49e068a48",
         "decrypt_config": null
     },
     "host_name": "",
@@ -22,7 +22,9 @@
             "type": "unless-stopped"
         },
         "runtime": "io.containerd.runc.v2",
-        "extra_hosts": [],
+        "extra_hosts": [
+            "mosquitto:host_ip"
+        ],
         "port_mappings": [],
         "log_config": {
             "driver_config": {
@@ -46,7 +48,15 @@
         "stdin_once": false,
         "tty": false
     },
-    "config": null,
+    "config": {
+        "env": [
+           "MQTT_CONN_BROKER=tcp://mosquitto:1883",
+           "LOG_LEVEL=INFO",
+           "SELF_UPDATE_TIMEOUT=30m",
+           "SELF_UPDATE_ENABLE_REBOOT=true"
+        ],
+        "cmd": []
+    },
     "network_settings": null,
     "state": {
         "pid": -1,

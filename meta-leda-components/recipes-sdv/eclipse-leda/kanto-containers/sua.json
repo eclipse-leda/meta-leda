@@ -1,8 +1,8 @@
 {
     "id": "",
-    "name": "databroker",
+    "name": "sua",
     "image": {
-        "name": "ghcr.io/eclipse/kuksa.val/databroker:0.2.5",
+        "name": "ghcr.io/eclipse-leda/leda-contrib-self-update-agent/sua:testing",
         "decrypt_config": null
     },
     "host_name": "",
@@ -10,7 +10,18 @@
     "resolv_conf_path": "",
     "hosts_path": "",
     "hostname_path": "",
-    "mounts": [],
+    "mounts": [
+        {
+            "source": "/var/run/dbus/system_bus_socket",
+            "destination": "/var/run/dbus/system_bus_socket",
+            "propagation_mode": "rprivate"
+        },
+        {
+            "source": "/data_temp/selfupdates",
+            "destination": "/RaucUpdate",
+            "propagation_mode": "rprivate"
+        }
+    ],
     "hooks": [],
     "host_config": {
         "devices": [],
@@ -22,8 +33,18 @@
             "type": "unless-stopped"
         },
         "runtime": "io.containerd.runc.v2",
-        "extra_hosts": [],
-        "port_mappings": [],
+        "extra_hosts": [
+            "mosquitto:host_ip"
+        ],
+        "port_mappings": [
+            {
+              "protocol": "tcp",
+              "container_port": 50052,
+              "host_ip": "localhost",
+              "host_port": 50052,
+              "host_port_end": 50052
+            }
+        ],
         "log_config": {
             "driver_config": {
                 "type": "json-file",
@@ -46,7 +67,13 @@
         "stdin_once": false,
         "tty": false
     },
-    "config": null,
+    "config": {
+        "env": [
+           "MQTT_CONN_BROKER=tcp://mosquitto:1883",
+           "LOG_LEVEL=INFO"
+        ],
+        "cmd": []
+    },
     "network_settings": null,
     "state": {
         "pid": -1,
