@@ -27,4 +27,5 @@ RDEPENDS:${PN} = "\
     kanto-auto-deployer \
     sdv-default-containers \
     kantui \
+    gpsd gpsd-conf \
 "
