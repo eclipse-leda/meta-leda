@@ -32,8 +32,7 @@ IMAGE_PREPROCESS_COMMAND += "prepare_filesystem;"
 inherit image
 
 prepare_filesystem() {
-    # install -d ${IMAGE_ROOTFS}/var/lib/
-    # install -d ${IMAGE_ROOTFS}/containerd/
+    install -d ${IMAGE_ROOTFS}/var/containerd/
     
     mv ${IMAGE_ROOTFS}/var/containers ${IMAGE_ROOTFS}/containers
     
