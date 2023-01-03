@@ -31,13 +31,18 @@ IMAGE_PREPROCESS_COMMAND += "prepare_filesystem;"
 
 inherit image
 
+CONTAINER_DIR = "/var/containers"
+
 prepare_filesystem() {
     install -d ${IMAGE_ROOTFS}/var/containerd/
-    
-    mv ${IMAGE_ROOTFS}/var/containers ${IMAGE_ROOTFS}/containers
-    
+
+    install -d ${IMAGE_ROOTFS}${CONTAINER_DIR}
+    mv "${IMAGE_ROOTFS}${KANTO_MANIFESTS_DIR}" "${IMAGE_ROOTFS}${CONTAINER_DIR}"
+
     rm -rf ${IMAGE_ROOTFS}/etc/systemd
     rm -rf ${IMAGE_ROOTFS}/etc/ld.so.cache
     rm -rf ${IMAGE_ROOTFS}/run
     rm -rf ${IMAGE_ROOTFS}/var/cache
+    rm -rf ${IMAGE_ROOTFS}/var/lib
+    rm -rf ${IMAGE_ROOTFS}/data
 }
