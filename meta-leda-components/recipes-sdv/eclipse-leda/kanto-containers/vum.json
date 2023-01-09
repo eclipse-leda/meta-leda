@@ -51,7 +51,7 @@
     "config": {
         "env": [
            "MQTT_CONN_BROKER=tcp://mosquitto:1883",
-           "LOG_LEVEL=DEBUG",
+           "LOG_LEVEL=INFO",
            "SELF_UPDATE_TIMEOUT=30m",
            "SELF_UPDATE_ENABLE_REBOOT=true"
         ],

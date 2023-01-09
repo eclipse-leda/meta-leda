@@ -15,6 +15,7 @@
 PACKAGES = "${PN}"
 FILES:${PN} += "${bindir}/kanto-auto-deployer"
 FILES:${PN} += "${systemd_unitdir}/system/kanto-auto-deployer.service"
+FILES:${PN} += "${KANTO_MANIFESTS_DIR}"
 
 do_install:append() {
 	cargo_do_install
