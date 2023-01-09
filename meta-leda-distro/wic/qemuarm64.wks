@@ -35,4 +35,4 @@ part --fixed-size 10M --ondisk vda --align 4096
 part --fixed-size 150M --source rootfs --rootfs-dir=sdv-image-rescue --ondisk vda --fstype=ext4 --label rescue --align 1024
 part --fixed-size 2500M --source rootfs --rootfs-dir=sdv-image-full --ondisk vda --fstype=ext4 --label root_a --align 4096
 part --fixed-size 2500M --source rootfs --rootfs-dir=sdv-image-minimal  --ondisk vda --fstype=ext4 --label root_b --align 4096
-part --fixed-size 4096M --ondisk vda --fstype=ext4 --label data --align 4096
+part --fixed-size 4096M --source rootfs --rootfs-dir=sdv-image-data --ondisk vda --fstype=ext4 --label data --align 4096
