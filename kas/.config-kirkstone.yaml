@@ -29,6 +29,7 @@ local_conf_header:
     INHERIT:remove = " archiver"
     INHERIT:remove = " cve-check"
     INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
+    KANTO_MANIFESTS_DIR = "/data/var/containers/manifests"
   sign_conf: |
     RAUC_KEY_FILE="${TOPDIR}/../examples/rauc/development-1.key.pem"
     RAUC_CERT_FILE="${TOPDIR}/../examples/rauc/development-1.cert.pem"
