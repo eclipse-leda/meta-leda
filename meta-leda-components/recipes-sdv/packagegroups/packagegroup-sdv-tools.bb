@@ -24,4 +24,5 @@ RDEPENDS:${PN} = "\
     sdv-core-utils \
     skopeo \
     sudo \
+    gps-utils \
     "
