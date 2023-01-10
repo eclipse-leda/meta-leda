@@ -20,8 +20,8 @@ IMAGE_FEATURES:append = " allow-empty-password"
 IMAGE_FEATURES:append = " empty-root-password"
 
 # The image dependencies are actually both types: build-time and run-time dependency
-RDEPENDS:${PN} = "sdv-image-full sdv-image-minimal sdv-image-rescue sdv-image-data sdv-rauc-bundle"
-DEPENDS = "sdv-image-full sdv-image-minimal sdv-image-rescue sdv-image-data sdv-rauc-bundle"
+RDEPENDS:${PN} = "sdv-image-full sdv-image-minimal sdv-image-rescue sdv-rauc-bundle"
+DEPENDS = "sdv-image-full sdv-image-minimal sdv-image-rescue sdv-rauc-bundle"
 
 inherit core-image
 
@@ -33,7 +33,6 @@ inherit core-image
 do_image_wic[depends] += "sdv-image-rescue:do_rootfs_wicenv"
 do_image_wic[depends] += "sdv-image-minimal:do_rootfs_wicenv"
 do_image_wic[depends] += "sdv-image-full:do_rootfs_wicenv"
-do_image_wic[depends] += "sdv-image-data:do_rootfs_wicenv"
 
 # For qemu, we produce disk images in qcow2 format (faster and smaller than raw or ext4 images)
 IMAGE_FSTYPES = " wic.qcow2"
@@ -58,9 +57,3 @@ QB_FSINFO:qemuarm64 = "wic:no-kernel-in-fs"
 #  WIC Kickstarter File: build-sdv-arm-qemu/wic/qemuarm-grub.wks
 QB_KERNEL_ROOT = "/dev/vda4"
 QB_DRIVE_TYPE = "/dev/vd"
-
-
-# inherit overlayfs
-# OVERLAYFS_MOUNT_POINT[data] = "/data/var/lib"
-# OVERLAYFS_WRITABLE_PATHS[data] = "/var/lib"
-# OVERLAYFS_QA_SKIP[varlib] = "mount-configured"
