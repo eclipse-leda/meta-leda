@@ -24,6 +24,7 @@ RDEPENDS:${PN} = "\
     suite-connector \
     system-metrics \
     rauc-hawkbit-updater \
+    leda-contrib-cloud-connector \
     kanto-auto-deployer \
     kantui \
 "
