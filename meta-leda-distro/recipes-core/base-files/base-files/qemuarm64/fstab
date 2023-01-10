@@ -7,6 +7,7 @@ tmpfs                /run                 tmpfs      mode=0755,nodev,nosuid,stri
 tmpfs                /var/volatile        tmpfs      defaults              0  0
 
 # Add mount for boot, grubenv and data partition
-LABEL=boot           /boot                vfat       defaults,nofail,noatime  0  0
+/dev/vda1           /boot                vfat       defaults,nofail,noatime  0  0
 LABEL=grubenv        /grubenv             auto       defaults,nofail,noatime  0  0
 LABEL=data           /data                auto       defaults,nofail,noatime  0  2
+
