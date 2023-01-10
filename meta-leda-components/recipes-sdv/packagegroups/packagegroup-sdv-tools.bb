@@ -25,3 +25,6 @@ RDEPENDS:${PN} = "\
     skopeo \
     sudo \
     "
+
+# TODO: For future example applictations
+# gps-utils

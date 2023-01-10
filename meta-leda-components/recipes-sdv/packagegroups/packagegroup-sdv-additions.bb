@@ -25,6 +25,8 @@ RDEPENDS:${PN} = "\
     system-metrics \
     rauc-hawkbit-updater \
     kanto-auto-deployer \
-    sdv-default-containers \
     kantui \
 "
+
+# TODO: For future example applictations:
+# gspd gpsd-conf

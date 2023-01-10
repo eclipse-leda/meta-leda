@@ -1,6 +1,6 @@
-![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/eclipse-leda/meta-leda/BitBake%20DryRun/main?label=main)
-![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/eclipse-leda/meta-leda/BitBake%20DryRun/kirkstone?label=kirkstone)
-![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/eclipse-leda/meta-leda/BitBake%20DryRun/honister?label=honister)
+![GitHub Workflow Status (main/dev)](https://img.shields.io/github/actions/workflow/status/eclipse-leda/meta-leda/dryrun.yml?branch=main&label=main)
+![GitHub Workflow Status (kirkstone branch)](https://img.shields.io/github/actions/workflow/status/eclipse-leda/meta-leda/dryrun.yml?branch=kirkstone&label=kirkstone)
+![GitHub Workflow Status (honister branch)](https://img.shields.io/github/actions/workflow/status/eclipse-leda/meta-leda/dryrun.yml?branch=honister&label=honister)
 
 # OpenEmbedded Meta-Layer for Software Defined Vehicles components
 
