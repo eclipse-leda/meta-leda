@@ -15,8 +15,8 @@ SUMMARY = "Self Update Agent offers remote OS updates for edge devices using RAU
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=a832eda17114b48ae16cda6a500941c2"
 
-SRC_URI = "gitsm://github.com/SoftwareDefinedVehicle/leda-contrib-self-update-agent-fork.git;protocol=https;branch=main"
-SRCREV = "db7ad3935bf2f1fae8207044e15cc78fc6d2824e"
+SRC_URI = "gitsm://github.com/eclipse-leda/leda-contrib-self-update-agent.git;protocol=https;branch=main"
+SRCREV = "f37df38cde19ef7974a8ceeb2b4f4dbbf288f43f"
 
 SRC_URI += " \
     file://self-update-agent/self-update-agent.service \
