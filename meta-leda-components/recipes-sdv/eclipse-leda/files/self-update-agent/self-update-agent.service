@@ -22,5 +22,4 @@ WantedBy=multi-user.target
 [Service]
 Restart=on-failure
 RestartSec=30s
-ExecStart=/usr/bin/self-update-agent -p /data/self-update-images
-
+ExecStart=/usr/bin/self-update-agent -p /data/self-update-images --host 127.0.0.1

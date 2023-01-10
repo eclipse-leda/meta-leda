@@ -22,6 +22,6 @@ WantedBy=multi-user.target
 [Service]
 Restart=on-failure
 RestartSec=30s
-ExecStart=/usr/bin/cloudagent -connectionString XXX
+ExecStart=/usr/bin/cloud-connector -configFile /etc/cloud-connector/config.json
 
 
