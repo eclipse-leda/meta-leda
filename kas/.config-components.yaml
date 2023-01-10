@@ -23,6 +23,9 @@ header:
 # The distro name as it is written into the `local.conf` of bitbake.
 target:
   - packagegroup-sdv-core
+  - packagegroup-sdv-additions
+  - packagegroup-sdv-examples
+  - packagegroup-sdv-tools
 local_conf_header:
   needed-features: |
     DISTRO_FEATURES += " rauc virtualization"
