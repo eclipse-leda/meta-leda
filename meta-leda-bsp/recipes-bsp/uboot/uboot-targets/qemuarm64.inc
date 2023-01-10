@@ -19,7 +19,7 @@ SRC_URI:append:qemuarm64 = " \
     file://env_in_fat_qemuarm.patch \
 "
 
-DEPENDS:append = " bc-native dtc-native swig-native python3-native flex-native bison-native "
+DEPENDS:append:qemuarm64 = " bc-native dtc-native swig-native python3-native flex-native bison-native "
 
 UBOOT_ENV_SUFFIX:qemuarm64 = "scr"
 UBOOT_ENV:qemuarm64 = "boot"
