@@ -18,12 +18,13 @@ LIC_FILES_CHKSUM = "file://src/${GO_IMPORT}/LICENSE;md5=2b42edef8fa55315f34f2370
 
 SRC_URI = " \
   git://${GO_IMPORT}.git;protocol=https;branch=main \
-  file://cloudagent-systemd/ \
+  file://cloud-connector/ \
 "
 SRCREV = "6240d8ef1fc24339f2c97f4dde98cc463b24681d"
 PV = "0.1+git${SRCPV}"
 
 GO_IMPORT = "github.com/eclipse-leda/leda-contrib-cloud-connector"
+PGM_NAME = "cloud-connector"
 
 S = "${WORKDIR}/git"
 
@@ -34,25 +35,31 @@ inherit systemd features_check
 
 NATIVE_SYSTEMD_SUPPORT = "1"
 SYSTEMD_PACKAGES = "${PN}"
-SYSTEMD_SERVICE:${PN} = "cloudagent.service"
+SYSTEMD_SERVICE:${PN} = "cloud-connector.service"
 SYSTEMD_AUTO_ENABLE:${PN} = "enable"
 
 FILES:${PN} += " \
-  ${bindir}/cloudagent \
-  ${systemd_system_unitdir}/cloudagent.service \
+  ${bindir}/cloud-connector \
+  ${systemd_system_unitdir}/cloud-connector.service \
+  ${sysconfdir}/${PGM_NAME}/config.json \
+  ${sysconfdir}/${PGM_NAME}/iothub.crt \
 "
 
 REQUIRED_DISTRO_FEATURES = "systemd"
 
 do_compile() {
   cd ${B}/src/${GO_IMPORT}
-  ${GO} build ${GOBUILDFLAGS} -o ${B}/cloudagent ./cmd/
+  ${GO} build ${GOBUILDFLAGS} -o ${B}/${PGM_NAME} ./cmd/
 }
 
 do_install() {
   install -d "${D}/${bindir}"
-  install -m 0755 "${B}/cloudagent" "${D}/${bindir}"
+  install -m 0755 "${B}/${PGM_NAME}" "${D}/${bindir}"
 
   install -d ${D}${systemd_unitdir}/system/
-  install -m 0644 ${WORKDIR}/cloudagent-systemd/cloudagent.service ${D}${systemd_system_unitdir}
+  install -m 0644 ${WORKDIR}/${PGM_NAME}/cloud-connector.service ${D}${systemd_system_unitdir}
+
+  install -d "${D}/${sysconfdir}/${PGM_NAME}"
+  install -m 0644 "${WORKDIR}/${PGM_NAME}/config.json" "${D}${sysconfdir}/${PGM_NAME}"
+  install -m 0644 "${S}/src/${GO_IMPORT}/resources/iothub.crt" "${D}${sysconfdir}/${PGM_NAME}"
 }
