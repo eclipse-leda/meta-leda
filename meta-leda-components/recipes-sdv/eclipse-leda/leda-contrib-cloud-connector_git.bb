@@ -14,17 +14,20 @@
 SUMMARY = "SDV Cloud Connector"
 DESCRIPTION = "Customized fork of Eclipse Kanto azure-connector with additional support of Eclipse Backend Function Bindings and Azure C2D messages"
 LICENSE = "Apache-2.0"
-LIC_FILES_CHKSUM = "file://${WORKDIR}/git/src/github.com/eclipse-leda/leda-incubator-cloudagent/NOTICE;md5=b95389a3f134a33b445b438d337848f7"
+LIC_FILES_CHKSUM = "file://src/${GO_IMPORT}/LICENSE;md5=2b42edef8fa55315f34f2370b4715ca9"
 
-SRC_URI =  " \
-    git://github.com/eclipse-leda/leda-contrib-cloud-connector;branch=main \
-    file://cloudagent-systemd/ \
+SRC_URI = " \
+  git://${GO_IMPORT}.git;protocol=https;branch=main \
+  file://cloudagent-systemd/ \
 "
-SRCREV = "86aabb2712157414398d786d323bed1ff752b666"
+SRCREV = "6240d8ef1fc24339f2c97f4dde98cc463b24681d"
+PV = "0.1+git${SRCPV}"
 
-GO_IMPORT = "github.com/eclipse-leda/leda-incubator-cloudagent"
+GO_IMPORT = "github.com/eclipse-leda/leda-contrib-cloud-connector"
 
 S = "${WORKDIR}/git"
+
+do_compile[network] = "1"
 
 inherit go-mod
 inherit systemd features_check
@@ -34,8 +37,10 @@ SYSTEMD_PACKAGES = "${PN}"
 SYSTEMD_SERVICE:${PN} = "cloudagent.service"
 SYSTEMD_AUTO_ENABLE:${PN} = "enable"
 
-FILES:${PN} += "${bindir}/cloudagent \
-                ${systemd_system_unitdir}/cloudagent.service"
+FILES:${PN} += " \
+  ${bindir}/cloudagent \
+  ${systemd_system_unitdir}/cloudagent.service \
+"
 
 REQUIRED_DISTRO_FEATURES = "systemd"
 
