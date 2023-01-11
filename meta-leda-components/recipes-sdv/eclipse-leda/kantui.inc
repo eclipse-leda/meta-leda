@@ -12,8 +12,9 @@
 # ********************************************************************************/
 
 
-PACKAGES = "${PN}"
+PACKAGES = "${PN} ${PN}-dbg"
 FILES:${PN} += "${bindir}/kantui"
+FILES:${PN}-dbg += "${bindir}/.debug"
 
 do_install:append() {
 	cargo_do_install
