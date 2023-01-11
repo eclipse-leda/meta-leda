@@ -27,7 +27,7 @@
 
 bootloader --ptable gpt --configfile="qemuarm64.cfg"
 
-part --source bootimg-partition --ondisk vda --fstype=vfat --label boot --active --align 4 --size 16 --sourceparams="loader=u-boot" --use-uuid
+part --source bootimg-partition --ondisk vda --fstype=vfat --label BOOT --active --align 4096 --size 100 --use-uuid
 # Second Bootloader Partition (empty, for future updates)
 part --fixed-size 10M --ondisk vda --align 4096 --no-table
 # Empty partition (on x86, this is grubenv - we store RAUC Status here as well)
