@@ -17,7 +17,7 @@
             "propagation_mode": "rprivate"
         },
         {
-            "source": "/data/data_temp/selfupdates",
+            "source": "/data/selfupdates",
             "destination": "/RaucUpdate",
             "propagation_mode": "rprivate"
         }

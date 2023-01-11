@@ -11,5 +11,5 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 #
-# KANTO_MANIFESTS_DIR ??= "/var/containers/manifests" moved in .config*.yaml files
+KANTO_MANIFESTS_LOCAL_DIR ??= "/var/containers/manifests"
 

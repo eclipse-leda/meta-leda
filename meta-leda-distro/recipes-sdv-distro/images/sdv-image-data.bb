@@ -19,10 +19,10 @@ LICENSE = "Apache-2.0"
 # until projects have released containers
 # IMAGE_INSTALL:append = " packagegroup-sdv-airgap"
 
-DEPENDS += "sdv-default-containers"
-IMAGE_INSTALL += "sdv-default-containers"
-DEPENDS += "sdv-optional-containers"
-IMAGE_INSTALL += "sdv-optional-containers"
+#DEPENDS += "sdv-core-containers"
+IMAGE_INSTALL += "sdv-core-containers"
+#DEPENDS += "sdv-example-containers"
+IMAGE_INSTALL += "sdv-example-containers"
 
 
 IMAGE_FSTYPES += "ext4.gz"
@@ -33,13 +33,16 @@ IMAGE_PREPROCESS_COMMAND += "prepare_filesystem;"
 
 inherit image
 
-CONTAINER_DIR = "/var/containers"
+#CONTAINER_DIR = "/var/containers"
 
 prepare_filesystem() {
     install -d ${IMAGE_ROOTFS}/var/containerd/
 
-    install -d ${IMAGE_ROOTFS}${CONTAINER_DIR}
-    mv "${IMAGE_ROOTFS}${KANTO_MANIFESTS_DIR}" "${IMAGE_ROOTFS}${CONTAINER_DIR}"
+#    install -d ${IMAGE_ROOTFS}${CONTAINER_DIR}
+#    mv "${IMAGE_ROOTFS}${KANTO_MANIFESTS_DIR}" "${IMAGE_ROOTFS}${CONTAINER_DIR}"
+
+    install -d ${IMAGE_ROOTFS}/selfupdates/
+# Related to sua.json
 
     rm -rf ${IMAGE_ROOTFS}/etc/systemd
     rm -rf ${IMAGE_ROOTFS}/etc/ld.so.cache

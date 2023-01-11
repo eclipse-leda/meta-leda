@@ -19,14 +19,14 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57"
 
 do_install:append() {
-    install -d ${D}${KANTO_MANIFESTS_DIR}
-    install ${THISDIR}/kanto-containers/seatservice.json ${D}${KANTO_MANIFESTS_DIR}
-    install ${THISDIR}/kanto-containers/hvac.json ${D}${KANTO_MANIFESTS_DIR}
-    install ${THISDIR}/kanto-containers/feedercan.json ${D}${KANTO_MANIFESTS_DIR}
+    install -d ${D}${KANTO_MANIFESTS_LOCAL_DIR}
+    install ${THISDIR}/kanto-containers/example/seatservice.json ${D}${KANTO_MANIFESTS_LOCAL_DIR}
+    install ${THISDIR}/kanto-containers/example/hvac.json ${D}${KANTO_MANIFESTS_LOCAL_DIR}
+    install ${THISDIR}/kanto-containers/example/feedercan.json ${D}${KANTO_MANIFESTS_LOCAL_DIR}
 }
 
 PACKAGES = "${PN}"
-#FILES:${PN} += "${KANTO_MANIFESTS_DIR}"
-FILES:${PN} += "${KANTO_MANIFESTS_DIR}/seatservice.json"
-FILES:${PN} += "${KANTO_MANIFESTS_DIR}/hvac.json"
-FILES:${PN} += "${KANTO_MANIFESTS_DIR}/feedercan.json"
+FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}"
+FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}/seatservice.json"
+FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}/hvac.json"
+FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}/feedercan.json"
