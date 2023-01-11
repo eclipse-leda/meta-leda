@@ -26,10 +26,10 @@
         "port_mappings": [
             {
               "protocol": "tcp",
-              "container_port": 50051,
+              "container_port": 50151,
               "host_ip": "localhost",
-              "host_port": 50051,
-              "host_port_end": 50051
+              "host_port": 50151,
+              "host_port_end": 50151
             }
         ],
         "log_config": {

@@ -20,7 +20,7 @@ LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd
 
 # Will be changed for sua.json as well and be separated in a different recipe
 SUA_DATA_DIR = "/data_temp/selfupdates"
-CLOUDCONNECTOR_CERTIFICATES_DIR="/certificates"
+CLOUDCONNECTOR_CERTIFICATES_DIR="/certificate"
 
 do_install:append() {
     install -d ${D}${KANTO_MANIFESTS_DIR}

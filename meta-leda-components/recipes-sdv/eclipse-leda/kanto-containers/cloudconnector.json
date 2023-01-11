@@ -12,12 +12,12 @@
     "hostname_path": "",
     "mounts": [
         {
-            "source": "/data/certificates/device.crt",
+            "source": "/data/certificate/device.crt",
             "destination": "/device.crt",
             "propagation_mode": "rprivate"
         },
         {
-            "source": "/data/certificates/device.key",
+            "source": "/data/certificate/device.key",
             "destination": "/device.key",
             "propagation_mode": "rprivate"
         }
