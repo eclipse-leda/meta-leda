@@ -2,7 +2,7 @@
     "id": "",
     "name": "sua",
     "image": {
-        "name": "ghcr.io/eclipse-leda/leda-contrib-self-update-agent/self-update-agent:build-10",
+        "name": "ghcr.io/eclipse-leda/leda-contrib-self-update-agent/self-update-agent:build-12",
         "decrypt_config": null
     },
     "host_name": "",
@@ -14,7 +14,7 @@
         {
             "source": "/var/run/dbus/system_bus_socket",
             "destination": "/var/run/dbus/system_bus_socket",
-            "propagation_mode": "rprivate"
+            "propagation_mode": "shared"
         },
         {
             "source": "/data/selfupdates",
@@ -39,8 +39,8 @@
               "protocol": "tcp",
               "container_port": 50052,
               "host_ip": "localhost",
-              "host_port": 50052,
-              "host_port_end": 50052
+              "host_port": 30052,
+              "host_port_end": 30052
             }
         ],
         "log_config": {
