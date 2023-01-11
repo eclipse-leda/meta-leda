@@ -1,8 +1,8 @@
 {
     "id": "",
-    "name": "seatservice-example",
+    "name": "feedercan",
     "image": {
-        "name": "ghcr.io/eclipse/kuksa.val.services/seat_service:v0.1.0",
+        "name": "ghcr.io/eclipse/kuksa.val.feeders/dbc2val:v0.1.1",
         "decrypt_config": null
     },
     "host_name": "",
@@ -23,15 +23,7 @@
         },
         "runtime": "io.containerd.runc.v2",
         "extra_hosts": [],
-        "port_mappings": [
-            {
-              "protocol": "tcp",
-              "container_port": 50051,
-              "host_ip": "localhost",
-              "host_port": 50051,
-              "host_port_end": 50051
-            }
-        ],
+        "port_mappings": [],
         "log_config": {
             "driver_config": {
                 "type": "json-file",
@@ -56,7 +48,11 @@
     },
     "config": {
         "env": [
-           "VEHICLEDATABROKER_DAPR_APP_ID=vehicledatabroker"
+            "VEHICLEDATABROKER_DAPR_APP_ID=vehicledatabroker",
+            "LOG_LEVEL=info",
+            "databroker=info",
+            "broker_client=info",
+            "dbcfeeder=info"
         ],
         "cmd": []
     },

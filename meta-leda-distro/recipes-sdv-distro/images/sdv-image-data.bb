@@ -19,8 +19,10 @@ LICENSE = "Apache-2.0"
 # until projects have released containers
 # IMAGE_INSTALL:append = " packagegroup-sdv-airgap"
 
-
+DEPENDS += "sdv-default-containers"
 IMAGE_INSTALL += "sdv-default-containers"
+DEPENDS += "sdv-optional-containers"
+IMAGE_INSTALL += "sdv-optional-containers"
 
 
 IMAGE_FSTYPES += "ext4.gz"
@@ -45,4 +47,5 @@ prepare_filesystem() {
     rm -rf ${IMAGE_ROOTFS}/var/cache
     rm -rf ${IMAGE_ROOTFS}/var/lib
     rm -rf ${IMAGE_ROOTFS}/data
+
 }

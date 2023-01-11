@@ -2,7 +2,7 @@
     "id": "",
     "name": "sua",
     "image": {
-        "name": "ghcr.io/eclipse-leda/leda-contrib-self-update-agent/sua:testing",
+        "name": "ghcr.io/eclipse-leda/leda-contrib-self-update-agent/self-update-agent:build-10",
         "decrypt_config": null
     },
     "host_name": "",
@@ -17,7 +17,7 @@
             "propagation_mode": "rprivate"
         },
         {
-            "source": "/data_temp/selfupdates",
+            "source": "/data/data_temp/selfupdates",
             "destination": "/RaucUpdate",
             "propagation_mode": "rprivate"
         }
@@ -33,9 +33,7 @@
             "type": "unless-stopped"
         },
         "runtime": "io.containerd.runc.v2",
-        "extra_hosts": [
-            "mosquitto:host_ip"
-        ],
+        "extra_hosts": [],
         "port_mappings": [
             {
               "protocol": "tcp",
@@ -68,10 +66,7 @@
         "tty": false
     },
     "config": {
-        "env": [
-           "MQTT_CONN_BROKER=tcp://mosquitto:1883",
-           "LOG_LEVEL=INFO"
-        ],
+        "env": [],
         "cmd": []
     },
     "network_settings": null,
