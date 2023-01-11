@@ -21,9 +21,6 @@ SRC_URI:append:qemuarm64 = " \
 
 DEPENDS:append:qemuarm64 = " bc-native dtc-native swig-native python3-native flex-native bison-native "
 
-UBOOT_ENV_SUFFIX:qemuarm64 = "scr"
-UBOOT_ENV:qemuarm64 = "boot"
-
 do_configure:append:qemuarm64() {
     sed -e 's/@@KERNEL_IMAGETYPE@@/${KERNEL_IMAGETYPE}/' \
     -e 's/@@KERNEL_BOOTCMD@@/${KERNEL_BOOTCMD}/' \
@@ -31,7 +28,7 @@ do_configure:append:qemuarm64() {
 }
 
 do_compile:append:qemuarm64() {
-    ${B}/tools/mkimage -C none -A ${UBOOT_ARCH} -T script -d "${WORKDIR}/boot.cmd" "boot.scr"
+    ${B}/tools/mkimage -C none -A ${UBOOT_ARCH} -T script -d "${WORKDIR}/boot.cmd" "${UBOOT_ENV}.${UBOOT_ENV_SUFFIX}"
 }
 
 do_install:qemuarm64() {

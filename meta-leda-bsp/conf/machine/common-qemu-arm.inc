@@ -27,6 +27,9 @@ KERNEL_BOOTCMD = "booti"
 UBOOT_ENTRYPOINT = "0x40008000"
 UBOOT_LOADADDRESS = "0x40008000"
 
+UBOOT_ENV = "boot"
+UBOOT_ENV_SUFFIX = "scr"
+
 # Output of U-Boot's "bdinfo" command on qemu-system-arm:
 # boot_params = 0x00000000
 # DRAM bank   = 0x00000000
@@ -38,7 +41,7 @@ UBOOT_LOADADDRESS = "0x40008000"
 
 MACHINE_FEATURES = "usbgadget usbhost vfat"
 
-IMAGE_BOOT_FILES = "u-boot.${UBOOT_SUFFIX} ${KERNEL_IMAGETYPE} boot.scr"
+IMAGE_BOOT_FILES = "u-boot.${UBOOT_SUFFIX} ${KERNEL_IMAGETYPE} ${UBOOT_ENV}.${UBOOT_ENV_SUFFIX}"
 IMAGE_CLASSES += "qemuboot"
 
 QB_DEFAULT_BIOS = "u-boot.bin"
