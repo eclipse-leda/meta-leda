@@ -31,4 +31,4 @@ RDEPENDS:${PN} = "\
 "
 
 # TODO: For future example applictations:
-# gspd gpsd-conf
+# gpsd gpsd-conf
