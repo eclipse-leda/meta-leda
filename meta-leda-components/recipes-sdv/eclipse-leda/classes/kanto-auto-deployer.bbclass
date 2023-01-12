@@ -11,4 +11,8 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 #
+
 KANTO_MANIFESTS_LOCAL_DIR ??= "/var/containers/manifests"
+
+KANTO_MANIFESTS_DIR ??= "${KANTO_MANIFESTS_LOCAL_DIR}"
+KANTO_MANIFESTS_DIR[doc] = "The location path of Kanto Container Management deployment descriptors to autodeploy"
