@@ -1,8 +1,8 @@
 {
     "id": "",
-    "name": "seatservice",
+    "name": "cloudconnector",
     "image": {
-        "name": "ghcr.io/eclipse/kuksa.val.services/seat_service:v0.1.0",
+        "name": "ghcr.io/eclipse-leda/leda-contrib-cloud-connector/cloudconnector:main-fd4a8260772ee64d7360550358b265b0c80f1345",
         "decrypt_config": null
     },
     "host_name": "",
@@ -10,7 +10,18 @@
     "resolv_conf_path": "",
     "hosts_path": "",
     "hostname_path": "",
-    "mounts": [],
+    "mounts": [
+        {
+            "source": "/data/var/certificates/device.crt",
+            "destination": "/var/certificates/device.crt",
+            "propagation_mode": "rprivate"
+        },
+        {
+            "source": "/data/var/certificates/device.key",
+            "destination": "/var/certificates/device.key",
+            "propagation_mode": "rprivate"
+        }
+    ],
     "hooks": [],
     "host_config": {
         "devices": [],
@@ -23,15 +34,7 @@
         },
         "runtime": "io.containerd.runc.v2",
         "extra_hosts": [],
-        "port_mappings": [
-            {
-              "protocol": "tcp",
-              "container_port": 50051,
-              "host_ip": "localhost",
-              "host_port": 50051,
-              "host_port_end": 50051
-            }
-        ],
+        "port_mappings": [],
         "log_config": {
             "driver_config": {
                 "type": "json-file",
@@ -56,7 +59,15 @@
     },
     "config": {
         "env": [
-           "VEHICLEDATABROKER_DAPR_APP_ID=vehicledatabroker"
+           "CERT_PATH=/var/certificates/device.crt",
+           "KEY_PATH=/var/certificates/device.key",
+           "LOCAL_ADDRESS=tcp://mosquitto:1883",
+           "LOG_FILE=''",
+           "LOG_LEVEL=INFO",
+           "CA_CERT_PATH=/app/iothub.crt",
+           "MESSAGE_MAPPER_CONFIG=/app/message-mapper-config.json",
+           "ALLOWED_CLOUD_MESSAGE_TYPES_LIST='vss.setPosition,updateme,subscribeOnceCommand,vss.set'",
+           "ALLOWED_LOCAL_TOPICS_LIST='cloudConnector/#'"
         ],
         "cmd": []
     },

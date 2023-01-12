@@ -14,14 +14,13 @@
 SUMMARY = "An image containing files for the SDV data partition."
 LICENSE = "Apache-2.0"
 
-
 # TODO: Temporarily disabled AirGap container installations
 # until projects have released containers
 # IMAGE_INSTALL:append = " packagegroup-sdv-airgap"
 
-
-IMAGE_INSTALL += "sdv-default-containers"
-
+IMAGE_INSTALL += "sdv-core-containers"
+IMAGE_INSTALL += "sdv-example-containers"
+IMAGE_INSTALL += "sdv-example-certificate"
 
 IMAGE_FSTYPES += "ext4.gz"
 IMAGE_LINGUAS = ""
@@ -31,13 +30,12 @@ IMAGE_PREPROCESS_COMMAND += "prepare_filesystem;"
 
 inherit image
 
-CONTAINER_DIR = "/var/containers"
-
 prepare_filesystem() {
+    # Required by containerd
     install -d ${IMAGE_ROOTFS}/var/containerd/
 
-    install -d ${IMAGE_ROOTFS}${CONTAINER_DIR}
-    mv "${IMAGE_ROOTFS}${KANTO_MANIFESTS_DIR}" "${IMAGE_ROOTFS}${CONTAINER_DIR}"
+    # Required by Self Update Agent (see sua.json)
+    install -d ${IMAGE_ROOTFS}/selfupdates/
 
     rm -rf ${IMAGE_ROOTFS}/etc/systemd
     rm -rf ${IMAGE_ROOTFS}/etc/ld.so.cache
@@ -45,4 +43,5 @@ prepare_filesystem() {
     rm -rf ${IMAGE_ROOTFS}/var/cache
     rm -rf ${IMAGE_ROOTFS}/var/lib
     rm -rf ${IMAGE_ROOTFS}/data
+
 }

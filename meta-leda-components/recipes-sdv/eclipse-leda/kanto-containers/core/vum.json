@@ -10,7 +10,13 @@
     "resolv_conf_path": "",
     "hosts_path": "",
     "hostname_path": "",
-    "mounts": [],
+    "mounts": [
+        {
+            "source": "/proc",
+            "destination": "/proc",
+            "propagation_mode": "rprivate"
+        }
+    ],
     "hooks": [],
     "host_config": {
         "devices": [],
@@ -22,9 +28,7 @@
             "type": "unless-stopped"
         },
         "runtime": "io.containerd.runc.v2",
-        "extra_hosts": [
-            "mosquitto:host_ip"
-        ],
+        "extra_hosts": [],
         "port_mappings": [],
         "log_config": {
             "driver_config": {
@@ -50,10 +54,10 @@
     },
     "config": {
         "env": [
-           "MQTT_CONN_BROKER=tcp://mosquitto:1883",
-           "LOG_LEVEL=INFO",
            "SELF_UPDATE_TIMEOUT=30m",
-           "SELF_UPDATE_ENABLE_REBOOT=true"
+           "SELF_UPDATE_ENABLE_REBOOT=true",
+           "THINGS_CONN_BROKER=tcp://mosquitto:1883",
+           "THINGS_FEATURES=ContainerOrchestrator"
         ],
         "cmd": []
     },
