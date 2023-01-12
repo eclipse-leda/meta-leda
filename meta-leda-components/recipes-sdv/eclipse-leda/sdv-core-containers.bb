@@ -13,26 +13,17 @@
 #
 inherit kanto-auto-deployer
 
-DESCRIPTION = "Kanto Default Containers"
+DESCRIPTION = "SDV Edge Core Containers"
 SRC_URI += "file://LICENSE"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57"
-
-#SUA_DATA_DIR = "/selfupdates"
-
-CLOUDCONNECTOR_CERTIFICATE_DIR="/certificate"
-# Related to cloudconnector.json /var/containers/certificate"
 
 do_install:append() {
     install -d ${D}${KANTO_MANIFESTS_LOCAL_DIR}
     install ${THISDIR}/kanto-containers/core/cloudconnector.json ${D}${KANTO_MANIFESTS_LOCAL_DIR}
     install ${THISDIR}/kanto-containers/core/databroker.json ${D}${KANTO_MANIFESTS_LOCAL_DIR}
     install ${THISDIR}/kanto-containers/core/vum.json ${D}${KANTO_MANIFESTS_LOCAL_DIR}
-#    install -d ${D}${SUA_DATA_DIR}
     install ${THISDIR}/kanto-containers/core/sua.json ${D}${KANTO_MANIFESTS_LOCAL_DIR}
-    install -d ${D}${CLOUDCONNECTOR_CERTIFICATE_DIR}
-    install ${TOPDIR}/../examples/cloudconnector/device.crt ${D}${CLOUDCONNECTOR_CERTIFICATE_DIR}
-    install ${TOPDIR}/../examples/cloudconnector/device.key ${D}${CLOUDCONNECTOR_CERTIFICATE_DIR}
 }
 
 PACKAGES = "${PN}"
@@ -40,8 +31,4 @@ FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}"
 FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}/cloudconnector.json"
 FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}/databroker.json"
 FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}/vum.json"
-#FILES:${PN} += "${SUA_DATA_DIR}"
 FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}/sua.json"
-FILES:${PN} += "${CLOUDCONNECTOR_CERTIFICATE_DIR}"
-FILES:${PN} += "${CLOUDCONNECTOR_CERTIFICATE_DIR}/device.crt"
-FILES:${PN} += "${CLOUDCONNECTOR_CERTIFICATE_DIR}/device.key"
