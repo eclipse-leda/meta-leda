@@ -48,8 +48,8 @@
     },
     "config": {
         "env": [
-           "CERT_PATH=/data/var/certificate/device.crt",
-           "KEY_PATH=/data/var/certificate/device.key",
+           "CERT_PATH=/data/var/certificates/device.crt",
+           "KEY_PATH=/data/var/certificates/device.key",
            "LOCAL_ADDRESS=tcp://mosquitto:1883",
            "LOG_FILE=''",
            "LOG_LEVEL=INFO",
