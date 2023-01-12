@@ -14,3 +14,7 @@
 # Include file for Kuksa Databroker Command Line Tool
 
 DESCRIPTION = "Eclipse Kuksa - DataBroker command line tool to interact with the databroker server"
+
+do_compile:prepend() {
+    rm ${S}/Cargo.lock
+}

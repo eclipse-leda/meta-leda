@@ -24,6 +24,7 @@ RDEPENDS:${PN} = "\
     sdv-core-utils \
     skopeo \
     sudo \
+    databroker-cli \
     "
 
 # TODO: For future example applictations
