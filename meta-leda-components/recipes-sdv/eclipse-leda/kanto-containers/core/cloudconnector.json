@@ -10,7 +10,18 @@
     "resolv_conf_path": "",
     "hosts_path": "",
     "hostname_path": "",
-    "mounts": [],
+    "mounts": [
+        {
+            "source": "/data/var/certificates/device.crt",
+            "destination": "/var/certificates/device.crt",
+            "propagation_mode": "rprivate"
+        },
+        {
+            "source": "/data/var/certificates/device.key",
+            "destination": "/var/certificates/device.key",
+            "propagation_mode": "rprivate"
+        }
+    ],
     "hooks": [],
     "host_config": {
         "devices": [],
@@ -48,8 +59,8 @@
     },
     "config": {
         "env": [
-           "CERT_PATH=/data/var/certificates/device.crt",
-           "KEY_PATH=/data/var/certificates/device.key",
+           "CERT_PATH=/var/certificates/device.crt",
+           "KEY_PATH=/var/certificates/device.key",
            "LOCAL_ADDRESS=tcp://mosquitto:1883",
            "LOG_FILE=''",
            "LOG_LEVEL=INFO",
