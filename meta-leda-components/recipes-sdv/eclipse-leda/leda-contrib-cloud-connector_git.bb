@@ -31,7 +31,7 @@ S = "${WORKDIR}/git"
 do_compile[network] = "1"
 
 inherit go-mod
-inherit systemd features_check
+inherit systemd
 
 NATIVE_SYSTEMD_SUPPORT = "1"
 SYSTEMD_PACKAGES = "${PN}"
@@ -45,8 +45,6 @@ FILES:${PN} += " \
   ${sysconfdir}/${PGM_NAME}/iothub.crt \
 "
 
-REQUIRED_DISTRO_FEATURES = "systemd"
-
 do_compile() {
   cd ${B}/src/${GO_IMPORT}
   ${GO} build ${GOBUILDFLAGS} -o ${B}/${PGM_NAME} ./cmd/
@@ -56,8 +54,10 @@ do_install() {
   install -d "${D}/${bindir}"
   install -m 0755 "${B}/${PGM_NAME}" "${D}/${bindir}"
 
-  install -d ${D}${systemd_unitdir}/system/
-  install -m 0644 ${WORKDIR}/${PGM_NAME}/cloud-connector.service ${D}${systemd_system_unitdir}
+  if [ "${@bb.utils.filter('DISTRO_FEATURES', 'systemd', d)}" ]; then
+    install -d ${D}${systemd_unitdir}/system/
+    install -m 0644 ${WORKDIR}/${PGM_NAME}/cloud-connector.service ${D}${systemd_system_unitdir}
+  fi
 
   install -d "${D}/${sysconfdir}/${PGM_NAME}"
   install -m 0644 "${WORKDIR}/${PGM_NAME}/config.json" "${D}${sysconfdir}/${PGM_NAME}"
