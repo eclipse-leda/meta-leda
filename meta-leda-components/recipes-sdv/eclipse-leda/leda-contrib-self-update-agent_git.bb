@@ -37,7 +37,7 @@ DEPENDS += "glib-networking"
 DEPENDS += "nlohmann-json"
 DEPENDS += "paho-mqtt-cpp"
 
-PACKAGES = "${PN}-data ${PN}"
+PACKAGES = "${PN}-data ${PN} ${PN}-dbg"
 
 SYSTEMD_SERVICE:${PN} = "self-update-agent.service"
 
@@ -49,6 +49,10 @@ FILES:${PN} += " \
 
 FILES:${PN}-data += " \
     /data/self-update-images/ \
+"
+
+FILES:${PN}-dbg += " \
+    ${bindir}/.debug/ \
 "
 
 do_install() {
