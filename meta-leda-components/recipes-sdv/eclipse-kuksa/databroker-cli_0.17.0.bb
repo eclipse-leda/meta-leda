@@ -31,8 +31,11 @@ do_compile:prepend(){
     # toolchain version > 1.59.0. This causes the bitbake recipe to fail with a 
     # missing dependency. Deleting the lock causes the OE meta-rust tasks to
     # re-generate the Cargo.lock with the crate versions.
-    rm "${S}/Cargo.lock"
+    if [ -f "${S}/Cargo.lock" ]; then
+        rm "${S}/Cargo.lock"
+    fi
 }
+
 # please note if you have entries that do not begin with crate://
 # you must change them to how that package can be fetched
 SRC_URI += " \
