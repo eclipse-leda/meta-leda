@@ -24,7 +24,6 @@ RDEPENDS:${PN} = "\
     leda-utils \
     skopeo \
     sudo \
-    kantui \
     "
 
 # TODO: For future example applictations
