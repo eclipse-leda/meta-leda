@@ -22,13 +22,15 @@
             "type": "unless-stopped"
         },
         "runtime": "io.containerd.runc.v2",
-        "extra_hosts": [],
+        "extra_hosts": [
+            "databroker-host:host_ip"
+        ],
         "port_mappings": [],
         "log_config": {
             "driver_config": {
                 "type": "json-file",
                 "max_files": 2,
-                "max_size": "100M",
+                "max_size": "1M",
                 "root_dir": ""
             },
             "mode_config": {
@@ -47,7 +49,10 @@
         "tty": false
     },
     "config": {
-        "env": [],
+        "env": [
+            "VEHICLEDATABROKER_DAPR_APP_ID=databroker",
+            "VDB_ADDRESS=databroker-host:30555"
+        ],
         "cmd": []
     },
     "network_settings": null,

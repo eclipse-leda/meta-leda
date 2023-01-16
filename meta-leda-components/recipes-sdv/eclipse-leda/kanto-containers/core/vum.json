@@ -14,7 +14,7 @@
         {
             "source": "/proc",
             "destination": "/proc",
-            "propagation_mode": "rprivate"
+            "propagation_mode": "shared"
         }
     ],
     "hooks": [],
@@ -28,13 +28,15 @@
             "type": "unless-stopped"
         },
         "runtime": "io.containerd.runc.v2",
-        "extra_hosts": [],
+        "extra_hosts": [
+            "mosquitto:host_ip"
+        ],
         "port_mappings": [],
         "log_config": {
             "driver_config": {
                 "type": "json-file",
                 "max_files": 2,
-                "max_size": "100M",
+                "max_size": "1M",
                 "root_dir": ""
             },
             "mode_config": {

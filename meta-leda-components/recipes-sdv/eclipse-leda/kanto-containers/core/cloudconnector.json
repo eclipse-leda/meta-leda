@@ -2,7 +2,7 @@
     "id": "",
     "name": "cloudconnector",
     "image": {
-        "name": "ghcr.io/eclipse-leda/leda-contrib-cloud-connector/cloudconnector:main-fd4a8260772ee64d7360550358b265b0c80f1345",
+        "name": "ghcr.io/eclipse-leda/leda-contrib-cloud-connector/cloudconnector:main-47c01227a620a3dbd85b66e177205c06c0f7a52e",
         "decrypt_config": null
     },
     "host_name": "",
@@ -13,12 +13,12 @@
     "mounts": [
         {
             "source": "/data/var/certificates/device.crt",
-            "destination": "/var/certificates/device.crt",
+            "destination": "/device.crt",
             "propagation_mode": "rprivate"
         },
         {
             "source": "/data/var/certificates/device.key",
-            "destination": "/var/certificates/device.key",
+            "destination": "/device.key",
             "propagation_mode": "rprivate"
         }
     ],
@@ -33,13 +33,15 @@
             "type": "unless-stopped"
         },
         "runtime": "io.containerd.runc.v2",
-        "extra_hosts": [],
+        "extra_hosts": [
+            "mosquitto:host_ip"
+        ],
         "port_mappings": [],
         "log_config": {
             "driver_config": {
                 "type": "json-file",
                 "max_files": 2,
-                "max_size": "100M",
+                "max_size": "1M",
                 "root_dir": ""
             },
             "mode_config": {
@@ -59,8 +61,8 @@
     },
     "config": {
         "env": [
-           "CERT_PATH=/var/certificates/device.crt",
-           "KEY_PATH=/var/certificates/device.key",
+           "CERT_FILE=/device.crt",
+           "KEY_FILE=/device.key",
            "LOCAL_ADDRESS=tcp://mosquitto:1883",
            "LOG_FILE=''",
            "LOG_LEVEL=INFO",
