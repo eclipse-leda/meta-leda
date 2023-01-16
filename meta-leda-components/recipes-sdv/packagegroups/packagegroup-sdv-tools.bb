@@ -21,10 +21,11 @@ RDEPENDS:${PN} = "\
     jq \
     mosquitto-clients \
     nano \
-    sdv-core-utils \
+    leda-utils \
     skopeo \
     sudo \
     databroker-cli \
+    kantui \
     "
 
 # TODO: For future example applictations

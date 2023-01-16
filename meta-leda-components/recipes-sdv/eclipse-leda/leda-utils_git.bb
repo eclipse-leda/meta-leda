@@ -12,10 +12,10 @@
 # ********************************************************************************/
 
 SUMMARY = "SDV Core Utilities"
-DESCRIPTION = "Core shell scripts"
+DESCRIPTION = "Core shell scripts for Eclipse Leda"
 
 SRC_URI = "git://github.com/eclipse-leda/leda-utils;branch=main;protocol=https"
-SRCREV = "c816c3a75dcc41a2962d34730b9fd0bc0084c79d"
+SRCREV = "4771fc9bd72c31a65c32648145ff24c0b91678ac"
 
 # According to https://wiki.yoctoproject.org/wiki/License_Infrastructure_Interest_Group
 LICENSE = "Apache-2.0"
@@ -23,15 +23,6 @@ LIC_FILES_CHKSUM = "file://${WORKDIR}/git/LICENSE;md5=3b83ef96387f14655fc854ddc3
 
 # Runtime Dependencies
 RDEPENDS:${PN} += " bash"
-
-# Force to refetch every time
-do_fetch[nostamp] = "1"
-do_install[nostamp] = "1"
-
-# Skip the compilation tasks
-#do_compile[noexec] = "1"
-#do_configure[noexec] = "1"
-#do_package_qa[noexec] = "1"
 
 do_install() {
     install -d ${D}${bindir}
