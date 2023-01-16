@@ -24,6 +24,7 @@ RDEPENDS:${PN} = "\
     leda-utils \
     skopeo \
     sudo \
+    databroker-cli \
     kantui \
     "
 
