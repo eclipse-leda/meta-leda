@@ -21,6 +21,8 @@ RDEPENDS:${PN} = "\
     openssh \
     openssh-sftp-server \
     rauc \
-    sdv-core-utils \
+    container-management \
+    kanto-auto-deployer \
+    leda-utils \
     openvpn \
     "
