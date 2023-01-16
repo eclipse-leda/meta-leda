@@ -21,11 +21,18 @@ inherit cargo
 # how to get databroker-cli could be as easy as but default to a git checkout:
 # SRC_URI += "crate://crates.io/databroker-cli/0.17.0"
 SRC_URI += "gitsm://github.com/eclipse/kuksa.val;protocol=https;nobranch=1"
-SRCREV = "6d2f7b97e2f5817830ef333a636d90138a18b9b1"
+SRCREV = "590198a35de7b2201bdd913750157bb9778a5214"
 S = "${WORKDIR}/git"
 CARGO_SRC_DIR = "kuksa_databroker/databroker-cli"
 PV:append = ".AUTOINC+861b2ec674"
 
+do_compile:prepend(){
+    # Needed as the repo for kuksa provides a Cargo.lock generated with a Rust 
+    # toolchain version > 1.59.0. This causes the bitbake recipe to fail with a 
+    # missing dependency. Deleting the lock causes the OE meta-rust tasks to
+    # re-generate the Cargo.lock with the crate versions.
+    rm "${S}/Cargo.lock"
+}
 # please note if you have entries that do not begin with crate://
 # you must change them to how that package can be fetched
 SRC_URI += " \
@@ -59,7 +66,6 @@ SRC_URI += " \
     crate://crates.io/fixedbitset/0.4.2 \
     crate://crates.io/fnv/1.0.7 \
     crate://crates.io/form_urlencoded/1.1.0 \
-    crate://crates.io/fs_extra/1.2.0 \
     crate://crates.io/futures-channel/0.3.25 \
     crate://crates.io/futures-core/0.3.25 \
     crate://crates.io/futures-sink/0.3.25 \
@@ -68,7 +74,7 @@ SRC_URI += " \
     crate://crates.io/getrandom/0.1.16 \
     crate://crates.io/getrandom/0.2.8 \
     crate://crates.io/getset/0.1.2 \
-    crate://crates.io/git2/0.15.0 \
+    crate://crates.io/git2/0.14.2 \
     crate://crates.io/h2/0.3.15 \
     crate://crates.io/hashbrown/0.12.3 \
     crate://crates.io/heck/0.3.3 \
@@ -84,12 +90,10 @@ SRC_URI += " \
     crate://crates.io/instant/0.1.12 \
     crate://crates.io/itertools/0.10.5 \
     crate://crates.io/itoa/1.0.5 \
-    crate://crates.io/jemalloc-sys/0.5.2+5.3.0-patched \
-    crate://crates.io/jemallocator/0.5.0 \
     crate://crates.io/jobserver/0.1.25 \
     crate://crates.io/lazy_static/1.4.0 \
     crate://crates.io/libc/0.2.139 \
-    crate://crates.io/libgit2-sys/0.14.1+1.5.0 \
+    crate://crates.io/libgit2-sys/0.13.2+1.4.2 \
     crate://crates.io/libz-sys/1.1.8 \
     crate://crates.io/linefeed/0.6.0 \
     crate://crates.io/log/0.4.17 \
@@ -103,6 +107,7 @@ SRC_URI += " \
     crate://crates.io/nom/5.1.2 \
     crate://crates.io/nu-ansi-term/0.46.0 \
     crate://crates.io/num_cpus/1.15.0 \
+    crate://crates.io/num_threads/0.1.6 \
     crate://crates.io/once_cell/1.17.0 \
     crate://crates.io/os_str_bytes/6.4.1 \
     crate://crates.io/overload/0.1.1 \
@@ -162,9 +167,7 @@ SRC_URI += " \
     crate://crates.io/thiserror-impl/1.0.38 \
     crate://crates.io/thiserror/1.0.38 \
     crate://crates.io/thread_local/1.1.4 \
-    crate://crates.io/time-core/0.1.0 \
-    crate://crates.io/time-macros/0.2.6 \
-    crate://crates.io/time/0.3.17 \
+    crate://crates.io/time/0.3.15 \
     crate://crates.io/tinyvec/1.6.0 \
     crate://crates.io/tinyvec_macros/0.1.0 \
     crate://crates.io/tokio-io-timeout/1.2.0 \
@@ -191,7 +194,7 @@ SRC_URI += " \
     crate://crates.io/unicode-width/0.1.10 \
     crate://crates.io/url/2.3.1 \
     crate://crates.io/vcpkg/0.2.15 \
-    crate://crates.io/vergen/7.5.0 \
+    crate://crates.io/vergen/7.3.2 \
     crate://crates.io/version_check/0.9.4 \
     crate://crates.io/want/0.3.0 \
     crate://crates.io/wasi/0.11.0+wasi-snapshot-preview1 \
@@ -209,7 +212,6 @@ SRC_URI += " \
     crate://crates.io/windows_x86_64_gnullvm/0.42.0 \
     crate://crates.io/windows_x86_64_msvc/0.42.0 \
 "
-
 
 LIC_FILES_CHKSUM = " \
     file://LICENSE;md5=2b42edef8fa55315f34f2370b4715ca9 \
