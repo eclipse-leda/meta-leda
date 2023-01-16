@@ -23,7 +23,15 @@
         },
         "runtime": "io.containerd.runc.v2",
         "extra_hosts": [],
-        "port_mappings": [],
+        "port_mappings": [
+            {
+              "protocol": "tcp",
+              "container_port": 55555,
+              "host_ip": "localhost",
+              "host_port": 30555,
+              "host_port_end": 30555
+            }
+        ],
         "log_config": {
             "driver_config": {
                 "type": "json-file",
