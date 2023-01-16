@@ -1,0 +1,14 @@
+[Unit]
+Description=Eclipse Kanto - Container Management
+Documentation=https://eclipse.org/kanto/docs/
+After=network.target containerd.service data.mount
+Requires=network.target containerd.service
+
+[Service]
+Type=simple
+ExecStart=@CM_BIN_DD@/container-management --cfg-file @CM_CFG_DD@/container-management/config.json
+Restart=always
+TimeoutSec=3000
+
+[Install]
+WantedBy=multi-user.target
