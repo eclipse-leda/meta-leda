@@ -18,12 +18,6 @@ inherit packagegroup
 
 RDEPENDS:${PN} = "\
     container-management \
-    file-upload \
-    file-backup \
-    software-update \
-    suite-connector \
-    system-metrics \
-    rauc-hawkbit-updater \
     leda-contrib-cloud-connector \
     leda-contrib-self-update-agent \
     kanto-auto-deployer \
