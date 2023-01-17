@@ -21,6 +21,7 @@ RDEPENDS:${PN} = "\
     openssh \
     openssh-sftp-server \
     rauc \
+    mosquitto \
     container-management \
     kanto-auto-deployer \
     leda-utils \
