@@ -1,0 +1,12 @@
+index e4c082b3a..d4042d748 100644
+--- a/containerd.service
++++ b/containerd.service
+@@ -15,7 +15,7 @@
+ [Unit]
+ Description=containerd container runtime
+ Documentation=https://containerd.io
+-After=network.target local-fs.target
++After=network.target local-fs.target data.mount
+ 
+ [Service]
+ ExecStartPre=-/sbin/modprobe overlay

@@ -1,7 +1,9 @@
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
-SRC_URI += "file://config.toml"
+SRC_URI += "file://config.toml \
+            file://containerd_service_depends_on_data.patch \
+            "
 
 do_install:append() {
     install -d ${D}${sysconfdir}/containerd
