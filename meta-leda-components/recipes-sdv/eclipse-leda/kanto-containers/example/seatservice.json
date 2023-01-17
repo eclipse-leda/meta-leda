@@ -61,7 +61,7 @@
            "VEHICLEDATABROKER_DAPR_APP_ID=databroker",
            "BROKER_ADDR=databroker-host:30555",
            "RUST_LOG=info",
-           "vehicle_data_broker=debug"
+           "vehicle_data_broker=info"
         ],
         "cmd": []
     },

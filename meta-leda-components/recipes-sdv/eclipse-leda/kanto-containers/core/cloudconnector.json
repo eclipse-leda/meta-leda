@@ -64,7 +64,7 @@
            "CERT_FILE=/device.crt",
            "KEY_FILE=/device.key",
            "LOCAL_ADDRESS=tcp://mosquitto:1883",
-           "LOG_FILE=''",
+           "LOG_FILE=",
            "LOG_LEVEL=INFO",
            "CA_CERT_PATH=/app/iothub.crt",
            "MESSAGE_MAPPER_CONFIG=/app/message-mapper-config.json",
