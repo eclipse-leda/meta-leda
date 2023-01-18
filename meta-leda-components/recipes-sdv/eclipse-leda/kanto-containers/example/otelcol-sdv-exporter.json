@@ -1,8 +1,8 @@
 {
     "id": "",
-    "name": "sua",
+    "name": "otelcol-sdv-exporter",
     "image": {
-        "name": "ghcr.io/eclipse-leda/leda-contrib-self-update-agent/self-update-agent:build-20",
+        "name": "ghcr.io/softwaredefinedvehicle/sdv-edge-otel/otelcol-sdv-exporter:v0.0.1",
         "decrypt_config": null
     },
     "host_name": "",
@@ -10,18 +10,7 @@
     "resolv_conf_path": "",
     "hosts_path": "",
     "hostname_path": "",
-    "mounts": [
-        {
-            "source": "/var/run/dbus/system_bus_socket",
-            "destination": "/var/run/dbus/system_bus_socket",
-            "propagation_mode": "shared"
-        },
-        {
-            "source": "/data/selfupdates",
-            "destination": "/RaucUpdate",
-            "propagation_mode": "rprivate"
-        }
-    ],
+    "mounts": [],
     "hooks": [],
     "host_config": {
         "devices": [],
@@ -36,15 +25,7 @@
         "extra_hosts": [
             "mosquitto:host_ip"
         ],
-        "port_mappings": [
-            {
-              "protocol": "tcp",
-              "container_port": 50052,
-              "host_ip": "localhost",
-              "host_port": 30052,
-              "host_port_end": 30052
-            }
-        ],
+        "port_mappings": [],
         "log_config": {
             "driver_config": {
                 "type": "json-file",
