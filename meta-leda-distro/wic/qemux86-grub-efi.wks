@@ -33,7 +33,7 @@ part --fixed-size 50M --ondisk vda --no-table
 part --fixed-size 10M --source rawcopy --sourceparams="file=grubenv.vfat" --fstype=vfat --ondisk vda --label grubenv
 
 # A rescue partition as fallback ("Factory Reset"), mounted for showcase
-part --fixed-size 150M --source rootfs --rootfs-dir=sdv-image-rescue --ondisk vda --fstype=ext4 --label rescue --fsoptions "ro"
+part --fixed-size 200M --source rootfs --rootfs-dir=sdv-image-rescue --ondisk vda --fstype=ext4 --label rescue --fsoptions "ro"
 
 # First Root Partition (active, pre-installed), mounted readonly to show that root fs can be readonly
 # and all container-apps in cluster are contained on /data
