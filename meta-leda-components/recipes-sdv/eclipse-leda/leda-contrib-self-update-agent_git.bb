@@ -48,7 +48,11 @@ FILES:${PN} += " \
 "
 
 FILES:${PN}-data += " \
-    /data/self-update-images/ \
+    /data/selfupdates \
+"
+
+FILES:${PN}-dbg += " \
+    ${bindir}/.debug/ \
 "
 
 FILES:${PN}-dbg += " \
@@ -65,5 +69,5 @@ do_install() {
     install -d ${D}${libdir}
     install -m 755 ${B}/3rdparty/libmini-yaml.so ${D}${libdir}
 
-    install -d ${D}/data/self-update-images/
+    install -d ${D}/data/selfupdates
 }
