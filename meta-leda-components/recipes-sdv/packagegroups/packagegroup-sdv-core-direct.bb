@@ -18,4 +18,7 @@ inherit packagegroup
 
 RDEPENDS:${PN} = "\
     ca-certificates \
+    mosquitto \
+    leda-contrib-cloud-connector \
+    leda-contrib-self-update-agent \
     rauc "
