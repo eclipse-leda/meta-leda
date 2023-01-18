@@ -1,8 +1,8 @@
 {
     "id": "",
-    "name": "cloudconnector",
+    "name": "otelcol-sdv-agent",
     "image": {
-        "name": "ghcr.io/eclipse-leda/leda-contrib-cloud-connector/cloudconnector:main-47c01227a620a3dbd85b66e177205c06c0f7a52e",
+        "name": "ghcr.io/softwaredefinedvehicle/sdv-edge-otel/otelcol-sdv-ext:v0.0.1",
         "decrypt_config": null
     },
     "host_name": "",
@@ -12,13 +12,18 @@
     "hostname_path": "",
     "mounts": [
         {
-            "source": "/data/var/certificates/device.crt",
-            "destination": "/device.crt",
+            "source": "/",
+            "destination": "/hostfs",
             "propagation_mode": "rprivate"
         },
         {
-            "source": "/data/var/certificates/device.key",
-            "destination": "/device.key",
+            "source": "/var/lib/container-management/containers",
+            "destination": "/var/lib/docker/containers",
+            "propagation_mode": "rprivate"
+        },
+        {
+            "source": "/run/log/journal",
+            "destination": "/run/log/journal",
             "propagation_mode": "rprivate"
         }
     ],
@@ -36,7 +41,15 @@
         "extra_hosts": [
             "mosquitto:host_ip"
         ],
-        "port_mappings": [],
+        "port_mappings": [
+            {
+              "protocol": "tcp",
+              "container_port": 9411,
+              "host_ip": "localhost",
+              "host_port": 4317,
+              "host_port_end": 4317
+            }
+        ],
         "log_config": {
             "driver_config": {
                 "type": "json-file",
@@ -61,17 +74,17 @@
     },
     "config": {
         "env": [
-           "CERT_FILE=/device.crt",
-           "KEY_FILE=/device.key",
-           "LOCAL_ADDRESS=tcp://mosquitto:1883",
-           "LOG_FILE=",
-           "LOG_LEVEL=INFO",
-           "CA_CERT_PATH=/app/iothub.crt",
-           "MESSAGE_MAPPER_CONFIG=/app/message-mapper-config.json",
-           "ALLOWED_CLOUD_MESSAGE_TYPES_LIST=vss.setPosition,updateme,subscribeOnceCommand,vss.set,desiredstate.update",
-           "ALLOWED_LOCAL_TOPICS_LIST=cloudConnector/#"
+           "OTELCOL_NAME=otelcol-sdv",
+           "HOST_PROC=/hostfs/proc",
+           "HOST_SYS=/hostfs/sys",
+           "HOST_ETC=/hostfs/etc",
+           "HOST_VAR=/hostfs/var",
+           "HOST_RUN=/hostfs/run",
+           "HOST_DEV=/hostfs/dev"
         ],
-        "cmd": []
+        "cmd": [
+            "/otelcol-sdv --config=/conf/relay.yaml"
+        ]
     },
     "network_settings": null,
     "state": {

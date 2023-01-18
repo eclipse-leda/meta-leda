@@ -1,8 +1,8 @@
 {
     "id": "",
-    "name": "cloudconnector",
+    "name": "otelcol-sdv-exporter",
     "image": {
-        "name": "ghcr.io/eclipse-leda/leda-contrib-cloud-connector/cloudconnector:main-47c01227a620a3dbd85b66e177205c06c0f7a52e",
+        "name": "ghcr.io/softwaredefinedvehicle/sdv-edge-otel/otelcol-sdv-exporter:v0.0.1",
         "decrypt_config": null
     },
     "host_name": "",
@@ -10,18 +10,7 @@
     "resolv_conf_path": "",
     "hosts_path": "",
     "hostname_path": "",
-    "mounts": [
-        {
-            "source": "/data/var/certificates/device.crt",
-            "destination": "/device.crt",
-            "propagation_mode": "rprivate"
-        },
-        {
-            "source": "/data/var/certificates/device.key",
-            "destination": "/device.key",
-            "propagation_mode": "rprivate"
-        }
-    ],
+    "mounts": [],
     "hooks": [],
     "host_config": {
         "devices": [],
@@ -60,17 +49,7 @@
         "tty": false
     },
     "config": {
-        "env": [
-           "CERT_FILE=/device.crt",
-           "KEY_FILE=/device.key",
-           "LOCAL_ADDRESS=tcp://mosquitto:1883",
-           "LOG_FILE=",
-           "LOG_LEVEL=INFO",
-           "CA_CERT_PATH=/app/iothub.crt",
-           "MESSAGE_MAPPER_CONFIG=/app/message-mapper-config.json",
-           "ALLOWED_CLOUD_MESSAGE_TYPES_LIST=vss.setPosition,updateme,subscribeOnceCommand,vss.set,desiredstate.update",
-           "ALLOWED_LOCAL_TOPICS_LIST=cloudConnector/#"
-        ],
+        "env": [],
         "cmd": []
     },
     "network_settings": null,

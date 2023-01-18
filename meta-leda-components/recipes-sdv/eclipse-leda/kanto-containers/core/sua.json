@@ -2,7 +2,7 @@
     "id": "",
     "name": "sua",
     "image": {
-        "name": "ghcr.io/eclipse-leda/leda-contrib-self-update-agent/self-update-agent:build-12",
+        "name": "ghcr.io/eclipse-leda/leda-contrib-self-update-agent/self-update-agent:build-20",
         "decrypt_config": null
     },
     "host_name": "",
