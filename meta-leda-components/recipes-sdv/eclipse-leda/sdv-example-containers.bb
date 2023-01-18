@@ -23,6 +23,9 @@ do_install:append() {
     install ${THISDIR}/kanto-containers/example/seatservice.json ${D}${KANTO_MANIFESTS_LOCAL_DIR}
     install ${THISDIR}/kanto-containers/example/hvac.json ${D}${KANTO_MANIFESTS_LOCAL_DIR}
     install ${THISDIR}/kanto-containers/example/feedercan.json ${D}${KANTO_MANIFESTS_LOCAL_DIR}
+# Under construction
+#    install ${THISDIR}/kanto-containers/example/otelcol-sdv-agent.json ${D}${KANTO_MANIFESTS_LOCAL_DIR}
+#    install ${THISDIR}/kanto-containers/example/otelcol-sdv-exporter.json ${D}${KANTO_MANIFESTS_LOCAL_DIR}
 }
 
 PACKAGES = "${PN}"
@@ -30,3 +33,6 @@ FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}"
 FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}/seatservice.json"
 FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}/hvac.json"
 FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}/feedercan.json"
+# Under construction
+#FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}/otelcol-sdv-agent.json"
+#FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}/otelcol-sdv-exporter.json"

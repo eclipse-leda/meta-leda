@@ -1,8 +1,8 @@
 {
     "id": "",
-    "name": "sua",
+    "name": "otelcol-sdv-agent",
     "image": {
-        "name": "ghcr.io/eclipse-leda/leda-contrib-self-update-agent/self-update-agent:build-20",
+        "name": "ghcr.io/softwaredefinedvehicle/sdv-edge-otel/otelcol-sdv-ext:v0.0.1",
         "decrypt_config": null
     },
     "host_name": "",
@@ -12,13 +12,18 @@
     "hostname_path": "",
     "mounts": [
         {
-            "source": "/var/run/dbus/system_bus_socket",
-            "destination": "/var/run/dbus/system_bus_socket",
-            "propagation_mode": "shared"
+            "source": "/",
+            "destination": "/hostfs",
+            "propagation_mode": "rprivate"
         },
         {
-            "source": "/data/selfupdates",
-            "destination": "/RaucUpdate",
+            "source": "/var/lib/container-management/containers",
+            "destination": "/var/lib/docker/containers",
+            "propagation_mode": "rprivate"
+        },
+        {
+            "source": "/run/log/journal",
+            "destination": "/run/log/journal",
             "propagation_mode": "rprivate"
         }
     ],
@@ -39,10 +44,10 @@
         "port_mappings": [
             {
               "protocol": "tcp",
-              "container_port": 50052,
+              "container_port": 9411,
               "host_ip": "localhost",
-              "host_port": 30052,
-              "host_port_end": 30052
+              "host_port": 4317,
+              "host_port_end": 4317
             }
         ],
         "log_config": {
@@ -68,8 +73,18 @@
         "tty": false
     },
     "config": {
-        "env": [],
-        "cmd": []
+        "env": [
+           "OTELCOL_NAME=otelcol-sdv",
+           "HOST_PROC=/hostfs/proc",
+           "HOST_SYS=/hostfs/sys",
+           "HOST_ETC=/hostfs/etc",
+           "HOST_VAR=/hostfs/var",
+           "HOST_RUN=/hostfs/run",
+           "HOST_DEV=/hostfs/dev"
+        ],
+        "cmd": [
+            "/otelcol-sdv --config=/conf/relay.yaml"
+        ]
     },
     "network_settings": null,
     "state": {
