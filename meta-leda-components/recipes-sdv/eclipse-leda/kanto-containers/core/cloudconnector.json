@@ -68,7 +68,6 @@
            "LOG_LEVEL=INFO",
            "CA_CERT_PATH=/app/iothub.crt",
            "MESSAGE_MAPPER_CONFIG=/app/message-mapper-config.json",
-           "ALLOWED_CLOUD_MESSAGE_TYPES_LIST=vss.setPosition,updateme,subscribeOnceCommand,vss.set,desiredstate.update",
            "ALLOWED_LOCAL_TOPICS_LIST=cloudConnector/#"
         ],
         "cmd": []
