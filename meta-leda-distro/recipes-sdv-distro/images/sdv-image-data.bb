@@ -24,7 +24,7 @@ IMAGE_INSTALL += "sdv-example-certificate"
 
 IMAGE_FSTYPES += "ext4.gz"
 IMAGE_LINGUAS = ""
-IMAGE_ROOTFS_SIZE ?= "4194304"
+IMAGE_ROOTFS_SIZE ?= "2097152"
 
 IMAGE_PREPROCESS_COMMAND += "prepare_filesystem;"
 
