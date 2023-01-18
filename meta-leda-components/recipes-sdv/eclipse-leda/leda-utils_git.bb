@@ -26,13 +26,16 @@ RDEPENDS:${PN} += " bash"
 
 do_install() {
     install -d ${D}${bindir}
-    install -d ${D}/etc/sdv
+    install -d ${D}${sysconfdir}/sdv
     cp -R --no-dereference --preserve=mode,links -v ${WORKDIR}/git/src/bash/can-forward ${D}${bindir}
     cp -R --no-dereference --preserve=mode,links -v ${WORKDIR}/git/src/bash/sdv-device-info ${D}${bindir}
     cp -R --no-dereference --preserve=mode,links -v ${WORKDIR}/git/src/bash/sdv-health ${D}${bindir}
     cp -R --no-dereference --preserve=mode,links -v ${WORKDIR}/git/src/bash/sdv-motd ${D}${bindir}
     cp -R --no-dereference --preserve=mode,links -v ${WORKDIR}/git/src/bash/sdv-provision ${D}${bindir}
-    cp -R --no-dereference --preserve=mode,links -v ${WORKDIR}/git/src/bash/sdv.conf ${D}/etc/sdv/
+    cp -R --no-dereference --preserve=mode,links -v ${WORKDIR}/git/src/bash/sdv.conf ${D}${sysconfdir}/sdv/
+
+    install -d ${D}${sysconfdir}/profile.d
+    ln -sf ${bindir}/sdv-motd ${D}${sysconfdir}/profile.d/sdv-motd.sh
 }
 
 FILES_${PN} += "${bindir}/can-forward"
