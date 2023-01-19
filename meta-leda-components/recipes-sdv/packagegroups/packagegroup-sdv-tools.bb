@@ -24,6 +24,7 @@ RDEPENDS:${PN} = "\
     leda-utils \
     skopeo \
     sudo \
+    databroker-cli \
     "
 
 # TODO: For future example applictations
