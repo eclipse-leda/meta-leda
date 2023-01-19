@@ -52,6 +52,7 @@
         "env": [
             "VEHICLEDATABROKER_DAPR_APP_ID=databroker",
             "VDB_ADDRESS=databroker-host:30555",
+            "USECASE=databroker",
             "LOG_LEVEL=info",
             "databroker=info",
             "broker_client=info",
