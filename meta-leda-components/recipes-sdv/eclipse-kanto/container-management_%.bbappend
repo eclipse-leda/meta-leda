@@ -19,4 +19,21 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
 SRC_URI += "file://service.template \
+            file://config.json \
           "
+
+do_install:append() {
+
+    if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)}; then
+
+        # config.json
+        install -d ${D}${CM_CFG_DD}/container-management
+        install -m 0644 ${WORKDIR}/config.json ${D}${CM_CFG_DD}/container-management/config.json
+    
+        # fill in the config.json template with the custom configs provided
+        sed -e 's,@CM_LOD_DD@,${CM_LOD_DD},g' \
+          -e 's,@CM_THINGS_ENABLED@,${CM_THINGS_ENABLED},g' \
+          -i ${D}${CM_CFG_DD}/container-management/config.json
+
+    fi
+}
