@@ -11,7 +11,7 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-# Increase memory for k3s to at least 2GB or more
+# Increase memory for Kanto Container Management to at least 2GB or more
 QB_MEM = "-m 4096"
 QB_MEM:qemuarm = "-m 2048"
 

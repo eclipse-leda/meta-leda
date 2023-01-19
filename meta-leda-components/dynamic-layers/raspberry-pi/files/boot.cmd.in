@@ -15,7 +15,7 @@
 # mmc 0:3 is SDV Rescue
 # mmc 0:4 is SDV Full
 # mmc 0:5 is SDV Minimal
-# mmc 0:6 is /data partition (Kubernetes) - must be last partition, so that it can be grown
+# mmc 0:6 is /data partition (Kanto Container Management) - must be last partition, so that it can be grown
 
 fdt addr ${fdt_addr} && fdt get value bootargs /chosen bootargs
 
