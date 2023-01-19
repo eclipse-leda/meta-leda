@@ -1,0 +1,11 @@
+{
+    "manager": {
+        "default_ctrs_stop_timeout": 5
+    },
+    "log": {
+        "log_file": "@CM_LOD_DD@/container-management/container-management.log"
+    },
+    "things": {
+        "enable": @CM_THINGS_ENABLED@
+    }
+}
