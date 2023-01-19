@@ -22,7 +22,7 @@ do_install[nostamp] = "1"
 do_install_basefilesissue[nostamp] = "1"
 
 # Create some additionally needed directories in root filesystem:
-# - /data for Kubernetes Cluster
+# - /data for Kanto Container Management
 # - /grubenv to hold bootloader (GRUB or U-Boot) environment and RAUC status information
 dirs755 += "/data"
 dirs755 += "/grubenv"
