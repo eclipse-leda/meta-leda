@@ -18,6 +18,8 @@ FILES:${PN}-dbg += "${bindir}/.debug"
 
 do_install:append() {
 	cargo_do_install
+	install -d ${D}${sysconfdir}/kantui
+	install -m 0664 "${S}/${CARGO_SRC_DIR}/kantui_conf.toml" "${D}${sysconfdir}/kantui/kantui_conf.toml" 
 }
 
 cargo_do_install () {
