@@ -44,4 +44,4 @@ part --source rootfs --rootfs-dir=sdv-image-minimal --ondisk vda --fstype=ext4 -
 
 # The data partition to store Kubernetes Cluster state (e.g. containerized apps)
 # Last partition, so that it can be grown (eg on Raspi to full SD-Card capacitiy, on qemu by extending the qcow2 disk image file)
-part --source rootfs --rootfs-dir=sdv-image-data --ondisk vda --fstype=ext4 --label data
+part --fixed-size 2048M --source rootfs --rootfs-dir=sdv-image-data --ondisk vda --fstype=ext4 --label data
