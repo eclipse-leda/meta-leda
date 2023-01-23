@@ -1,5 +1,5 @@
+if test -e virtio 0:1 uboot.env; then env load; fi;
 fdt addr ${fdt_addr} && fdt get value bootargs /chosen bootargs
-
 test -n "${BOOT_ORDER}" || setenv BOOT_ORDER "SDV_A SDV_B"
 test -n "${BOOT_SDV_A_LEFT}" || setenv BOOT_SDV_A_LEFT 3
 test -n "${BOOT_SDV_B_LEFT}" || setenv BOOT_SDV_B_LEFT 3
