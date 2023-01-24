@@ -1,4 +1,4 @@
-# Eclipse Leda - fstab for qemuarm64 RAUC redundant boot setup
+# Eclipse Leda - fstab for qemuarm RAUC redundant boot setup
 
 /dev/root            /                    auto       defaults,noatime              1  1
 proc                 /proc                proc       defaults              0  0
