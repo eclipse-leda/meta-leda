@@ -32,7 +32,6 @@ part --source bootimg-partition --ondisk vda --fstype=vfat --label BOOT --active
 part --fixed-size 10M --ondisk vda --align 4096 --no-table
 # Empty partition (on x86, this is grubenv - we store RAUC Status here as well)
 part --fixed-size 10M --ondisk vda --align 4096
-part --source rootfs --rootfs-dir=sdv-image-rescue --ondisk vda --fstype=ext4 --label rescue --align 1024
-part --source rootfs --rootfs-dir=sdv-image-full --ondisk vda --fstype=ext4 --label root_a --align 4096
+part --source rootfs --rootfs-dir=sdv-image-minimal --ondisk vda --fstype=ext4 --label root_a --align 4096
 part --source rootfs --rootfs-dir=sdv-image-minimal  --ondisk vda --fstype=ext4 --label root_b --align 4096
 part --fixed-size 2048M --source rootfs --rootfs-dir=sdv-image-data --ondisk vda --fstype=ext4 --label data --align 4096
