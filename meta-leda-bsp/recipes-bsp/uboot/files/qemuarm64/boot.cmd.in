@@ -30,8 +30,18 @@ for BOOT_SLOT in "${BOOT_ORDER}"; do
   fi
 done
 
+# Use the automated slot counting as the default
+setenv bootmenu_0 Autoboot=''
+# Short-circuit automated bootargs if a menu entry is chosen
+setenv bootmenu_1 Boot SDV Image Full='setenv bootpart "/dev/vda4" && setenv raucslot "SDV_A"'
+setenv bootmenu_2 Boot SDV Image Minimal='setenv bootpart "/dev/vda5" && setenv raucslot "SDV_B"'
+setenv bootmenu_3 Reset=reset
+setenv bootmenu_4 Power Off=poweroff
+bootmenu 3
+
 if test -n "${bootpart}"; then
   setenv bootargs "${bootargs} root=${bootpart} rauc.slot=${raucslot}"
+  echo "Booting with boot args: ${bootargs}"
   saveenv
 else
   echo "No valid RAUC slot found. Resetting tries to 3"
