@@ -1,9 +1,11 @@
 if test -e virtio 0:1 uboot.env; then env load; fi;
-fdt addr ${fdt_addr} && fdt get value bootargs /chosen bootargs
+
+setenv fallback_bootargs ""
+fdt addr ${fdt_addr} && fdt get value bootargs /chosen bootargs || setenv bootargs ${fallback_bootargs}
+
 test -n "${BOOT_ORDER}" || setenv BOOT_ORDER "SDV_A SDV_B"
 test -n "${BOOT_SDV_A_LEFT}" || setenv BOOT_SDV_A_LEFT 3
 test -n "${BOOT_SDV_B_LEFT}" || setenv BOOT_SDV_B_LEFT 3
-test -n "${BOOT_DEV}" || setenv BOOT_DEV "virtio 0:1"
 
 setenv bootpart
 setenv raucslot
@@ -17,15 +19,13 @@ for BOOT_SLOT in "${BOOT_ORDER}"; do
       echo "Found valid RAUC slot SDV_A"
       setenv bootpart "/dev/vda4"
       setenv raucslot "SDV_A"
-      setenv BOOT_DEV "virtio 0:4"
     fi
   elif test "x${BOOT_SLOT}" = "xSDV_B"; then
     if test ${BOOT_SDV_B_LEFT} -gt 0; then
       setexpr BOOT_SDV_B_LEFT ${BOOT_SDV_B_LEFT} - 1
-      echo "Found valid RAUC slot B"
+      echo "Found valid RAUC slot SDV_B"
       setenv bootpart "/dev/vda5"
       setenv raucslot "SDV_B"
-      setenv BOOT_DEV "virtio 0:5"
     fi
   fi
 done
