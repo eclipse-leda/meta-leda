@@ -20,7 +20,6 @@ RDEPENDS:${PN} = "\
     htop \
     jq \
     mosquitto-clients \
-    nano \
     leda-utils \
     skopeo \
     sudo \
