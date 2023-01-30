@@ -1,8 +1,17 @@
 {
-    "container_name": "otelcol-sdv-exporter",
+    "id": "",
+    "name": "zipkin",
     "image": {
-        "name": "ghcr.io/softwaredefinedvehicle/sdv-edge-otel/otelcol-sdv-exporter:v0.0.1"
+        "name": "ghcr.io/openzipkin/zipkin:master",
+        "decrypt_config": null
     },
+    "host_name": "zipkin",
+    "domain_name": "",
+    "resolv_conf_path": "",
+    "hosts_path": "",
+    "hostname_path": "",
+    "mounts": [],
+    "hooks": [],
     "host_config": {
         "devices": [],
         "network_mode": "bridge",
@@ -13,13 +22,11 @@
             "type": "unless-stopped"
         },
         "runtime": "io.containerd.runc.v2",
-        "extra_hosts": [
-            "mosquitto:host_ip"
-        ],
+        "extra_hosts": [],
         "port_mappings": [
             {
               "protocol": "tcp",
-              "container_port": 4317,
+              "container_port": 9411,
               "host_ip": "localhost",
               "host_port": 9411,
               "host_port_end": 9411
@@ -40,14 +47,33 @@
         "resources": null
     },
     "io_config": {
+        "attach_stderr": false,
+        "attach_stdin": false,
+        "attach_stdout": false,
         "open_stdin": false,
+        "stdin_once": false,
         "tty": false
     },
     "config": {
-        "env": [
-           "RUST_LOG=info",
-           "MQTT_BROKER_HOST=mosquitto"
-        ],
+        "env": [],
         "cmd": []
-    }
+    },
+    "network_settings": null,
+    "state": {
+        "pid": -1,
+        "started_at": "",
+        "error": "",
+        "exit_code": 0,
+        "finished_at": "",
+        "exited": false,
+        "dead": false,
+        "restarting": false,
+        "paused": false,
+        "running": false,
+        "status": "",
+        "oom_killed": false
+    },
+    "created": "",
+    "manually_stopped": false,
+    "restart_count": 0
 }

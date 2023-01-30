@@ -30,6 +30,7 @@ local_conf_header:
     INHERIT:remove = " cve-check"
     INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
     KANTO_MANIFESTS_DIR = "/data/var/containers/manifests"
+    KANTO_MANIFESTS_DEV_DIR = "/data/var/containers/manifests_dev"
 repos:
   # This entry includes the repository where the config file is located
   # to the bblayers.conf:

@@ -1,8 +1,17 @@
 {
-    "container_name": "feedercan",
+    "id": "",
+    "name": "feedercan",
     "image": {
-        "name": "ghcr.io/eclipse/kuksa.val.feeders/dbc2val:v0.1.1"
+        "name": "ghcr.io/eclipse/kuksa.val.feeders/dbc2val:v0.1.1",
+        "decrypt_config": null
     },
+    "host_name": "",
+    "domain_name": "",
+    "resolv_conf_path": "",
+    "hosts_path": "",
+    "hostname_path": "",
+    "mounts": [],
+    "hooks": [],
     "host_config": {
         "devices": [],
         "network_mode": "bridge",
@@ -16,6 +25,7 @@
         "extra_hosts": [
             "databroker-host:host_ip"
         ],
+        "port_mappings": [],
         "log_config": {
             "driver_config": {
                 "type": "json-file",
@@ -31,7 +41,11 @@
         "resources": null
     },
     "io_config": {
+        "attach_stderr": false,
+        "attach_stdin": false,
+        "attach_stdout": false,
         "open_stdin": false,
+        "stdin_once": false,
         "tty": false
     },
     "config": {
@@ -45,5 +59,23 @@
             "dbcfeeder=info"
         ],
         "cmd": []
-    }
+    },
+    "network_settings": null,
+    "state": {
+        "pid": -1,
+        "started_at": "",
+        "error": "",
+        "exit_code": 0,
+        "finished_at": "",
+        "exited": false,
+        "dead": false,
+        "restarting": false,
+        "paused": false,
+        "running": false,
+        "status": "",
+        "oom_killed": false
+    },
+    "created": "",
+    "manually_stopped": false,
+    "restart_count": 0
 }
