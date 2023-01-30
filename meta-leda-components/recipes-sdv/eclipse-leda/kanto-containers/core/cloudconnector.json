@@ -1,16 +1,9 @@
 {
-    "id": "",
-    "name": "cloudconnector",
+    "container_name": "cloudconnector",
     "image": {
-        "name": "ghcr.io/eclipse-leda/leda-contrib-cloud-connector/cloudconnector:main-47c01227a620a3dbd85b66e177205c06c0f7a52e",
-        "decrypt_config": null
+        "name": "ghcr.io/eclipse-leda/leda-contrib-cloud-connector/cloudconnector:main-47c01227a620a3dbd85b66e177205c06c0f7a52e"
     },
-    "host_name": "",
-    "domain_name": "",
-    "resolv_conf_path": "",
-    "hosts_path": "",
-    "hostname_path": "",
-    "mounts": [
+    "mount_points": [
         {
             "source": "/data/var/certificates/device.crt",
             "destination": "/device.crt",
@@ -22,7 +15,6 @@
             "propagation_mode": "rprivate"
         }
     ],
-    "hooks": [],
     "host_config": {
         "devices": [],
         "network_mode": "bridge",
@@ -52,11 +44,7 @@
         "resources": null
     },
     "io_config": {
-        "attach_stderr": false,
-        "attach_stdin": false,
-        "attach_stdout": false,
         "open_stdin": false,
-        "stdin_once": false,
         "tty": false
     },
     "config": {
@@ -71,23 +59,5 @@
            "ALLOWED_LOCAL_TOPICS_LIST=cloudConnector/#"
         ],
         "cmd": []
-    },
-    "network_settings": null,
-    "state": {
-        "pid": -1,
-        "started_at": "",
-        "error": "",
-        "exit_code": 0,
-        "finished_at": "",
-        "exited": false,
-        "dead": false,
-        "restarting": false,
-        "paused": false,
-        "running": false,
-        "status": "",
-        "oom_killed": false
-    },
-    "created": "",
-    "manually_stopped": false,
-    "restart_count": 0
+    }
 }
