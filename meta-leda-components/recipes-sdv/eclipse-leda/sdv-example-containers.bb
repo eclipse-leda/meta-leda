@@ -20,21 +20,14 @@ LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd
 
 do_install:append() {
     install -d ${D}${KANTO_MANIFESTS_LOCAL_DIR}
-    install ${THISDIR}/kanto-containers/example/seatservice.json ${D}${KANTO_MANIFESTS_LOCAL_DIR}
     install ${THISDIR}/kanto-containers/example/hvac.json ${D}${KANTO_MANIFESTS_LOCAL_DIR}
     install ${THISDIR}/kanto-containers/example/feedercan.json ${D}${KANTO_MANIFESTS_LOCAL_DIR}
 # Under construction
-#    install ${THISDIR}/kanto-containers/example/zipkin.json ${D}${KANTO_MANIFESTS_LOCAL_DIR}
-#    install ${THISDIR}/kanto-containers/example/otelcol-sdv-agent.json ${D}${KANTO_MANIFESTS_LOCAL_DIR}
-#    install ${THISDIR}/kanto-containers/example/otelcol-sdv-exporter.json ${D}${KANTO_MANIFESTS_LOCAL_DIR}
+#   install ${THISDIR}/kanto-containers/example/zipkin.json ${D}${KANTO_MANIFESTS_LOCAL_DIR}
 
     install -d ${D}${KANTO_MANIFESTS_LOCAL_DEV_DIR}
-# Moved to KANTO_MANIFESTS_LOCAL_DIR
-#    install ${THISDIR}/kanto-containers/example_dev/seatservice.json ${D}${KANTO_MANIFESTS_LOCAL_DEV_DIR}
-#    install ${THISDIR}/kanto-containers/example_dev/hvac.json ${D}${KANTO_MANIFESTS_LOCAL_DEV_DIR}
-#    install ${THISDIR}/kanto-containers/example_dev/feedercan.json ${D}${KANTO_MANIFESTS_LOCAL_DEV_DIR}
+    install ${THISDIR}/kanto-containers/example_dev/seatservice.json ${D}${KANTO_MANIFESTS_LOCAL_DEV_DIR}
 # Under construction
-#    install ${THISDIR}/kanto-containers/example_dev/zipkin.json ${D}${KANTO_MANIFESTS_LOCAL_DEV_DIR}
 #    install ${THISDIR}/kanto-containers/example_dev/otelcol-sdv-agent.json ${D}${KANTO_MANIFESTS_LOCAL_DEV_DIR}
 #    install ${THISDIR}/kanto-containers/example_dev/otelcol-sdv-exporter.json ${D}${KANTO_MANIFESTS_LOCAL_DEV_DIR}
 
@@ -42,20 +35,13 @@ do_install:append() {
 
 PACKAGES = "${PN}"
 FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}"
-FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}/seatservice.json"
 FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}/hvac.json"
 FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}/feedercan.json"
 # Under construction
 # FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}/zipkin.json"
-# FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}/otelcol-sdv-agent.json"
-# FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}/otelcol-sdv-exporter.json"
 
-# Moved to KANTO_MANIFESTS_LOCAL_DIR
-#FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DEV_DIR}"
-#FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DEV_DIR}/seatservice.json"
-#FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DEV_DIR}/hvac.json"
-#FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DEV_DIR}/feedercan.json"
+FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DEV_DIR}"
+FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DEV_DIR}/seatservice.json"
 # Under construction
-# FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DEV_DIR}/zipkin.json"
 # FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DEV_DIR}/otelcol-sdv-agent.json"
 # FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DEV_DIR}/otelcol-sdv-exporter.json"
