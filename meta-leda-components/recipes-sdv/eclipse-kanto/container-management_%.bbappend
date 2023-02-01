@@ -18,9 +18,11 @@
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
-SRC_URI += "file://service.template \
+SRC_URI += "git://github.com/eclipse-kanto/container-management;protocol=https;branch=main \
+            file://service.template \
             file://config.json \
           "
+SRCREV = "d7cea3ad4e7329d770da5c2d4ff4cc10629c0b80"
 
 do_install:append() {
 
@@ -33,6 +35,7 @@ do_install:append() {
         # fill in the config.json template with the custom configs provided
         sed -e 's,@CM_LOD_DD@,${CM_LOD_DD},g' \
           -e 's,@CM_THINGS_ENABLED@,${CM_THINGS_ENABLED},g' \
+          -e 's,@KANTO_MANIFESTS_DIR@,${KANTO_MANIFESTS_DIR},g' \
           -i ${D}${CM_CFG_DD}/container-management/config.json
 
     fi
