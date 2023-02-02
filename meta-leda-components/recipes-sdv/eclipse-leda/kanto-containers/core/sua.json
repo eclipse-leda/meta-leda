@@ -1,7 +1,7 @@
 {
     "container_name": "sua",
     "image": {
-        "name": "ghcr.io/eclipse-leda/leda-contrib-self-update-agent/self-update-agent:build-20"
+        "name": "ghcr.io/eclipse-leda/leda-contrib-self-update-agent/self-update-agent:build-38"
     },
     "mount_points": [
         {
