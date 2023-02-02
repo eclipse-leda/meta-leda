@@ -30,6 +30,7 @@ local_conf_header:
     INHERIT:remove = " cve-check"
     INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
     KANTO_MANIFESTS_DIR = "/data/var/containers/manifests"
+    KANTO_MANIFESTS_DEV_DIR = "/data/var/containers/manifests_dev"
   meta-rauc: |
     RAUC_KEY_FILE = "${COREBASE}/../examples/rauc/development-1.key.pem"
     RAUC_CERT_FILE = "${COREBASE}/../examples/rauc/development-1.cert.pem"

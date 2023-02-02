@@ -15,7 +15,7 @@
 PACKAGES = "${PN} ${PN}-dbg"
 FILES:${PN} += "${bindir}/kanto-auto-deployer"
 FILES:${PN} += "${systemd_unitdir}/system/kanto-auto-deployer.service"
-FILES:${PN} += "${KANTO_MANIFESTS_DIR}"
+FILES:${PN} += "${KANTO_MANIFESTS_DEV_DIR}"
 FILES:${PN}-dbg += "${bindir}/.debug"
 
 do_install:append() {
@@ -64,16 +64,16 @@ install_service() {
     install -d ${D}${KANTO_SERVICE_DIR}
     install -m 0644 ${THISDIR}/files/kanto-auto-deployer.service.template ${D}${KANTO_SERVICE_DIR}/kanto-auto-deployer.service
 
-    if [ -z ${KANTO_MANIFESTS_DIR} ]; then
-        bbfatal "KANTO_MANIFESTS_DIR must not be empty, please set in your local.conf"
+    if [ -z ${KANTO_MANIFESTS_DEV_DIR} ]; then
+        bbfatal "KANTO_MANIFESTS_DEV_DIR must not be empty, please set in your local.conf"
     fi
 
     # fill in the kanto auto deployer service template with the result configurations
     sed -e 's,@KD_BIN_DD@,${bindir},g' \
-        -e 's,@KD_CFG_DD@,${KANTO_MANIFESTS_DIR},g' \
+        -e 's,@KD_CFG_DD@,${KANTO_MANIFESTS_DEV_DIR},g' \
     -i ${D}${KANTO_SERVICE_DIR}/kanto-auto-deployer.service
 
-    install -d ${D}${KANTO_MANIFESTS_DIR}
+    install -d ${D}${KANTO_MANIFESTS_DEV_DIR}
 }
 
 

@@ -25,7 +25,15 @@
         "extra_hosts": [
             "mosquitto:host_ip"
         ],
-        "port_mappings": [],
+        "port_mappings": [
+            {
+              "protocol": "tcp",
+              "container_port": 4317,
+              "host_ip": "localhost",
+              "host_port": 9411,
+              "host_port_end": 9411
+            }
+        ],
         "log_config": {
             "driver_config": {
                 "type": "json-file",
@@ -49,7 +57,10 @@
         "tty": false
     },
     "config": {
-        "env": [],
+        "env": [
+           "RUST_LOG=info",
+           "MQTT_BROKER_HOST=mosquitto"
+        ],
         "cmd": []
     },
     "network_settings": null,

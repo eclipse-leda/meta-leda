@@ -74,7 +74,7 @@
     },
     "config": {
         "env": [
-           "OTELCOL_NAME=otelcol-sdv",
+           "OTELCOL_NAME=/otelcol-sdv",
            "HOST_PROC=/hostfs/proc",
            "HOST_SYS=/hostfs/sys",
            "HOST_ETC=/hostfs/etc",
@@ -83,7 +83,7 @@
            "HOST_DEV=/hostfs/dev"
         ],
         "cmd": [
-            "/otelcol-sdv --config=/conf/relay.yaml"
+            "/otelcol-sdv --config=/relay.yaml"
         ]
     },
     "network_settings": null,

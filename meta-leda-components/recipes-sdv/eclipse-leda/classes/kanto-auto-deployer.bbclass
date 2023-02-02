@@ -13,6 +13,9 @@
 #
 
 KANTO_MANIFESTS_LOCAL_DIR ??= "/var/containers/manifests"
+KANTO_MANIFESTS_LOCAL_DEV_DIR ??= "/var/containers/manifests_dev"
 
 KANTO_MANIFESTS_DIR ??= "${KANTO_MANIFESTS_LOCAL_DIR}"
-KANTO_MANIFESTS_DIR[doc] = "The location path of Kanto Container Management deployment descriptors to autodeploy"
+KANTO_MANIFESTS_DEV_DIR ??= "${KANTO_MANIFESTS_LOCAL_DEV_DIR}"
+KANTO_MANIFESTS_DIR[doc] = "The location path of Kanto Container Management deployment descriptors"
+KANTO_MANIFESTS_DEV_DIR[doc] = "The location path of Kanto Container Management deployment descriptors to autodeploy"
