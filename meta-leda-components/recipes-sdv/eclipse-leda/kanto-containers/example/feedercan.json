@@ -1,4 +1,5 @@
 {
+    "container_id": "feedercan",
     "container_name": "feedercan",
     "image": {
         "name": "ghcr.io/eclipse/kuksa.val.feeders/dbc2val:v0.1.1"

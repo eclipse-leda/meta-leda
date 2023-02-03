@@ -1,4 +1,5 @@
 {
+    "container_id": "hvacservice-example",
     "container_name": "hvacservice-example",
     "image": {
         "name": "ghcr.io/eclipse/kuksa.val.services/hvac_service:v0.1.0"

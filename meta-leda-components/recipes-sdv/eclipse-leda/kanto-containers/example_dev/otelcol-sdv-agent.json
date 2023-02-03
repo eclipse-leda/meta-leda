@@ -1,5 +1,5 @@
 {
-    "id": "",
+    "id": "otelcol-sdv-agent",
     "name": "otelcol-sdv-agent",
     "image": {
         "name": "ghcr.io/softwaredefinedvehicle/sdv-edge-otel/otelcol-sdv-ext:v0.0.1",
