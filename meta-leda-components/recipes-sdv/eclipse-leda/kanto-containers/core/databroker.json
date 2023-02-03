@@ -1,4 +1,5 @@
 {
+    "container_id": "databroker",
     "container_name": "databroker",
     "image": {
         "name": "ghcr.io/eclipse/kuksa.val/databroker:0.2.5"

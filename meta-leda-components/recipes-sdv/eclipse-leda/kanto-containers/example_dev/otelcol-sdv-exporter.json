@@ -1,5 +1,5 @@
 {
-    "id": "",
+    "id": "otelcol-sdv-exporter",
     "name": "otelcol-sdv-exporter",
     "image": {
         "name": "ghcr.io/softwaredefinedvehicle/sdv-edge-otel/otelcol-sdv-exporter:v0.0.1",

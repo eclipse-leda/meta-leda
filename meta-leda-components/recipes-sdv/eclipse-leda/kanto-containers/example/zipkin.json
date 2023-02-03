@@ -1,4 +1,5 @@
 {
+    "container_id": "zipkin",
     "container_name": "zipkin",
     "image": {
         "name": "ghcr.io/openzipkin/zipkin:master"

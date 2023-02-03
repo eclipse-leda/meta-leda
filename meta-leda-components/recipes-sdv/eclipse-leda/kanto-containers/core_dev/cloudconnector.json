@@ -1,5 +1,5 @@
 {
-    "id": "",
+    "id": "cloudconnector",
     "name": "cloudconnector",
     "image": {
         "name": "ghcr.io/eclipse-leda/leda-contrib-cloud-connector/cloudconnector:main-47c01227a620a3dbd85b66e177205c06c0f7a52e",
