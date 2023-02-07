@@ -1,4 +1,5 @@
 {
+    "container_id": "vum",
     "container_name": "vum",
     "image": {
         "name": "ghcr.io/eclipse-leda/leda-contrib-vehicle-update-manager/vehicleupdatemanager:main-1d8dca55a755c4b3c7bc06eabfa06ad49e068a48"

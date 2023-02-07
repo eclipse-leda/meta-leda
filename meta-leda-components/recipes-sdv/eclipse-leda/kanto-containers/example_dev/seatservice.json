@@ -1,5 +1,5 @@
 {
-    "id": "",
+    "id": "seatservice-example",
     "name": "seatservice-example",
     "image": {
         "name": "ghcr.io/eclipse/kuksa.val.services/seat_service:v0.1.0",
