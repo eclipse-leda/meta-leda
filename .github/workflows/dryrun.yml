@@ -47,5 +47,13 @@ jobs:
       with:
         path: build/cache
         key: bb-cache-local
-    - name: DryRun sdv-image-all
-      run: kas build --target sdv-image-all -- --dry-run
+    - name: DryRun default (qemux86_64)
+      run: kas build -- --dry-run
+    - name: DryRun Raspberry Pi 4
+      run: kas build kas/.config-kirkstone-rpi4.yaml -- --dry-run
+    - name: DryRun Kirkstone (qemux86-64)
+      run: kas build kas/.config-kirkstone.yaml -- --dry-run
+    - name: DryRun Kirkstone (qemuarm64)
+      env: 
+        KAS_MACHINE: qemuarm64
+      run: kas build kas/.config-kirkstone.yaml -- --dry-run
