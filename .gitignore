@@ -6,7 +6,6 @@ build/
 meta-kanto
 meta-openembedded
 meta-rauc
-meta-kanto
 meta-rauc-community
 meta-virtualization
 meta-raspberrypi
