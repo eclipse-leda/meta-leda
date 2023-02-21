@@ -64,3 +64,7 @@ QB_DRIVE_TYPE = "/dev/vd"
 # OVERLAYFS_MOUNT_POINT[data] = "/data/var/lib"
 # OVERLAYFS_WRITABLE_PATHS[data] = "/var/lib"
 # OVERLAYFS_QA_SKIP[varlib] = "mount-configured"
+
+INCOMPATIBLE_LICENSE = "GPL-3.0* LGPL-3.0* AGPL-3.0*"
+INCOMPATIBLE_LICENSE_EXCEPTIONS = "grub-common:GPL-3.0-only grub-editenv:GPL-3.0-only grub-efi:GPL-3.0-only"
+PACKAGE_EXCLUDE = "dosfstools"
