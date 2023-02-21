@@ -19,6 +19,7 @@ IMAGE_INSTALL:append = " kernel-image kernel-modules"
 
 # SDV Minimal
 IMAGE_INSTALL:append = " packagegroup-sdv-core"
+IMAGE_INSTALL:append:raspberrypi4-64 = " packagegroup-sdv-rpi4wifi"
 
 IMAGE_LINGUAS = " "
 

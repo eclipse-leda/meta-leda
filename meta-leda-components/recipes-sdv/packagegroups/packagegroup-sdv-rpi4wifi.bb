@@ -1,5 +1,5 @@
 # /********************************************************************************
-# * Copyright (c) 2022 Contributors to the Eclipse Foundation
+# * Copyright (c) 2023 Contributors to the Eclipse Foundation
 # *
 # * See the NOTICE file(s) distributed with this work for additional
 # * information regarding copyright ownership.
@@ -11,7 +11,13 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-require sdv-canbus-modules.inc
-require sdv-misc-kernel-config.inc
-require sdv-qemu-virtio.inc
-require sdv-wifi-kernel-config.inc
+SUMMARY = "SDV core Wifi packages for RPi4"
+DESCRIPTION = "WiFi Drivers for working SDV system on RPi4"
+
+inherit packagegroup
+
+RDEPENDS:${PN} = "\
+    linux-firmware-rpidistro-broadcom-license \
+    linux-firmware-rpidistro-bcm43455 \
+    linux-firmware-rpidistro-bcm43456 \
+"

@@ -23,6 +23,7 @@ IMAGE_INSTALL:append = " packagegroup-sdv-core"
 IMAGE_INSTALL:append = " packagegroup-sdv-additions"
 IMAGE_INSTALL:append = " packagegroup-sdv-tools"
 IMAGE_INSTALL:append = " packagegroup-sdv-examples"
+IMAGE_INSTALL:append:raspberrypi4-64 = " packagegroup-sdv-rpi4wifi"
 
 IMAGE_LINGUAS = " "
 
