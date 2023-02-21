@@ -15,7 +15,9 @@ SUMMARY = "SDV QEMU Virtual Device Support"
 DESCRIPTION = "Enables support for QEMU emulated devices"
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/linux-yocto:"
-SRC_URI:append = " file://qemu-virtio.cfg"
+SRC_URI:append:qemuarm = " file://qemu-virtio.cfg"
+SRC_URI:append:qemuarm64 = " file://qemu-virtio.cfg"
+SRC_URI:append:qemux86-64 = " file://qemu-virtio.cfg"
 
 # According to https://wiki.yoctoproject.org/wiki/License_Infrastructure_Interest_Group
 LICENSE = "Apache-2.0"

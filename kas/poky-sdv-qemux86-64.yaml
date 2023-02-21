@@ -1,5 +1,5 @@
 # /********************************************************************************
-# * Copyright (c) 2022 Contributors to the Eclipse Foundation
+# * Copyright (c) 2023 Contributors to the Eclipse Foundation
 # *
 # * See the NOTICE file(s) distributed with this work for additional
 # * information regarding copyright ownership.
@@ -10,14 +10,18 @@
 # *
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
-
-SUMMARY = "SDV Misc Kernel Configuration"
-DESCRIPTION = "Modify some general Kernel defaults"
-
-FILESEXTRAPATHS:prepend := "${THISDIR}/linux-yocto:"
-SRC_URI:append = " file://kernel-loglevel.cfg"
-SRC_URI:append = " file://kernel-misc.cfg"
-
-# According to https://wiki.yoctoproject.org/wiki/License_Infrastructure_Interest_Group
-LICENSE = "Apache-2.0"
-#LIC_FILES_CHKSUM = "file://LICENSE;md5=d9fc0efef5228704e7f5b37f27192723"
+# Every file needs to contain a header, that provides kas with information
+# about the context of this file.
+header:
+  version: 12
+  includes:
+  - .config-components.yaml
+  - mirrors.yaml
+distro: poky
+target: core-image-minimal
+local_conf_header:
+  user: |
+    IMAGE_INSTALL:append = " packagegroup-sdv-core"
+    DISTRO_FEATURES += " sdv rauc virtualization"
+    EXTRA_IMAGE_FEATURES += "debug-tweaks"
+machine: qemux86-64
