@@ -1,0 +1,38 @@
+# /********************************************************************************
+# * Copyright (c) 2022 Contributors to the Eclipse Foundation
+# *
+# * See the NOTICE file(s) distributed with this work for additional
+# * information regarding copyright ownership.
+# *
+# * This program and the accompanying materials are made available under the
+# * terms of the Apache License 2.0 which is available at
+# * https://www.apache.org/licenses/LICENSE-2.0
+# *
+# * SPDX-License-Identifier: Apache-2.0
+# ********************************************************************************/
+#
+# short-description: Create Qemu disk image with EFI
+# long-description: Creates a partitioned Qemu disk image for use with EFI and the RAUC
+# update tool. The partitioning scheme provides:
+# * an EFI partition with space for the bootloader and its script and environment
+# * TODO: a rauc partition?!?!?
+# * a rescue partition
+# * two root file system partitions for atomic updates
+# * a common data partition
+
+
+bootloader --ptable gpt
+
+
+part --fixed-size 50M --source bootimg-partition --ondisk vda --fstype=vfat --label boot --active --use-uuid
+
+
+# TODO: should be removed!?
+part --fixed-size 50M --ondisk vda --no-table
+part --fixed-size 10M --source rawcopy --sourceparams="file=grubenv.vfat" --fstype=vfat --ondisk vda --label grubenv
+
+
+part --source rootfs --rootfs-dir=sdv-image-rescue --ondisk vda --fstype=ext4 --label rescue
+part --extra-space 50M --source rootfs --rootfs-dir=sdv-image-full --ondisk vda --fstype=ext4 --label root_a
+part --extra-space 50M --source rootfs --rootfs-dir=sdv-image-minimal --ondisk vda --fstype=ext4 --label root_b
+part --fixed-size 3072M --source rootfs --rootfs-dir=sdv-image-data --ondisk vda --fstype=ext4 --label data
