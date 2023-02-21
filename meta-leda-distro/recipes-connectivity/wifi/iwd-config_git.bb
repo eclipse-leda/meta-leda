@@ -14,6 +14,9 @@
 DESCRIPTION = "DHCP Client configuration for WiFi with iwd"
 LICENSE = "Apache-2.0"
 
+PROVIDES:${PN} += "iwd-config"
+RPROVIDES:${PN} += "iwd-config"
+
 do_install() {
     install -d ${D}/etc/iwd
     install -m 0644 ${THISDIR}/files/main.conf ${D}/etc/iwd
