@@ -23,11 +23,9 @@ IMAGE_FEATURES:append = " empty-root-password"
 RDEPENDS:${PN} = "sdv-image-full sdv-image-minimal sdv-image-rescue sdv-image-data sdv-rauc-bundle"
 DEPENDS = "sdv-image-full sdv-image-minimal sdv-image-rescue sdv-image-data sdv-rauc-bundle"
 
-inherit core-image
+WKS_FILE_DEPENDS_BOOTLOADERS:remove = "grub-efi"
 
-# Ensure efi-boot.vfat is built
-# Must only be run for qemux86_86
-# do_image_wic[depends] += "boot-image:do_deploy"
+inherit core-image
 
 # Ensure WICVARS are being built for each of the images before the WIC Image Type is trying to find them
 do_image_wic[depends] += "sdv-image-rescue:do_rootfs_wicenv"
@@ -53,9 +51,6 @@ QB_FSINFO:qemuarm = "wic:no-kernel-in-fs"
 QB_ROOTFS_OPT:qemuarm64 = "-drive id=disk0,file=@ROOTFS@,if=none,format=qcow2 -device virtio-blk-device,drive=disk0"
 QB_FSINFO:qemuarm64 = "wic:no-kernel-in-fs"
 
-# Must be in sync with:
-#  GRUB Config: meta-leda/recipes-bsp/grub/files/grub.cfg
-#  WIC Kickstarter File: build-sdv-arm-qemu/wic/qemuarm-grub.wks
 QB_KERNEL_ROOT = "/dev/vda4"
 QB_DRIVE_TYPE = "/dev/vd"
 
@@ -66,5 +61,4 @@ QB_DRIVE_TYPE = "/dev/vd"
 # OVERLAYFS_QA_SKIP[varlib] = "mount-configured"
 
 INCOMPATIBLE_LICENSE = "GPL-3.0* LGPL-3.0* AGPL-3.0*"
-INCOMPATIBLE_LICENSE_EXCEPTIONS = "grub-common:GPL-3.0-only grub-editenv:GPL-3.0-only grub-efi:GPL-3.0-only"
 PACKAGE_EXCLUDE = "dosfstools"

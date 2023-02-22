@@ -15,22 +15,18 @@
 # long-description: Creates a partitioned Qemu disk image for use with EFI and the RAUC
 # update tool. The partitioning scheme provides:
 # * an EFI partition with space for the bootloader and its script and environment
-# * TODO: a rauc partition?!?!?
 # * a rescue partition
 # * two root file system partitions for atomic updates
 # * a common data partition
 
-
 bootloader --ptable gpt
 
+part --fixed-size 50M --source bootimg-partition --ondisk vda --fstype=vfat --label BOOT --active --use-uuid
 
-part --fixed-size 50M --source bootimg-partition --ondisk vda --fstype=vfat --label boot --active --use-uuid
-
-
-# TODO: should be removed!?
+# Second Bootloader Partition (empty, for future updates)
 part --fixed-size 50M --ondisk vda --no-table
-part --fixed-size 10M --source rawcopy --sourceparams="file=grubenv.vfat" --fstype=vfat --ondisk vda --label grubenv
-
+# Empty partition
+part --fixed-size 10M --ondisk vda
 
 part --source rootfs --rootfs-dir=sdv-image-rescue --ondisk vda --fstype=ext4 --label rescue
 part --extra-space 50M --source rootfs --rootfs-dir=sdv-image-full --ondisk vda --fstype=ext4 --label root_a

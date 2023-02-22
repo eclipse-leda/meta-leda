@@ -47,4 +47,3 @@ QB_KERNEL_ROOT = "/dev/vda"
 QB_DRIVE_TYPE = "/dev/vd"
 
 INCOMPATIBLE_LICENSE = "GPL-3.0* LGPL-3.0* AGPL-3.0*"
-INCOMPATIBLE_LICENSE_EXCEPTIONS = "grub-common:GPL-3.0-only grub-editenv:GPL-3.0-only grub-efi:GPL-3.0-only"

@@ -35,12 +35,9 @@ inherit core-image
 IMAGE_ROOTFS_SIZE ?= "8192"
 IMAGE_ROOTFS_EXTRA_SPACE:append = "${@bb.utils.contains("DISTRO_FEATURES", "systemd", " + 4096", "", d)}"
 
-# Fall back to ext4 for now, as wic for qemuarm does not yet contain u-boot
-#QB_ROOTFS_OPT = "-drive id=disk0,file=@ROOTFS@,if=none,format=raw -device virtio-blk-device,drive=disk0"
 QB_FSINFO = "wic:no-kernel-in-fs"
 
 QB_KERNEL_ROOT = "/dev/vda"
 QB_DRIVE_TYPE = "/dev/vd"
 
 INCOMPATIBLE_LICENSE = "GPL-3.0* LGPL-3.0* AGPL-3.0*"
-INCOMPATIBLE_LICENSE_EXCEPTIONS = "grub-common:GPL-3.0-only grub-editenv:GPL-3.0-only grub-efi:GPL-3.0-only"
