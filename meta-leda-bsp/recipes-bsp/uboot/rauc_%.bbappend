@@ -14,4 +14,4 @@
 
 RDEPENDS:${PN}:qemuarm64 += "u-boot-fw-utils u-boot-env libubootenv"
 RDEPENDS:${PN}:qemuarm += "u-boot-fw-utils u-boot-env libubootenv"
-
+RDEPENDS:${PN}:qemux86-64 += "u-boot-fw-utils u-boot-env libubootenv"

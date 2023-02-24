@@ -18,3 +18,4 @@ LICENSE = "Apache-2.0"
 inherit rauc-integration
 include uboot-targets/qemuarm64.inc
 include uboot-targets/qemuarm.inc
+include uboot-targets/qemux86-64.inc
