@@ -34,6 +34,7 @@ local_conf_header:
   meta-rauc: |
     RAUC_KEY_FILE = "${COREBASE}/../examples/rauc/development-1.key.pem"
     RAUC_CERT_FILE = "${COREBASE}/../examples/rauc/development-1.cert.pem"
+    RAUC_KEYRING_FILE="${TOPDIR}/../examples/rauc/ca.cert.pem"
 repos:
   # This entry includes the repository where the config file is located
   # to the bblayers.conf:
