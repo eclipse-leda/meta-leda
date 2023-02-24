@@ -11,37 +11,24 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 #
-# short-description: Create Qemu disk image
-# long-description: Creates a partitioned Qemu disk image for use with the RAUC
-# update tool. The partitionging scheme provides:
-# * a grub environment partition
+# short-description: Create Qemu disk image with EFI
+# long-description: Creates a partitioned Qemu disk image for use with EFI and the RAUC
+# update tool. The partitioning scheme provides:
+# * an EFI partition with space for the bootloader and its script and environment
 # * a rescue partition
-# * a bootloader partition with extra space for a shadow copy for atomic bootloader updates
 # * two root file system partitions for atomic updates
 # * a common data partition
 
-# Set the partition tabnle to GPT
 bootloader --ptable gpt
 
-# First Bootloader Partition
-part --fixed-size 50M --source rawcopy --sourceparams="file=efi-boot.vfat" --fstype=vfat --ondisk vda --label boot --active
+part --fixed-size 50M --source bootimg-partition --ondisk vda --fstype=vfat --label BOOT --active --use-uuid
 
 # Second Bootloader Partition (empty, for future updates)
 part --fixed-size 50M --ondisk vda --no-table
+# Empty partition
+part --fixed-size 10M --ondisk vda
 
-# GRUB environment to store info about retries, mounted for showcase
-part --fixed-size 10M --source rawcopy --sourceparams="file=grubenv.vfat" --fstype=vfat --ondisk vda --label grubenv
-
-# A rescue partition as fallback ("Factory Reset"), mounted for showcase
 part --source rootfs --rootfs-dir=sdv-image-rescue --ondisk vda --fstype=ext4 --label rescue
-
-# First Root Partition (active, pre-installed), mounted readonly to show that root fs can be readonly
-# and all container-apps in cluster are contained on /data
 part --extra-space 50M --source rootfs --rootfs-dir=sdv-image-full --ondisk vda --fstype=ext4 --label root_a
-
-# Second Root Partition (empty, not mounted) to show the self-update mechanism
 part --extra-space 50M --source rootfs --rootfs-dir=sdv-image-minimal --ondisk vda --fstype=ext4 --label root_b
-
-# The data partition to store Kanto Container Management state (e.g. containerized apps)
-# Last partition, so that it can be grown (eg on Raspi to full SD-Card capacitiy, on qemu by extending the qcow2 disk image file)
 part --fixed-size 3072M --source rootfs --rootfs-dir=sdv-image-data --ondisk vda --fstype=ext4 --label data

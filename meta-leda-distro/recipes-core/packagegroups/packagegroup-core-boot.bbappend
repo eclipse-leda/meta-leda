@@ -11,8 +11,5 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-# Machine specific, see meta-leda/meta-leda-bsp/conf/machine/qemux86-64-extra.conf
-# Enable GRUB Bootloader, so that we can chose which partition to boot.
-# MACHINE_FEATURES:append = " pcbios efi"
-# EXTRA_IMAGEDEPENDS += "ovmf"
-# PREFERRED_RPROVIDER_virtual-grub-bootconf = "rauc-qemu-grubconf"
+# Disable the default efi bootloader because we are using u-boot:
+EFI_PROVIDER = ""

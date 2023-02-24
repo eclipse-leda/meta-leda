@@ -45,3 +45,5 @@ prepare_filesystem() {
     rm -rf ${IMAGE_ROOTFS}/data
 
 }
+
+INCOMPATIBLE_LICENSE = "GPL-3.0* LGPL-3.0* AGPL-3.0*"

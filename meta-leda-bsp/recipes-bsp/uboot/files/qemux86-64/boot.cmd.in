@@ -1,0 +1,40 @@
+if test -e virtio 0:1 uboot.env; then env load; fi;
+
+setenv bootpart
+setenv raucslot
+setenv default_bootargs "console=ttyS0 init=/sbin/init"
+
+test -n "${BOOT_ORDER}" || setenv BOOT_ORDER "SDV_A SDV_B"
+test -n "${BOOT_SDV_A_LEFT}" || setenv BOOT_SDV_A_LEFT 3
+test -n "${BOOT_SDV_B_LEFT}" || setenv BOOT_SDV_B_LEFT 3
+
+setenv sdv_set_boot_sdv_a 'part number virtio 0 root_a bootpart && setenv raucslot "SDV_A" && run sdv_set_bootargs'
+setenv sdv_set_boot_sdv_b 'part number virtio 0 root_b bootpart && setenv raucslot "SDV_B" && run sdv_set_bootargs'
+setenv sdv_set_bootargs 'part uuid virtio 0:${bootpart} bootpart_uuid; setenv bootargs "${default_bootargs} root=PARTUUID=${bootpart_uuid} rauc.slot=${raucslot}"; saveenv'
+setenv sdv_reset_rauc 'echo "No valid RAUC slot found. Resetting tries to 3"; setenv BOOT_SDV_A_LEFT 3; setenv BOOT_SDV_B_LEFT 3; saveenv; reset'
+setenv sdv_boot 'load virtio 0:${bootpart} ${kernel_addr_r} /boot/@@KERNEL_IMAGETYPE@@; @@KERNEL_BOOTCMD@@ ${kernel_addr_r}'
+setenv sdv_autoboot 'if test -n "${bootpart}"; then run sdv_boot; else run sdv_reset_rauc; fi'
+
+for BOOT_SLOT in "${BOOT_ORDER}"; do
+  if test "x${bootpart}" != "x"; then
+    # skip remaining slots
+  elif test "x${BOOT_SLOT}" = "xSDV_A"; then
+    if test ${BOOT_SDV_A_LEFT} -gt 0; then
+      setexpr BOOT_SDV_A_LEFT ${BOOT_SDV_A_LEFT} - 1
+      echo "Found valid RAUC slot SDV_A"
+      run sdv_set_boot_sdv_a
+    fi
+  elif test "x${BOOT_SLOT}" = "xSDV_B"; then
+    if test ${BOOT_SDV_B_LEFT} -gt 0; then
+      setexpr BOOT_SDV_B_LEFT ${BOOT_SDV_B_LEFT} - 1
+      echo "Found valid RAUC slot SDV_B"
+      run sdv_set_boot_sdv_b
+    fi
+  fi
+done
+
+setenv bootmenu_0 Autoboot="run sdv_autoboot"
+setenv bootmenu_1 Boot SDV Image Full="run sdv_set_boot_sdv_a; run sdv_boot"
+setenv bootmenu_2 Boot SDV Image Minimal="run sdv_set_boot_sdv_b; run sdv_boot"
+setenv bootmenu_3 Reset=reset
+bootmenu 3

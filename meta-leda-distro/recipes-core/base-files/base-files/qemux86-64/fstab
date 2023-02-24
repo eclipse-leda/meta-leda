@@ -6,7 +6,6 @@ devpts               /dev/pts             devpts     mode=0620,ptmxmode=0666,gid
 tmpfs                /run                 tmpfs      mode=0755,nodev,nosuid,strictatime 0  0
 tmpfs                /var/volatile        tmpfs      defaults              0  0
 
-# Add mount for boot, grubenv and data partition
-LABEL=boot           /boot                auto       defaults,nofail,noatime  0  0
-LABEL=grubenv        /grubenv             auto       defaults,nofail,noatime,x-systemd.before=rauc-mark-good.service  0  0
-LABEL=data           /data                auto       defaults,nofail,noatime  0  2
+# Add mount for boot and data partition
+LABEL=BOOT           /boot                vfat       defaults,nofail,noatime  0  0
+LABEL=data           /data                auto       defaults,nofail,noatime,x-systemd.before=rauc-mark-good.service  0  2

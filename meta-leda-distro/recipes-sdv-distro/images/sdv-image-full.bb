@@ -46,3 +46,5 @@ QB_FSINFO = "wic:no-kernel-in-fs"
 
 QB_KERNEL_ROOT = "/dev/vda"
 QB_DRIVE_TYPE = "/dev/vd"
+
+INCOMPATIBLE_LICENSE = "GPL-3.0* LGPL-3.0* AGPL-3.0*"

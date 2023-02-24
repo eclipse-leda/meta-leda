@@ -11,20 +11,6 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-SUMMARY = "SDV core packages"
-DESCRIPTION = "Packages required to set up a basic working SDV system"
 
-inherit packagegroup
-
-RDEPENDS:${PN} = "\
-    htop \
-    jq \
-    mosquitto-clients \
-    leda-utils \
-    skopeo \
-    sudo \
-    databroker-cli \
-    "
-
-# TODO: For future example applictations
-# gps-utils
+# disable readline support to avoid GPLv3 licensed dependencies:
+PACKAGECONFIG:remove = "readline"
