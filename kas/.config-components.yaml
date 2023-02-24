@@ -59,4 +59,3 @@ repos:
     path: ./
     layers:
       meta-leda-components:
-      meta-leda-distro:
