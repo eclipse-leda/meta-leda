@@ -28,7 +28,7 @@ target:
   - packagegroup-sdv-tools
 local_conf_header:
   needed-features: |
-    DISTRO_FEATURES += " rauc virtualization"
+    DISTRO_FEATURES += " sdv rauc virtualization"
     INHERIT += " rm_work"
 repos:
   poky:
@@ -59,3 +59,4 @@ repos:
     path: ./
     layers:
       meta-leda-components:
+      meta-leda-distro:

@@ -1,5 +1,5 @@
 # /********************************************************************************
-# * Copyright (c) 2022 Contributors to the Eclipse Foundation
+# * Copyright (c) 2023 Contributors to the Eclipse Foundation
 # *
 # * See the NOTICE file(s) distributed with this work for additional
 # * information regarding copyright ownership.
@@ -11,5 +11,17 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-# Disable the default efi bootloader because we are using u-boot:
-EFI_PROVIDER = ""
+DESCRIPTION = "DHCP Client configuration for WiFi with iwd"
+LICENSE = "Apache-2.0"
+
+PROVIDES:${PN} += "iwd-config"
+RPROVIDES:${PN} += "iwd-config"
+
+do_install() {
+    install -d ${D}/etc/iwd
+    install -m 0644 ${THISDIR}/files/main.conf ${D}/etc/iwd
+}
+
+PACKAGES = "${PN}"
+FILES:${PN} += "/etc/iwd/main.conf"
+

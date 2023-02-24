@@ -24,9 +24,6 @@ RDEPENDS:${PN} = "\
     skopeo \
     sudo \
     databroker-cli \
-    wpa-supplicant \
-    iw \
-    iwd \
     "
 
 # TODO: For future example applictations
