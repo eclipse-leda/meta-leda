@@ -25,18 +25,3 @@ IMAGE_INSTALL += " \
     "
 
 OCI_IMAGE_TAG = "cyclonedds-example:${PV}"
-
-IMAGE_CMD:append:oci() {
-    cd ${IMGDEPLOYDIR}
-
-    if [ -n "${OCI_IMAGE_TAR_OUTPUT}" ]; then
-
-        cd $image_name
-        tar -cf "../$image_name.tar" *
-        cd -
-
-	    ln -sf "$image_name.tar" "${IMAGE_BASENAME}-${MACHINE}-oci.tar"
-    fi
-
-    ln -sf $image_name ${IMAGE_BASENAME}-${MACHINE}-oci
-}

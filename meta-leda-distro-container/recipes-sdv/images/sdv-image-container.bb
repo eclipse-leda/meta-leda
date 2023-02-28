@@ -30,10 +30,10 @@ IMAGE_INSTALL = " \
 
 # If the following is configured in local.conf (or the distro):
 #      PACKAGE_EXTRA_ARCHS:append = " container-dummy-provides"
-# 
+#
 # it has been explicitly # indicated that we don't want or need a shell, so we'll
 # add the dummy provides.
-# 
+#
 # This is required, since there are postinstall scripts in base-files and base-passwd
 # that reference /bin/sh and we'll get a rootfs error if there's no shell or no dummy
 # provider.
@@ -49,3 +49,18 @@ rootfs_fixup_var_volatile () {
     install -m 755 -d ${IMAGE_ROOTFS}/${localstatedir}/volatile/log
 }
 
+# create stable symlinks to the latest container image
+IMAGE_CMD:append:oci() {
+    cd ${IMGDEPLOYDIR}
+
+    if [ -n "${OCI_IMAGE_TAR_OUTPUT}" ]; then
+
+        cd $image_name
+        tar -cf "../$image_name.tar" *
+        cd -
+
+	    ln -sf "$image_name.tar" "${IMAGE_BASENAME}-${MACHINE}-oci.tar"
+    fi
+
+    ln -sf $image_name ${IMAGE_BASENAME}-${MACHINE}-oci
+}
