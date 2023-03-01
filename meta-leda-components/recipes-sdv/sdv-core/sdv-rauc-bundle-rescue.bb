@@ -19,4 +19,3 @@ RAUC_SLOT_rescue[fstype] = "ext4"
 
 # Using block hash index improves performance of install
 RAUC_SLOT_rescue[adaptive] = "block-hash-index"
-
