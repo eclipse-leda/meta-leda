@@ -14,26 +14,16 @@
     "hooks": [],
     "host_config": {
         "devices": [],
-        "network_mode": "bridge",
-        "privileged": false,
+        "network_mode": "host",
+        "privileged": true,
         "restart_policy": {
             "maximum_retry_count": 0,
             "retry_timeout": 0,
             "type": "unless-stopped"
         },
         "runtime": "io.containerd.runc.v2",
-        "extra_hosts": [
-            "databroker-host:host_ip"
-        ],
-        "port_mappings": [
-            {
-              "protocol": "tcp",
-              "container_port": 50051,
-              "host_ip": "localhost",
-              "host_port": 30051,
-              "host_port_end": 30051
-            }
-        ],
+        "extra_hosts": [],
+        "port_mappings": [],
         "log_config": {
             "driver_config": {
                 "type": "json-file",
@@ -58,10 +48,11 @@
     },
     "config": {
         "env": [
-           "VEHICLEDATABROKER_DAPR_APP_ID=databroker",
-           "BROKER_ADDR=databroker-host:30555",
-           "RUST_LOG=info",
-           "vehicle_data_broker=info"
+            "CAN=can0",
+            "VEHICLEDATABROKER_DAPR_APP_ID=databroker",
+            "BROKER_ADDR=127.0.0.1:30555",
+            "RUST_LOG=info",
+            "vehicle_data_broker=info"
         ],
         "cmd": []
     },
