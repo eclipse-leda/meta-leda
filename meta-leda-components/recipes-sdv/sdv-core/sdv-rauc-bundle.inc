@@ -29,10 +29,10 @@ def get_imageversion(d):
     layerRev = d.getVar("DISTRO_VERSION")
     path = d.getVar("TOPDIR") or d.getVar("BUILD_DIR")
     try:
-        (output, error) = bb.process.run("git describe --always --tags", path)
+        (output, error) = bb.process.run("git describe --always --tags", cwd=path)
         layerRev = output.rstrip()
     except Exception as exc:
-        bb.warn('Exception executing git, falling back to DISTRO_VERSION')
+        bb.warn('Exception executing git, falling back to DISTRO_VERSION ${DISTRO_VERSION}', exc)
     d.setVar("VERSION_ID", layerRev)
     return layerRev
 
