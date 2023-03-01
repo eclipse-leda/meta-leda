@@ -16,39 +16,21 @@ inherit bundle
 # Must match to RAUCs system.conf files
 RAUC_BUNDLE_COMPATIBLE = "Eclipse Leda (${MACHINE})"
 
+# Use the newer Verity format for streaming update bundles
 RAUC_BUNDLE_FORMAT = "verity"
 
-# To build multiple/different slots, add them here and then add RAUC_SLOT_slotname to map to BitBake images
-# RAUC_BUNDLE_SLOTS = "rootfs_full rootfs_minimal"
-# RAUC_SLOT_rootfs_full = "sdv-image-full"
-# RAUC_SLOT_rootfs_minimal = "sdv-image-minimal"
-
-# For now, we only have one "rootfs" slot and it will always be a "sdv-image-minimal" to save download size.
-RAUC_BUNDLE_SLOTS = "rootfs"
-
-# The name of the image to use, this could later be "sdv-core-image-minimal"
-RAUC_SLOT_rootfs = "sdv-image-minimal"
-
-# Override the rootfs fstype for rauc, otherwise rauc will bundle "wic.qcow2" file,
-# which cannot be used from within the guest. RAUC would fail on installing a "wic.qcow2" file.
-RAUC_SLOT_rootfs[fstype] = "ext4"
-
-# These are set in site.conf
+# These are set in site.conf or in kas yaml files
 # RAUC_KEY_FILE = "${THISDIR}/path/to/development-1.key.pem"
 # RAUC_CERT_FILE = "${THISDIR}/path/to/development-1.cert.pem"
 
 # Set RAUC bundle version to git tag or git commit in case no tag is available
-def exec_git_run(cmd, path):
-    (output, error) = bb.process.run(cmd, cwd=path)
-    return output.rstrip()
-
 def get_imageversion(d):
     # Default fallback is just the version of the distro ("2022")
     layerRev = d.getVar("DISTRO_VERSION")
     path = d.getVar("TOPDIR") or d.getVar("BUILD_DIR")
     try:
-        ver = exec_git_run("git describe --always --tags", path)
-        layerRev = ver
+        (output, error) = bb.process.run("git describe --always --tags", path)
+        layerRev = output.rstrip()
     except Exception as exc:
         bb.warn('Exception executing git, falling back to DISTRO_VERSION')
     d.setVar("VERSION_ID", layerRev)

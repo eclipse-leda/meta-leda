@@ -20,8 +20,25 @@ IMAGE_FEATURES:append = " allow-empty-password"
 IMAGE_FEATURES:append = " empty-root-password"
 
 # The image dependencies are actually both types: build-time and run-time dependency
-RDEPENDS:${PN} = "sdv-image-full sdv-image-minimal sdv-image-rescue sdv-image-data sdv-rauc-bundle"
-DEPENDS = "sdv-image-full sdv-image-minimal sdv-image-rescue sdv-image-data sdv-rauc-bundle"
+RDEPENDS:${PN} = " \
+    sdv-image-full \
+    sdv-image-minimal \
+    sdv-image-rescue \
+    sdv-image-data \
+    sdv-rauc-bundle-full \
+    sdv-rauc-bundle-minimal \
+    sdv-rauc-bundle-rescue \
+    "
+
+DEPENDS = " \
+    sdv-image-full \
+    sdv-image-minimal \
+    sdv-image-rescue \
+    sdv-image-data \
+    sdv-rauc-bundle-full \
+    sdv-rauc-bundle-minimal \
+    sdv-rauc-bundle-rescue \
+    "
 
 WKS_FILE_DEPENDS_BOOTLOADERS:remove = "grub-efi"
 
