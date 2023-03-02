@@ -19,8 +19,9 @@ IMAGE_INSTALL:append = " kernel-image kernel-modules"
 
 # SDV Minimal
 IMAGE_INSTALL:append = " packagegroup-sdv-core"
-IMAGE_INSTALL:append = " ${@bb.utils.contains("DISTRO_FEATURES", "sdvwifi", "packagegroup-sdv-wifi", "", d)}"
-IMAGE_INSTALL:append:raspberrypi4-64 = " ${@bb.utils.contains("DISTRO_FEATURES", "sdvwifi", "packagegroup-sdv-rpi4wifi", "", d)}"
+IMAGE_INSTALL:append = " ${@bb.utils.contains("DISTRO_FEATURES", "wifi", "packagegroup-base-wifi", "", d)}"
+IMAGE_INSTALL:append = " ${@bb.utils.contains("DISTRO_FEATURES", "wifi", "packagegroup-sdv-wifi", "", d)}"
+IMAGE_INSTALL:append:raspberrypi4-64 = " ${@bb.utils.contains("DISTRO_FEATURES", "wifi", "packagegroup-sdv-rpi4wifi", "", d)}"
 
 IMAGE_LINGUAS = " "
 
