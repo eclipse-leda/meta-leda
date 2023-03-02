@@ -2,7 +2,7 @@
     "id": "seatservice-example",
     "name": "seatservice-example",
     "image": {
-        "name": "ghcr.io/eclipse/kuksa.val.services/seat_service:v0.1.0",
+        "name": "ghcr.io/boschglobal/kuksa.val.services/seat_service:v0.3.0",
         "decrypt_config": null
     },
     "host_name": "",
@@ -49,7 +49,7 @@
     "config": {
         "env": [
             "CAN=can0",
-            "VEHICLEDATABROKER_DAPR_APP_ID=databroker",
+            "SC_CAN=can0",
             "BROKER_ADDR=127.0.0.1:30555",
             "RUST_LOG=info",
             "vehicle_data_broker=info"
