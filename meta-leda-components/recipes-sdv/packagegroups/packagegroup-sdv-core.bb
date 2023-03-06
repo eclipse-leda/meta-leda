@@ -26,8 +26,4 @@ RDEPENDS:${PN} = "\
     kanto-auto-deployer \
     leda-utils \
     openvpn \
-    wpa-supplicant  \
-    iw \
-    iwd \
-    iwd-config \
     "
