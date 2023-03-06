@@ -22,11 +22,8 @@ LIC_FILES_CHKSUM = "file://${WORKDIR}/git/LICENSE;md5=3b83ef96387f14655fc854ddc3
 PREINSTALLED_CTR_IMAGES_DIR ??= "/var/constainers/images"
 AG_SERVICE_DIR = "${systemd_unitdir}/system"
 
-
-SRC_URI += "    file://airgap-ctr-installer \ 
-                file://airgap-container-installer.service.template
-           "
-
+SRC_URI:append = " file://airgap-ctr-installer"
+SRC_URI:append = " file://airgap-container-installer.service.template"
 
 install_service() {
     install -d ${D}${AG_SERVICE_DIR}
@@ -42,3 +39,8 @@ do_install() {
     install -m 0755 ${WORKDIR}/git/src/sh/airgap-ctr-installer ${D}${bindir}
     install_service
 }
+
+FILES_${PN} += "${bindir}/airgap-ctr-installer"
+FILES_${PN} += "${AG_SERVICE_DIR}/airgap-container-installer.service"
+
+PACKAGES = "${PN}"
