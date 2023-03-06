@@ -32,6 +32,7 @@ do_install() {
     install -m 0755 ${WORKDIR}/git/src/sh/sdv-health ${D}${bindir}
     install -m 0755 ${WORKDIR}/git/src/sh/sdv-motd ${D}${bindir}
     install -m 0755 ${WORKDIR}/git/src/sh/sdv-provision ${D}${bindir}
+    install -m 0755 ${WORKDIR}/git/src/sh/sdv-ctr-exec ${D}${bindir}
     install -m 0644 ${WORKDIR}/git/src/sh/sdv.conf ${D}/etc/sdv/
 
     install -d ${D}${sysconfdir}/profile.d
@@ -43,6 +44,7 @@ FILES_${PN} += "${bindir}/sdv-device-info"
 FILES_${PN} += "${bindir}/sdv-health"
 FILES_${PN} += "${bindir}/sdv-motd"
 FILES_${PN} += "${bindir}/sdv-provision"
+FILES_${PN} += "${bindir}/sdv-ctr-exec"
 FILES_${PN} += "/etc/sdv/sdv.conf"
 
 PACKAGES = "${PN}"
