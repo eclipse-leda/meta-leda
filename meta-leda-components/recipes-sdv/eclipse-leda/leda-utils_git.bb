@@ -15,7 +15,7 @@ SUMMARY = "SDV Core Utilities"
 DESCRIPTION = "Core shell scripts for Eclipse Leda"
 
 SRC_URI = "git://github.com/eclipse-leda/leda-utils;branch=main;protocol=https"
-SRCREV = "d6c104269ca40ac67c863102c29c0cd06cecd472"
+SRCREV = "3f79a1abb1584501872f8d259f8d358c5e5919fd"
 
 # According to https://wiki.yoctoproject.org/wiki/License_Infrastructure_Interest_Group
 LICENSE = "Apache-2.0"
@@ -32,6 +32,7 @@ do_install() {
     install -m 0755 ${WORKDIR}/git/src/sh/sdv-health ${D}${bindir}
     install -m 0755 ${WORKDIR}/git/src/sh/sdv-motd ${D}${bindir}
     install -m 0755 ${WORKDIR}/git/src/sh/sdv-provision ${D}${bindir}
+    install -m 0755 ${WORKDIR}/git/src/sh/sdv-ctr-exec ${D}${bindir}
     install -m 0644 ${WORKDIR}/git/src/sh/sdv.conf ${D}/etc/sdv/
 
     install -d ${D}${sysconfdir}/profile.d
@@ -43,6 +44,7 @@ FILES_${PN} += "${bindir}/sdv-device-info"
 FILES_${PN} += "${bindir}/sdv-health"
 FILES_${PN} += "${bindir}/sdv-motd"
 FILES_${PN} += "${bindir}/sdv-provision"
+FILES_${PN} += "${bindir}/sdv-ctr-exec"
 FILES_${PN} += "/etc/sdv/sdv.conf"
 
 PACKAGES = "${PN}"
