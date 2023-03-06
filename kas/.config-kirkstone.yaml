@@ -34,6 +34,7 @@ local_conf_header:
     # Set the values to the default value, to prevent user warnings during our build
     CLOUDCONNECTOR_CERTIFICATE_CERTFILE = "${S}/cloud-connector/example-device.crt"
     CLOUDCONNECTOR_CERTIFICATE_KEYFILE = "${S}/cloud-connector/example-device.key"
+    DISTRO_FEATURES += " wifi"
   sign_conf: |
     RAUC_KEY_FILE="${TOPDIR}/../examples/rauc/development-1.key.pem"
     RAUC_CERT_FILE="${TOPDIR}/../examples/rauc/development-1.cert.pem"
