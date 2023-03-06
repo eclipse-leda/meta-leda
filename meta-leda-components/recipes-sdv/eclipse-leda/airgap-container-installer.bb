@@ -20,16 +20,25 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 LIC_FILES_CHKSUM = "file://${WORKDIR}/git/LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57"
 
 PREINSTALLED_CTR_IMAGES_DIR ??= "/var/constainers/images"
+AG_SERVICE_DIR = "${systemd_unitdir}/system"
 
-SRC_URI += " "
+
+SRC_URI += "    airgap-ctr-installer \ 
+                airgap-container-installer.service.template
+           "
+
+
+install_service() {
+    install -d ${D}${AG_SERVICE_DIR}
+    install -m 0644 ${THISDIR}/airgap-container-installer.service.template ${D}${AG_SERVICE_DIR}/airgap-container-installer.service
+
+    sed -e 's,@AG_CFG_DD@,${bindir},g' \
+        -e 's,@AG_CFG_DD@,${PREINSTALLED_CTR_IMAGES_DIR},g' \
+    -i ${D}${AG_SERVICE_DIR}/airgap-container-installer.service
+}
 
 do_install() {
     install -d ${D}${bindir}
-    install -m 0755 ${WORKDIR}/git/src/sh/can-forward ${D}${bindir}
-    install -m 0755 ${WORKDIR}/git/src/sh/sdv-device-info ${D}${bindir}
-    install -m 0755 ${WORKDIR}/git/src/sh/sdv-health ${D}${bindir}
-    install -m 0755 ${WORKDIR}/git/src/sh/sdv-motd ${D}${bindir}
-    install -m 0755 ${WORKDIR}/git/src/sh/sdv-provision ${D}${bindir}
-    install -m 0644 ${WORKDIR}/git/src/sh/sdv.conf ${D}/etc/sdv/
-
+    install -m 0755 ${WORKDIR}/git/src/sh/airgap-ctr-installer ${D}${bindir}
+    install_service
 }
