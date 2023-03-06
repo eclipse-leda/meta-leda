@@ -21,6 +21,8 @@ SRCREV = "3f79a1abb1584501872f8d259f8d358c5e5919fd"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${WORKDIR}/git/LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57"
 
+RDEPENDS:${PN} += "mosquitto-clients"
+
 do_install() {
     install -d ${D}${bindir}
     install -d ${D}${sysconfdir}/sdv
