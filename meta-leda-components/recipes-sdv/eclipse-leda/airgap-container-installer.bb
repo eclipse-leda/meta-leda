@@ -14,21 +14,20 @@
 SUMMARY = "Airgapped Container Installer"
 DESCRIPTION = "A service that installs pre-downloaded container images in a specified directory"
 
-# According to https://wiki.yoctoproject.org/wiki/License_Infrastructure_Interest_Group
-LICENSE = "Apache-2.0"
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
-LIC_FILES_CHKSUM = "file://${WORKDIR}/git/LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57"
+SRC_URI:append = " file://airgap-ctr-installer"
+SRC_URI:append = " file://airgap-container-installer.service.template"
+
+LICENSE = "Apache-2.0"
+LIC_FILES_CHKSUM = "file://${THISDIR}/files/LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57"
 
 PREINSTALLED_CTR_IMAGES_DIR ??= "/var/constainers/images"
 AG_SERVICE_DIR = "${systemd_unitdir}/system"
 
-SRC_URI:append = " file://airgap-ctr-installer"
-SRC_URI:append = " file://airgap-container-installer.service.template"
-
 install_service() {
     install -d ${D}${AG_SERVICE_DIR}
-    install -m 0644 ${THISDIR}/airgap-container-installer.service.template ${D}${AG_SERVICE_DIR}/airgap-container-installer.service
-
+    install -m 0644 ${WORKDIR}/airgap-container-installer.service.template ${D}${AG_SERVICE_DIR}/airgap-container-installer.service
+    bberror ${AD_SERVICE_DIR}
     sed -e 's,@AG_CFG_DD@,${bindir},g' \
         -e 's,@AG_CFG_DD@,${PREINSTALLED_CTR_IMAGES_DIR},g' \
     -i ${D}${AG_SERVICE_DIR}/airgap-container-installer.service
@@ -36,11 +35,11 @@ install_service() {
 
 do_install() {
     install -d ${D}${bindir}
-    install -m 0755 ${WORKDIR}/git/src/sh/airgap-ctr-installer ${D}${bindir}
+    install -m 0755 ${WORKDIR}/airgap-ctr-installer ${D}${bindir}
     install_service
 }
 
-FILES_${PN} += "${bindir}/airgap-ctr-installer"
-FILES_${PN} += "${AG_SERVICE_DIR}/airgap-container-installer.service"
+FILES:${PN} += " ${bindir}/airgap-ctr-installer"
+FILES:${PN} += " ${AG_SERVICE_DIR}/airgap-container-installer.service"
 
 PACKAGES = "${PN}"
