@@ -23,8 +23,8 @@ PREINSTALLED_CTR_IMAGES_DIR ??= "/var/constainers/images"
 AG_SERVICE_DIR = "${systemd_unitdir}/system"
 
 
-SRC_URI += "    airgap-ctr-installer \ 
-                airgap-container-installer.service.template
+SRC_URI += "    file://airgap-ctr-installer \ 
+                file://airgap-container-installer.service.template
            "
 
 
