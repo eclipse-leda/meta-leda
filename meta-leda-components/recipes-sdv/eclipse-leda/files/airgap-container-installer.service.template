@@ -21,6 +21,7 @@ Before=container-management.service
 WantedBy=multi-user.target
 
 [Service]
+Type=oneshot
 Restart=on-failure
 RestartSec=5s
-ExecStart=@AG_BIN_DD@/airgap-ctr-installer @AG_IMG_DD@
+ExecStart=@AG_BIN_DD@/airgap-container-installer @AG_IMG_DD@
