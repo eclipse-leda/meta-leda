@@ -17,6 +17,12 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
+tar_dir=$1;
+
+if [ -n "${tar_dir+x}" ]; then 
+    echo "Using current working dir as an image directory";
+    tar_dir=$(pwd) 
+fi
 
 for tar_image in $1; do
     ctr --namespace kanto-cm image import ${tar_image}

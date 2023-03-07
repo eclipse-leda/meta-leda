@@ -28,8 +28,7 @@ install_service() {
     install -d ${D}${AG_SERVICE_DIR}
     install -m 0644 ${WORKDIR}/airgap-container-installer.service.template ${D}${AG_SERVICE_DIR}/airgap-container-installer.service
     bberror ${AD_SERVICE_DIR}
-    sed -e 's,@AG_CFG_DD@,${bindir},g' \
-        -e 's,@AG_CFG_DD@,${PREINSTALLED_CTR_IMAGES_DIR},g' \
+    sed -e 's,@AG_CFG_DD@,${PREINSTALLED_CTR_IMAGES_DIR},g'
     -i ${D}${AG_SERVICE_DIR}/airgap-container-installer.service
 }
 

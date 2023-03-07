@@ -23,4 +23,4 @@ WantedBy=multi-user.target
 [Service]
 Restart=on-failure
 RestartSec=5s
-ExecStart=/usr/bin/airgap-ctr-installer @AG_CFG_DD@
+ExecStart=@AG_BIN_DD@/airgap-ctr-installer @AG_IMG_DD@
