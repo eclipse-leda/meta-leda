@@ -1,5 +1,5 @@
 # /********************************************************************************
-# * Copyright (c) 2022 Contributors to the Eclipse Foundation
+# * Copyright (c) 2023 Contributors to the Eclipse Foundation
 # *
 # * See the NOTICE file(s) distributed with this work for additional
 # * information regarding copyright ownership.
@@ -11,20 +11,11 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-SUMMARY = "SDV core packages"
-DESCRIPTION = "Packages required to set up a basic working SDV system"
+SUMMARY = "SDV pre-downloaded containers"
+DESCRIPTION = "Pre-downloaded (airgapped) containers that would be installed in the image by default"
 
 inherit packagegroup
 
 RDEPENDS:${PN} = "\
-    ca-certificates \
-    openssh \
-    openssh-sftp-server \
-    rauc \
-    mosquitto \
-    container-management \
-    kanto-auto-deployer \
-    leda-utils \
-    openvpn \
-    airgap-container-installer \
-    "
+    sdv-container-helloworld \
+ "

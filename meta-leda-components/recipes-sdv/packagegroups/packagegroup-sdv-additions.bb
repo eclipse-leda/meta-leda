@@ -19,7 +19,6 @@ inherit packagegroup
 RDEPENDS:${PN} = "\
     kanto-auto-deployer \
     kantui \
-    airgap-container-installer \
 "
 
 # TODO: For future example applictations:
