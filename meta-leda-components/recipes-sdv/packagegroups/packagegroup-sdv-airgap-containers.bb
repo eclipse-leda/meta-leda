@@ -24,6 +24,4 @@ RDEPENDS:${PN} = "\
     sdv-container-vehicleupdatemanager  \
     sdv-container-hvacservice \
     sdv-container-feedercan \
-    sdv-container-otelagent \
-    sdv-container-otelexporter \
  "
