@@ -29,6 +29,11 @@ if [ ! -d "${tar_dir}" ]; then
     exit 1
 fi 
 
-for tar_image in "${tar_dir}"/*; do
+if [ -z "$(ls -A ${tar_dir}/*.tar*)" ]; then
+   echo "Nothing to install"
+   exit 0
+fi
+
+for tar_image in "${tar_dir}"/*.tar*; do
     ctr --namespace kanto-cm image import ${tar_image}
 done
