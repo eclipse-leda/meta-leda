@@ -11,7 +11,7 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-DESCRIPTION = "wpa_supplicant start up"
+DESCRIPTION = "Start up wpa_supplicant"
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 SRC_URI:append = " file://wpa.service"

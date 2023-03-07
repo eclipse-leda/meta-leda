@@ -11,7 +11,18 @@
 # *
 # * SPDX-License-Identifier: EPL-2.0
 # ********************************************************************************/
-#
+# Use: 
+#   wpa_passphrase <SSID> <Passphrase> >> /etc/wpa_supplicant.conf
+# in orded to create the file
+# Helpful commands:
+#   iw wlan0 info
+#   iw wlan0 scan
+#   iw wlan0 link
 
+if [ ! -e /etc/wpa_supplicant.conf ]; then
+  exit
+fi
+
+/sbin/ip link set wlan0 up
 /usr/sbin/wpa_supplicant -B -Dnl80211 -iwlan0 -c/etc/wpa_supplicant.conf
 /sbin/udhcpc -i wlan0
