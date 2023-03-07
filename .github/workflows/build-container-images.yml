@@ -57,15 +57,19 @@ jobs:
     - name: Build container images for qemux86-64
       run: kas build kas/.config-kirkstone.yaml --target packagegroup-sdv-container-images
 
-    # - name: Build container images for Raspberry Pi 4
-      # run: kas build kas/.config-kirkstone-rpi4.yaml --target packagegroup-sdv-container-images
+    - name: Build container images for Raspberry Pi 4
+      run: kas build kas/.config-kirkstone-rpi4.yaml --target packagegroup-sdv-container-images
 
-    - name: Upload build artifacts
+    - name: Upload QEMU x86-64 images
       uses: actions/upload-artifact@v3
       with:
-        name: Application Container Images
+        name: AppContainerImages_QEMUx86-64
         if-no-files-found: error
-        # path: |
-          # /build/tmp/deploy/images/qemux86-64/*qemux86-64-oci.tar
-          # /build/tmp/deploy/images/raspberrypi4-64/*raspberrypi4-64-oci.tar
         path: build/tmp/deploy/images/qemux86-64/*qemux86-64-oci.tar
+
+    - name: Upload Raspberry Pi 4 (64bit) images
+      uses: actions/upload-artifact@v3
+      with:
+        name: AppContainerImages_RaspberryPi4-64
+        if-no-files-found: error
+        path: build/tmp/deploy/images/raspberrypi4-64/*raspberrypi4-64-oci.tar
