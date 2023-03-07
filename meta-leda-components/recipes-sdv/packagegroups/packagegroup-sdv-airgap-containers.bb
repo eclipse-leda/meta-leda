@@ -17,5 +17,8 @@ DESCRIPTION = "Pre-downloaded (airgapped) containers that would be installed in 
 inherit packagegroup
 
 RDEPENDS:${PN} = "\
-    sdv-container-helloworld \
+    sdv-kuksa-val-databroker \
+    sdv-container-seatservice \
+    sdv-container-selfupdateagent \
+    sdv-container-cloudconnector \
  "

@@ -24,8 +24,8 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=d9fc0efef5228704e7f5b37f27192723"
 
 # Define image to be pulled
-SDV_IMAGE_REF="ghcr.io/eclipse-leda/leda-incubator-vehicleapi/seat_service"
-SDV_IMAGE_TAG="v0.18.0"
+SDV_IMAGE_REF="ghcr.io/boschglobal/kuksa.val.services/seat_service"
+SDV_IMAGE_TAG="v0.3.0"
 
 # Override container architecture. If not set, recipe tries autodetection for target machine architecture.
 #CONTAINER_ARCH="arm64"

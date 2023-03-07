@@ -11,8 +11,8 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-SUMMARY = "SDV Self Update Agent"
-DESCRIPTION = "The self update agent (SUA) is a component responsible for the OS Update process."
+SUMMARY = "Eclipse Kuksa.Val Databroker Air-Gap Installation"
+DESCRIPTION = "Pre-load Eclipse Kuksa core containers to the device filesystem"
 
 inherit sdv-container-cache
 
@@ -24,11 +24,6 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=d9fc0efef5228704e7f5b37f27192723"
 
 # Define image to be pulled
-SDV_IMAGE_REF="ghcr.io/eclipse-leda/sdv-self-update-agent/sua"
-SDV_IMAGE_TAG="v0.1.16"
+SDV_IMAGE_REF = "ghcr.io/eclipse/kuksa.val/databroker"
+SDV_IMAGE_TAG = "0.3.0"
 
-# Override container architecture. If not set, recipe tries autodetection for target machine architecture.
-#CONTAINER_ARCH="arm64"
-
-# Skip pre-caching of a container if target architecture does not exist
-CONTAINER_SKIP_MISSING_ARCH="1"
