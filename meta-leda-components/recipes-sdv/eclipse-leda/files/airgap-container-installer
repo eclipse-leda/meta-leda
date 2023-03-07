@@ -35,5 +35,5 @@ if [ -z "$(ls -A ${tar_dir}/*.tar* 2>/dev/null)" ]; then
 fi
 
 for tar_image in "${tar_dir}"/*.tar*; do
-    ctr --namespace kanto-cm image import ${tar_image}
+    ctr --namespace kanto-cm image import ${tar_image} --no-unpack
 done
