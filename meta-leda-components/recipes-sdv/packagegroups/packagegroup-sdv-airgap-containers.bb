@@ -21,4 +21,7 @@ RDEPENDS:${PN} = "\
     sdv-container-seatservice \
     sdv-container-selfupdateagent \
     sdv-container-cloudconnector \
+    sdv-container-vehicleupdatemanager  \
+    sdv-container-hvacservice \
+    sdv-container-feedercan \
  "

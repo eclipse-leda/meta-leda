@@ -11,8 +11,8 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-SUMMARY = "SDV CAN Feeder"
-DESCRIPTION = "Feed CAN bus simulation into the SDV Data Broker"
+SUMMARY = "SDV Example HVAC Service"
+DESCRIPTION = "Example HVAC service"
 
 inherit sdv-container-cache
 
@@ -24,8 +24,8 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57"
 
 # Define image to be pulled
-SDV_IMAGE_REF="ghcr.io/eclipse/kuksa.val.feeders/dbc2val"
-SDV_IMAGE_TAG="v0.1.1"
+SDV_IMAGE_REF="ghcr.io/eclipse/kuksa.val.services/hvac_service"
+SDV_IMAGE_TAG="v0.1.0"
 
 # Override container architecture. If not set, recipe tries autodetection for target machine architecture.
 #CONTAINER_ARCH="arm64"
