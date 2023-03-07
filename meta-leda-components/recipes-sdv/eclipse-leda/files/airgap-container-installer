@@ -18,6 +18,7 @@
 # ********************************************************************************/
 
 tar_dir=$1
+IMPORTED_CTRS_LOCK_NAME="imported-ctrs.lock"
 
 if [ -z "${tar_dir}" ]; then
     echo "Using current working directory as image directory"
@@ -34,8 +35,27 @@ if [ -z "$(ls -A ${tar_dir}/*.tar* 2>/dev/null)" ]; then
    exit 0
 fi
 
+# ctr image import is very slow even when importing the same image twice
+# we keep a list of already imported images and we skip them
+LOCK_PATH="${tar_dir}/${IMPORTED_CTRS_LOCK_NAME}"
+if [ -f "$LOCK_PATH" ]; then
+    echo "Lock at ${LOCK_PATH} does not exist. Creating an empty lock."
+    touch $LOCK_PATH
+    echo "Created ${LOCK_PATH}"
+fi
+
+
 for tar_image in "${tar_dir}"/*.tar*; do
     echo "Loading ${tar_image}..."
-    ctr --namespace kanto-cm image import ${tar_image} --no-unpack
-    echo "Loaded."
+    tar_base_name=$(basename ${tar_image})
+    if grep -Fxq "$tar_base_name" ${LOCK_PATH}; then
+        # Container image already imported, skipping...
+        echo "Already imported...Skipping"
+        continue;
+    else
+        echo "Importing new image"
+        ctr --namespace kanto-cm image import ${tar_image} --no-unpack || exit $?
+        echo "${tar_base_name}" >> ${LOCK_PATH}
+        echo "Imported"
+    fi    
 done
