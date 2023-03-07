@@ -11,23 +11,22 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-DESCRIPTION = "DHCP Client configuration for WiFi with iwd"
+DESCRIPTION = "wpa_supplicant start up"
 
-PROVIDES:${PN} += "iwd-config"
-RPROVIDES:${PN} += "iwd-config"
-
+PROVIDES:${PN} += "wpa"
+RPROVIDES:${PN} += "wpa"
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
-SRC_URI:append = " file://main.conf"
+SRC_URI:append = " file://wpa.service"
 
-do_install() {
-    install -d ${D}/etc/iwd
-    install -m 0644 ${WORKDIR}/main.conf ${D}/etc/iwd
+SERVICE_DIR = "${systemd_unitdir}/system"
+
+install_service() {
+    install -d ${D}${SERVICE_DIR}
+    install -m 0644 ${WORKDIR}/wpa.service ${D}${SERVICE_DIR}
 }
 
 SRC_URI += "file://LICENSE"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${SYSCONFDIR}/LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57"
-
 PACKAGES = "${PN}"
-FILES:${PN} += "/etc/iwd/main.conf"
-
+FILES:${PN} += "${SERVICE_DIR}/wpa.service"

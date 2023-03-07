@@ -10,6 +10,16 @@
 # *
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
+# 
+[Unit]
+Description=wpa_supplicant start service
+After=network-online.target
+Wants=network-online.target
 
-PACKAGECONFIG:remove = "readline"
-PACKAGECONFIG:append = " libedit"
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+Restart=on-failure
+RestartSec=5s
+ExecStart=/bin/sh -c '/usr/sbin/wpa_supplicant  -B -Dnl80211 -iwlan0 -c/etc/wpa_supplicant.conf; /sbin/udhcpc -i wlan0'
