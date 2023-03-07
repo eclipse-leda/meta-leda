@@ -20,6 +20,6 @@ Wants=network-online.target
 WantedBy=multi-user.target
 
 [Service]
-Restart=on-failure
-RestartSec=5s
-ExecStart=/bin/sh -c '/usr/sbin/wpa_supplicant  -B -Dnl80211 -iwlan0 -c/etc/wpa_supplicant.conf; /sbin/udhcpc -i wlan0'
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/sbin/wpa.sh

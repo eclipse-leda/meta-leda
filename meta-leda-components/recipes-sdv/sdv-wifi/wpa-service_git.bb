@@ -13,20 +13,33 @@
 
 DESCRIPTION = "wpa_supplicant start up"
 
-PROVIDES:${PN} += "wpa"
-RPROVIDES:${PN} += "wpa"
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 SRC_URI:append = " file://wpa.service"
+SRC_URI:append = " file://wpa.sh"
 
-SERVICE_DIR = "${systemd_unitdir}/system"
+inherit systemd features_check
 
-install_service() {
-    install -d ${D}${SERVICE_DIR}
-    install -m 0644 ${WORKDIR}/wpa.service ${D}${SERVICE_DIR}
+NATIVE_SYSTEMD_SUPPORT = "1"
+SYSTEMD_PACKAGES = "${PN}"
+SYSTEMD_SERVICE:${PN} = "wpa.service"
+SYSTEMD_AUTO_ENABLE:${PN} = "enable"
+
+FILES:${PN} += "${sbindir}/wpa.sh \
+                ${systemd_system_unitdir}/wpa.service"
+
+REQUIRED_DISTRO_FEATURES = "systemd"
+
+do_install:append() {
+    install -d ${D}/${sbindir}
+    install -m 0755 ${WORKDIR}/wpa.sh ${D}/${sbindir}
+
+    install -d ${D}${systemd_unitdir}/system/
+    install -m 0644 ${WORKDIR}/wpa.service ${D}${systemd_system_unitdir}
 }
 
 SRC_URI += "file://LICENSE"
 LICENSE = "Apache-2.0"
-LIC_FILES_CHKSUM = "file://${SYSCONFDIR}/LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57"
+LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57"
 PACKAGES = "${PN}"
-FILES:${PN} += "${SERVICE_DIR}/wpa.service"
+FILES:${PN} += "${sbindir}/wpa.sh"
+FILES:${PN} += "${systemd_system_unitdir}/wpa.service"
