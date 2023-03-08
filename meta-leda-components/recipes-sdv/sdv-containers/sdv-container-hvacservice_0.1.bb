@@ -1,5 +1,5 @@
 # /********************************************************************************
-# * Copyright (c) 2022 Contributors to the Eclipse Foundation
+# * Copyright (c) 2023 Contributors to the Eclipse Foundation
 # *
 # * See the NOTICE file(s) distributed with this work for additional
 # * information regarding copyright ownership.
@@ -11,8 +11,8 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-SUMMARY = "SDV Vehicle Update Manager container"
-DESCRIPTION = "Docker container of the SDV Vehicle Update Manager"
+SUMMARY = "SDV Example HVAC Service"
+DESCRIPTION = "Example HVAC service"
 
 inherit sdv-container-cache
 
@@ -21,12 +21,15 @@ SRC_URI += "file://README.txt \
 
 # According to https://wiki.yoctoproject.org/wiki/License_Infrastructure_Interest_Group
 LICENSE = "Apache-2.0"
-LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=d9fc0efef5228704e7f5b37f27192723"
+LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57"
 
 # Define image to be pulled
-SDV_IMAGE_REF="ghcr.io/eclipse-leda/leda-incubator-containersm/vehicleupdatemanager"
-SDV_IMAGE_TAG="v0.7"
+SDV_IMAGE_REF="ghcr.io/eclipse/kuksa.val.services/hvac_service"
+SDV_IMAGE_TAG="v0.1.0"
 
 # Override container architecture. If not set, recipe tries autodetection for target machine architecture.
 #CONTAINER_ARCH="arm64"
+
+# Skip pre-caching of a container if target architecture does not exist
+CONTAINER_SKIP_MISSING_ARCH="1"
 

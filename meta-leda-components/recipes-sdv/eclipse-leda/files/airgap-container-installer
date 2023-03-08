@@ -1,0 +1,67 @@
+#!/bin/sh
+# shellcheck disable=SC3043
+# shellcheck disable=SC1091
+# shellcheck disable=SC2086
+# shellcheck disable=SC2034
+# shellcheck disable=SC2059
+# /********************************************************************************
+# * Copyright (c) 2023 Contributors to the Eclipse Foundation
+# *
+# * See the NOTICE file(s) distributed with this work for additional
+# * information regarding copyright ownership.
+# *
+# * This program and the accompanying materials are made available under the
+# * terms of the Apache License 2.0 which is available at
+# * https://www.apache.org/licenses/LICENSE-2.0
+# *
+# * SPDX-License-Identifier: Apache-2.0
+# ********************************************************************************/
+
+tar_dir=$1
+IMPORTED_CTRS_LOCK_NAME="imported-ctrs.lock"
+
+if [ -z "${tar_dir}" ]; then
+    echo "Using current working directory as image directory"
+    tar_dir=$(pwd)
+fi
+
+if [ ! -d "${tar_dir}" ]; then
+    echo "${tar_dir} either does not exist or is not a directory"
+    exit 1
+fi
+
+if [ -z "$(ls -A ${tar_dir}/*.tar* 2>/dev/null)" ]; then
+    echo "Nothing to install"
+    exit 0
+fi
+
+# ctr image import is very slow even when importing the same image twice
+# we keep a list of already imported images and we skip them
+LOCK_PATH="${tar_dir}/${IMPORTED_CTRS_LOCK_NAME}"
+if [ ! -f ${LOCK_PATH} ]; then
+    echo "Lock at ${LOCK_PATH} does not exist. Creating an empty lock."
+    echo "# THIS FILE KEEPS A LOG OF ALL IMAGES ALREADY IMPORTED BY AIRGAP-CONTAINER-INSTALLER.SERVICE" >>${LOCK_PATH}
+    echo "# DELETE ANY LINES FOR IMAGES THAT YOU WISH TO BE RE-IMPORTED ON SERVICE RESTART" >>${LOCK_PATH}
+    echo "Created ${LOCK_PATH}"
+fi
+
+for tar_image in "${tar_dir}"/*.tar*; do
+    echo "Loading ${tar_image}..."
+    tar_base_name=$(basename ${tar_image})
+    if grep -Fxq "$tar_base_name" ${LOCK_PATH}; then
+        # Container image already imported, skipping...
+        echo "Already imported...Skipping"
+        continue
+    else
+        echo "Importing new image"
+        import_msg=$(ctr --namespace kanto-cm image import ${tar_image} --no-unpack)
+        import_rc=$?
+        if [ $import_rc -eq 0 ]; then
+            echo "${tar_base_name}" >>${LOCK_PATH}
+            echo "Imported"
+        else
+            echo "Importing ${tar_image} failed with message: ${import_msg}, rc: ${import_rc}"
+            continue
+        fi
+    fi
+done

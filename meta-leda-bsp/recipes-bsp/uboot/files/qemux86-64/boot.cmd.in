@@ -2,7 +2,7 @@ if test -e virtio 0:1 uboot.env; then env load; fi;
 
 setenv bootpart
 setenv raucslot
-setenv default_bootargs "console=ttyS0 init=/sbin/init"
+setenv default_bootargs "net.ifnames=0 console=ttyS0 init=/sbin/init"
 
 test -n "${BOOT_ORDER}" || setenv BOOT_ORDER "SDV_A SDV_B"
 test -n "${BOOT_SDV_A_LEFT}" || setenv BOOT_SDV_A_LEFT 3

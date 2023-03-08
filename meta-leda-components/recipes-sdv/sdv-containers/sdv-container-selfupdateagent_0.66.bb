@@ -11,8 +11,8 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-SUMMARY = "SDV CAN Feeder"
-DESCRIPTION = "Feed CAN bus simulation into the SDV Data Broker"
+SUMMARY = "SDV Self Update Agent"
+DESCRIPTION = "The self update agent (SUA) is a component responsible for the OS Update process."
 
 inherit sdv-container-cache
 
@@ -24,12 +24,11 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57"
 
 # Define image to be pulled
-SDV_IMAGE_REF="ghcr.io/eclipse/kuksa.val.feeders/dbc2val"
-SDV_IMAGE_TAG="v0.1.1"
+SDV_IMAGE_REF="ghcr.io/eclipse-leda/leda-contrib-self-update-agent/self-update-agent"
+SDV_IMAGE_TAG="build-66"
 
 # Override container architecture. If not set, recipe tries autodetection for target machine architecture.
 #CONTAINER_ARCH="arm64"
 
 # Skip pre-caching of a container if target architecture does not exist
 CONTAINER_SKIP_MISSING_ARCH="1"
-

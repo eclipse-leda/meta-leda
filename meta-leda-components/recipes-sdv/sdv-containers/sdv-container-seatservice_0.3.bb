@@ -11,8 +11,8 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-SUMMARY = "Eclipse Kuksa.Val Databroker Air-Gap Installation"
-DESCRIPTION = "Pre-load Eclipse Kuksa core containers to the device filesystem"
+SUMMARY = "SDV Example Seat Service"
+DESCRIPTION = "Example seat service"
 
 inherit sdv-container-cache
 
@@ -21,9 +21,15 @@ SRC_URI += "file://README.txt \
 
 # According to https://wiki.yoctoproject.org/wiki/License_Infrastructure_Interest_Group
 LICENSE = "Apache-2.0"
-LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=d9fc0efef5228704e7f5b37f27192723"
+LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57"
 
 # Define image to be pulled
-SDV_IMAGE_REF = "ghcr.io/eclipse/kuksa.val/databroker"
-SDV_IMAGE_TAG = "0.2.5"
+SDV_IMAGE_REF="ghcr.io/boschglobal/kuksa.val.services/seat_service"
+SDV_IMAGE_TAG="v0.3.0"
+
+# Override container architecture. If not set, recipe tries autodetection for target machine architecture.
+#CONTAINER_ARCH="arm64"
+
+# Skip pre-caching of a container if target architecture does not exist
+CONTAINER_SKIP_MISSING_ARCH="1"
 

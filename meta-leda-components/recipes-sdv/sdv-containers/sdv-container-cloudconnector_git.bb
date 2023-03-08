@@ -11,24 +11,25 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-SUMMARY = "SDV Self Update Agent"
-DESCRIPTION = "The self update agent (SUA) is a component responsible for the OS Update process."
+SUMMARY = "SDV Cloud Connector container"
+DESCRIPTION = "Docker container of the Eclipse Kanto Cloud Connector"
 
 inherit sdv-container-cache
 
 SRC_URI += "file://README.txt \
-            file://LICENSE"
+            git://github.com/eclipse-leda/leda-contrib-cloud-connector;protocol=https;branch=main"
+SRCREV = "${AUTOREV}"
 
 # According to https://wiki.yoctoproject.org/wiki/License_Infrastructure_Interest_Group
 LICENSE = "Apache-2.0"
-LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=d9fc0efef5228704e7f5b37f27192723"
+LIC_FILES_CHKSUM = "file://${WORKDIR}/git/LICENSE;md5=2b42edef8fa55315f34f2370b4715ca9"
 
 # Define image to be pulled
-SDV_IMAGE_REF="ghcr.io/eclipse-leda/sdv-self-update-agent/sua"
-SDV_IMAGE_TAG="v0.1.16"
+SDV_IMAGE_REF="ghcr.io/eclipse-leda/leda-contrib-cloud-connector/cloudconnector"
+SDV_IMAGE_TAG="main-47c01227a620a3dbd85b66e177205c06c0f7a52e"
 
 # Override container architecture. If not set, recipe tries autodetection for target machine architecture.
 #CONTAINER_ARCH="arm64"
 
 # Skip pre-caching of a container if target architecture does not exist
-CONTAINER_SKIP_MISSING_ARCH="1"
+CONTAINER_SKIP_MISSING_ARCH="0"

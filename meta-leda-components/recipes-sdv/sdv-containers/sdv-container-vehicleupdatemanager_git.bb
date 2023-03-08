@@ -11,25 +11,22 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-SUMMARY = "SDV Cloud Connector container"
-DESCRIPTION = "Docker container of the Eclipse Kanto Cloud Connector"
+SUMMARY = "SDV Vehicle Update Manager container"
+DESCRIPTION = "Docker container of the SDV Vehicle Update Manager"
 
 inherit sdv-container-cache
 
 SRC_URI += "file://README.txt \
-            git://github.com/eclipse-leda/leda-contrib-cloud-connector;protocol=https;branch=main"
-SRCREV = "${AUTOREV}"
+            file://LICENSE"
 
 # According to https://wiki.yoctoproject.org/wiki/License_Infrastructure_Interest_Group
 LICENSE = "Apache-2.0"
-LIC_FILES_CHKSUM = "file://${WORKDIR}/git/LICENSE;md5=2b42edef8fa55315f34f2370b4715ca9"
+LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57"
 
 # Define image to be pulled
-SDV_IMAGE_REF="ghcr.io/eclipse-leda/leda-incubator-cloud-connector/cloudconnector"
-SDV_IMAGE_TAG="main-13add98ec32e077d0f125e333a24aaf908187c9b"
+SDV_IMAGE_REF="ghcr.io/eclipse-leda/leda-contrib-vehicle-update-manager/vehicleupdatemanager"
+SDV_IMAGE_TAG="main-1d8dca55a755c4b3c7bc06eabfa06ad49e068a48"
 
 # Override container architecture. If not set, recipe tries autodetection for target machine architecture.
 #CONTAINER_ARCH="arm64"
 
-# Skip pre-caching of a container if target architecture does not exist
-CONTAINER_SKIP_MISSING_ARCH="0"
