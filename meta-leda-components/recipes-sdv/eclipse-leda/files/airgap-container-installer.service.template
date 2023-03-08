@@ -22,6 +22,7 @@ WantedBy=multi-user.target
 
 [Service]
 Type=oneshot
+RemainAfterExit=yes
 Restart=on-failure
 RestartSec=5s
 ExecStart=@AG_BIN_DD@/airgap-container-installer @AG_IMG_DD@
