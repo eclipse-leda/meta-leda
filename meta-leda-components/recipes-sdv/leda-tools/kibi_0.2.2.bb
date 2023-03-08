@@ -1,3 +1,16 @@
+# /********************************************************************************
+# * Copyright (c) 2023 Contributors to the Eclipse Foundation
+# *
+# * See the NOTICE file(s) distributed with this work for additional
+# * information regarding copyright ownership.
+# *
+# * This program and the accompanying materials are made available under the
+# * terms of the Apache License 2.0 which is available at
+# * https://www.apache.org/licenses/LICENSE-2.0
+# *
+# * SPDX-License-Identifier: Apache-2.0
+# ********************************************************************************/
+
 SUMMARY = "A text editor in less than 1024 lines of code with syntax higlighting, search and more."
 DESCRIPTION = "Kibi is a small text editor with syntax highlighting and a permissive FOSS license. Can be used as a nano-replacement"
 HOMEPAGE = "https://github.com/ilai-deutel/kibi"
