@@ -1,5 +1,5 @@
 # /********************************************************************************
-# * Copyright (c) 2022 Contributors to the Eclipse Foundation
+# * Copyright (c) 2023 Contributors to the Eclipse Foundation
 # *
 # * See the NOTICE file(s) distributed with this work for additional
 # * information regarding copyright ownership.
@@ -11,14 +11,11 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-SUMMARY = "SDV Cloud Connector container image"
-DESCRIPTION = "Docker container of the Eclipse Kanto Cloud Connector for IoT Suite"
-LICENSE = "Apache-2.0"
-LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
+SUMMARY = "SDV application container images"
+DESCRIPTION = "Packages creating application images to be run as containers"
 
-include images/sdv-image-container.bb
+inherit packagegroup
 
-IMAGE_INSTALL += " \
-    busybox \
-    kanto-suite-connector \
-    "
+RDEPENDS:${PN} = "\
+    self-update-agent-container \
+"
