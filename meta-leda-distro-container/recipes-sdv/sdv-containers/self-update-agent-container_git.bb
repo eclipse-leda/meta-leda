@@ -1,5 +1,5 @@
 # /********************************************************************************
-# * Copyright (c) 2022 Contributors to the Eclipse Foundation
+# * Copyright (c) 2023 Contributors to the Eclipse Foundation
 # *
 # * See the NOTICE file(s) distributed with this work for additional
 # * information regarding copyright ownership.
@@ -11,14 +11,18 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-SUMMARY = "SDV Cloud Connector container image"
-DESCRIPTION = "Docker container of the Eclipse Kanto Cloud Connector for IoT Suite"
+SUMMARY = "Self Update Agent container image"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-include images/sdv-image-container.bb
+require ../images/sdv-image-container.bb
 
 IMAGE_INSTALL += " \
     busybox \
-    kanto-suite-connector \
+    leda-contrib-self-update-agent \
+    leda-contrib-self-update-agent-data \
     "
+
+OCI_IMAGE_TAG = "self-update-agent:latest"
+OCI_IMAGE_ENTRYPOINT = "/usr/bin/self-update-agent"
+OCI_IMAGE_ENTRYPOINT_ARGS = "-p /data/selfupdates --host mosquitto:1883"

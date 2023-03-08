@@ -14,7 +14,7 @@
 SUMMARY = "SDV container images to demonstrate CycloneDDS"
 DESCRIPTION ="The resulting image contains all the python examples from the CycloneDDS project"
 LICENSE = "Apache-2.0"
-LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57"
+LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 require ../images/sdv-image-container.bb
 
@@ -25,18 +25,3 @@ IMAGE_INSTALL += " \
     "
 
 OCI_IMAGE_TAG = "cyclonedds-example:${PV}"
-
-IMAGE_CMD:append:oci() {
-    cd ${IMGDEPLOYDIR}
-
-    if [ -n "${OCI_IMAGE_TAR_OUTPUT}" ]; then
-
-        cd $image_name
-        tar -cf "../$image_name.tar" *
-        cd -
-
-	    ln -sf "$image_name.tar" "${IMAGE_BASENAME}-${MACHINE}-oci.tar"
-    fi
-
-    ln -sf $image_name ${IMAGE_BASENAME}-${MACHINE}-oci
-}
