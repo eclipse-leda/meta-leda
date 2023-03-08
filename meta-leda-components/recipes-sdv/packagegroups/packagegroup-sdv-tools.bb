@@ -19,6 +19,7 @@ inherit packagegroup
 RDEPENDS:${PN} = "\
     htop \
     jq \
+    kibi \
     mosquitto-clients \
     leda-utils \
     skopeo \
