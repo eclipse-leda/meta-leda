@@ -11,17 +11,11 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-DESCRIPTION = "DHCP Client configuration for WiFi with iwd"
-LICENSE = "Apache-2.0"
+require sdv-rauc-bundle.inc
 
-PROVIDES:${PN} += "iwd-config"
-RPROVIDES:${PN} += "iwd-config"
+RAUC_BUNDLE_SLOTS = "rootfs"
+RAUC_SLOT_rootfs = "sdv-image-minimal"
+RAUC_SLOT_rootfs[fstype] = "ext4"
 
-do_install() {
-    install -d ${D}/etc/iwd
-    install -m 0644 ${THISDIR}/files/main.conf ${D}/etc/iwd
-}
-
-PACKAGES = "${PN}"
-FILES:${PN} += "/etc/iwd/main.conf"
-
+# Using block hash index improves performance of install
+RAUC_SLOT_rootfs[adaptive] = "block-hash-index"

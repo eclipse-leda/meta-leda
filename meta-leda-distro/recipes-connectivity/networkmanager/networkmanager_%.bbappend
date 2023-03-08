@@ -11,19 +11,5 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-SUMMARY = "SDV core packages"
-DESCRIPTION = "Packages required to set up a basic working SDV system"
-
-inherit packagegroup
-
-RDEPENDS:${PN} = "\
-    ca-certificates \
-    openssh \
-    openssh-sftp-server \
-    rauc \
-    mosquitto \
-    container-management \
-    kanto-auto-deployer \
-    leda-utils \
-    openvpn \
-    "
+PACKAGECONFIG:remove = "readline"
+PACKAGECONFIG:append = " libedit"

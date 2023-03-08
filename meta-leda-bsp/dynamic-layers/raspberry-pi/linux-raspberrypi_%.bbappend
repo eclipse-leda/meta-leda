@@ -1,5 +1,5 @@
 # /********************************************************************************
-# * Copyright (c) 2022 Contributors to the Eclipse Foundation
+# * Copyright (c) 2023 Contributors to the Eclipse Foundation
 # *
 # * See the NOTICE file(s) distributed with this work for additional
 # * information regarding copyright ownership.
@@ -11,19 +11,8 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-SUMMARY = "SDV core packages"
-DESCRIPTION = "Packages required to set up a basic working SDV system"
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
-inherit packagegroup
+inherit rauc-integration
 
-RDEPENDS:${PN} = "\
-    ca-certificates \
-    openssh \
-    openssh-sftp-server \
-    rauc \
-    mosquitto \
-    container-management \
-    kanto-auto-deployer \
-    leda-utils \
-    openvpn \
-    "
+SRC_URI:append:rauc-integration = " file://leda-bsp-rauc.cfg"

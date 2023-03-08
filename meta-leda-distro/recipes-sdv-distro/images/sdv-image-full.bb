@@ -23,7 +23,12 @@ IMAGE_INSTALL:append = " packagegroup-sdv-core"
 IMAGE_INSTALL:append = " packagegroup-sdv-additions"
 IMAGE_INSTALL:append = " packagegroup-sdv-tools"
 IMAGE_INSTALL:append = " packagegroup-sdv-examples"
-IMAGE_INSTALL:append:raspberrypi4-64 = " packagegroup-sdv-rpi4wifi"
+IMAGE_INSTALL:append = " ${@bb.utils.contains("DISTRO_FEATURES", "wifi", "networkmanager", "", d)}"
+IMAGE_INSTALL:append = " ${@bb.utils.contains("DISTRO_FEATURES", "wifi", "networkmanager-nmcli", "", d)}"
+IMAGE_INSTALL:append = " ${@bb.utils.contains("DISTRO_FEATURES", "wifi", "packagegroup-base-wifi", "", d)}"
+#IMAGE_INSTALL:append = " ${@bb.utils.contains("DISTRO_FEATURES", "wifi", "iwd", "", d)}"
+IMAGE_INSTALL:append = " ${@bb.utils.contains("DISTRO_FEATURES", "wifi", "iwd-config", "", d)}"
+IMAGE_INSTALL:append:raspberrypi4-64 = " ${@bb.utils.contains("DISTRO_FEATURES", "wifi", "packagegroup-sdv-rpi4wifi", "", d)}"
 
 IMAGE_LINGUAS = " "
 
@@ -39,6 +44,12 @@ inherit core-image
 
 IMAGE_ROOTFS_SIZE ?= "8192"
 IMAGE_ROOTFS_EXTRA_SPACE:append = "${@bb.utils.contains("DISTRO_FEATURES", "systemd", " + 4096", "", d)}"
+
+# Optimizations for RAUC adaptive method 'block-hash-index'
+# rootfs image size must to be 4K-aligned
+IMAGE_ROOTFS_ALIGNMENT = "4"
+# ext4 block and inode size should be set to 4K
+EXTRA_IMAGECMD:ext4 = "-i 4096 -b 4096"
 
 # Fall back to ext4 for now, as wic for qemuarm does not yet contain u-boot
 #QB_ROOTFS_OPT = "-drive id=disk0,file=@ROOTFS@,if=none,format=raw -device virtio-blk-device,drive=disk0"

@@ -42,6 +42,11 @@ RUN sudo apt-get -y install software-properties-common \
     && sudo apt-get -y update \
     && sudo apt-get -y install libfuse3-dev fuse3 blobfuse2
 
+# Update RAUC to 1.8.1 from Debian Testing channel
+RUN sudo apt-add-repository 'deb http://deb.debian.org/debian/ testing main' \
+    && sudo apt-get -y update \
+    && sudo apt-get -y install -t testing rauc
+
 # Try to enable KVM to improve performance of qemu-system-x86 on x86 hosts.
 # This is also run in post-attach.sh
 RUN /bin/bash -c "(groupadd --system kvm; gpasswd -a vscode kvm; chown root:kvm /dev/kvm; chmod 0660 /dev/kvm; echo 'KVM permissions set up') || true"

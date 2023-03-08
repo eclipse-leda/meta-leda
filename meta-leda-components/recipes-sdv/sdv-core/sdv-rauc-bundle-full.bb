@@ -1,5 +1,5 @@
 # /********************************************************************************
-# * Copyright (c) 2022 Contributors to the Eclipse Foundation
+# * Copyright (c) 2023 Contributors to the Eclipse Foundation
 # *
 # * See the NOTICE file(s) distributed with this work for additional
 # * information regarding copyright ownership.
@@ -11,19 +11,11 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-SUMMARY = "SDV core packages"
-DESCRIPTION = "Packages required to set up a basic working SDV system"
+require sdv-rauc-bundle.inc
 
-inherit packagegroup
+RAUC_BUNDLE_SLOTS = "rootfs"
+RAUC_SLOT_rootfs = "sdv-image-full"
+RAUC_SLOT_rootfs[fstype] = "ext4"
 
-RDEPENDS:${PN} = "\
-    ca-certificates \
-    openssh \
-    openssh-sftp-server \
-    rauc \
-    mosquitto \
-    container-management \
-    kanto-auto-deployer \
-    leda-utils \
-    openvpn \
-    "
+# Using block hash index improves performance of install
+RAUC_SLOT_rootfs[adaptive] = "block-hash-index"
