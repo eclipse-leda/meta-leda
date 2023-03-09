@@ -13,7 +13,7 @@
 # ********************************************************************************/
 # Use: 
 #   wpa_passphrase <SSID> <Passphrase> >> /etc/wpa_supplicant.conf
-# in orded to create the file
+# in order to create the file
 # Helpful commands:
 #   iw wlan0 info
 #   iw wlan0 scan
