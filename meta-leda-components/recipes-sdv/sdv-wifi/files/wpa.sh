@@ -18,8 +18,6 @@
 #   iw wlan0 info
 #   iw wlan0 scan
 #   iw wlan0 link
-# Note:
-# Existence of /boot/wpa_supplicant.conf will overwrite the one in /etc
 
 if [ -e /boot/wpa_supplicant.conf -a ! -e /etc/wpa_supplicant.conf ]; then
   cp /boot/wpa_supplicant.conf /etc
