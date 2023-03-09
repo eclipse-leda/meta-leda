@@ -21,11 +21,11 @@
 # Note:
 # Existence of /boot/wpa_supplicant.conf will overwrite the one in /etc
 
-if [ -e /boot/wpa_supplicant.conf ]; then
-  mv /boot/wpa_suplicant.conf /etc
+if [ -e /boot/wpa_supplicant.conf -a ! -e /etc/wpa_supplicant.conf ]; then
+  cp /boot/wpa_suplicant.conf /etc
 fi
 
-if [ ! -e /etc/wpa_supplicant.conf ]
+if [ ! -e /etc/wpa_supplicant.conf ]; then
   exit
 fi
 
