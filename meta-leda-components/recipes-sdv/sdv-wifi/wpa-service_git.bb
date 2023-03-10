@@ -24,9 +24,6 @@ SYSTEMD_PACKAGES = "${PN}"
 SYSTEMD_SERVICE:${PN} = "wpa.service"
 SYSTEMD_AUTO_ENABLE:${PN} = "enable"
 
-FILES:${PN} += "${sbindir}/wpa.sh \
-                ${systemd_system_unitdir}/wpa.service"
-
 REQUIRED_DISTRO_FEATURES = "systemd"
 
 do_install:append() {

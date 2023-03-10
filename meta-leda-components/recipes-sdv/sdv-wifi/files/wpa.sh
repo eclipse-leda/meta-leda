@@ -13,19 +13,17 @@
 # ********************************************************************************/
 # Use: 
 #   wpa_passphrase <SSID> <Passphrase> >> /etc/wpa_supplicant.conf
-# in orded to create the file
+# in order to create the file
 # Helpful commands:
 #   iw wlan0 info
 #   iw wlan0 scan
 #   iw wlan0 link
-# Note:
-# Existence of /boot/wpa_supplicant.conf will overwrite the one in /etc
 
-if [ -e /boot/wpa_supplicant.conf ]; then
-  mv /boot/wpa_suplicant.conf /etc
+if [ -e /boot/wpa_supplicant.conf -a ! -e /etc/wpa_supplicant.conf ]; then
+  cp /boot/wpa_supplicant.conf /etc
 fi
 
-if [ ! -e /etc/wpa_supplicant.conf ]
+if [ ! -e /etc/wpa_supplicant.conf ]; then
   exit
 fi
 
