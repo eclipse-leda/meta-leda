@@ -18,10 +18,9 @@
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
-SRC_URI += "git://github.com/eclipse-kanto/container-management;protocol=https;branch=main \
-            file://service.template \
+SRC_URI += "file://service.template \
             file://config.json \
-          "
+           "
 
 do_install:append() {
 
