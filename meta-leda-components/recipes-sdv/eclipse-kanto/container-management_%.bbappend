@@ -22,7 +22,6 @@ SRC_URI += "git://github.com/eclipse-kanto/container-management;protocol=https;b
             file://service.template \
             file://config.json \
           "
-SRCREV = "d7cea3ad4e7329d770da5c2d4ff4cc10629c0b80"
 
 do_install:append() {
 
