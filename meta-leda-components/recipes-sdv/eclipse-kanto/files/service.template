@@ -1,7 +1,7 @@
 [Unit]
 Description=Eclipse Kanto - Container Management
 Documentation=https://eclipse.org/kanto/docs/
-After=network.target containerd.service data.mount
+After=network.target containerd.service time-set.target data.mount
 Requires=network.target containerd.service
 
 [Service]
