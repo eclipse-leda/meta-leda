@@ -12,6 +12,8 @@
 # * SPDX-License-Identifier: EPL-2.0
 # ********************************************************************************/
 #
+/usr/bin/date -s "20230103"
+
 echo "Enlarging SD Card partition"
 
 DEVICE=$(lsblk -l | grep part | tail -1 | awk '{print $1}' | sed 's/..$//')
