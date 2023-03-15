@@ -20,7 +20,7 @@ SRC_URI:append = " file://soft-hwclock-tick.service"
 SRC_URI:append = " file://soft-hwclock-tick.timer"
 
 SRC_URI = "https://github.com/kristjanvalur/soft-hwclock"
-SRC_URI[sha256sum] = "7c54181ed4d593ce3ab5a598324db6f1c272508140f6099cc70bea9104f81881"
+SRC_URI[sha256sum] = "1268c4fee70172603845c4d305fbfc1b06f04a228d16515e7001d4f836b331e6"
 
 inherit systemd features_check
 
