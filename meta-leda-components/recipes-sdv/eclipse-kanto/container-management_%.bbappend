@@ -19,8 +19,9 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
 SRC_URI += "file://service.template \
+            file://service.sync.template \ 
             file://config.json \
-          "
+           "
 
 do_install:append() {
 
@@ -36,5 +37,16 @@ do_install:append() {
           -e 's,@KANTO_MANIFESTS_DIR@,${KANTO_MANIFESTS_DIR},g' \
           -i ${D}${CM_CFG_DD}/container-management/config.json
 
+        # service.template as service
+        install -d ${D}/${systemd_unitdir}/system
+        if "${@bb.utils.contains('DISTRO_FEATURES','timesync','true','false',d)}" ; then
+          install -m 0644 ${WORKDIR}/service.sync.template ${D}${systemd_unitdir}/system/container-management.service
+        else
+          install -m 0644 ${WORKDIR}/service.template ${D}${systemd_unitdir}/system/container-management.service
+        fi
+        # fill in the container management service template with the result configurations
+        sed -e 's,@CM_BIN_DD@,${bindir},g' \
+            -e 's,@CM_CFG_DD@,${sysconfdir},g' \
+        -i ${D}${systemd_unitdir}/system/container-management.service
     fi
 }
