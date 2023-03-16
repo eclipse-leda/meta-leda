@@ -7,8 +7,5 @@
     },
     "things": {
         "enable": @CM_THINGS_ENABLED@
-    },
-    "deployment": {
-        "init_dir": "@KANTO_MANIFESTS_DIR@"
     }
 }
