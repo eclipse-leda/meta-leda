@@ -26,8 +26,8 @@ inherit cargo kanto-auto-deployer
 RDEPENDS_${PN} += " grpc protobuf nativesdk-protobuf"
 DEPENDS += " protobuf protobuf-native grpc git-native"
 
-SRCREV = "9f68b40d7880261ee04450f20ad1e3b59ef5a692"
-PV:append = ".AUTOINC+9f68b40d788"
+SRCREV = "15ff12d9a790802324c829a2c9b4c1bcf69ee9dc"
+PV:append = ".AUTOINC+15ff12d9a7"
 SRC_URI = "gitsm://github.com/eclipse-leda/leda-utils;protocol=https;nobranch=0;branch=main"
 
 S = "${WORKDIR}/git"
@@ -40,10 +40,12 @@ PROTOC = "protoc --proto_path=/src/rust/kanto-auto-deployer/container-management
 # please note if you have entries that do not begin with crate://
 # you must change them to how that package can be fetched
 SRC_URI += " \
-    crate://crates.io/anyhow/1.0.66 \
+    crate://crates.io/aho-corasick/0.7.20 \
+    crate://crates.io/anyhow/1.0.69 \
     crate://crates.io/async-stream-impl/0.3.3 \
     crate://crates.io/async-stream/0.3.3 \
     crate://crates.io/async-trait/0.1.59 \
+    crate://crates.io/atty/0.2.14 \
     crate://crates.io/autocfg/1.1.0 \
     crate://crates.io/axum-core/0.2.9 \
     crate://crates.io/axum/0.5.17 \
@@ -52,6 +54,7 @@ SRC_URI += " \
     crate://crates.io/bytes/1.3.0 \
     crate://crates.io/cfg-if/1.0.0 \
     crate://crates.io/either/1.8.0 \
+    crate://crates.io/env_logger/0.9.3 \
     crate://crates.io/fastrand/1.8.0 \
     crate://crates.io/fixedbitset/0.4.2 \
     crate://crates.io/fnv/1.0.7 \
@@ -71,12 +74,14 @@ SRC_URI += " \
     crate://crates.io/http/0.2.8 \
     crate://crates.io/httparse/1.8.0 \
     crate://crates.io/httpdate/1.0.2 \
+    crate://crates.io/humantime/2.1.0 \
     crate://crates.io/hyper-timeout/0.4.1 \
     crate://crates.io/hyper/0.14.23 \
     crate://crates.io/indexmap/1.9.2 \
     crate://crates.io/instant/0.1.12 \
     crate://crates.io/itertools/0.10.5 \
     crate://crates.io/itoa/1.0.4 \
+    crate://crates.io/json-patch/0.3.0 \
     crate://crates.io/lazy_static/1.4.0 \
     crate://crates.io/libc/0.2.137 \
     crate://crates.io/log/0.4.17 \
@@ -109,14 +114,17 @@ SRC_URI += " \
     crate://crates.io/regex/1.7.0 \
     crate://crates.io/remove_dir_all/0.5.3 \
     crate://crates.io/ryu/1.0.11 \
-    crate://crates.io/serde/1.0.148 \
-    crate://crates.io/serde_derive/1.0.148 \
+    crate://crates.io/serde/1.0.155 \
+    crate://crates.io/serde_derive/1.0.155 \
     crate://crates.io/serde_json/1.0.89 \
     crate://crates.io/slab/0.4.7 \
     crate://crates.io/socket2/0.4.7 \
     crate://crates.io/syn/1.0.105 \
     crate://crates.io/sync_wrapper/0.1.1 \
     crate://crates.io/tempfile/3.3.0 \
+    crate://crates.io/termcolor/1.2.0 \
+    crate://crates.io/thiserror-impl/1.0.39 \
+    crate://crates.io/thiserror/1.0.39 \
     crate://crates.io/tokio-io-timeout/1.2.0 \
     crate://crates.io/tokio-macros/1.8.2 \
     crate://crates.io/tokio-stream/0.1.11 \
@@ -132,12 +140,14 @@ SRC_URI += " \
     crate://crates.io/tracing-core/0.1.30 \
     crate://crates.io/tracing-futures/0.2.5 \
     crate://crates.io/tracing/0.1.37 \
+    crate://crates.io/treediff/4.0.2 \
     crate://crates.io/try-lock/0.2.3 \
     crate://crates.io/unicode-ident/1.0.5 \
     crate://crates.io/want/0.3.0 \
     crate://crates.io/wasi/0.11.0+wasi-snapshot-preview1 \
     crate://crates.io/which/4.3.0 \
     crate://crates.io/winapi-i686-pc-windows-gnu/0.4.0 \
+    crate://crates.io/winapi-util/0.1.5 \
     crate://crates.io/winapi-x86_64-pc-windows-gnu/0.4.0 \
     crate://crates.io/winapi/0.3.9 \
     crate://crates.io/windows-sys/0.42.0 \
