@@ -12,13 +12,18 @@
     "hostname_path": "",
     "mounts": [
         {
-            "source": "/etc/ota-client/config",
+            "source": "/etc/ota-client",
             "destination": "/app/config",
             "propagation_mode": "rprivate"
         },
         {
             "source": "/data/var/certificates",
             "destination": "/app/config/certs",
+            "propagation_mode": "rprivate"
+        },
+        {
+            "source": "/etc/ssl/certs",
+            "destination": "/app/config/ca-certs/",
             "propagation_mode": "rprivate"
         },
         {
