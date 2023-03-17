@@ -27,4 +27,4 @@ To perform a dry-run of the build:
 
 To execute QEMU:
 
-    kas shell -c "runqemu kvm ovmf nographic" kas/.config-kirkstone.yaml
+    kas shell -c "runqemu slirp kvm ovmf nographic" kas/.config-kirkstone.yaml
