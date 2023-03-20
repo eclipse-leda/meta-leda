@@ -1,0 +1,94 @@
+{
+    "id": "ota-client",
+    "name": "ota-client",
+    "image": {
+        "name": "ghcr.io/softwaredefinedvehicle/sdv-ota-client/ota-client:v0.0.2",
+        "decrypt_config": null
+    },
+    "host_name": "",
+    "domain_name": "",
+    "resolv_conf_path": "",
+    "hosts_path": "",
+    "hostname_path": "",
+    "mounts": [
+        {
+            "source": "/etc/ota-client",
+            "destination": "/app/config",
+            "propagation_mode": "rprivate"
+        },
+        {
+            "source": "/data/var/certificates",
+            "destination": "/app/config/certs",
+            "propagation_mode": "rprivate"
+        },
+        {
+            "source": "/etc/ssl/certs",
+            "destination": "/app/config/ca-certs/",
+            "propagation_mode": "rprivate"
+        },
+        {
+            "source": "/tmp",
+            "destination": "/tmp",
+            "propagation_mode": "rprivate"
+        }
+    ],
+    "hooks": [],
+    "host_config": {
+        "devices": [],
+        "network_mode": "bridge",
+        "privileged": false,
+        "restart_policy": {
+            "maximum_retry_count": 0,
+            "retry_timeout": 0,
+            "type": "unless-stopped"
+        },
+        "runtime": "io.containerd.runc.v2",
+        "extra_hosts": [
+            "mosquitto:host_ip"
+        ],
+        "port_mappings": [],
+        "log_config": {
+            "driver_config": {
+                "type": "json-file",
+                "max_files": 2,
+                "max_size": "1M",
+                "root_dir": ""
+            },
+            "mode_config": {
+                "mode": "blocking",
+                "max_buffer_size": ""
+            }
+        },
+        "resources": null
+    },
+    "io_config": {
+        "attach_stderr": false,
+        "attach_stdin": false,
+        "attach_stdout": false,
+        "open_stdin": false,
+        "stdin_once": false,
+        "tty": false
+    },
+    "config": {
+        "env": [],
+        "cmd": []
+    },
+    "network_settings": null,
+    "state": {
+        "pid": -1,
+        "started_at": "",
+        "error": "",
+        "exit_code": 0,
+        "finished_at": "",
+        "exited": false,
+        "dead": false,
+        "restarting": false,
+        "paused": false,
+        "running": false,
+        "status": "",
+        "oom_killed": false
+    },
+    "created": "",
+    "manually_stopped": false,
+    "restart_count": 0
+}
