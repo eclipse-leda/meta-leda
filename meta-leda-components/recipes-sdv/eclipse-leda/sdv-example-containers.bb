@@ -24,14 +24,13 @@ SRC_URI:append = " file://example/feedercan.json"
 SRC_URI:append = " file://example/seatservice.json"
 
 do_install:append() {
-    install -d ${D}${KANTO_MANIFESTS_LOCAL_DIR}
-    install ${WORKDIR}/example/hvac.json ${D}${KANTO_MANIFESTS_LOCAL_DIR}
-    install ${WORKDIR}/example/feedercan.json ${D}${KANTO_MANIFESTS_LOCAL_DIR}
-    install ${WORKDIR}/example/seatservice.json ${D}${KANTO_MANIFESTS_LOCAL_DIR}
+    install -d ${D}${KANTO_MANIFESTS_LOCAL_DEV_DIR}
+    install ${WORKDIR}/example/hvac.json ${D}${KANTO_MANIFESTS_LOCAL_DEV_DIR}
+    install ${WORKDIR}/example/feedercan.json ${D}${KANTO_MANIFESTS_LOCAL_DEV_DIR}
+    install ${WORKDIR}/example/seatservice.json ${D}${KANTO_MANIFESTS_LOCAL_DEV_DIR}
+
 # Under construction
 #   install ${WORKDIR}/example/zipkin.json ${D}${KANTO_MANIFESTS_LOCAL_DIR}
-
-    install -d ${D}${KANTO_MANIFESTS_LOCAL_DEV_DIR}
 # Under construction
 #    install ${WORKDIR}/example_dev/otelcol-sdv-agent.json ${D}${KANTO_MANIFESTS_LOCAL_DEV_DIR}
 #    install ${WORKDIR}/example_dev/otelcol-sdv-exporter.json ${D}${KANTO_MANIFESTS_LOCAL_DEV_DIR}
@@ -39,14 +38,13 @@ do_install:append() {
 }
 
 PACKAGES = "${PN}"
-FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}"
-FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}/hvac.json"
-FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}/feedercan.json"
-FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}/seatservice.json"
+FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DEV_DIR}"
+FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DEV_DIR}/hvac.json"
+FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DEV_DIR}/feedercan.json"
+FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DEV_DIR}/seatservice.json"
 # Under construction
 # FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}/zipkin.json"
 
-FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DEV_DIR}"
 # Under construction
 # FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DEV_DIR}/otelcol-sdv-agent.json"
 # FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DEV_DIR}/otelcol-sdv-exporter.json"
