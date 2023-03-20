@@ -15,7 +15,7 @@
         },
         "runtime": "io.containerd.runc.v2",
         "extra_hosts": [
-            "databroker-host:databroker"
+            "databroker:container_databroker-host"
         ],
         "log_config": {
             "driver_config": {
@@ -38,7 +38,7 @@
     "config": {
         "env": [
             "VEHICLEDATABROKER_DAPR_APP_ID=databroker",
-            "VDB_ADDRESS=databroker-host:30555",
+            "VDB_ADDRESS=databroker:55555",
             "USECASE=databroker",
             "LOG_LEVEL=info",
             "databroker=info",
