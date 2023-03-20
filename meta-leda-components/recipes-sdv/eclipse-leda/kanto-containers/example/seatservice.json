@@ -15,7 +15,7 @@
         },
         "runtime": "io.containerd.runc.v2",
         "extra_hosts": [
-            "databroker-host:container_databroker-host"
+            "databroker:container_databroker-host"
         ],
         "port_mappings": [
             {
@@ -41,7 +41,7 @@
     },
     "config": {
         "env": [
-           "BROKER_ADDR=databroker-host:55555",
+           "BROKER_ADDR=databroker:55555",
            "RUST_LOG=info",
            "vehicle_data_broker=info"
         ],
