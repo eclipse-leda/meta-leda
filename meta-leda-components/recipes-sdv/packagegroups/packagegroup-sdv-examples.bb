@@ -24,6 +24,7 @@ RDEPENDS:${PN} = "\
     can-utils-cantest \
     can-utils-slcan \
     can-utils-log \
+    leda-ota-client \
     "
 
 KERNEL_MODULE_AUTOLOAD += "can"

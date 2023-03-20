@@ -18,11 +18,10 @@
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
-SRC_URI += "git://github.com/eclipse-kanto/container-management;protocol=https;branch=main \
-            file://service.template \
+SRC_URI += "file://service.template \
+            file://service.sync.template \ 
             file://config.json \
-          "
-SRCREV = "d7cea3ad4e7329d770da5c2d4ff4cc10629c0b80"
+           "
 
 do_install:append() {
 
@@ -38,5 +37,16 @@ do_install:append() {
           -e 's,@KANTO_MANIFESTS_DIR@,${KANTO_MANIFESTS_DIR},g' \
           -i ${D}${CM_CFG_DD}/container-management/config.json
 
+        # service.template as service
+        install -d ${D}/${systemd_unitdir}/system
+        if "${@bb.utils.contains('DISTRO_FEATURES','timesync','true','false',d)}" ; then
+          install -m 0644 ${WORKDIR}/service.sync.template ${D}${systemd_unitdir}/system/container-management.service
+        else
+          install -m 0644 ${WORKDIR}/service.template ${D}${systemd_unitdir}/system/container-management.service
+        fi
+        # fill in the container management service template with the result configurations
+        sed -e 's,@CM_BIN_DD@,${bindir},g' \
+            -e 's,@CM_CFG_DD@,${sysconfdir},g' \
+        -i ${D}${systemd_unitdir}/system/container-management.service
     fi
 }
