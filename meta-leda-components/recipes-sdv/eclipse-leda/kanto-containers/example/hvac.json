@@ -15,7 +15,7 @@
         },
         "runtime": "io.containerd.runc.v2",
         "extra_hosts": [
-            "databroker-host:host_ip"
+            "databroker-host:databroker"
         ],
         "port_mappings": [],
         "log_config": {
