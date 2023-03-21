@@ -1,8 +1,8 @@
 {
-    "container_id": "feedercan",
-    "container_name": "feedercan",
+    "container_id": "seatservice-example",
+    "container_name": "seatservice-example",
     "image": {
-        "name": "ghcr.io/eclipse/kuksa.val.feeders/dbc2val:v0.1.1"
+        "name": "ghcr.io/boschglobal/kuksa.val.services/seat_service:v0.3.0"
     },
     "host_config": {
         "devices": [],
@@ -17,6 +17,15 @@
         "extra_hosts": [
             "databroker:container_databroker-host"
         ],
+        "port_mappings": [
+            {
+              "protocol": "tcp",
+              "container_port": 50051,
+              "host_ip": "localhost",
+              "host_port": 30051,
+              "host_port_end": 30051
+            }
+        ],
         "log_config": {
             "driver_config": {
                 "type": "json-file",
@@ -28,22 +37,13 @@
                 "mode": "blocking",
                 "max_buffer_size": ""
             }
-        },
-        "resources": null
-    },
-    "io_config": {
-        "open_stdin": false,
-        "tty": false
+        }
     },
     "config": {
         "env": [
-            "VEHICLEDATABROKER_DAPR_APP_ID=databroker",
-            "VDB_ADDRESS=databroker:55555",
-            "USECASE=databroker",
-            "LOG_LEVEL=info",
-            "databroker=info",
-            "broker_client=info",
-            "dbcfeeder=info"
+           "BROKER_ADDR=databroker:55555",
+           "RUST_LOG=info",
+           "vehicle_data_broker=info"
         ],
         "cmd": []
     }

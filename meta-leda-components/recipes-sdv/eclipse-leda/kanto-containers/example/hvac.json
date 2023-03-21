@@ -15,7 +15,7 @@
         },
         "runtime": "io.containerd.runc.v2",
         "extra_hosts": [
-            "databroker-host:host_ip"
+            "databroker:container_databroker-host"
         ],
         "port_mappings": [],
         "log_config": {
@@ -39,7 +39,7 @@
     "config": {
         "env": [
             "VEHICLEDATABROKER_DAPR_APP_ID=databroker",
-            "VDB_ADDRESS=databroker-host:30555"
+            "VDB_ADDRESS=databroker:55555"
         ],
         "cmd": []
     }

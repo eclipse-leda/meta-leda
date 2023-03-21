@@ -21,19 +21,18 @@ LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd
 FILESEXTRAPATHS:prepend := "${THISDIR}/kanto-containers:"
 SRC_URI:append = " file://example/hvac.json"
 SRC_URI:append = " file://example/feedercan.json"
-SRC_URI:append = " file://example_dev/seatservice.json"
-SRC_URI:append = " file://example_dev/ota-client.json.disabled"
+SRC_URI:append = " file://example/seatservice.json"
+SRC_URI:append = " file://example/ota-client.json.disabled"
 
 do_install:append() {
     install -d ${D}${KANTO_MANIFESTS_LOCAL_DIR}
     install ${WORKDIR}/example/hvac.json ${D}${KANTO_MANIFESTS_LOCAL_DIR}
     install ${WORKDIR}/example/feedercan.json ${D}${KANTO_MANIFESTS_LOCAL_DIR}
+    install ${WORKDIR}/example/seatservice.json ${D}${KANTO_MANIFESTS_LOCAL_DIR}
+    install ${WORKDIR}/example/ota-client.json.disabled ${D}${KANTO_MANIFESTS_LOCAL_DEV_DIR}
+
 # Under construction
 #   install ${WORKDIR}/example/zipkin.json ${D}${KANTO_MANIFESTS_LOCAL_DIR}
-
-    install -d ${D}${KANTO_MANIFESTS_LOCAL_DEV_DIR}
-    install ${WORKDIR}/example_dev/seatservice.json ${D}${KANTO_MANIFESTS_LOCAL_DEV_DIR}
-    install ${WORKDIR}/example_dev/ota-client.json.disabled ${D}${KANTO_MANIFESTS_LOCAL_DEV_DIR}
 
 # Under construction
 #    install ${WORKDIR}/example_dev/otelcol-sdv-agent.json ${D}${KANTO_MANIFESTS_LOCAL_DEV_DIR}
@@ -46,10 +45,12 @@ PACKAGES = "${PN}"
 FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}"
 FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}/hvac.json"
 FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}/feedercan.json"
+FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}/seatservice.json"
+FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}/ota-client.json.disabled"
 
-FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DEV_DIR}"
-FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DEV_DIR}/seatservice.json"
-FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DEV_DIR}/ota-client.json.disabled"
+# Under construction
+# FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}/zipkin.json"
+
 
 # Under construction
 # FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}/zipkin.json"

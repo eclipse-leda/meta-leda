@@ -1,19 +1,10 @@
 {
-    "id": "otelcol-sdv-exporter",
-    "name": "otelcol-sdv-exporter",
+    "container_id": "otelcol-sdv-exporter",
+    "container_name": "otelcol-sdv-exporter",
     "image": {
-        "name": "ghcr.io/softwaredefinedvehicle/sdv-edge-otel/otelcol-sdv-exporter:v0.0.1",
-        "decrypt_config": null
+        "name": "ghcr.io/softwaredefinedvehicle/sdv-edge-otel/otelcol-sdv-exporter:v0.0.1"
     },
-    "host_name": "",
-    "domain_name": "",
-    "resolv_conf_path": "",
-    "hosts_path": "",
-    "hostname_path": "",
-    "mounts": [],
-    "hooks": [],
     "host_config": {
-        "devices": [],
         "network_mode": "bridge",
         "privileged": false,
         "restart_policy": {
@@ -48,37 +39,11 @@
         },
         "resources": null
     },
-    "io_config": {
-        "attach_stderr": false,
-        "attach_stdin": false,
-        "attach_stdout": false,
-        "open_stdin": false,
-        "stdin_once": false,
-        "tty": false
-    },
     "config": {
         "env": [
            "RUST_LOG=info",
            "MQTT_BROKER_HOST=mosquitto"
         ],
         "cmd": []
-    },
-    "network_settings": null,
-    "state": {
-        "pid": -1,
-        "started_at": "",
-        "error": "",
-        "exit_code": 0,
-        "finished_at": "",
-        "exited": false,
-        "dead": false,
-        "restarting": false,
-        "paused": false,
-        "running": false,
-        "status": "",
-        "oom_killed": false
-    },
-    "created": "",
-    "manually_stopped": false,
-    "restart_count": 0
+    }
 }
