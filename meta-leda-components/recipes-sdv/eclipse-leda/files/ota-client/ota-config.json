@@ -1,0 +1,12 @@
+{
+    "mqtt-server-addr": "ssl://mqtt.connect.devices.eu.bosch-mobility-cloud.com:15443",
+    "mqtt-local-server-addr": "tcp://mosquitto:1883",
+    "mqtt-client-id":"<<PUT DEVICE ID HERE>>",
+    "ssl-tcert": "/app/config/certs/ca.pem",
+    "ssl-cert": "/app/config/certs/device.crt",
+    "ssl-pkey": "/app/config/certs/device.key",
+    "use-otang-plugin": true,
+    "use-mqtt-plugin": false,
+    "persistent-directory": "/tmp",
+    "upload-directory": "/tmp"
+}

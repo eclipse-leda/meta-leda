@@ -1,8 +1,8 @@
 {
-    "id": "otelcol-sdv-agent",
-    "name": "otelcol-sdv-agent",
+    "id": "ota-client",
+    "name": "ota-client",
     "image": {
-        "name": "ghcr.io/softwaredefinedvehicle/sdv-edge-otel/otelcol-sdv-ext:v0.0.1",
+        "name": "ghcr.io/softwaredefinedvehicle/sdv-ota-client/ota-client:v0.0.2",
         "decrypt_config": null
     },
     "host_name": "",
@@ -12,18 +12,23 @@
     "hostname_path": "",
     "mounts": [
         {
-            "source": "/",
-            "destination": "/hostfs",
+            "source": "/etc/ota-client",
+            "destination": "/app/config",
             "propagation_mode": "rprivate"
         },
         {
-            "source": "/var/lib/container-management/containers",
-            "destination": "/var/lib/docker/containers",
+            "source": "/data/var/certificates",
+            "destination": "/app/config/certs",
             "propagation_mode": "rprivate"
         },
         {
-            "source": "/run/log/journal",
-            "destination": "/run/log/journal",
+            "source": "/etc/ssl/certs",
+            "destination": "/app/config/ca-certs/",
+            "propagation_mode": "rprivate"
+        },
+        {
+            "source": "/tmp",
+            "destination": "/tmp",
             "propagation_mode": "rprivate"
         }
     ],
@@ -41,15 +46,7 @@
         "extra_hosts": [
             "mosquitto:host_ip"
         ],
-        "port_mappings": [
-            {
-              "protocol": "tcp",
-              "container_port": 9411,
-              "host_ip": "localhost",
-              "host_port": 4317,
-              "host_port_end": 4317
-            }
-        ],
+        "port_mappings": [],
         "log_config": {
             "driver_config": {
                 "type": "json-file",
@@ -73,18 +70,8 @@
         "tty": false
     },
     "config": {
-        "env": [
-           "OTELCOL_NAME=/otelcol-sdv",
-           "HOST_PROC=/hostfs/proc",
-           "HOST_SYS=/hostfs/sys",
-           "HOST_ETC=/hostfs/etc",
-           "HOST_VAR=/hostfs/var",
-           "HOST_RUN=/hostfs/run",
-           "HOST_DEV=/hostfs/dev"
-        ],
-        "cmd": [
-            "/otelcol-sdv --config=/relay.yaml"
-        ]
+        "env": [],
+        "cmd": []
     },
     "network_settings": null,
     "state": {

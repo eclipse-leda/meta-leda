@@ -1,0 +1,19 @@
+{
+    "log": {
+        "log_file": "/var/log/container-management/container-management.log",
+        "log_level": "DEBUG"
+    },
+    "containers": {
+        "registry_configurations": {
+            "ghcr.io": {
+                "credentials": {
+                    "user_id": "***MY-USERID***",
+                    "password": "***MY-Personal-Access-Token***"
+                }
+            }
+        }
+    },
+    "things": {
+        "enable": false
+    }
+}

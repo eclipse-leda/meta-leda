@@ -1,4 +1,4 @@
-name: Build Poky with SDV Core
+name: Build Poky with SDV Core (Self Hosted)
 
 on:
   workflow_dispatch:

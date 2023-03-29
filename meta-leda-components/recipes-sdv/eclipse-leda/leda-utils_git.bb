@@ -15,7 +15,7 @@ SUMMARY = "SDV Core Utilities"
 DESCRIPTION = "Core shell scripts for Eclipse Leda"
 
 SRC_URI = "git://github.com/eclipse-leda/leda-utils;branch=main;protocol=https"
-SRCREV = "3f79a1abb1584501872f8d259f8d358c5e5919fd"
+SRCREV = "67ed015d636259591695e657a12fea3fa3c8b1e3"
 
 # According to https://wiki.yoctoproject.org/wiki/License_Infrastructure_Interest_Group
 LICENSE = "Apache-2.0"
@@ -30,9 +30,12 @@ do_install() {
     install -m 0755 ${WORKDIR}/git/src/sh/can-forward ${D}${bindir}
     install -m 0755 ${WORKDIR}/git/src/sh/sdv-device-info ${D}${bindir}
     install -m 0755 ${WORKDIR}/git/src/sh/sdv-health ${D}${bindir}
+    install -m 0755 ${WORKDIR}/git/src/sh/sdv-help ${D}${bindir}
     install -m 0755 ${WORKDIR}/git/src/sh/sdv-motd ${D}${bindir}
     install -m 0755 ${WORKDIR}/git/src/sh/sdv-provision ${D}${bindir}
     install -m 0755 ${WORKDIR}/git/src/sh/sdv-ctr-exec ${D}${bindir}
+    install -m 0755 ${WORKDIR}/git/src/sh/sdv-kanto-ctl ${D}${bindir}
+
     install -m 0644 ${WORKDIR}/git/src/sh/sdv.conf ${D}/etc/sdv/
 
     install -d ${D}${sysconfdir}/profile.d
@@ -42,9 +45,11 @@ do_install() {
 FILES_${PN} += "${bindir}/can-forward"
 FILES_${PN} += "${bindir}/sdv-device-info"
 FILES_${PN} += "${bindir}/sdv-health"
+FILES_${PN} += "${bindir}/sdv-help"
 FILES_${PN} += "${bindir}/sdv-motd"
 FILES_${PN} += "${bindir}/sdv-provision"
 FILES_${PN} += "${bindir}/sdv-ctr-exec"
+FILES_${PN} += "${bindir}/sdv-kanto-ctl"
 FILES_${PN} += "/etc/sdv/sdv.conf"
 
 PACKAGES = "${PN}"
