@@ -1,0 +1,41 @@
+# /********************************************************************************
+# * Copyright (c) 2023 Contributors to the Eclipse Foundation
+# *
+# * See the NOTICE file(s) distributed with this work for additional
+# * information regarding copyright ownership.
+# *
+# * This program and the accompanying materials are made available under the
+# * terms of the Apache License 2.0 which is available at
+# * https://www.apache.org/licenses/LICENSE-2.0
+# *
+# * SPDX-License-Identifier: Apache-2.0
+# ********************************************************************************/
+#
+# Do not add mount points in the Kickstarter File, as we're using a custom fstab.
+# Otherwise, mount points will appear twice in fstab.
+#
+# short-description: Create SD card image
+# long-description: Creates an SD card image for jetson-nano
+
+
+# Bootloader configuration (U-Boot)
+bootloader --ptable gpt --configfile="jetson-nano-2gb-devkit.cfg"
+
+# /dev/mmcblk0p1 - Boot partition /boot
+part --source bootimg-partition --ondisk mmcblk0 --fstype=vfat --label boot --active --align 4096 --size 100
+
+# GRUB environment to store info about retries, mounted for showcase
+# /dev/mmcblk0p2 - Partition mounted to /grubenv
+part --fixed-size 10M --fstype=vfat --ondisk mmcblk0 --label grubenv --align 1024
+
+# /dev/mmcblk0p3 - Rescue partition
+part --source rootfs --rootfs-dir=sdv-image-rescue --ondisk mmcblk0 --fstype=ext4 --label rescue --align 1024
+
+# /dev/mmcblk0p4 - SDV Full partition - mounted to "/"
+part --source rootfs --rootfs-dir=sdv-image-full --ondisk mmcblk0 --fstype=ext4 --label root_a --align 4096
+
+# /dev/mmcblk0p5 - SDV Minimal partition
+part --source rootfs --rootfs-dir=sdv-image-minimal  --ondisk mmcblk0 --fstype=ext4 --label root_b --align 4096
+
+# /dev/mmcblk0p6 - Kanto Container Management Data partition mounted to "/data"
+part --fixed-size 2048M --source rootfs --rootfs-dir=sdv-image-data --ondisk mmcblk0 --fstype=ext4 --label data --align 4096 --fsoptions "x-systemd.growfs"
