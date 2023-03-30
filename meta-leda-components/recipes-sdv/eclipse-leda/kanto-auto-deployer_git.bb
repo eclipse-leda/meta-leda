@@ -28,7 +28,7 @@ DEPENDS += " protobuf protobuf-native grpc git-native"
 
 SRCREV = "cead2d028fb011f124b0f321e2c3a7c4e1845c12"
 PV:append = ".AUTOINC+cead2d028f"
-SRC_URI = "gitsm://https://github.com/eclipse-leda/leda-utils.git;protocol=https;nobranch=1;branch=main"
+SRC_URI = "gitsm://github.com/eclipse-leda/leda-utils.git;protocol=https;nobranch=1;branch=main"
 
 S = "${WORKDIR}/git"
 
