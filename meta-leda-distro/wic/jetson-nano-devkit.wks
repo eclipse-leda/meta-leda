@@ -22,20 +22,20 @@
 bootloader --ptable gpt --configfile="jetson-nano-devkit.cfg"
 
 # /dev/mmcblk0p1 - Boot partition /boot
-part --source bootimg-partition --ondisk mmcblk0 --fstype=vfat --label boot --active --align 4096 --size 100
+part --source bootimg-partition --ondisk mtdblock0 --fstype=vfat --label boot --active --align 4096 --size 100
 
 # GRUB environment to store info about retries, mounted for showcase
 # /dev/mmcblk0p2 - Partition mounted to /grubenv
-part --fixed-size 10M --fstype=vfat --ondisk mmcblk0 --label grubenv --align 1024
+part --fixed-size 10M --fstype=vfat --ondisk mtdblock0 --label grubenv --align 1024
 
 # /dev/mmcblk0p3 - Rescue partition
-part --source rootfs --rootfs-dir=sdv-image-rescue --ondisk mmcblk0 --fstype=ext4 --label rescue --align 1024
+part --source rootfs --rootfs-dir=sdv-image-rescue --ondisk mtdblock0 --fstype=ext4 --label rescue --align 1024
 
 # /dev/mmcblk0p4 - SDV Full partition - mounted to "/"
-part --source rootfs --rootfs-dir=sdv-image-full --ondisk mmcblk0 --fstype=ext4 --label root_a --align 4096
+part --source rootfs --rootfs-dir=sdv-image-full --ondisk mtdblock0 --fstype=ext4 --label root_a --align 4096
 
 # /dev/mmcblk0p5 - SDV Minimal partition
-part --source rootfs --rootfs-dir=sdv-image-minimal  --ondisk mmcblk0 --fstype=ext4 --label root_b --align 4096
+part --source rootfs --rootfs-dir=sdv-image-minimal  --ondisk mtdblock0 --fstype=ext4 --label root_b --align 4096
 
 # /dev/mmcblk0p6 - Kanto Container Management Data partition mounted to "/data"
-part --fixed-size 2048M --source rootfs --rootfs-dir=sdv-image-data --ondisk mmcblk0 --fstype=ext4 --label data --align 4096 --fsoptions "x-systemd.growfs"
+part --fixed-size 2048M --source rootfs --rootfs-dir=sdv-image-data --ondisk mtdblock0 --fstype=ext4 --label data --align 4096 --fsoptions "x-systemd.growfs"
