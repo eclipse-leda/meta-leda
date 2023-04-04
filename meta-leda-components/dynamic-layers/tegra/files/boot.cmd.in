@@ -10,19 +10,19 @@
 # *
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
-# mtd 0:1 is boot partition (populated with Raspberry specific boot files)
-# mtd 0:2 is /grubenv (Stores boot-loader environments and RAUC Status)
-# mtd 0:3 is SDV Rescue
-# mtd 0:4 is SDV Full
-# mtd 0:5 is SDV Minimal
-# mtd 0:6 is /data partition (Kanto Container Management) - must be last partition, so that it can be grown
+# mmc 0:1 is boot partition (populated with Raspberry specific boot files)
+# mmc 0:2 is /grubenv (Stores boot-loader environments and RAUC Status)
+# mmc 0:3 is SDV Rescue
+# mmc 0:4 is SDV Full
+# mmc 0:5 is SDV Minimal
+# mmc 0:6 is /data partition (Kanto Container Management) - must be last partition, so that it can be grown
 
 fdt addr ${fdt_addr} && fdt get value bootargs /chosen bootargs
 
 test -n "${BOOT_ORDER}" || setenv BOOT_ORDER "SDV_A SDV_B"
 test -n "${BOOT_SDV_A_LEFT}" || setenv BOOT_SDV_A_LEFT 3
 test -n "${BOOT_SDV_B_LEFT}" || setenv BOOT_SDV_B_LEFT 3
-test -n "${BOOT_DEV}" || setenv BOOT_DEV "mtd 0:3"
+test -n "${BOOT_DEV}" || setenv BOOT_DEV "mmc 0:3"
 
 setenv bootpart
 setenv raucslot
@@ -36,7 +36,7 @@ for BOOT_SLOT in "${BOOT_ORDER}"; do
       echo "Found valid RAUC slot SDV_A"
       setenv bootpart "/dev/mmcblk0p4"
       setenv raucslot "SDV_A"
-      setenv BOOT_DEV "mtd 0:4"
+      setenv BOOT_DEV "mmc 0:4"
     fi
   elif test "x${BOOT_SLOT}" = "xSDV_B"; then
     if test ${BOOT_SDV_B_LEFT} -gt 0; then
@@ -44,7 +44,7 @@ for BOOT_SLOT in "${BOOT_ORDER}"; do
       echo "Found valid RAUC slot SDV_B"
       setenv bootpart "/dev/mmcblk0p5"
       setenv raucslot "SDV_B"
-      setenv BOOT_DEV "mtd 0:5"
+      setenv BOOT_DEV "mmc 0:5"
     fi
   fi
 done
@@ -60,6 +60,6 @@ else
   reset
 fi
 
-fatload mtd 0:1 ${kernel_addr_r} @@KERNEL_IMAGETYPE@@
-if test ! -e mtd 0:1 uboot.env; then saveenv; fi;
+fatload mmc 0:1 ${kernel_addr_r} @@KERNEL_IMAGETYPE@@
+if test ! -e mmc 0:1 uboot.env; then saveenv; fi;
 @@KERNEL_BOOTCMD@@ ${kernel_addr_r} - ${fdt_addr}
