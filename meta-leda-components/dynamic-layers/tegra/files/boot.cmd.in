@@ -34,7 +34,7 @@ for BOOT_SLOT in "${BOOT_ORDER}"; do
     if test ${BOOT_SDV_A_LEFT} -gt 0; then
       setexpr BOOT_SDV_A_LEFT ${BOOT_SDV_A_LEFT} - 1
       echo "Found valid RAUC slot SDV_A"
-      setenv bootpart "/dev/mtdblock0p4"
+      setenv bootpart "/dev/mmcblk0p4"
       setenv raucslot "SDV_A"
       setenv BOOT_DEV "mtd 0:4"
     fi
@@ -42,7 +42,7 @@ for BOOT_SLOT in "${BOOT_ORDER}"; do
     if test ${BOOT_SDV_B_LEFT} -gt 0; then
       setexpr BOOT_SDV_B_LEFT ${BOOT_SDV_B_LEFT} - 1
       echo "Found valid RAUC slot SDV_B"
-      setenv bootpart "/dev/mtdblock0p5"
+      setenv bootpart "/dev/mmcblk0p5"
       setenv raucslot "SDV_B"
       setenv BOOT_DEV "mtd 0:5"
     fi
