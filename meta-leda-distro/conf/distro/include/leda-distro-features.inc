@@ -19,6 +19,9 @@ DISTRO_FEATURES:append = " security"
 DISTRO_FEATURES:append = " sdv"
 DISTRO_FEATURES:append = " ldconfig"
 
+# Enable wifi
+DISTRO_FEATURES:append = " wifi"
+
 # Enable systemd as init process
 DISTRO_FEATURES:append = " systemd"
 VIRTUAL-RUNTIME_init_manager = "systemd"
