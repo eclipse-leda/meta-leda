@@ -28,7 +28,9 @@ DEPENDS += " protobuf protobuf-native grpc git-native"
 
 SRCREV = "cead2d028fb011f124b0f321e2c3a7c4e1845c12"
 PV:append = ".AUTOINC+cead2d028f"
-SRC_URI = "gitsm://github.com/eclipse-leda/leda-utils.git;protocol=https;nobranch=1;branch=main"
+SRC_URI = "git://github.com/eclipse-leda/leda-utils.git;protocol=https;nobranch=1;branch=main"
+SRC_URI += "git://github.com/eclipse-kanto/container-management;protocol=https;nobranch=1;name=containerm;destsuffix=src/rust/kanto-auto-deployer/container-management/containerm"
+SRCREV_containerm = "6e7c13a83473153c954f81fd89cfd3ad8ee94471"
 
 S = "${WORKDIR}/git"
 
