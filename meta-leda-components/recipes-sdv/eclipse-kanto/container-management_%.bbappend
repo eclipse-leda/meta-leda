@@ -19,7 +19,6 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
 SRC_URI += "file://service.template \
-            file://service.sync.template \ 
             file://config.json \
            "
 
