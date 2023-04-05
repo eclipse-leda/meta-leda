@@ -39,11 +39,7 @@ do_install:append() {
 
         # service.template as service
         install -d ${D}/${systemd_unitdir}/system
-        if "${@bb.utils.contains('DISTRO_FEATURES','timesync','true','false',d)}" ; then
-          install -m 0644 ${WORKDIR}/service.sync.template ${D}${systemd_unitdir}/system/container-management.service
-        else
-          install -m 0644 ${WORKDIR}/service.template ${D}${systemd_unitdir}/system/container-management.service
-        fi
+        install -m 0644 ${WORKDIR}/service.template ${D}${systemd_unitdir}/system/container-management.service
         # fill in the container management service template with the result configurations
         sed -e 's,@CM_BIN_DD@,${bindir},g' \
             -e 's,@CM_CFG_DD@,${sysconfdir},g' \
