@@ -15,13 +15,19 @@
 #
 inherit cargo
 
-# If this is git based prefer versioned ones if they exist
-# DEFAULT_PREFERENCE = "-1"
 
-# how to get databroker-cli could be as easy as but default to a git checkout:
-# SRC_URI += "crate://crates.io/databroker-cli/0.17.0"
-SRC_URI += "gitsm://github.com/eclipse/kuksa.val;protocol=https;nobranch=1"
-SRCREV = "590198a35de7b2201bdd913750157bb9778a5214"
+SRCREV_FORMAT = "cli_jsoncons_jwtcpp_turtle"
+
+SRC_URI += "git://github.com/eclipse/kuksa.val;branch=master;name=cli;protocol=https;nobranch=1 \
+            git://github.com/danielaparker/jsoncons.git;protocol=https;name=jsoncons;branch=master;destsuffix=git/kuksa-val-server/3rd-party-libs/jsoncons \
+            git://github.com/Thalhammer/jwt-cpp.git;protocol=https;name=jwtcpp;branch=master;destsuffix=git/kuksa-val-server/3rd-party-libs/jwt-cpp \
+            git://github.com/mat007/turtle.git;protocol=https;name=turtle;branch=master;destsuffix=git/kuksa-val-server/3rd-party-libs/turtle \
+            "
+SRCREV_cli = "590198a35de7b2201bdd913750157bb9778a5214"
+SRCREV_jsoncons = "af61925bb960df55331d3b6ec198042a1b133694"
+SRCREV_jwtcpp = "34bb0644ea613cfcbc09c148db9de8aa6c5612b5"
+SRCREV_turtle = "bbe01e6d9d21ff7075aba782434185a8339d44dd"
+
 S = "${WORKDIR}/git"
 CARGO_SRC_DIR = "kuksa_databroker/databroker-cli"
 PV:append = ".AUTOINC+861b2ec674"
