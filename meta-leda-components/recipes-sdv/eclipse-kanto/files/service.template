@@ -1,8 +1,8 @@
 [Unit]
 Description=Eclipse Kanto - Container Management
 Documentation=https://eclipse.org/kanto/docs/
-After=network-online.target systemd-timesyncd.service time-set.target containerd.service data.mount
-Requires=network-online.target containerd.service
+After=network.target time-set.target containerd.service data.mount
+Requires=network.target containerd.service
 
 [Service]
 Type=simple
