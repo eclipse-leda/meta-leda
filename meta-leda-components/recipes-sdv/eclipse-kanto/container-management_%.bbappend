@@ -21,7 +21,7 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 SRC_URI += "file://service.template \
             file://config.json \
            "
-SRCREV = "6e7c13a83473153c954f81fd89cfd3ad8ee94471"
+SRCREV="65e00358fa5aed1792059488a80fe755b36a8191"        
 
 do_install:append() {
 
