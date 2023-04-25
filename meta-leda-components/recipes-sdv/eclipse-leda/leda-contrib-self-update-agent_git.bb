@@ -15,7 +15,7 @@ SUMMARY = "Self Update Agent offers remote OS updates for edge devices using RAU
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=a832eda17114b48ae16cda6a500941c2"
 
-SRCREV_FORMAT = "sua_pahoc_pahoccp_yaml_curl_googletest_glib_spdlog_openssl_json"
+SRCREV_FORMAT = "sua_pahoc_pahocpp_yaml_curl_googletest_glib_spdlog_openssl_json"
 
 SRC_URI += "git://github.com/eclipse-leda/leda-contrib-self-update-agent.git;name=sua;protocol=https;branch=main \
             git://github.com/eclipse/paho.mqtt.c.git;protocol=https;name=pahoc;branch=master;destsuffix=git/3rdparty/paho.mqtt.c \
