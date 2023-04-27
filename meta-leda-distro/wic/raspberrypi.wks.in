@@ -28,10 +28,10 @@ part --fixed-size 10M --fstype=vfat --ondisk mmcblk0 --label grubenv --align 102
 part --source rootfs --rootfs-dir=sdv-image-rescue --ondisk mmcblk0 --fstype=ext4 --label rescue --align 1024
 
 # /dev/mmcblk0p4 - SDV Full partition - mounted to "/"
-part --source rootfs --rootfs-dir=sdv-image-full --ondisk mmcblk0 --fstype=ext4 --label root_a --align 4096
+part --extra-space 50M --source rootfs --rootfs-dir=sdv-image-full --ondisk mmcblk0 --fstype=ext4 --label root_a --align 4096
 
 # /dev/mmcblk0p5 - SDV Minimal partition
-part --source rootfs --rootfs-dir=sdv-image-minimal  --ondisk mmcblk0 --fstype=ext4 --label root_b --align 4096
+part --extra-space 50M --source rootfs --rootfs-dir=sdv-image-minimal --ondisk mmcblk0 --fstype=ext4 --label root_b --align 4096
 
 # /dev/mmcblk0p6 - Kanto Container Management Data partition mounted to "/data"
 part --fixed-size 2048M --source rootfs --rootfs-dir=sdv-image-data --ondisk mmcblk0 --fstype=ext4 --label data --align 4096 --fsoptions "x-systemd.growfs"
