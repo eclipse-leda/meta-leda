@@ -19,7 +19,7 @@
 #   iw wlan0 scan
 #   iw wlan0 link
 
-if [ -e /boot/wpa_supplicant.conf -a ! -e /etc/wpa_supplicant.conf ]; then
+if [ -e /boot/wpa_supplicant.conf ]; then
   cp /boot/wpa_supplicant.conf /etc
 fi
 

@@ -13,8 +13,8 @@
 # 
 [Unit]
 Description=Start wpa_supplicant
-After=network-online.target boot.mount root.mount
-Wants=network-online.target boot.mount root.mount
+After=network.target boot.mount root.mount data.mount
+Wants=network.target boot.mount root.mount data.mount
 
 [Install]
 WantedBy=multi-user.target

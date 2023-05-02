@@ -22,9 +22,15 @@ inherit cargo
 RDEPENDS_${PN} += "grpc protobuf nativesdk-protobuf"
 DEPENDS += "protobuf protobuf-native grpc"
 
-SRC_URI += "gitsm://github.com/eclipse-leda/leda-utils.git;protocol=https;nobranch=1;branch=main"
-SRCREV = "5bcbef1054775e277117d9cebacbc05234919ba7"
+SRCREV_FORMAT = "kantuisrc_containerm"
+
+SRC_URI += "git://github.com/eclipse-leda/leda-utils.git;protocol=https;name=kantuisrc;branch=main"
+SRCREV_kantuisrc = "5bcbef1054775e277117d9cebacbc05234919ba7"
 PV:append = ".AUTOINC+5bcbef1054"
+
+# Fetch the Kanto Container Management repository since kantui needs the protobuf files from kanto CM
+SRC_URI += "git://github.com/eclipse-kanto/container-management;protocol=https;branch=main;name=containerm;destsuffix=git/src/rust/kanto-tui/container-management"
+SRCREV_containerm = "65e00358fa5aed1792059488a80fe755b36a8191"
 
 S = "${WORKDIR}/git"
 CARGO_SRC_DIR = "src/rust/kanto-tui"

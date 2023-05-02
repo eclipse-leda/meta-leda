@@ -22,7 +22,6 @@ RDEPENDS:${PN} = "\
     kibi \
     mosquitto-clients \
     leda-utils \
-    skopeo \
     sudo \
     databroker-cli \
     "
