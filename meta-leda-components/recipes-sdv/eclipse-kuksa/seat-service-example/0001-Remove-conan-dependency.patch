@@ -1,0 +1,36 @@
+From ed8681a122027078f7b032e59c595214dc996dab Mon Sep 17 00:00:00 2001
+From: Guenther Meyer <g.meyer@signum-media.de>
+Date: Thu, 4 May 2023 16:49:19 +0200
+Subject: [PATCH] Remove conan dependency
+
+Signed-off-by: Guenther Meyer <g.meyer@signum-media.de>
+---
+ seat_service/CMakeLists.txt     | 2 --
+ seat_service/src/CMakeLists.txt | 1 -
+ 2 files changed, 3 deletions(-)
+
+diff --git a/seat_service/CMakeLists.txt b/seat_service/CMakeLists.txt
+index f99d663..77850da 100644
+--- a/seat_service/CMakeLists.txt
++++ b/seat_service/CMakeLists.txt
+@@ -14,8 +14,6 @@ cmake_minimum_required(VERSION 3.5.1)
+
+ # Project
+ project(SdvHAL C CXX)
+-# use conan as dependency management
+-include(${CMAKE_BINARY_DIR}/conan_paths.cmake)
+
+ option(SDV_BUILD_TESTING "Build with Tests" ON)
+
+diff --git a/seat_service/src/CMakeLists.txt b/seat_service/src/CMakeLists.txt
+index df59858..03140ee 100644
+--- a/seat_service/src/CMakeLists.txt
++++ b/seat_service/src/CMakeLists.txt
+@@ -14,7 +14,6 @@
+ cmake_minimum_required(VERSION 3.10)
+
+ project(SdvVehicleServices C CXX)
+-include(${CMAKE_BINARY_DIR}/conan_paths.cmake)
+ set (CMAKE_CXX_STANDARD 14)
+
+ add_subdirectory(bin/seat_service)
