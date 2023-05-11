@@ -11,14 +11,23 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-SUMMARY = "SDV application container images"
-DESCRIPTION = "Packages creating application images to be run as containers"
+SUMMARY = "Seat Service Example container image"
+LICENSE = "Apache-2.0"
+LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-inherit packagegroup
+require ../images/sdv-image-container.bb
 
-RDEPENDS:${PN} = "\
-    self-update-agent-container \
-    hvac-service-example-container \
-    vehicle-update-manager-container \
-    seat-service-example-container \
+IMAGE_INSTALL += " \
+    busybox \
+    coreutils-stdbuf \
+    seat-service-example \
+"
+
+OCI_IMAGE_TAG = "seat-service-example:latest"
+OCI_IMAGE_ENTRYPOINT = "/usr/bin/val_start.sh"
+OCI_IMAGE_ENV_VARS = " \
+    CAN=cansim \
+    SERVICE_HOST=0.0.0.0 \
+    SERVICE_PORT=50051 \
+    BROKER_ADDR=databroker:55555 \
 "
