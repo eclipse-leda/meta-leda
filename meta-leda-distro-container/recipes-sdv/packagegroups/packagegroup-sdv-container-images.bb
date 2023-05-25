@@ -21,4 +21,5 @@ RDEPENDS:${PN} = "\
     hvac-service-example-container \
     vehicle-update-manager-container \
     seat-service-example-container \
+    databroker-container \
 "
