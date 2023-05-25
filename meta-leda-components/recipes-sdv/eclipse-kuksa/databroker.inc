@@ -12,3 +12,14 @@
 # ********************************************************************************/
 
 DESCRIPTION = "Efficient in-vehicle signal broker written in RUST"
+
+
+PACKAGES =+ "${PN}-vss-core"
+SUMMARY:${PN}-vss-core = "Covesa VSS Releases"
+
+FILES:${PN}-vss-core = "${datadir}/vss-core"
+
+do_install:append() {
+    install -d ${D}${datadir}/vss-core
+    install -m 0644 ${S}/data/vss-core/*.json ${D}${datadir}/vss-core
+}
