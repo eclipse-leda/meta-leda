@@ -21,7 +21,9 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 SRC_URI += "file://service.template \
             file://config.json \
            "
-SRCREV="${AUTOREV}" # use the latest version of Kanto CM sources
+
+ # Use the latest version of Kanto CM sources
+SRCREV="${AUTOREV}"
 
 do_install:append() {
 
