@@ -22,7 +22,6 @@ SRC_URI += "file://service.template \
             file://config.json \
            "
 
- # Use the latest version of Kanto CM sources
 SRCREV="${AUTOREV}"
 
 do_install:append() {
