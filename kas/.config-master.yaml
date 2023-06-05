@@ -69,6 +69,7 @@ repos:
     path: ./
     layers:
       meta-leda-bsp:
+      meta-leda-backports:
       meta-leda-components:
       meta-leda-distro:
       meta-leda-distro-container:
