@@ -1,0 +1,56 @@
+{
+    "container_id": "seatadjuster-app",
+    "container_name": "seatadjuster-app",
+    "image": {
+        "name": "ghcr.io/eclipse-leda/leda-examples/seat-adjuster-app:latest"
+    },
+    "host_config": {
+        "devices": [],
+        "network_mode": "bridge",
+        "privileged": false,
+        "restart_policy": {
+            "maximum_retry_count": 0,
+            "retry_timeout": 0,
+            "type": "unless-stopped"
+        },
+        "runtime": "io.containerd.runc.v2",
+        "extra_hosts": [        
+                "mosquitto:host_ip",
+                "databroker:container_databroker-host",
+                "seatservice-example:container_seatservice-example-host"
+        ],
+        "port_mappings": [
+            {
+              "protocol": "tcp",
+              "container_port": 30151,
+              "host_ip": "localhost",
+              "host_port": 50151,
+              "host_port_end": 50151
+            }
+        ],
+        "log_config": {
+            "driver_config": {
+                "type": "json-file",
+                "max_files": 2,
+                "max_size": "1M",
+                "root_dir": ""
+            },
+            "mode_config": {
+                "mode": "blocking",
+                "max_buffer_size": ""
+            }
+        },
+        "resources": null
+    },
+    "config": {
+        "env": [
+           "SDV_SEATSERVICE_ADDRESS=grpc://seatservice-example:50051",
+           "SDV_VEHICLEDATABROKER_ADDRESS=grpc://databroker:55555",
+           "SDV_MQTT_ADDRESS=mqtt://mosquitto:1883",
+           "SDV_MIDDLEWARE_TYPE=native",
+           "RUST_LOG=info",
+           "vehicle_data_broker=info"
+        ],
+        "cmd": []
+    }
+}
