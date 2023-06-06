@@ -2,7 +2,7 @@
     "container_id": "seatadjuster-app",
     "container_name": "seatadjuster-app",
     "image": {
-        "name": "ghcr.io/eclipse-leda/leda-examples/seat-adjuster-app:latest"
+        "name": "ghcr.io/eclipse-leda/leda-example-applications/seatadjuster-app:latest"
     },
     "host_config": {
         "devices": [],
