@@ -60,6 +60,6 @@ jobs:
           desc: 'Core and example container descriptors for Eclipse Leda (Software-Defined Vehicle)'
       - uses: actions/upload-artifact@v3
         with:
-          name: leda-utils-containers
+          name: leda-containers
           path: 
             ./*.deb
