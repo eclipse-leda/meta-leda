@@ -20,7 +20,7 @@ on:
 jobs:
   call-build:
     name: Build
-    uses: ./.github/workflows/debian-leda-containers.yaml
+    uses: ./.github/workflows/debian-leda-containers.yml
     secrets: inherit
 
   upload-assets:
