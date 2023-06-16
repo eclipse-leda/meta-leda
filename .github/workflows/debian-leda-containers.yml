@@ -1,0 +1,64 @@
+# /********************************************************************************
+# * Copyright (c) 2023 Contributors to the Eclipse Foundation
+# *
+# * See the NOTICE file(s) distributed with this work for additional
+# * information regarding copyright ownership.
+# *
+# * This program and the accompanying materials are made available under the
+# * terms of the Apache License 2.0 which is available at
+# * https://www.apache.org/licenses/LICENSE-2.0
+# *
+# * SPDX-License-Identifier: Apache-2.0
+# ********************************************************************************/
+#
+
+name: Deb Container Descriptors
+
+on:
+  workflow_dispatch:
+  workflow_call:
+  push:
+    paths:
+      - 'src/sh/**'
+      - 'src/tests/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Debian Package Preparation
+        run: |
+          mkdir -p .debpkg/var/containers/manifests/examples
+
+          cp meta-leda-components/recipes-sdv/eclipse-leda/kanto-containers/core/* .debpkg/var/containers/manifests
+          cp meta-leda-components/recipes-sdv/eclipse-leda/kanto-containers/example/* .debpkg/var/containers/manifests/examples
+
+          # create DEBIAN directory if you want to add other pre/post scripts
+          mkdir -p .debpkg/DEBIAN
+          cat <<EOT > .debpkg/DEBIAN/copyright
+          Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+          Upstream-Name: Eclipse Leda
+          Source: github.com/eclipse-leda/
+          
+          Files: *
+          Copyright: 2022-2023, Contributors to the Eclipse Foundation
+          License: APL-2.0
+          EOT          
+      - name: Set variables
+        run: |
+          git describe --tags --always --long
+          echo "package_version=`echo $(git describe --tags --always --long | tr -d [:alpha:] | sed 's/-/./g')`" >> $GITHUB_ENV
+      - uses: jiro4989/build-deb-action@v2
+        with:
+          package: eclipse-leda-containers
+          package_root: .debpkg
+          maintainer: Eclipse Leda Development Team
+          version: '${{ env.package_version }}'
+          arch: 'all'
+          desc: 'Core and example container descriptors for Eclipse Leda (Software-Defined Vehicle)'
+      - uses: actions/upload-artifact@v3
+        with:
+          name: leda-utils-containers
+          path: 
+            ./*.deb
