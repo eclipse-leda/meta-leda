@@ -15,7 +15,7 @@
 
 inherit cargo
 
-SRC_URI += "gitsm://git@github.com/eclipse-leda/leda-utils.git;protocol=https;nobranch=1;branch=main"
+SRC_URI += "gitsm://github.com/eclipse-leda/leda-utils.git;protocol=https;nobranch=1;branch=main"
 SRCREV = "006e8f0e7d993be9f7405d8f61db8fb8a58a49eb"
 S = "${WORKDIR}/git"
 CARGO_SRC_DIR = "src/rust/kanto-tui"
