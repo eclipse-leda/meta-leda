@@ -11,10 +11,15 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-KANTO_MANIFESTS_LOCAL_DIR ??= "/var/containers/manifests"
-KANTO_MANIFESTS_LOCAL_DEV_DIR ??= "/var/containers/manifests_dev"
+DESCRIPTION = "Efficient in-vehicle signal broker written in RUST"
 
-KANTO_MANIFESTS_DIR ??= "${KANTO_MANIFESTS_LOCAL_DIR}"
-KANTO_MANIFESTS_DEV_DIR ??= "${KANTO_MANIFESTS_LOCAL_DEV_DIR}"
-KANTO_MANIFESTS_DIR[doc] = "The location path of Kanto Container Management deployment descriptors"
-KANTO_MANIFESTS_DEV_DIR[doc] = "The location path of Kanto Container Management deployment descriptors to autodeploy"
+
+PACKAGES =+ "${PN}-vss-core"
+SUMMARY:${PN}-vss-core = "Covesa VSS Releases"
+
+FILES:${PN}-vss-core = "${datadir}/vss-core"
+
+do_install:append() {
+    install -d ${D}${datadir}/vss-core
+    install -m 0644 ${S}/data/vss-core/*.json ${D}${datadir}/vss-core
+}

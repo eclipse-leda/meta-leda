@@ -21,7 +21,7 @@ inherit cargo
 SRC_URI += "gitsm://github.com/eclipse/kuksa.val.git;protocol=https;nobranch=1;branch=master"
 SRCREV = "dc8be056d96d60cdb6b60db04ab79b0d4ef86c54"
 S = "${WORKDIR}/git"
-CARGO_SRC_DIR = "kuksa_databroker/databroker-cli"
+CARGO_SRC_DIR = "kuksa_databroker/databroker"
 
 SRC_URI += " \
     crate://crates.io/aho-corasick/0.7.18 \
@@ -212,12 +212,12 @@ LIC_FILES_CHKSUM = " \
     file://kuksa_databroker/LICENSE;md5=2b42edef8fa55315f34f2370b4715ca9 \
 "
 
-SUMMARY = "Eclipse Kuksa - DataBroker CLI"
+SUMMARY = "Eclipse Kuksa - DataBroker"
 HOMEPAGE = "https://github.com/eclipse/kuksa.val"
 LICENSE = "Apache-2.0"
 
 # includes this file if it exists but does not fail
 # this is useful for anything you may want to override from
 # what cargo-bitbake generates.
-include databroker-cli-${PV}.inc
-include databroker-cli.inc
+include databroker-${PV}.inc
+include databroker.inc

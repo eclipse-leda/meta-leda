@@ -11,10 +11,16 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-KANTO_MANIFESTS_LOCAL_DIR ??= "/var/containers/manifests"
-KANTO_MANIFESTS_LOCAL_DEV_DIR ??= "/var/containers/manifests_dev"
+SUMMARY = "Vehicle Update Manager container image"
+LICENSE = "Apache-2.0"
+LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-KANTO_MANIFESTS_DIR ??= "${KANTO_MANIFESTS_LOCAL_DIR}"
-KANTO_MANIFESTS_DEV_DIR ??= "${KANTO_MANIFESTS_LOCAL_DEV_DIR}"
-KANTO_MANIFESTS_DIR[doc] = "The location path of Kanto Container Management deployment descriptors"
-KANTO_MANIFESTS_DEV_DIR[doc] = "The location path of Kanto Container Management deployment descriptors to autodeploy"
+require ../images/sdv-image-container.bb
+
+IMAGE_INSTALL += " \
+    busybox \
+    leda-contrib-vehicle-update-manager \
+    "
+
+OCI_IMAGE_TAG = "vehicle-update-manager:latest"
+OCI_IMAGE_ENTRYPOINT = "/usr/bin/updatemanagerd"

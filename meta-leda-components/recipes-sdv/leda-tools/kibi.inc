@@ -11,57 +11,18 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-
-PACKAGES = "${PN} ${PN}-dbg"
-FILES:${PN} += "${bindir}/kibi"
-FILES:${PN}-dbg += "${bindir}/.debug"
-
 do_install:append() {
-	cargo_do_install
-	install_syntax_highlighting_confs
-	alias_nano
-}
-
-cargo_do_install () {
-	install_syntax_highlighting_confs
-	local have_installed=false
-	for tgt in "${B}/target/${CARGO_TARGET_SUBDIR}/"*; do
-		case $tgt in
-		*examples)
-			if [ -d "$tgt" ]; then
-				for example in "$tgt/"*; do
-					if [ -f "$example" ] && [ -x "$example" ]; then
-						install -d "${D}${bindir}"
-						install -m755 "$example" "${D}${bindir}"
-						have_installed=true
-					fi
-				done
-			fi
-			;;
-		*)
-			if [ -f "$tgt" ] && [ -x "$tgt" ]; then
-				install -d "${D}${bindir}"
-				install -m755 "$tgt" "${D}${bindir}"
-				have_installed=true
-			fi
-			;;
-		esac
-	done
-	if ! $have_installed; then
-		die "Did not find anything to install"
-	fi
-
+    install_syntax_highlighting_confs
+    alias_nano
 }
 
 install_syntax_highlighting_confs() {
-	if [ ${KIBI_SYNTAX_HIGHLIGHTING} -ne 0 ]; then
-		install -d ${D}${datadir}/kibi
-		cp -r ${S_SYNTAX}/syntax.d ${D}${datadir}/kibi
-	fi
-}	
+    install -d ${D}${datadir}/kibi
+    cp -r ${S}/syntax.d ${D}${datadir}/kibi
+}
 
 alias_nano() {
-	if [ ${KIBI_ALIAS_NANO} -ne 0 ]; then
-		ln --relative --symbolic ${D}${bindir}/kibi ${D}${bindir}/nano
-	fi
+    if [ ${KIBI_ALIAS_NANO} -ne 0 ]; then
+        ln --relative --symbolic ${D}${bindir}/kibi ${D}${bindir}/nano
+    fi
 }

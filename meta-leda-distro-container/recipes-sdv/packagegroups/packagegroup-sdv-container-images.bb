@@ -18,4 +18,8 @@ inherit packagegroup
 
 RDEPENDS:${PN} = "\
     self-update-agent-container \
+    hvac-service-example-container \
+    vehicle-update-manager-container \
+    seat-service-example-container \
+    databroker-container \
 "

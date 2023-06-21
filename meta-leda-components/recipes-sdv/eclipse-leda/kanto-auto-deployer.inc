@@ -1,5 +1,5 @@
 # /********************************************************************************
-# * Copyright (c) 2022 Contributors to the Eclipse Foundation
+# * Copyright (c) 2023 Contributors to the Eclipse Foundation
 # *
 # * See the NOTICE file(s) distributed with this work for additional
 # * information regarding copyright ownership.
@@ -11,54 +11,27 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
+inherit systemd kanto-auto-deployer
 
-PACKAGES = "${PN} ${PN}-dbg"
-FILES:${PN} += "${bindir}/kanto-auto-deployer"
-FILES:${PN} += "${systemd_unitdir}/system/kanto-auto-deployer.service"
-FILES:${PN} += "${KANTO_MANIFESTS_DEV_DIR}"
-FILES:${PN}-dbg += "${bindir}/.debug"
+SUMMARY = "Kanto Auto Deployer via a unix socket"
+DESCRIPTION = "Automated deployment of Kanto Container Management Manifests"
+HOMEPAGE = "https://github.com/eclipse-leda/leda-utils"
 
-do_install:append() {
-	cargo_do_install
-	install_service
-}
+LICENSE = "Apache-2.0"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57"
 
-cargo_do_install () {
-	local have_installed=false
-	for tgt in "${B}/target/${CARGO_TARGET_SUBDIR}/"*; do
-		case $tgt in
-		*.so|*.rlib)
-			install -d "${D}${rustlibdir}"
-			install -m755 "$tgt" "${D}${rustlibdir}"
-			have_installed=true
-			;;
-		*examples)
-			if [ -d "$tgt" ]; then
-				for example in "$tgt/"*; do
-					if [ -f "$example" ] && [ -x "$example" ]; then
-						install -d "${D}${bindir}"
-						install -m755 "$example" "${D}${bindir}"
-						have_installed=true
-					fi
-				done
-			fi
-			;;
-		*)
-			if [ -f "$tgt" ] && [ -x "$tgt" ]; then
-				install -d "${D}${bindir}"
-				install -m755 "$tgt" "${D}${bindir}"
-				have_installed=true
-			fi
-			;;
-		esac
-	done
-	if ! $have_installed; then
-		die "Did not find anything to install"
-	fi
-
-}
+SYSTEMD_AUTO_ENABLE = "enable"
+SYSTEMD_PACKAGES = "${@bb.utils.contains('DISTRO_FEATURES','systemd','${PN}','',d)}"
+SYSTEMD_SERVICE:${PN} = "${@bb.utils.contains('DISTRO_FEATURES','systemd','kanto-auto-deployer.service','',d)}"
 
 KANTO_SERVICE_DIR = "${systemd_unitdir}/system"
+
+FILES:${PN} += "${systemd_unitdir}/system/kanto-auto-deployer.service"
+FILES:${PN} += "${KANTO_MANIFESTS_DEV_DIR}"
+
+do_install:append() {
+    install_service
+}
 
 install_service() {
     install -d ${D}${KANTO_SERVICE_DIR}
@@ -75,5 +48,3 @@ install_service() {
 
     install -d ${D}${KANTO_MANIFESTS_DEV_DIR}
 }
-
-

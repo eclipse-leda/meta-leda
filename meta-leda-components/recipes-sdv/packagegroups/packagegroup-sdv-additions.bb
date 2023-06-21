@@ -17,7 +17,6 @@ DESCRIPTION = "Packages required to set up a basic working demo SDV system, but 
 inherit packagegroup
 
 RDEPENDS:${PN} = "\
-    kanto-auto-deployer \
     kantui \
 "
 

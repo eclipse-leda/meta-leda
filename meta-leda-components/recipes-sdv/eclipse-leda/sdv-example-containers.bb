@@ -30,6 +30,7 @@ SRC_URI:append = " file://example/otelcol-sdv-exporter.json.disabled"
 
 do_install:append() {
     install -d ${D}${KANTO_MANIFESTS_LOCAL_DIR}
+    install -d ${D}${KANTO_MANIFESTS_LOCAL_DEV_DIR}
 
     # Activated Containers
     install ${WORKDIR}/example/hvac.json ${D}${KANTO_MANIFESTS_LOCAL_DIR}
@@ -48,6 +49,8 @@ do_install:append() {
 PACKAGES = "${PN}"
 
 FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}"
+FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DEV_DIR}"
+
 FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}/hvac.json"
 FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}/feedercan.json"
 FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}/seatservice.json"
