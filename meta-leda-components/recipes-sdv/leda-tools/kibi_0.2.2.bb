@@ -17,8 +17,10 @@ HOMEPAGE = "https://github.com/ilai-deutel/kibi"
 
 inherit cargo
 
-SRC_URI += "git://github.com/ilai-deutel/kibi.git;protocol=https;nobranch=1"
-SRCREV = "2cc6bead72e2b48203d6ddf28f189c51868a9a79"
+SRCREV_FORMAT = "kibisrc_moresyntax"
+
+SRC_URI += "git://github.com/ilai-deutel/kibi.git;nobranch=1;protocol=https;name=kibisrc;branch=main"
+SRCREV_kibisrc = "2cc6bead72e2b48203d6ddf28f189c51868a9a79"
 
 # Get a commit with syntax highlighting for a lot of languages but no support for rust version 1.59.0
 SRC_URI += "git://github.com/ilai-deutel/kibi.git;protocol=https;nobranch=1;name=moresyntax;destsuffix=moresyntax/"
