@@ -2,7 +2,7 @@
     "container_id": "sua",
     "container_name": "sua",
     "image": {
-        "name": "ghcr.io/eclipse-leda/leda-contrib-self-update-agent/self-update-agent:build-66"
+        "name": "ghcr.io/eclipse-leda/leda-contrib-self-update-agent/self-update-agent:build-152"
     },
     "mount_points": [
         {
@@ -12,7 +12,7 @@
         },
         {
             "source": "/data/selfupdates",
-            "destination": "/RaucUpdate",
+            "destination": "/data/selfupdates",
             "propagation_mode": "rprivate"
         },
         {
