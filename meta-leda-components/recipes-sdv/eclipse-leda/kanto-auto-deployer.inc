@@ -25,13 +25,15 @@ SYSTEMD_PACKAGES = "${@bb.utils.contains('DISTRO_FEATURES','systemd','${PN}','',
 SYSTEMD_SERVICE:${PN} = "${@bb.utils.contains('DISTRO_FEATURES','systemd','kanto-auto-deployer.service','',d)}"
 
 KANTO_SERVICE_DIR = "${systemd_unitdir}/system"
+KAD_LOCK_PATH ??= "/var/lib/kanto-auto-deployer/KAD.enabled"
+
 
 FILES:${PN} += "${systemd_unitdir}/system/kanto-auto-deployer.service"
 FILES:${PN} += "${KANTO_MANIFESTS_DEV_DIR}"
 
 
 cargo_do_compile:prepend() {
-    export KAD_LOCK_PATH="/data/var/lib/kanto-auto-deployer/KAD.enabled"
+    export KAD_LOCK_PATH="{KAD_LOCK_PATH}"
 }
 
 do_install:append() {
