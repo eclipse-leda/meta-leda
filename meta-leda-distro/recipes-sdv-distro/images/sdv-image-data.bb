@@ -31,6 +31,7 @@ IMAGE_PREPROCESS_COMMAND += "prepare_filesystem;"
 inherit image
 
 prepare_filesystem() {
+
     # Required by containerd
     install -d ${IMAGE_ROOTFS}/var/containerd/
 
@@ -44,6 +45,9 @@ prepare_filesystem() {
     rm -rf ${IMAGE_ROOTFS}/var/lib
     rm -rf ${IMAGE_ROOTFS}/data
 
+    # Required by kanto-auto-deployer
+    install -d ${IMAGE_ROOTFS}/var/lib/kanto-auto-deployer
+    echo "Rename this file to KAD.enabled to re-enable KAD service" > ${IMAGE_ROOTFS}/var/lib/kanto-auto-deployer/KAD.enabled
 }
 
 INCOMPATIBLE_LICENSE = "GPL-3.0* LGPL-3.0* AGPL-3.0*"

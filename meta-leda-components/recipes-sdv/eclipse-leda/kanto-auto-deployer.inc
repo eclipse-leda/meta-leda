@@ -29,6 +29,11 @@ KANTO_SERVICE_DIR = "${systemd_unitdir}/system"
 FILES:${PN} += "${systemd_unitdir}/system/kanto-auto-deployer.service"
 FILES:${PN} += "${KANTO_MANIFESTS_DEV_DIR}"
 
+
+cargo_do_compile:prepend() {
+    export KAD_LOCK_PATH="/data/var/lib/kanto-auto-deployer/KAD.enabled"
+}
+
 do_install:append() {
     install_service
 }

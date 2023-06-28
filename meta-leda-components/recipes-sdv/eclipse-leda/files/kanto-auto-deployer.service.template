@@ -16,6 +16,7 @@ Description=Kanto Auto Deployer
 After=network-online.target container-management.service
 Wants=network-online.target container-management.service
 Requires=container-management.service
+ConditionPathExists=/data/var/lib/kanto-auto-deployer/KAD.enabled
 
 [Install]
 WantedBy=multi-user.target
@@ -23,4 +24,5 @@ WantedBy=multi-user.target
 [Service]
 Restart=on-failure
 RestartSec=5s
-ExecStart=@KD_BIN_DD@/kanto-auto-deployer @KD_CFG_DD@ --daemon
+ExecStart=@KD_BIN_DD@/kanto-auto-deployer --daemon --mqtt @KD_CFG_DD@ 
+
