@@ -33,7 +33,7 @@ FILES:${PN} += "${KANTO_MANIFESTS_DEV_DIR}"
 
 
 cargo_do_compile:prepend() {
-    export KAD_LOCK_PATH="{KAD_LOCK_PATH}"
+    export KAD_LOCK_PATH="${KAD_LOCK_PATH}"
 }
 
 do_install:append() {
