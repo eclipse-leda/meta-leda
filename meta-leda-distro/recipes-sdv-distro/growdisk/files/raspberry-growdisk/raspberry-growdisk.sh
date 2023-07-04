@@ -20,10 +20,10 @@ LAST_PARTITION_NUMBER=$(lsblk -l | grep part | wc -l)
 PARTITION="/dev/${DEVICE}p${LAST_PARTITION_NUMBER}"
 
 sgdisk /dev/$DEVICE --move-second-header
-
+partx -u -v /dev/$DEVICE
 e2fsck -f -y $PARTITION
-echo ',+' | sfdisk /dev/$DEVICE -N $LAST_PARTITION_NUMBER --force
-e2fsck -f -y $PARTITION
+echo ',+' | sfdisk /dev/$DEVICE -N $LAST_PARTITION_NUMBER --force --lock --no-reread
+partx -u -v /dev/$DEVICE
 resize2fs $PARTITION
 e2fsck -f -y $PARTITION
-sfdisk -Vl /dev/$DEVICE
+sfdisk -V /dev/$DEVICE
