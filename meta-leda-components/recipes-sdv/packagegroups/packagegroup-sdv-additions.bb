@@ -19,6 +19,3 @@ inherit packagegroup
 RDEPENDS:${PN} = "\
     kantui \
 "
-
-# TODO: For future example applictations:
-# gpsd gpsd-conf

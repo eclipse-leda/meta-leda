@@ -26,6 +26,8 @@ RDEPENDS:${PN} = "\
     kanto-auto-deployer \
     leda-utils \
     openvpn \
+    gpsd \
+    gpsd-conf \
     "
 
 RDEPENDS:${PN}:append = " ${@bb.utils.contains("DISTRO_FEATURES", "airgap-containers", "airgap-container-installer", "", d)}"

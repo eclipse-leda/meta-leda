@@ -24,7 +24,5 @@ RDEPENDS:${PN} = "\
     leda-utils \
     sudo \
     databroker-cli \
+    gps-utils \
     "
-
-# TODO: For future example applictations
-# gps-utils
