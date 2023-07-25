@@ -25,4 +25,5 @@ RDEPENDS:${PN} = "\
     sudo \
     databroker-cli \
     gps-utils \
+    kuksa-gps-feeder \
     "
