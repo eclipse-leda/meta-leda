@@ -14,16 +14,11 @@
 SUMMARY = "KUKSA.val Python Client and SDK"
 HOMEPAGE = "https://github.com/eclipse/kuksa.val"
 
-
-# TODO: update to newer release with fixed license file and without bash dependency ...
-
-
 LICENSE = "Apache-2.0"
-# LIC_FILES_CHKSUM = "file://LICENSE;md5=899c824b3a6926844787ad42a3e5df56"
-LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=2b42edef8fa55315f34f2370b4715ca9"
 
 PYPI_PACKAGE = "kuksa_client"
-SRC_URI[sha256sum] = "148aa5eea5e7b760b859754770f456159062d9c405b206c66bc668b11166331c"
+SRC_URI[sha256sum] = "548efd32ab5c4f0004f922b36eba88f1dc8c374bf3c599f1337b6b74e0fcf448"
 
 DEPENDS += " \
     python3-grpcio-tools-native \
@@ -33,7 +28,6 @@ RDEPENDS:${PN} = " \
     python3-cmd2 \
     python3-grpcio-tools \
     python3-websockets \
-    bash \
 "
 
 inherit pypi setuptools3
