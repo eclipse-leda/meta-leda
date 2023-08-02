@@ -9,4 +9,4 @@ RemainAfterExit=yes
 ExecStart=/usr/sbin/raspberry-growdisk.sh
 
 [Install]
-WantedBy=data.mount
+RequiredBy=data.mount
