@@ -21,6 +21,7 @@ LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd
 FILESEXTRAPATHS:prepend := "${THISDIR}/kanto-containers:"
 SRC_URI:append = " file://example/hvac.json"
 SRC_URI:append = " file://example/feedercan.json"
+SRC_URI:append = " file://example/feedergps.json"
 SRC_URI:append = " file://example/seatservice.json"
 SRC_URI:append = " file://example/seatadjuster-app.json.disabled"
 SRC_URI:append = " file://example/ota-client.json.disabled"
@@ -34,6 +35,7 @@ do_install:append() {
     # Activated Containers
     install ${WORKDIR}/example/hvac.json ${D}${KANTO_MANIFESTS_LOCAL_DIR}
     install ${WORKDIR}/example/feedercan.json ${D}${KANTO_MANIFESTS_LOCAL_DIR}
+    install ${WORKDIR}/example/feedergps.json ${D}${KANTO_MANIFESTS_LOCAL_DIR}
     install ${WORKDIR}/example/seatservice.json ${D}${KANTO_MANIFESTS_LOCAL_DIR}
 
     # Deactivated Containers
@@ -51,6 +53,7 @@ FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}"
 
 FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}/hvac.json"
 FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}/feedercan.json"
+FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}/feedergps.json"
 FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}/seatservice.json"
 
 FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}/seatadjuster-app.json.disabled"
