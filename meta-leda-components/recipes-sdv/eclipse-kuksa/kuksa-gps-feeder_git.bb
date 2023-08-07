@@ -18,6 +18,7 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://../LICENSE.txt;md5=175792518e4ac015ab6696d16c4f607e"
 
 SRC_URI = "git://github.com/eclipse/kuksa.val.feeders.git;protocol=https;branch=main \
+           file://0001-Fix-container-entrypoint-script.patch \
            file://gpsd_feeder.ini \
 "
 
@@ -32,13 +33,16 @@ RDEPENDS:${PN} = " \
 "
 
 FILES:${PN} = "\
-    ${bindir}/gpsd_feeder \
+    ${bindir}/gpsd_feeder.py \
+    ${bindir}/entrypoint_gps_feeder.sh \
     ${sysconfdir}/gpsd_feeder.ini \
 "
 
 do_install () {
     install -d ${D}${bindir}
-    install -m 0755 ${S}/gpsd_feeder.py ${D}${bindir}/gpsd_feeder
+    install -m 0755 ${S}/gpsd_feeder.py ${D}${bindir}/gpsd_feeder.py
+    install -m 0755 ${S}/entrypoint.sh ${D}${bindir}/entrypoint_gps_feeder.sh
+
     install -d ${D}${sysconfdir}
     install -m 0644 ${WORKDIR}/gpsd_feeder.ini ${D}${sysconfdir}/gpsd_feeder.ini
 }

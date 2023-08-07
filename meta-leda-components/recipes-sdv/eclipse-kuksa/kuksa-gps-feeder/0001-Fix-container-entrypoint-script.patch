@@ -1,0 +1,22 @@
+From 7b1999832f1dfebccca8df0f25473f9bcbfcaf7a Mon Sep 17 00:00:00 2001
+From: Guenther Meyer <g.meyer@signum-media.de>
+Date: Mon, 7 Aug 2023 15:26:01 +0200
+Subject: [PATCH] Fix container entrypoint script
+
+
+diff --git a/gps2val/entrypoint.sh b/gps2val/entrypoint.sh
+index 44f0aac..74bc327 100755
+--- a/entrypoint.sh
++++ b/entrypoint.sh
+@@ -35,7 +35,7 @@ cleanup() {
+ }
+
+ echo "# Launching: ./gpsd_feeder.py $*"
+-python -u ./gpsd_feeder.py $*
++python3 -u /usr/bin/gpsd_feeder.py $*
+
+ cleanup
+
+--
+2.41.0
+

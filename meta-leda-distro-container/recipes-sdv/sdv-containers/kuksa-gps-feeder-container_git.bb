@@ -11,16 +11,20 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-SUMMARY = "SDV application container images"
-DESCRIPTION = "Packages creating application images to be run as containers"
+SUMMARY = "Eclipse Kuksa - GPS Feeder container image"
 
-inherit packagegroup
+LICENSE = "Apache-2.0"
+LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-RDEPENDS:${PN} = "\
-    self-update-agent-container \
-    hvac-service-example-container \
-    vehicle-update-manager-container \
-    seat-service-example-container \
-    databroker-container \
-    kuksa-gps-feeder-container \
+require ../images/sdv-image-container.bb
+
+IMAGE_INSTALL += " \
+    busybox \
+    gpsd \
+    kuksa-gps-feeder \
 "
+
+OCI_IMAGE_TAG = "kuksa-gps-feeder:latest"
+OCI_IMAGE_ENTRYPOINT = "entrypoint_gps_feeder.sh"
+OCI_IMAGE_ENTRYPOINT_ARGS = "--insecure=True --ip databroker --port 55555 --protocol grpc"
+OCI_IMAGE_ENV_VARS = 'GPSD_OPTIONS="-S 2948 gpsd://host:2947"'
