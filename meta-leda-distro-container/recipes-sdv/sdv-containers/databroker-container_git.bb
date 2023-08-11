@@ -20,11 +20,10 @@ require ../images/sdv-image-container.bb
 IMAGE_INSTALL += " \
     busybox \
     databroker \
-    databroker-vss-core \
 "
 
 DATA_BROKER_PORT = "55555"
-DATA_BROKER_METADATA = "/usr/share/vss-core/vss_release_3.0.json"
+DATA_BROKER_METADATA = "/usr/share/vss/vss_rel_3.1.1.json"
 
 OCI_IMAGE_TAG = "databroker:latest"
 OCI_IMAGE_ENTRYPOINT = "/usr/bin/databroker"
