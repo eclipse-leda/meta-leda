@@ -1,5 +1,5 @@
 # /********************************************************************************
-# * Copyright (c) 2022 Contributors to the Eclipse Foundation
+# * Copyright (c) 2023 Contributors to the Eclipse Foundation
 # *
 # * See the NOTICE file(s) distributed with this work for additional
 # * information regarding copyright ownership.
@@ -11,22 +11,12 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-SUMMARY = "SDV core packages"
-DESCRIPTION = "Packages required to set up a basic working SDV system"
+SUMMARY = "Covesa VSS Releases"
 
 inherit packagegroup
 
 RDEPENDS:${PN} = "\
-    ca-certificates \
-    openssh \
-    openssh-sftp-server \
-    rauc \
-    mosquitto \
-    container-management \
-    kanto-auto-deployer \
-    leda-utils \
-    openvpn \
-    vss-releases \
-    "
-
-RDEPENDS:${PN}:append = " ${@bb.utils.contains("DISTRO_FEATURES", "airgap-containers", "airgap-container-installer", "", d)}"
+    vss-release4 \
+    vss-release3 \
+    vss-release2 \
+"
