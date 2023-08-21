@@ -1,0 +1,18 @@
+{
+    "log": {
+      "logFile": "/var/log/update-manager/update-manager.log"
+    },
+    "domain": "vehicle",
+    "agents": {
+        "containers": {
+            "name": "containers",
+            "rebootRequired": false,
+            "readTimeout": "30s"
+        },
+        "self-update": {
+            "name": "self-update",
+            "rebootRequired": true,
+            "readTimeout": "30s"
+        }
+    }
+}
