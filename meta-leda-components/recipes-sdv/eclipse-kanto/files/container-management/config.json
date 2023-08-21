@@ -14,6 +14,6 @@
     "update_agent": {
       "enable": true,
       "system_containers": [],
-      "verbose_inventory_report": true
+      "verbose_inventory_report": false
     }
 }
