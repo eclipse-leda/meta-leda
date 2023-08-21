@@ -10,5 +10,10 @@
     },
     "deployment": {
         "init_dir": "@KANTO_MANIFESTS_DIR@"
+    },
+    "update_agent": {
+      "enable": true,
+      "system_containers": [],
+      "verbose_inventory_report": false
     }
 }
