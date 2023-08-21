@@ -17,11 +17,8 @@ HOMEPAGE = "https://github.com/eclipse/kuksa.val.services"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://../LICENSE;md5=2b42edef8fa55315f34f2370b4715ca9"
 
-SRC_URI = "git://github.com/eclipse/kuksa.val.services;protocol=https;branch=main \
-           file://0001-add-missing-shebang-line.patch;patchdir=.. \
-           "
-
-SRCREV = "07a2d28cedb1b367ae65a8e75939029f06bb24fc"
+SRC_URI = "git://github.com/eclipse/kuksa.val.services;protocol=https;branch=main"
+SRCREV = "3a4fff12f2c9a6f96064e5382e4e3b03ea32090b"
 PV = "0.2.0+git${SRCPV}"
 
 S = "${WORKDIR}/git/hvac_service"

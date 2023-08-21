@@ -22,7 +22,7 @@ SRC_URI = "git://github.com/eclipse/kuksa.val.services;protocol=https;branch=mai
            file://git/CMakeLists.txt \
 "
 
-SRCREV = "07a2d28cedb1b367ae65a8e75939029f06bb24fc"
+SRCREV = "0cb84b8c524e64160b3edf1e607bb4de67e93a11"
 PV = "0.2.0+git${SRCPV}"
 
 S = "${WORKDIR}/git"
@@ -32,7 +32,6 @@ inherit cmake
 DEPENDS += " protobuf grpc protobuf-native grpc-native python3-cantools-native"
 
 RDEPENDS:${PN} = "can-utils"
-RDEPENDS:${PN} += " bash"
 
 EXTRA_OECMAKE = "-DSDV_BUILD_TESTING=OFF -DCMAKE_BUILD_TYPE=Release"
 
