@@ -1,6 +1,6 @@
 {
     "log": {
-      "logFile": "/var/log/update-manager/update-manager.log"
+      "logFile": "/var/log/kanto-update-manager/kanto-update-manager.log"
     },
     "domain": "vehicle",
     "agents": {
