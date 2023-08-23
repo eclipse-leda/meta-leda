@@ -16,7 +16,7 @@
 inherit cargo
 
 SRC_URI += "gitsm://github.com/SoftwareDefinedVehicle/leda-utils-fork.git;protocol=https;nobranch=1;branch=kad-mqtt-poc"
-SRCREV = "baed62f66ab2d31ef068ec1762f2256e6dcd446b"
+SRCREV = "7d534c7a6ff74c87a79379f636ec6932afce1139"
 S = "${WORKDIR}/git"
 CARGO_SRC_DIR = "src/rust/kanto-auto-deployer"
 
