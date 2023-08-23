@@ -11,6 +11,9 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
+FILESEXTRAPATHS:prepend := "${THISDIR}/files/update-manager:"
 
-# disable GPLv3 licensed dependencies:
-PACKAGECONFIG:remove = " readline gdbm"
+SRC_URI += "file://config.json \
+           "
+
+SRCREV="${AUTOREV}"

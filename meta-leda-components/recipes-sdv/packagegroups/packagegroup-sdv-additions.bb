@@ -18,4 +18,5 @@ inherit packagegroup
 
 RDEPENDS:${PN} = "\
     kantui \
+    python3-modules \
 "

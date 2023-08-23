@@ -23,6 +23,7 @@ RDEPENDS:${PN} = "\
     rauc \
     mosquitto \
     container-management \
+    update-manager \
     kanto-auto-deployer \
     leda-utils \
     openvpn \
