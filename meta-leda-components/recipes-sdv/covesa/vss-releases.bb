@@ -19,4 +19,7 @@ RDEPENDS:${PN} = "\
     vss-release4 \
     vss-release3 \
     vss-release2 \
+    vss-spec4 \
+    vss-spec3 \
+    vss-spec2 \
 "

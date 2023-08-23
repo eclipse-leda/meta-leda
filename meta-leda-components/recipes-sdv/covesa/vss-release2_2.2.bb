@@ -25,9 +25,15 @@ SRC_URI[json.sha256sum] = "405d57cd7c01223c45da6e3b1f0a13276abd1b2c11bc7419cf4d3
 SRCREV = "${AUTOREV}"
 S = "${WORKDIR}"
 
-FILES:${PN} = "${datadir}/vss"
+PACKAGES += " vss-spec2"
+
+FILES:${PN} = "${datadir}/vss/*.*"
+FILES:vss-spec2 = "${datadir}/vss/spec"
 
 do_install:append() {
     install -d ${D}${datadir}/vss
     install -m 0644 ${S}/vss_rel_${PV}.* ${D}${datadir}/vss
+
+    install -d ${D}${datadir}/vss/spec/${PV}
+    cp -R --no-preserve=ownership ${S}/git/spec/* ${D}${datadir}/vss/spec/${PV}
 }
