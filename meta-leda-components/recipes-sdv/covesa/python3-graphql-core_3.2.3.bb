@@ -1,5 +1,5 @@
 # /********************************************************************************
-# * Copyright (c) 2022 Contributors to the Eclipse Foundation
+# * Copyright (c) 2023 Contributors to the Eclipse Foundation
 # *
 # * See the NOTICE file(s) distributed with this work for additional
 # * information regarding copyright ownership.
@@ -11,21 +11,16 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-SUMMARY = "SDV core packages"
-DESCRIPTION = "Packages required to set up a basic working SDV system"
+SUMMARY = "GraphQL implementation for Python, a port of GraphQL.js, the JavaScript reference implementation for GraphQL"
+HOMEPAGE = "https://github.com/graphql-python/graphql-core"
 
-inherit packagegroup
+LICENSE = "MIT"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=73706fb002de2debc52328afd1688817"
 
-RDEPENDS:${PN} = "\
-    htop \
-    jq \
-    kibi \
-    mosquitto-clients \
-    leda-utils \
-    sudo \
-    databroker-cli \
-    vss-tools \
-    "
+SRC_URI[sha256sum] = "06d2aad0ac723e35b1cb47885d3e5c45e956a53bc1b209a9fc5369007fe46676"
 
-# TODO: For future example applictations
-# gps-utils
+PYPI_PACKAGE = "graphql-core"
+
+inherit pypi setuptools3
+
+BBCLASSEXTEND = "native"
