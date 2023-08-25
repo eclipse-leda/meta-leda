@@ -16,7 +16,7 @@
 # the data partition is properly mounted and the data partition is unmounted AFTER Kanto-CM
 # is fully stopped.
 
-FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/files/container-management:"
 
 SRC_URI += "file://service.template \
             file://config.json \
