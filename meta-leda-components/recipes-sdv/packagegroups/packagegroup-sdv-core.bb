@@ -28,6 +28,7 @@ RDEPENDS:${PN} = "\
     leda-utils \
     openvpn \
     sdv-device-config \
+    avahi-daemon libnss-mdns \
     "
 
 RDEPENDS:${PN}:append = " ${@bb.utils.contains("DISTRO_FEATURES", "airgap-containers", "airgap-container-installer", "", d)}"
