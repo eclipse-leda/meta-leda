@@ -36,6 +36,9 @@ prepare_filesystem() {
 
     # Required by Self Update Agent (see sua.json)
     install -d ${IMAGE_ROOTFS}/selfupdates/
+    
+    # Where blueprints will be saved
+    install -d "${IMAGE_ROOTFS}/var/containers/bluerpints"
 
     rm -rf ${IMAGE_ROOTFS}/etc/systemd
     rm -rf ${IMAGE_ROOTFS}/etc/ld.so.cache
