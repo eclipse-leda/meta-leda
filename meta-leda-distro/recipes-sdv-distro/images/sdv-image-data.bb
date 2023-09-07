@@ -38,7 +38,7 @@ prepare_filesystem() {
     install -d ${IMAGE_ROOTFS}/selfupdates/
     
     # Where blueprints will be saved
-    install -d "${IMAGE_ROOTFS}/var/containers/bluerpints"
+    install -d "${IMAGE_ROOTFS}/var/containers/blueprints"
 
     rm -rf ${IMAGE_ROOTFS}/etc/systemd
     rm -rf ${IMAGE_ROOTFS}/etc/ld.so.cache
