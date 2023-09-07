@@ -10,7 +10,7 @@ inherit cargo
 SRC_URI += "gitsm://github.com/SoftwareDefinedVehicle/leda-utils-fork.git;protocol=https;nobranch=1;branch=feature/blueprints-selector"
 SRCREV = "6ab189a1ef188f6f60ab81dc70aff55fbb36667d"
 S = "${WORKDIR}/git"
-CARGO_SRC_DIR = ""
+CARGO_SRC_DIR = "src/rust/blueprint-selector"
 PV:append = ".AUTOINC+6ab189a1ef"
 
 # please note if you have entries that do not begin with crate://
