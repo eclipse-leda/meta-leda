@@ -21,6 +21,7 @@ LICENSE = "Apache-2.0"
 IMAGE_INSTALL += "sdv-core-containers"
 IMAGE_INSTALL += "sdv-example-containers"
 IMAGE_INSTALL += "sdv-example-certificate"
+IMAGE_INSTALL += "sdv-example-blueprints"
 IMAGE_INSTALL:append = " ${@bb.utils.contains("DISTRO_FEATURES", "airgap-containers", "packagegroup-sdv-airgap-containers", "", d)}"
 IMAGE_FSTYPES += "ext4.gz"
 IMAGE_LINGUAS = ""
@@ -37,6 +38,9 @@ prepare_filesystem() {
 
     # Required by Self Update Agent (see sua.json)
     install -d ${IMAGE_ROOTFS}/selfupdates/
+    
+    # Where blueprints will be saved
+    install -d "${IMAGE_ROOTFS}/var/containers/blueprints"
 
     rm -rf ${IMAGE_ROOTFS}/etc/systemd
     rm -rf ${IMAGE_ROOTFS}/etc/ld.so.cache
