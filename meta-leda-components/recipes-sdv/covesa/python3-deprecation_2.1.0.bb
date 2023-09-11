@@ -1,5 +1,5 @@
 # /********************************************************************************
-# * Copyright (c) 2022 Contributors to the Eclipse Foundation
+# * Copyright (c) 2023 Contributors to the Eclipse Foundation
 # *
 # * See the NOTICE file(s) distributed with this work for additional
 # * information regarding copyright ownership.
@@ -11,21 +11,20 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-SUMMARY = "SDV core packages"
-DESCRIPTION = "Packages required to set up a basic working SDV system"
+SUMMARY = "Powerful and Lightweight Python Tree Data Structure with various plugins"
+HOMEPAGE = "https://github.com/c0fec0de/anytree"
 
-inherit packagegroup
+LICENSE = "Apache-2.0"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=e3fc50a88d0a364313df4b21ef20c29e"
 
-RDEPENDS:${PN} = "\
-    htop \
-    jq \
-    kibi \
-    mosquitto-clients \
-    leda-utils \
-    sudo \
-    databroker-cli \
-    vss-tools \
-    "
+SRC_URI[sha256sum] = "72b3bde64e5d778694b0cf68178aed03d15e15477116add3fb773e581f9518ff"
 
-# TODO: For future example applictations
-# gps-utils
+PYPI_PACKAGE = "deprecation"
+
+inherit pypi setuptools3
+
+RDEPENDS:${PN} = " \
+    ${PYTHON_PN}-packaging \
+"
+
+BBCLASSEXTEND = "native"
