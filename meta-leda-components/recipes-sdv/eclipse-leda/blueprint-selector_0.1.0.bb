@@ -19,7 +19,7 @@ inherit cargo
 
 # how to get blueprint-selector could be as easy as but default to a git checkout:
 # SRC_URI += "crate://crates.io/blueprint-selector/0.1.0"
-SRC_URI += "gitsm://https://github.com/eclipse-leda/leda-utils.git;protocol=https;nobranch=1;branch=main"
+SRC_URI += "gitsm://github.com/eclipse-leda/leda-utils.git;protocol=https;nobranch=1;branch=main"
 SRCREV = "1f933716a8500c9f464537d60dfd33c8cdc0a850"
 S = "${WORKDIR}/git"
 CARGO_SRC_DIR = "src/rust/blueprint-selector"
