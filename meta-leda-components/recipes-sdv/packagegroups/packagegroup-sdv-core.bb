@@ -29,6 +29,7 @@ RDEPENDS:${PN} = "\
     openvpn \
     gpsd \
     gpsd-conf \
+    vss-releases \
     "
 
 RDEPENDS:${PN}:append = " ${@bb.utils.contains("DISTRO_FEATURES", "airgap-containers", "airgap-container-installer", "", d)}"

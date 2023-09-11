@@ -13,7 +13,7 @@
     },
     "update_agent": {
       "enable": true,
-      "system_containers": [],
+      "system_containers": ["sua"],
       "verbose_inventory_report": false
     }
 }

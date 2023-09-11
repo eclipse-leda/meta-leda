@@ -11,6 +11,15 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-DESCRIPTION = "Efficient in-vehicle signal broker written in RUST"
+SUMMARY = "Covesa VSS Releases"
 
-RDEPENDS:${PN} += "vss-releases"
+inherit packagegroup
+
+RDEPENDS:${PN} = "\
+    vss-release4 \
+    vss-release3 \
+    vss-release2 \
+    vss-spec4 \
+    vss-spec3 \
+    vss-spec2 \
+"

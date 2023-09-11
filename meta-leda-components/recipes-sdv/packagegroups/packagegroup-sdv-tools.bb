@@ -26,4 +26,5 @@ RDEPENDS:${PN} = "\
     databroker-cli \
     gps-utils \
     kuksa-gps-feeder \
+    vss-tools \
     "

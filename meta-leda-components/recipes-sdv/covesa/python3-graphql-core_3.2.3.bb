@@ -11,6 +11,16 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-DESCRIPTION = "Efficient in-vehicle signal broker written in RUST"
+SUMMARY = "GraphQL implementation for Python, a port of GraphQL.js, the JavaScript reference implementation for GraphQL"
+HOMEPAGE = "https://github.com/graphql-python/graphql-core"
 
-RDEPENDS:${PN} += "vss-releases"
+LICENSE = "MIT"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=73706fb002de2debc52328afd1688817"
+
+SRC_URI[sha256sum] = "06d2aad0ac723e35b1cb47885d3e5c45e956a53bc1b209a9fc5369007fe46676"
+
+PYPI_PACKAGE = "graphql-core"
+
+inherit pypi setuptools3
+
+BBCLASSEXTEND = "native"

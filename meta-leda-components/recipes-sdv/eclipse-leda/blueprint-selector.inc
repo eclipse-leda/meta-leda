@@ -10,7 +10,16 @@
 # *
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
+#
 
-DESCRIPTION = "Efficient in-vehicle signal broker written in RUST"
+BLUEPRINTS_DIR ??= "/var/containers/blueprints"
+BLUEPRINTS_DIR[doc] = "Specifies the location where blueprint selector should look for blueprints by default. \
+                       This should, in general, match with the location in the sdv-example-blueprints recipe if that is used. \
+                        "
 
-RDEPENDS:${PN} += "vss-releases"
+DEPENDS += " pkgconfig-native openssl"
+
+cargo_do_compile:prepend() {
+    export PKG_CONFIG_ALLOW_CROSS=1
+    export DEFAULT_BLUEPRINTS_DIR="${BLUEPRINTS_DIR}"
+}
