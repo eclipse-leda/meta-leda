@@ -13,6 +13,9 @@
 #
 
 BLUEPRINTS_DIR ??= "/var/containers/blueprints"
+BLUEPRINTS_DIR[doc] = "Specifies the location where blueprint selector should look for blueprints by default. \
+                       This should, in general, match with the location in the sdv-example-blueprints recipe if that is used. \
+                        "
 
 DEPENDS += " pkgconfig-native openssl"
 
