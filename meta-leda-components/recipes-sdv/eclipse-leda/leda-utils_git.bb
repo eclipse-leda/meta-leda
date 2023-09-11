@@ -21,7 +21,7 @@ SRCREV = "da392fb1676ec5dbce9a6665fe8e1cf1240c3377"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${WORKDIR}/git/LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57"
 
-RDEPENDS:${PN} += "mosquitto-clients"
+RDEPENDS:${PN} += "mosquitto-clients iproute2"
 
 do_install() {
     install -d ${D}${bindir}
