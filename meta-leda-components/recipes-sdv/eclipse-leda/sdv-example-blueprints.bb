@@ -37,9 +37,9 @@ do_install:append() {
 
 PACKAGES = "${PN}"
 
-FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}"
-FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}/leda_default.blueprint.json"
-FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}/fleet_management.blueprint.json"
-FILES:${PN} += "${KANTO_MANIFESTS_LOCAL_DIR}/databroker_only.blueprint.json"
+FILES:${PN} += "${BLUEPRINTS_LOCAL_DIR}"
+FILES:${PN} += "${BLUEPRINTS_LOCAL_DIR}/leda_default.blueprint.json"
+FILES:${PN} += "${BLUEPRINTS_LOCAL_DIR}/fleet_management.blueprint.json"
+FILES:${PN} += "${BLUEPRINTS_LOCAL_DIR}/databroker_only.blueprint.json"
 
 
