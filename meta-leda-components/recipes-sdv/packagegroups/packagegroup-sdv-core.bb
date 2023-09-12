@@ -30,6 +30,7 @@ RDEPENDS:${PN} = "\
     gpsd \
     gpsd-conf \
     vss-releases \
+    wasmedge \
     "
 
 RDEPENDS:${PN}:append = " ${@bb.utils.contains("DISTRO_FEATURES", "airgap-containers", "airgap-container-installer", "", d)}"
