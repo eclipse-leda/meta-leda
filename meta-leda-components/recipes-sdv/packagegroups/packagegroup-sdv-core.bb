@@ -23,6 +23,8 @@ RDEPENDS:${PN} = "\
     rauc \
     mosquitto \
     container-management \
+    crun \
+    wasmedge \
     update-manager \
     kanto-auto-deployer \
     leda-utils \
@@ -30,7 +32,6 @@ RDEPENDS:${PN} = "\
     gpsd \
     gpsd-conf \
     vss-releases \
-    wasmedge \
     "
 
 RDEPENDS:${PN}:append = " ${@bb.utils.contains("DISTRO_FEATURES", "airgap-containers", "airgap-container-installer", "", d)}"
