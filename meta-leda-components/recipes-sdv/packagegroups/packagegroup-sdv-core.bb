@@ -27,6 +27,8 @@ RDEPENDS:${PN} = "\
     kanto-auto-deployer \
     leda-utils \
     openvpn \
+    gpsd \
+    gpsd-conf \
     vss-releases \
     "
 
