@@ -1,0 +1,12 @@
+[Unit]
+Description=GPS (Global Positioning System) Daemon Sockets
+
+[Socket]
+ListenStream=/run/gpsd.sock
+ListenStream=[::]:2947
+ListenStream=0.0.0.0:2947
+SocketMode=0600
+BindIPv6Only=yes
+
+[Install]
+WantedBy=sockets.target

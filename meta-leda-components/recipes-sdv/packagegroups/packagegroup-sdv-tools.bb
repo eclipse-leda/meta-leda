@@ -24,8 +24,7 @@ RDEPENDS:${PN} = "\
     leda-utils \
     sudo \
     databroker-cli \
+    gps-utils \
+    kuksa-gps-feeder \
     vss-tools \
     "
-
-# TODO: For future example applictations
-# gps-utils
