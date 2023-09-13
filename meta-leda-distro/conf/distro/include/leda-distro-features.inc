@@ -18,6 +18,7 @@ DISTRO_FEATURES:append = " rauc"
 DISTRO_FEATURES:append = " security"
 DISTRO_FEATURES:append = " sdv"
 DISTRO_FEATURES:append = " ldconfig"
+DISTRO_FEATURES:append = " zeroconf"
 
 # Enable WiFi
 DISTRO_FEATURES:append = " wifi"

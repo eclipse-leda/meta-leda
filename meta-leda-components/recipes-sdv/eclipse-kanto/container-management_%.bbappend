@@ -11,7 +11,7 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 #
-# Modifies the original Kanto-CM recipe to use a custom service file that adds a 
+# Modifies the original Kanto-CM recipe to use a custom service file that adds a
 # After=data.mount dependency for CM. This way it is ensured that CM is started AFTER
 # the data partition is properly mounted and the data partition is unmounted AFTER Kanto-CM
 # is fully stopped.
@@ -31,11 +31,10 @@ do_install:append() {
         # config.json
         install -d ${D}${CM_CFG_DD}/container-management
         install -m 0644 ${WORKDIR}/config.json ${D}${CM_CFG_DD}/container-management/config.json
-    
+
         # fill in the config.json template with the custom configs provided
         sed -e 's,@CM_LOD_DD@,${CM_LOD_DD},g' \
           -e 's,@CM_THINGS_ENABLED@,${CM_THINGS_ENABLED},g' \
-          -e 's,@KANTO_MANIFESTS_DIR@,${KANTO_MANIFESTS_DIR},g' \
           -i ${D}${CM_CFG_DD}/container-management/config.json
 
         # service.template as service

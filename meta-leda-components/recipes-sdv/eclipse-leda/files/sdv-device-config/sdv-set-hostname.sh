@@ -1,3 +1,4 @@
+#!/bin/sh
 # /********************************************************************************
 # * Copyright (c) 2023 Contributors to the Eclipse Foundation
 # *
@@ -11,7 +12,15 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-KANTO_MANIFESTS_LOCAL_DIR ??= "/var/containers/manifests"
+DEVICE_ID=$(sdv-generate-deviceid.sh)
 
-KANTO_MANIFESTS_DIR ??= "${KANTO_MANIFESTS_LOCAL_DIR}"
-KANTO_MANIFESTS_DIR[doc] = "The location path of Kanto Container Management deployment descriptors"
+if [ -n "${DEVICE_ID}" ];
+then
+    HOST_NAME="leda-${DEVICE_ID}"
+    hostname "${HOST_NAME}"
+    echo "${HOST_NAME}" > /etc/hostname
+    sed -i "s/^127.0.1.1.*/127.0.0.1 ${HOST_NAME}/" /etc/hosts
+else
+    echo "Device ID not set, aborting!" >&2
+    exit 1
+fi

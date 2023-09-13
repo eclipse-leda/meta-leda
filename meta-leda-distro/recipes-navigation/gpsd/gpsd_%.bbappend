@@ -11,7 +11,19 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-KANTO_MANIFESTS_LOCAL_DIR ??= "/var/containers/manifests"
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
-KANTO_MANIFESTS_DIR ??= "${KANTO_MANIFESTS_LOCAL_DIR}"
-KANTO_MANIFESTS_DIR[doc] = "The location path of Kanto Container Management deployment descriptors"
+SRC_URI:append = " \
+    file://gpsd_default_config \
+    file://gpsd_socket.service \
+"
+
+do_install:append() {
+    install -d ${D}${sysconfdir}/default
+    install -m 0644 ${WORKDIR}/gpsd_default_config ${D}${sysconfdir}/default/gpsd.default
+
+    install -d ${D}${systemd_system_unitdir}
+    install -m 0644 ${WORKDIR}/gpsd_socket.service ${D}${systemd_system_unitdir}/gpsd.socket
+}
+
+SYSTEMD_SERVICE:${PN} = "${BPN}.socket ${BPN}ctl@.service"

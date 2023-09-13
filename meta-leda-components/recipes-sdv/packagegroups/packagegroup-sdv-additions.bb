@@ -21,6 +21,3 @@ RDEPENDS:${PN} = "\
     python3-modules \
     blueprint-selector \
 "
-
-# TODO: For future example applictations:
-# gpsd gpsd-conf

@@ -11,7 +11,14 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-KANTO_MANIFESTS_LOCAL_DIR ??= "/var/containers/manifests"
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
-KANTO_MANIFESTS_DIR ??= "${KANTO_MANIFESTS_LOCAL_DIR}"
-KANTO_MANIFESTS_DIR[doc] = "The location path of Kanto Container Management deployment descriptors"
+SRC_URI:append = " \
+    file://ssh.service \
+    file://mqtt.service \
+"
+
+do_install:append() {
+    install -m 644 ${WORKDIR}/ssh.service ${D}${sysconfdir}/avahi/services/
+    install -m 644 ${WORKDIR}/mqtt.service ${D}${sysconfdir}/avahi/services/
+}

@@ -11,7 +11,20 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-KANTO_MANIFESTS_LOCAL_DIR ??= "/var/containers/manifests"
+SUMMARY = "Eclipse Kuksa - GPS Feeder container image"
 
-KANTO_MANIFESTS_DIR ??= "${KANTO_MANIFESTS_LOCAL_DIR}"
-KANTO_MANIFESTS_DIR[doc] = "The location path of Kanto Container Management deployment descriptors"
+LICENSE = "Apache-2.0"
+LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
+
+require ../images/sdv-image-container.bb
+
+IMAGE_INSTALL += " \
+    busybox \
+    gpsd \
+    kuksa-gps-feeder \
+"
+
+OCI_IMAGE_TAG = "kuksa-gps-feeder:latest"
+OCI_IMAGE_ENTRYPOINT = "entrypoint_gps_feeder.sh"
+OCI_IMAGE_ENTRYPOINT_ARGS = "--insecure=True --ip databroker --port 55555 --protocol grpc"
+OCI_IMAGE_ENV_VARS = 'GPSD_OPTIONS="-S 2948 gpsd://host:2947"'
