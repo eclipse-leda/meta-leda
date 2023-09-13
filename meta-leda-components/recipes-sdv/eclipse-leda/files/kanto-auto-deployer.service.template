@@ -16,7 +16,7 @@ Description=Kanto Auto Deployer
 After=network-online.target container-management.service
 Wants=network-online.target container-management.service
 Requires=container-management.service
-ConditionPathExists=/data/var/lib/kanto-auto-deployer/KAD.enabled
+ConditionPathExists=@KD_LOCK_PATH@
 
 [Install]
 WantedBy=multi-user.target

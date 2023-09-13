@@ -51,6 +51,7 @@ install_service() {
     # fill in the kanto auto deployer service template with the result configurations
     sed -e 's,@KD_BIN_DD@,${bindir},g' \
         -e 's,@KD_CFG_DD@,${KANTO_MANIFESTS_DIR},g' \
+        -e 's,@KD_LOCK_PATH@,${KAD_LOCK_PATH},g' \
     -i ${D}${KANTO_SERVICE_DIR}/kanto-auto-deployer.service
 
     install -d ${D}${KANTO_MANIFESTS_DIR}
