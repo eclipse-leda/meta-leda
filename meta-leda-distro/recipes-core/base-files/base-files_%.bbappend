@@ -31,7 +31,7 @@ dirs755 += "/rescue"
 DEPENDS = "git-native"
 
 # Overwrite /etc/issue with a custom version to show git tag
-do_install_basefilesissue:append() { 
+do_install_basefilesissue:append() {
     if ${@bb.utils.contains('DISTRO_FEATURES', 'sdv', 'true', 'false', d)}; then
         # Default fallback is just the version of the distro ("2022")
         LAYER_REV="${DISTRO_VERSION}"
@@ -46,3 +46,5 @@ do_install_basefilesissue:append() {
         printf "${DISTRO_NAME} ${LAYER_REV}\n" > ${D}${sysconfdir}/issue.sdv
     fi
 }
+
+hostname = "leda-${MACHINE}"
