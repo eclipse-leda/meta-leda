@@ -23,6 +23,8 @@ SRC_URI += "file://service.template \
            "
 
 SRCREV="${AUTOREV}"
+RDEPENDS:${PN}:remove = " runc-opencontainers"
+RDEPENDS:${PN}:append = " crun"
 
 do_install:append() {
 
