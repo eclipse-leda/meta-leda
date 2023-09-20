@@ -20,4 +20,6 @@ RDEPENDS:${PN} = "\
     kantui \
     python3-modules \
     blueprint-selector \
+    tio \
+    tmux \
 "
