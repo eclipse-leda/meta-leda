@@ -29,4 +29,4 @@ inherit meson pkgconfig
 
 DEPENDS += " libinih"
 RDEPENDS:${PN} += " libinih"
-FILES:${PN} += " /usr/share/bash-completion/completions/tio "
+FILES:${PN} += " /usr/share/bash-completion/completions/tio"
