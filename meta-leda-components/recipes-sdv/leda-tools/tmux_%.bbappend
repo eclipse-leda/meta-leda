@@ -1,5 +1,5 @@
 # /********************************************************************************
-# * Copyright (c) 2022 Contributors to the Eclipse Foundation
+# * Copyright (c) 2023 Contributors to the Eclipse Foundation
 # *
 # * See the NOTICE file(s) distributed with this work for additional
 # * information regarding copyright ownership.
@@ -11,15 +11,11 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-SUMMARY = "SDV core additional packages"
-DESCRIPTION = "Packages required to set up a basic working demo SDV system, but may contain temporary or additional packages"
+# Version of tmux is 2.1
+LIC_FILES_CHKSUM = "file://tmux.c;beginline=3;endline=17;md5=8685b4455330a940fab1ff451aa941a0"
 
-inherit packagegroup
+SRC_URI = "git://github.com/tmux/tmux.git;protocol=https;branch=master"
+SRCREV = "310f0a960ca64fa3809545badc629c0c166c6cd2"
 
-RDEPENDS:${PN} = "\
-    kantui \
-    python3-modules \
-    blueprint-selector \
-    tio \
-    tmux \
-"
+S = "${WORKDIR}/git"
+B = "${WORKDIR}/build"
