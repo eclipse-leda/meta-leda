@@ -22,4 +22,5 @@ RDEPENDS:${PN} = "\
     blueprint-selector \
     tio \
     tmux \
+    strace \
 "
