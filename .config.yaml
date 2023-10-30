@@ -36,9 +36,9 @@ local_conf_header:
     CLOUDCONNECTOR_CERTIFICATE_CERTFILE = "${S}/cloud-connector/example-device.crt"
     CLOUDCONNECTOR_CERTIFICATE_KEYFILE = "${S}/cloud-connector/example-device.key"
     DISTRO_FEATURES += " wifi"
-  meta-rauc: |
-    RAUC_KEY_FILE = "${COREBASE}/../examples/rauc/development-1.key.pem"
-    RAUC_CERT_FILE = "${COREBASE}/../examples/rauc/development-1.cert.pem"
+  sign_conf: |
+    RAUC_KEY_FILE = "${TOPDIR}/../examples/rauc/development-1.key.pem"
+    RAUC_CERT_FILE = "${TOPDIR}/../examples/rauc/development-1.cert.pem"
     RAUC_KEYRING_URI = "file://${TOPDIR}/../examples/rauc/ca.cert.pem"
     RAUC_KEYRING_FILE = "${TOPDIR}/../examples/rauc/ca.cert.pem"
 repos:
