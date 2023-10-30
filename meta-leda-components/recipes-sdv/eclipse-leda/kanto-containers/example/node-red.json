@@ -2,7 +2,7 @@
     "container_id": "node-red-example",
     "container_name": "node-red-example",
     "image": {
-        "name": "ghcr.io/eclipse-leda/leda-example-applications/leda-example-node-red:latest"
+        "name": "ghcr.io/eclipse-leda/leda-example-applications/leda-example-node-red:main"
     },
     "host_config": {
         "devices": [],
@@ -46,7 +46,6 @@
             "MQTT_PORT=1883",
             "BROKER_ADDR=databroker",
             "BROKER_PORT=55555"
-
         ],
         "cmd": []
     }
