@@ -23,15 +23,9 @@ SRC_URI += "file://service.template \
            "
 
 SRCREV="${AUTOREV}"
-RDEPENDS:${PN}:remove = " runc-opencontainers"
-RDEPENDS:${PN}:append = " crun"
-
-RDEPENDS:${PN}:remove = " runc-opencontainers"
-RDEPENDS:${PN}:append = " crun"
-IMAGE_INSTALL:remove = " runc-opencontainers"
-
 
 do_install:append() {
+
     if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)}; then
 
         # config.json
