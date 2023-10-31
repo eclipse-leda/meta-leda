@@ -1,0 +1,52 @@
+{
+    "container_id": "node-red-example",
+    "container_name": "node-red-example",
+    "image": {
+        "name": "ghcr.io/eclipse-leda/leda-example-applications/leda-example-node-red:main"
+    },
+    "host_config": {
+        "devices": [],
+        "network_mode": "bridge",
+        "privileged": false,
+        "restart_policy": {
+            "maximum_retry_count": 0,
+            "retry_timeout": 0,
+            "type": "unless-stopped"
+        },
+        "runtime": "io.containerd.runc.v2",
+        "extra_hosts": [
+            "mosquitto:host_ip",
+            "databroker:container_databroker-host"
+        ],
+        "port_mappings": [
+            {
+                "protocol": "tcp",
+                "container_port": 1880,
+                "host_ip": "localhost",
+                "host_port": 1880,
+                "host_port_end": 1880
+            }
+        ],
+        "log_config": {
+            "driver_config": {
+                "type": "json-file",
+                "max_files": 2,
+                "max_size": "1M",
+                "root_dir": ""
+            },
+            "mode_config": {
+                "mode": "blocking",
+                "max_buffer_size": ""
+            }
+        }
+    },
+    "config": {
+        "env": [
+            "MQTT_ADDR=mosquitto",
+            "MQTT_PORT=1883",
+            "BROKER_ADDR=databroker",
+            "BROKER_PORT=55555"
+        ],
+        "cmd": []
+    }
+}
