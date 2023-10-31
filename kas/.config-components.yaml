@@ -41,6 +41,9 @@ repos:
   meta-lts-mixins:
     url: "https://git.yoctoproject.org/git/meta-lts-mixins"
     refspec: kirkstone/rust-1.68
+  meta-clang:
+    url: https://github.com/kraj/meta-clang
+    refspec: kirkstone
   meta-openembedded:
     url: "https://git.openembedded.org/meta-openembedded"
     refspec: kirkstone
