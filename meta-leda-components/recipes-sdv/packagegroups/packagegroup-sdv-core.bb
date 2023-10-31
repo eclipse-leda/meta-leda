@@ -23,6 +23,7 @@ RDEPENDS:${PN} = "\
     rauc \
     mosquitto \
     container-management \
+    wasmedge \
     update-manager \
     kanto-auto-deployer \
     leda-utils \
@@ -35,3 +36,6 @@ RDEPENDS:${PN} = "\
     "
 
 RDEPENDS:${PN}:append = " ${@bb.utils.contains("DISTRO_FEATURES", "airgap-containers", "airgap-container-installer", "", d)}"
+
+# crun recipe has a hard dependency on systemd. Do not build if systemd is unavailable
+RDEPENDS:${PN}:append = " ${@bb.utils.contains("DISTRO_FEATURES", "systemd", "crun", "", d)}"
