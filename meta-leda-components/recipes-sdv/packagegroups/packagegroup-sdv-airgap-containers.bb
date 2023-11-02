@@ -20,8 +20,10 @@ RDEPENDS:${PN} = "\
     sdv-kuksa-val-databroker \
     sdv-container-seatservice \
     sdv-container-selfupdateagent \
-    sdv-container-cloudconnector \
     sdv-container-vehicleupdatemanager  \
     sdv-container-hvacservice \
     sdv-container-feedercan \
  "
+
+# Disable cloudconnector
+#     sdv-container-cloudconnector
