@@ -55,15 +55,15 @@ SRC_URI += " \
     crate://crates.io/flume/0.10.14 \
     crate://crates.io/fnv/1.0.7 \
     crate://crates.io/fsevent-sys/4.1.0 \
-    crate://crates.io/futures-channel/0.3.28 \
-    crate://crates.io/futures-core/0.3.28 \
-    crate://crates.io/futures-executor/0.3.28 \
-    crate://crates.io/futures-io/0.3.28 \
-    crate://crates.io/futures-macro/0.3.28 \
-    crate://crates.io/futures-sink/0.3.28 \
-    crate://crates.io/futures-task/0.3.28 \
-    crate://crates.io/futures-util/0.3.28 \
-    crate://crates.io/futures/0.3.28 \
+    crate://crates.io/futures-channel/0.3.29 \
+    crate://crates.io/futures-core/0.3.29 \
+    crate://crates.io/futures-executor/0.3.29 \
+    crate://crates.io/futures-io/0.3.29 \
+    crate://crates.io/futures-macro/0.3.29 \
+    crate://crates.io/futures-sink/0.3.29 \
+    crate://crates.io/futures-task/0.3.29 \
+    crate://crates.io/futures-util/0.3.29 \
+    crate://crates.io/futures/0.3.29 \
     crate://crates.io/getrandom/0.2.8 \
     crate://crates.io/glob/0.3.1 \
     crate://crates.io/h2/0.3.16 \
@@ -118,7 +118,7 @@ SRC_URI += " \
     crate://crates.io/prettyplease/0.1.25 \
     crate://crates.io/proc-macro-error-attr/1.0.4 \
     crate://crates.io/proc-macro-error/1.0.4 \
-    crate://crates.io/proc-macro2/1.0.54 \
+    crate://crates.io/proc-macro2/1.0.69 \
     crate://crates.io/prost-build/0.10.4 \
     crate://crates.io/prost-derive/0.10.1 \
     crate://crates.io/prost-types/0.10.1 \
