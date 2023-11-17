@@ -25,8 +25,9 @@ DEPENDS += " \
 "
 
 RDEPENDS:${PN} = " \
-    python3-cmd2 \
+    python3-cmd2 (= 1.5.0) \
     python3-grpcio-tools \
+    python3-pygments \
     python3-websockets \
 "
 
