@@ -15,13 +15,13 @@ SUMMARY = "SDV Core Utilities"
 DESCRIPTION = "Core shell scripts for Eclipse Leda"
 
 SRC_URI = "git://github.com/eclipse-leda/leda-utils;branch=main;protocol=https"
-SRCREV = "7349f2679f0843568c9856f43f92a72bc04788fb"
+SRCREV = "1e3be710e1b84fc17cc5b63097881917803dfc3e"
 
 # According to https://wiki.yoctoproject.org/wiki/License_Infrastructure_Interest_Group
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${WORKDIR}/git/LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57"
 
-RDEPENDS:${PN} += "mosquitto-clients iproute2"
+RDEPENDS:${PN} += "mosquitto-clients iproute2 jq"
 
 do_install() {
     install -d ${D}${bindir}
