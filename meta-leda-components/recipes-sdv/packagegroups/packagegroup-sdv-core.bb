@@ -30,6 +30,7 @@ RDEPENDS:${PN} = "\
     openvpn \
     sdv-device-config \
     avahi-daemon libnss-mdns \
+    kantocm-zeroconf \
     gpsd \
     gpsd-conf \
     vss-releases \
