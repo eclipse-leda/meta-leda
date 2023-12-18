@@ -23,4 +23,7 @@ RDEPENDS:${PN} = "\
     tio \
     tmux \
     strace \
+    iproute2-ss \
+    tcpdump \
+    iperf2 \
 "
