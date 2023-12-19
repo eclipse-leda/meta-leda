@@ -30,6 +30,9 @@ local_conf_header:
   needed-features: |
     DISTRO_FEATURES += " sdv rauc virtualization"
     INHERIT += " rm_work"
+  meta-clang: |
+    # mask the llvm recipe provided by kirkstone to avoid warnings:
+    BBMASK += "/poky/meta/recipes-devtools/llvm/"
 repos:
   poky:
     url: "https://git.yoctoproject.org/git/poky"
@@ -67,5 +70,4 @@ repos:
   meta-leda:
     path: ./
     layers:
-      meta-leda-backports:
       meta-leda-components:

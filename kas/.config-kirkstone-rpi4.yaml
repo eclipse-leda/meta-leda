@@ -41,6 +41,9 @@ local_conf_header:
     RAUC_CERT_FILE = "${COREBASE}/../examples/rauc/development-1.cert.pem"
     RAUC_KEYRING_URI = "file://${TOPDIR}/../examples/rauc/ca.cert.pem"
     RAUC_KEYRING_FILE = "${TOPDIR}/../examples/rauc/ca.cert.pem"
+  meta-clang: |
+    # mask the llvm recipe provided by kirkstone to avoid warnings:
+    BBMASK += "/poky/meta/recipes-devtools/llvm/"
 repos:
   # This entry includes the repository where the config file is located
   # to the bblayers.conf:
@@ -91,7 +94,6 @@ repos:
     path: ./
     layers:
       meta-leda-bsp:
-      meta-leda-backports:
       meta-leda-components:
       meta-leda-distro:
       meta-leda-distro-container:
