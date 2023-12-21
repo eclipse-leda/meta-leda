@@ -17,7 +17,7 @@ DESCRIPTION = "System service to publish services on running containers dynamica
 SRC_URI = "git://github.com/eclipse-leda/leda-utils;protocol=https;branch=main \
            git://github.com/eclipse-kanto/container-management;name=kanto;protocol=https;branch=main;subdir=git/kanto_cm/api;subpath=containerm/api \
            "
-SRCREV = "d27289484a36a618b5c33b81dda0e944b60f8bdf"
+SRCREV = "10ca9031a2f6cf0f1981c411f02fbbb73827ead3"
 SRCREV_kanto = "e7fb861984deba4b7e7ba526c04ff695b1367cdc"
 
 LICENSE = "Apache-2.0"
@@ -33,8 +33,6 @@ inherit systemd
 
 DEPENDS += "python3-grpcio-tools-native"
 RDEPENDS:${PN} += "container-management avahi-daemon python3-grpcio python3-zeroconf"
-
-RDEPENDS:${PN} += "avahi-utils"
 
 SYSTEMD_SERVICE:${PN} = "kantocm-zeroconf.service"
 SYSTEMD_AUTO_ENABLE:${PN} = "enable"
