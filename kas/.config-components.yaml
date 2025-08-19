@@ -30,6 +30,9 @@ local_conf_header:
   needed-features: |
     DISTRO_FEATURES += " sdv rauc virtualization"
     INHERIT += " rm_work"
+  meta-clang: |
+    # mask the llvm recipe provided by kirkstone to avoid warnings:
+    BBMASK += "/poky/meta/recipes-devtools/llvm/"
 repos:
   poky:
     url: "https://git.yoctoproject.org/git/poky"
@@ -38,9 +41,12 @@ repos:
       meta:
       meta-poky:
       meta-yocto-bsp:
-  meta-lts-mixins:
+  meta-lts-mixins-rust:
     url: "https://git.yoctoproject.org/git/meta-lts-mixins"
     refspec: kirkstone/rust-1.68
+  meta-lts-mixins-go:
+    url: "https://git.yoctoproject.org/git/meta-lts-mixins"
+    refspec: kirkstone/go
   meta-clang:
     url: https://github.com/kraj/meta-clang
     refspec: kirkstone
@@ -64,5 +70,4 @@ repos:
   meta-leda:
     path: ./
     layers:
-      meta-leda-backports:
       meta-leda-components:
