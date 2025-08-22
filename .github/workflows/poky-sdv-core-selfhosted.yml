@@ -49,13 +49,3 @@ jobs:
         name: poky-minimal-sdv-core-qemu-x86_64.tar.xz
         if-no-files-found: error
         path: poky-minimal-sdv-core-qemu-x86_64.tar.xz
-        
-    - name: Upload SSTATE cache
-      uses: bacongobbler/azure-blob-storage-upload@v3.0.0
-      if: github.repository_owner == 'SoftwareDefinedVehicle'
-      with:
-        source_dir: 'build/sstate-cache/'
-        extra_args: '--destination-path sstate-cache/'
-        container_name: 'yocto-sstate-cache'
-        overwrite: 'true'
-        connection_string: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
