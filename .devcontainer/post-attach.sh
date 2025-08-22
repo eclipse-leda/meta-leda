@@ -54,8 +54,8 @@ function azure-mount() {
 
 # First arg: local mount point
 # Second arg: Name of Azure container
-azure-mount "azure-sstate-cache" "yocto-sstate-cache"
-azure-mount "azure-downloads-cache" "downloads"
+#azure-mount "azure-sstate-cache" "yocto-sstate-cache"
+#azure-mount "azure-downloads-cache" "downloads"
 
 # There is a umask issue in GitHub codespaces
 # possibly related to: https://github.com/orgs/community/discussions/26026
