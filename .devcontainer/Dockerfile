@@ -12,10 +12,7 @@
 # ********************************************************************************/
 
 # See here for image contents: https://github.com/microsoft/vscode-dev-containers/tree/v0.245.2/containers/debian/.devcontainer/base.Dockerfile
-
-# [Choice] Debian version (use bullseye on local arm64/Apple Silicon): bullseye, buster
-ARG VARIANT="buster"
-FROM mcr.microsoft.com/vscode/devcontainers/base:0-${VARIANT}
+FROM mcr.microsoft.com/devcontainers/base:debian
 
 # ** [Optional] Uncomment this section to install additional packages. **
 # RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
@@ -25,7 +22,7 @@ FROM mcr.microsoft.com/vscode/devcontainers/base:0-${VARIANT}
 RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends socat file gawk wget acl git diffstat unzip texinfo \
         gcc build-essential chrpath socat cpio python3 python3-pip python3-pexpect xz-utils debianutils \
-        iputils-ping python3-git python3-jinja2 libegl1-mesa libsdl1.2-dev pylint3 xterm python3-subunit \ 
+        iputils-ping python3-git python3-jinja2 libegl1-mesa libsdl1.2-dev pylint xterm python3-subunit \ 
         mesa-common-dev zstd liblz4-tool tmux mc skopeo fdisk ruby-full jq \
         libvirt-clients libvirt-daemon-system qemu-system-x86 qemu-system-arm qemu-kvm \
         squashfs-tools rauc python3-newt
@@ -36,20 +33,21 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install ca-certificates \
     lsb-release
 
 # Install blobfuse2 since blobfuse1 is not avaialable in MS repos for Debian 11
-RUN sudo apt-get -y install software-properties-common \
-    && curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add - \
-    && sudo apt-add-repository https://packages.microsoft.com/debian/11/prod/ \
-    && sudo apt-get -y update \
-    && sudo apt-get -y install libfuse3-dev fuse3 blobfuse2
+# RUN apt-get -y install software-properties-common \
+#     && curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add - \
+#     && sudo apt-add-repository https://packages.microsoft.com/debian/11/prod/ \
+#     && sudo apt-get -y update \
+#     && sudo apt-get -y install libfuse3-dev fuse3 blobfuse2
 
 # Update RAUC to 1.8.1 from Debian Testing channel
-RUN sudo apt-add-repository 'deb http://deb.debian.org/debian/ testing main' \
-    && sudo apt-get -y update \
-    && sudo apt-get -y install -t testing rauc
+# RUN apt-add-repository 'deb http://deb.debian.org/debian/ testing main' \
+#     && sudo apt-get -y update \
+#     && sudo apt-get -y install -t testing rauc
 
 # Try to enable KVM to improve performance of qemu-system-x86 on x86 hosts.
 # This is also run in post-attach.sh
-RUN /bin/bash -c "(groupadd --system kvm; gpasswd -a vscode kvm; chown root:kvm /dev/kvm; chmod 0660 /dev/kvm; echo 'KVM permissions set up') || true"
+#RUN /bin/bash -c "(groupadd --system kvm; gpasswd -a vscode kvm; chown root:kvm /dev/kvm; chmod 0660 /dev/kvm; echo 'KVM permissions set up') || true"
 
 # Install kas tool to set up Yocto build environment
-RUN pip3 install kas
+RUN apt-get install -y pipx
+RUN pipx install kas
