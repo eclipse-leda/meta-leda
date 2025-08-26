@@ -14,10 +14,6 @@
 # See here for image contents: https://github.com/microsoft/vscode-dev-containers/tree/v0.245.2/containers/debian/.devcontainer/base.Dockerfile
 FROM mcr.microsoft.com/devcontainers/base:debian
 
-# ** [Optional] Uncomment this section to install additional packages. **
-# RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-#     && apt-get -y install --no-install-recommends <your-package-list-here>
-
 # Install Dependencies
 RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends socat file gawk wget acl git diffstat unzip texinfo \
@@ -31,22 +27,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install ca-certificates \
     curl \
     gnupg \
     lsb-release
-
-# Install blobfuse2 since blobfuse1 is not avaialable in MS repos for Debian 11
-# RUN apt-get -y install software-properties-common \
-#     && curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add - \
-#     && sudo apt-add-repository https://packages.microsoft.com/debian/11/prod/ \
-#     && sudo apt-get -y update \
-#     && sudo apt-get -y install libfuse3-dev fuse3 blobfuse2
-
-# Update RAUC to 1.8.1 from Debian Testing channel
-# RUN apt-add-repository 'deb http://deb.debian.org/debian/ testing main' \
-#     && sudo apt-get -y update \
-#     && sudo apt-get -y install -t testing rauc
-
-# Try to enable KVM to improve performance of qemu-system-x86 on x86 hosts.
-# This is also run in post-attach.sh
-#RUN /bin/bash -c "(groupadd --system kvm; gpasswd -a vscode kvm; chown root:kvm /dev/kvm; chmod 0660 /dev/kvm; echo 'KVM permissions set up') || true"
 
 # Install kas tool to set up Yocto build environment
 RUN apt-get install -y pipx
