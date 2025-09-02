@@ -58,7 +58,7 @@ jobs:
       run: kas build kas/.config-kirkstone.yaml:kas/mirrors.yaml --target sdv-container-images
 
     - name: Upload QEMU x86-64 images
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: AppContainerImages_QEMUx86-64
         if-no-files-found: error

@@ -58,7 +58,7 @@ jobs:
       run: kas build kas/.config-kirkstone-rpi4.yaml:kas/mirrors.yaml --target sdv-container-images
 
     - name: Upload Raspberry Pi 4 (64bit) images
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: AppContainerImages_RaspberryPi4-64
         if-no-files-found: error

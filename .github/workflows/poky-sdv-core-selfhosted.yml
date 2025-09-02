@@ -44,7 +44,7 @@ jobs:
         time xz -v -8 -T0 ${ARC}
 
     - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with: 
         name: poky-minimal-sdv-core-qemu-x86_64.tar.xz
         if-no-files-found: error
