@@ -51,37 +51,37 @@ repos:
   # bblayers.conf:
   poky:
     url: "https://git.yoctoproject.org/git/poky"
-    refspec: kirkstone
+    branch: kirkstone
     layers:
       meta:
       meta-poky:
       meta-yocto-bsp:
   meta-lts-mixins-rust:
     url: "https://git.yoctoproject.org/git/meta-lts-mixins"
-    refspec: kirkstone/rust-1.68
+    branch: kirkstone/rust-1.68
   meta-lts-mixins-go:
     url: "https://git.yoctoproject.org/git/meta-lts-mixins"
-    refspec: kirkstone/go
+    branch: kirkstone/go
   meta-clang:
     url: https://github.com/kraj/meta-clang
-    refspec: kirkstone
+    branch: kirkstone
   meta-rauc-community:
     url: "https://github.com/rauc/meta-rauc-community.git"
-    refspec: kirkstone
+    branch: kirkstone
     layers:
       meta-rauc-raspberrypi:
   meta-rauc:
     url: "https://github.com/rauc/meta-rauc.git"
-    refspec: kirkstone
+    branch: kirkstone
   meta-kanto:
     url: "https://github.com/eclipse-kanto/meta-kanto.git"
-    refspec: kirkstone
+    branch: kirkstone
   meta-virtualization:
     url: "https://git.yoctoproject.org/meta-virtualization"
-    refspec: kirkstone
+    branch: kirkstone
   meta-openembedded:
     url: "https://git.openembedded.org/meta-openembedded"
-    refspec: kirkstone
+    branch: kirkstone
     layers:
       meta-oe:
       meta-filesystems:
@@ -89,7 +89,7 @@ repos:
       meta-networking:
   meta-raspberrypi:
     url: "https://git.yoctoproject.org/meta-raspberrypi"
-    refspec: kirkstone
+    branch: kirkstone
   meta-leda:
     path: ./
     layers:
