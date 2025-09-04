@@ -47,6 +47,9 @@ jobs:
       with:
         path: build/cache
         key: bb-cache-local
+      # See https://bugs.launchpad.net/ubuntu/+source/apparmor/+bug/2056555
+    - name: Apply fix for Bitbake on Ubuntu 24
+      run: sudo apparmor_parser -R /etc/apparmor.d/unprivileged_userns
     - name: DryRun default (qemux86_64)
       run: kas build -- --dry-run
     - name: DryRun Raspberry Pi 4

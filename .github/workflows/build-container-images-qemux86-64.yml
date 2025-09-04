@@ -54,6 +54,10 @@ jobs:
         path: build/cache
         key: bb-cache-local
 
+      # See https://bugs.launchpad.net/ubuntu/+source/apparmor/+bug/2056555
+    - name: Apply fix for Bitbake on Ubuntu 24
+      run: sudo apparmor_parser -R /etc/apparmor.d/unprivileged_userns
+
     - name: Build container images for Raspberry Pi 4
       run: kas build kas/.config-kirkstone-rpi4.yaml --target sdv-container-images
 
