@@ -13,7 +13,6 @@
 
 name: Build SDV application container images
 on:
-  pull_request:
   workflow_dispatch:
 
 jobs:
