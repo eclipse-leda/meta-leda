@@ -55,7 +55,7 @@ jobs:
         key: bb-cache-local
 
     - name: Build container images for QEMU x86-64
-      run: kas build kas/.config-kirkstone.yaml:kas/mirrors.yaml --target sdv-container-images
+      run: kas build kas/.config-kirkstone.yaml --target sdv-container-images
 
     - name: Upload QEMU x86-64 images
       uses: actions/upload-artifact@v4

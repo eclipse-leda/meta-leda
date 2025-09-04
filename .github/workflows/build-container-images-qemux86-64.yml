@@ -55,7 +55,7 @@ jobs:
         key: bb-cache-local
 
     - name: Build container images for Raspberry Pi 4
-      run: kas build kas/.config-kirkstone-rpi4.yaml:kas/mirrors.yaml --target sdv-container-images
+      run: kas build kas/.config-kirkstone-rpi4.yaml --target sdv-container-images
 
     - name: Upload Raspberry Pi 4 (64bit) images
       uses: actions/upload-artifact@v4

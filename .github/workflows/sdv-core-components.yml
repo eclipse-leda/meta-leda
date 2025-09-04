@@ -30,4 +30,4 @@ jobs:
     - name: Install kas
       run: sudo pip3 install kas
     - name: Build SDV core components only (poky distro)
-      run: kas build kas/.config-components.yaml:kas/mirrors.yaml
+      run: kas build kas/.config-components.yaml

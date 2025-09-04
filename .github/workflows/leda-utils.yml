@@ -30,4 +30,4 @@ jobs:
     - name: Install kas
       run: sudo pip3 install kas
     - name: Build leda-utils
-      run: kas build kas/.config-kirkstone.yaml:kas/mirrors.yaml --target leda-utils
+      run: kas build kas/.config-kirkstone.yaml --target leda-utils

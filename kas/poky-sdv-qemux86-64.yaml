@@ -16,7 +16,6 @@ header:
   version: 12
   includes:
   - .config-components.yaml
-  - mirrors.yaml
 distro: poky
 target: core-image-minimal
 local_conf_header:
