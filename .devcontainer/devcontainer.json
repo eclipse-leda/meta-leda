@@ -16,10 +16,16 @@
 	"name": "Debian",
 	"build": {
 		"dockerfile": "Dockerfile",
-		// Update 'VARIANT' to pick an Debian version: bullseye, buster
-		// Use bullseye on local arm64/Apple Silicon.
-		"args": { "VARIANT": "bullseye" }
+		"args": {
+			"HTTP_PROXY": "${localEnv:HTTP_PROXY}",
+			"HTTPS_PROXY": "${localEnv:HTTPS_PROXY}",
+			"http_proxy": "${localEnv:http_proxy}",
+			"https_proxy": "${localEnv:https_proxy}"
+		}
 	},
+	"runArgs": [
+		"--network=host"
+	],
 	"hostRequirements": {
 		"cpus": 2,
 		"memory": "4gb",
@@ -39,6 +45,12 @@
 
 	// Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
 	"remoteUser": "vscode",
+	"remoteEnv": {
+			"HTTP_PROXY": "${localEnv:HTTP_PROXY}",
+			"HTTPS_PROXY": "${localEnv:HTTPS_PROXY}",
+			"http_proxy": "${localEnv:http_proxy}",
+			"https_proxy": "${localEnv:https_proxy}"
+	},
 	"features": {
 		"docker-in-docker": "latest",
 		"github-cli": "latest"

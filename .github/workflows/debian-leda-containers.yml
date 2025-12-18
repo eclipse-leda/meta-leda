@@ -58,7 +58,7 @@ jobs:
           version: '${{ env.package_version }}'
           arch: 'all'
           desc: 'Core and example container descriptors for Eclipse Leda (Software-Defined Vehicle)'
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: leda-containers
           path: 

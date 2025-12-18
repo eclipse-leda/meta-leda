@@ -12,5 +12,6 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-git clone https://github.com/openembedded/bitbake
-bitbake/bin/bitbake-hashserv -b :1234 &
+# Optional caching
+# git clone https://github.com/openembedded/bitbake
+# bitbake/bin/bitbake-hashserv -b :1234 &

@@ -17,6 +17,7 @@
 # sudo gpasswd -a $USER kvm
 
 # Enable KVM Device for access to user (as qemu us run as non-root
+echo "Enabling KVM for user access..."
 sudo chown root:kvm /dev/kvm
 sudo chmod 0660 /dev/kvm
 
@@ -51,15 +52,16 @@ function azure-mount() {
     fi
 }
 
-
+# Local mounting of caches for sstate and downloads
 # First arg: local mount point
 # Second arg: Name of Azure container
-azure-mount "azure-sstate-cache" "yocto-sstate-cache"
-azure-mount "azure-downloads-cache" "downloads"
+# Example: azure-mount "azure-sstate-cache" "yocto-sstate-cache"
+# Example: azure-mount "azure-downloads-cache" "downloads"
 
 # There is a umask issue in GitHub codespaces
 # possibly related to: https://github.com/orgs/community/discussions/26026
 # which causes some recipes to fail to build, due to wrong permissions (e.g. gpsd)
 if [ -n "$CODESPACE_VSCODE_FOLDER" ]; then 
+    echo "Taking ownership of workspace folder for GitHub Codespaces bug #26026..."
     take_workspace_ownership $(whoami)  ${CODESPACE_VSCODE_FOLDER}
 fi

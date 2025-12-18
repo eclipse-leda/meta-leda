@@ -8,7 +8,7 @@ jobs:
 
   poky-core-qemux86_64:
     name: "poky-minimal-sdv-core-qemux86_64"
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     continue-on-error: true
     steps:
     
@@ -22,6 +22,10 @@ jobs:
     
     - name: Install kas
       run: sudo pip3 install kas
+
+      # See https://bugs.launchpad.net/ubuntu/+source/apparmor/+bug/2056555
+    - name: Apply fix for Bitbake on Ubuntu 24
+      run: sudo apparmor_parser -R /etc/apparmor.d/unprivileged_userns
 
     - name: Build poky-core-image-minimal + sdv-core
       env:
@@ -44,7 +48,7 @@ jobs:
         time xz -v -8 -T0 ${ARC}
 
     - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with: 
         name: poky-minimal-sdv-core-qemu-x86_64.tar.xz
         if-no-files-found: error

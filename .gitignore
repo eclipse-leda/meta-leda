@@ -12,6 +12,7 @@ meta-rauc-community
 meta-virtualization
 meta-raspberrypi
 meta-rust
+meta-clang
 poky
 
 # BitBake Hash Equivalence Server database

@@ -18,7 +18,7 @@ jobs:
     - name: Install tools
       run: |
         sudo apt-get update
-        sudo apt-get install -y --no-install-recommends socat file gawk wget git diffstat unzip texinfo gcc build-essential chrpath socat cpio python3 python3-pip python3-pexpect xz-utils debianutils iputils-ping python3-git python3-jinja2 libegl1-mesa libsdl1.2-dev pylint xterm python3-subunit mesa-common-dev zstd liblz4-tool tmux mc skopeo fdisk ruby-full jq libvirt-clients libvirt-daemon-system qemu-system-x86 qemu-system-arm qemu-kvm squashfs-tools rauc python3-newt ca-certificates curl gnupg lsb-release
+        sudo apt-get install -y --no-install-recommends socat file gawk wget git diffstat unzip texinfo gcc build-essential chrpath socat cpio python3 python3-pip python3-pexpect xz-utils debianutils iputils-ping python3-git python3-jinja2  libsdl1.2-dev pylint xterm python3-subunit mesa-common-dev zstd liblz4-tool tmux mc skopeo fdisk ruby-full jq libvirt-clients libvirt-daemon-system qemu-system-x86 qemu-system-arm qemu-kvm squashfs-tools rauc python3-newt ca-certificates curl gnupg lsb-release
     
     - name: Install kas
       run: sudo pip3 install kas
@@ -44,18 +44,8 @@ jobs:
         time xz -v -8 -T0 ${ARC}
 
     - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with: 
         name: poky-minimal-sdv-core-qemu-x86_64.tar.xz
         if-no-files-found: error
         path: poky-minimal-sdv-core-qemu-x86_64.tar.xz
-        
-    - name: Upload SSTATE cache
-      uses: bacongobbler/azure-blob-storage-upload@v3.0.0
-      if: github.repository_owner == 'SoftwareDefinedVehicle'
-      with:
-        source_dir: 'build/sstate-cache/'
-        extra_args: '--destination-path sstate-cache/'
-        container_name: 'yocto-sstate-cache'
-        overwrite: 'true'
-        connection_string: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}

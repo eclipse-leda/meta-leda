@@ -36,28 +36,28 @@ repos:
   # bblayers.conf:
   poky:
     url: "https://git.yoctoproject.org/git/poky"
-    refspec: honister
+    branch: honister
     layers:
       meta:
       meta-poky:
       meta-yocto-bsp:
   meta-rauc-community:
     url: "https://github.com/rauc/meta-rauc-community.git"
-    refspec: master
+    branch: master
     layers:
       meta-rauc-qemux86:
   meta-rauc:
     url: "https://github.com/rauc/meta-rauc.git"
-    refspec: honister
+    branch: honister
   meta-kanto:
     url: "https://github.com/eclipse-kanto/meta-kanto.git"
-    refspec: main
+    branch: main
   meta-virtualization:
     url: "https://git.yoctoproject.org/meta-virtualization"
-    refspec: honister
+    branch: honister
   meta-openembedded:
     url: "https://git.openembedded.org/meta-openembedded"
-    refspec: honister
+    branch: honister
     layers:
       meta-oe:
       meta-filesystems:
