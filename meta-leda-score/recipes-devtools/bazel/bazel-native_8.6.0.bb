@@ -13,11 +13,11 @@
 #
 # bazel-native: Provides the Bazel build tool as a native (host) tool.
 #
-# Eclipse S-Core modules require Bazel 7.x (Bzlmod / MODULE.bazel support).
+# Eclipse S-Core modules require Bazel 8.x (Bzlmod / MODULE.bazel support).
 # This recipe downloads the self-contained Bazel binary and installs it into
 # the native sysroot so that bazel.bbclass can reference it.
 #
-# Bazel 7.x is a JDK-free, self-contained binary. No Java installation is
+# Bazel 8.x is a JDK-free, self-contained binary. No Java installation is
 # needed on the build host. The binary is architecture-specific (x86_64).
 
 SUMMARY = "Bazel build tool - native"
@@ -30,14 +30,14 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57"
 
 inherit native
 
-PV = "7.4.1"
+PV = "8.6.0"
 
 BAZEL_ARCH = "x86_64"
 
 SRC_URI = "https://github.com/bazelbuild/bazel/releases/download/${PV}/bazel-${PV}-linux-${BAZEL_ARCH};downloadfilename=bazel \
            https://raw.githubusercontent.com/bazelbuild/bazel/${PV}/LICENSE;name=license"
 
-SRC_URI[sha256sum] = "c97f02133adce63f0c28678ac1f21d65fa8255c80429b588aeeba8a1fac6202b"
+SRC_URI[sha256sum] = "9860da9c9386bbc023feed8f43af3105d338727d77b644fa6aeca45a4a11957c"
 SRC_URI[license.sha256sum] = "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
 
 # No configure or compile steps needed for a pre-built binary

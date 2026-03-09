@@ -44,7 +44,7 @@ Eclipse S-CORE modules use [Bazel](https://bazel.build/) with
 [Bzlmod](https://bazel.build/external/overview#bzlmod) as the build system.
 This layer provides:
 
-- **`bazel-native`** recipe: Downloads and installs Bazel 7.x as a native
+- **`bazel-native`** recipe: Downloads and installs Bazel 8.x as a native
   (host-side) tool available during cross-compilation builds.
 - **`bazel.bbclass`**: A BitBake class that configures the Bazel build
   environment and integrates with the Yocto build lifecycle.
@@ -79,8 +79,8 @@ Integrating Bazel into a Yocto build environment has inherent challenges:
 
 ### Bazel Version
 
-S-CORE modules require Bazel 7.x (for Bzlmod / `MODULE.bazel` support).
-The `bazel-native` recipe provides Bazel 7.4.1.
+S-CORE modules require Bazel 8.x (for Bzlmod / `MODULE.bazel` support).
+The `bazel-native` recipe provides Bazel 8.6.0.
 
 ## Layer Dependencies
 

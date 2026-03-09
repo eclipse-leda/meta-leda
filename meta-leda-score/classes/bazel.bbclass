@@ -21,7 +21,7 @@
 #   BAZEL_OUTPUT_FILES - List of output files relative to Bazel output directory to install
 #
 # Optional variables:
-#   BAZEL_VERSION      - Bazel version to use (default: 7.4.1, can be overridden per recipe).
+#   BAZEL_VERSION      - Bazel version to use (default: 8.6.0, can be overridden per recipe).
 #                        The recipe bazel-native must provide this same version.
 #   BAZEL_EXTRA_ARGS   - Additional arguments to pass to Bazel build command.
 #   BAZEL_TEST_TARGETS - Bazel test targets to run (leave empty to skip tests).
@@ -57,7 +57,7 @@
 DEPENDS += "bazel-native"
 
 # Bazel version - must match the version provided by bazel-native
-BAZEL_VERSION ?= "7.4.1"
+BAZEL_VERSION ?= "8.6.0"
 
 # Bazel build targets to build
 BAZEL_TARGETS ?= "//..."
