@@ -21,6 +21,11 @@ echo "Enabling KVM for user access..."
 sudo chown root:kvm /dev/kvm
 sudo chmod 0660 /dev/kvm
 
+# Named volumes for caching sstate and downloads is owned by root initially
+sudo chown ${USER} ${PWD}/build
+sudo chown ${USER} ${PWD}/build/downloads
+sudo chown ${USER} ${PWD}/build/sstate-cache
+
 function take_workspace_ownership() {
     local USER=$1
     local DIR=$2
