@@ -51,6 +51,10 @@
 			"http_proxy": "${localEnv:http_proxy}",
 			"https_proxy": "${localEnv:https_proxy}"
 	},
+	"mounts": [
+		"source=bitbake_sstate_cache_meta_leda,target=${containerWorkspaceFolder}/build/sstate-cache,type=volume",
+		"source=bitbake_download_cache,target=${containerWorkspaceFolder}/build/downloads,type=volume"
+	],
 	"features": {
 		"docker-in-docker": "latest",
 		"github-cli": "latest"
