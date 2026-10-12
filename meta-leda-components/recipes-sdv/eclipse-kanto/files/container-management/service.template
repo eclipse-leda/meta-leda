@@ -6,6 +6,8 @@ Requires=network.target containerd.service
 
 [Service]
 Type=simple
+Environment=HOME=%h
+Environment=XDG_CONFIG_HOME=%E
 ExecStart=@CM_BIN_DD@/container-management --cfg-file @CM_CFG_DD@/container-management/config.json
 Restart=always
 TimeoutSec=3000
