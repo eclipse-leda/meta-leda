@@ -20,6 +20,11 @@ SRCREV = "006e8f0e7d993be9f7405d8f61db8fb8a58a49eb"
 S = "${WORKDIR}/git"
 CARGO_SRC_DIR = "src/rust/kanto-tui"
 
+DEPENDS += "protobuf-native"
+export PROTOC = "${STAGING_BINDIR_NATIVE}/protoc"
+export PROTOC_INCLUDE = "${STAGING_INCDIR_NATIVE}"
+export PROTOC_NO_VENDOR = "1"
+
 SRC_URI += " \
     crate://crates.io/ahash/0.6.3 \
     crate://crates.io/android_system_properties/0.1.5 \

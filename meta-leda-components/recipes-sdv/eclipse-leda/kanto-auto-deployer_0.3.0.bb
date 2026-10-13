@@ -20,6 +20,11 @@ SRCREV = "4c9963a1872464fec48b09ef4b24137d76911684"
 S = "${WORKDIR}/git"
 CARGO_SRC_DIR = "src/rust/kanto-auto-deployer"
 
+DEPENDS += "protobuf-native"
+export PROTOC = "${STAGING_BINDIR_NATIVE}/protoc"
+export PROTOC_INCLUDE = "${STAGING_INCDIR_NATIVE}"
+export PROTOC_NO_VENDOR = "1"
+
 SRC_URI += " \
     crate://crates.io/aho-corasick/0.7.20 \
     crate://crates.io/anyhow/1.0.70 \
