@@ -31,6 +31,9 @@ IMAGE_PREPROCESS_COMMAND += "prepare_filesystem;"
 
 inherit image
 
+# This data-only image does not run first-boot postinstall scripts.
+ROOTFS_BOOTSTRAP_INSTALL = ""
+
 prepare_filesystem() {
 
     # Required by containerd
