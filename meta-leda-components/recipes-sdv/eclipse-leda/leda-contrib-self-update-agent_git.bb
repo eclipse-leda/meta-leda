@@ -1,5 +1,5 @@
 # /********************************************************************************
-# * Copyright (c) 2022 Contributors to the Eclipse Foundation
+# * Copyright (c) 2022-2026 Contributors to the Eclipse Foundation
 # *
 # * See the NOTICE file(s) distributed with this work for additional
 # * information regarding copyright ownership.
@@ -44,6 +44,7 @@ SRC_URI += " \
     file://self-update-agent/0001-CMakeLists-root.patch \
     file://self-update-agent/0002-CMakeLists-3rdparty.patch \
     file://self-update-agent/0003-CMakeLists-src.patch \
+    file://self-update-agent/0004-Include-cstdint.patch \
 "
 
 S = "${WORKDIR}/git"
