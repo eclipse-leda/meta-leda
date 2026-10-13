@@ -14,3 +14,9 @@
 
 SKIP_RECIPE[alsa] ?= "ALSA is blacklisted to save build time and storage"
 PACKAGE_EXCLUDE += "alsa"
+
+# Leda uses U-Boot; do not ship the GPL-3.0-only GRUB environment tool.
+PACKAGE_EXCLUDE:append = " grub-editenv"
+
+# Do not ship the GPL-3.0-only Pine keymap.
+PACKAGE_EXCLUDE:append = " kbd-keymaps-pine"
