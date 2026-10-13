@@ -1,25 +1,23 @@
+Upstream-Status: Inappropriate [configuration specific to the QEMU target]
+
 diff --git a/configs/efi-x86_payload64_defconfig b/configs/efi-x86_payload64_defconfig
 index 26cfc49490..ea63a86d0c 100644
 --- a/configs/efi-x86_payload64_defconfig
 +++ b/configs/efi-x86_payload64_defconfig
-@@ -9,7 +9,7 @@ CONFIG_FIT=y
- CONFIG_FIT_SIGNATURE=y
+@@ -10,9 +10,9 @@ CONFIG_FIT_SIGNATURE=y
+ CONFIG_BOOTSTD_FULL=y
+ CONFIG_LEGACY_IMAGE_FORMAT=y
  CONFIG_SHOW_BOOT_PROGRESS=y
  CONFIG_USE_BOOTARGS=y
 -CONFIG_BOOTARGS="root=/dev/sdb3 init=/sbin/init rootwait ro"
 +CONFIG_BOOTARGS=""
+ CONFIG_USE_BOOTCOMMAND=y
  CONFIG_PRE_CONSOLE_BUFFER=y
  CONFIG_SYS_CONSOLE_INFO_QUIET=y
  CONFIG_DISPLAY_BOARDINFO_LATE=y
-@@ -19,7 +19,7 @@ CONFIG_CMD_IDE=y
- CONFIG_CMD_MMC=y
- CONFIG_CMD_PART=y
- CONFIG_CMD_USB=y
+@@ -24 +24 @@
 -# CONFIG_CMD_SETEXPR is not set
 +CONFIG_CMD_SETEXPR=y
- CONFIG_CMD_DHCP=y
- # CONFIG_CMD_NFS is not set
- CONFIG_CMD_PING=y
 @@ -42,3 +42,21 @@ CONFIG_SYSCON=y
  CONFIG_EFI=y
  CONFIG_EFI_STUB=y

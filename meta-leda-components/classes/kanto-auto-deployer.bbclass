@@ -1,5 +1,5 @@
 # /********************************************************************************
-# * Copyright (c) 2022 Contributors to the Eclipse Foundation
+# * Copyright (c) 2023-2026 Contributors to the Eclipse Foundation
 # *
 # * See the NOTICE file(s) distributed with this work for additional
 # * information regarding copyright ownership.
@@ -11,4 +11,7 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-OVERRIDES .= "${@bb.utils.contains('DISTRO_FEATURES', 'rauc', ':rauc-integration', '', d)}"
+KANTO_MANIFESTS_LOCAL_DIR ??= "/var/containers/manifests"
+
+KANTO_MANIFESTS_DIR ??= "${KANTO_MANIFESTS_LOCAL_DIR}"
+KANTO_MANIFESTS_DIR[doc] = "The location path of Kanto Container Management deployment descriptors"

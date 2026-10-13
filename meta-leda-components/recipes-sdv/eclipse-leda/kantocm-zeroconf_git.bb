@@ -1,5 +1,5 @@
 # /********************************************************************************
-# * Copyright (c) 2023 Contributors to the Eclipse Foundation
+# * Copyright (c) 2023-2026 Contributors to the Eclipse Foundation
 # *
 # * See the NOTICE file(s) distributed with this work for additional
 # * information regarding copyright ownership.
@@ -17,6 +17,7 @@ DESCRIPTION = "System service to publish services on running containers dynamica
 SRC_URI = "git://github.com/eclipse-leda/leda-utils;protocol=https;branch=main \
            git://github.com/eclipse-kanto/container-management;name=kanto;protocol=https;branch=main;subdir=git/kanto_cm/api;subpath=containerm/api \
            "
+SRCREV_FORMAT = "default_kanto"
 SRCREV = "10ca9031a2f6cf0f1981c411f02fbbb73827ead3"
 SRCREV_kanto = "e7fb861984deba4b7e7ba526c04ff695b1367cdc"
 
