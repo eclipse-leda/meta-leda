@@ -1,5 +1,5 @@
 # /********************************************************************************
-# * Copyright (c) 2022 Contributors to the Eclipse Foundation
+# * Copyright (c) 2022-2026 Contributors to the Eclipse Foundation
 # *
 # * See the NOTICE file(s) distributed with this work for additional
 # * information regarding copyright ownership.
@@ -35,53 +35,60 @@ local_conf_header:
     # Set the values to the default value, to prevent user warnings during our build
     CLOUDCONNECTOR_CERTIFICATE_CERTFILE = "${S}/cloud-connector/example-device.crt"
     CLOUDCONNECTOR_CERTIFICATE_KEYFILE = "${S}/cloud-connector/example-device.key"
-    DISTRO_FEATURES += " wifi"
+    DISTRO_FEATURES += " wifi usrmerge"
   sign_conf: |
     RAUC_KEY_FILE = "${TOPDIR}/../examples/rauc/development-1.key.pem"
     RAUC_CERT_FILE = "${TOPDIR}/../examples/rauc/development-1.cert.pem"
     RAUC_KEYRING_URI = "file://${TOPDIR}/../examples/rauc/ca.cert.pem"
     RAUC_KEYRING_FILE = "${TOPDIR}/../examples/rauc/ca.cert.pem"
-  meta-clang: |
-    # mask the llvm recipe provided by kirkstone to avoid warnings:
-    BBMASK += "/poky/meta/recipes-devtools/llvm/"
 repos:
   # This entry includes the repository where the config file is located
   # to the bblayers.conf:
   # Here we include a list of layers from the poky repository to the
   # bblayers.conf:
-  poky:
-    url: "https://git.yoctoproject.org/git/poky"
-    branch: kirkstone
+  bitbake:
+    url: https://github.com/openembedded/bitbake.git
+    tag: yocto-5.0.20
+    commit: cff3be6f664f8f07a40727ff63eeeb24d6f5e00b
+    layers: {}
+  openembedded-core:
+    url: https://github.com/openembedded/openembedded-core.git
+    tag: yocto-5.0.20
+    commit: 70dc15941dd33270a92d1001174efb3093e79bdf
     layers:
       meta:
+  poky:
+    url: "https://git.yoctoproject.org/meta-yocto/"
+    branch: scarthgap
+    layers:
       meta-poky:
       meta-yocto-bsp:
   meta-lts-mixins-rust:
     url: "https://git.yoctoproject.org/git/meta-lts-mixins"
-    branch: kirkstone/rust-1.68
+    branch: scarthgap/rust
   meta-lts-mixins-go:
     url: "https://git.yoctoproject.org/git/meta-lts-mixins"
-    branch: kirkstone/go
+    branch: scarthgap/go
   meta-clang:
     url: https://github.com/kraj/meta-clang
-    branch: kirkstone
+    branch: scarthgap
   meta-rauc-community:
     url: "https://github.com/rauc/meta-rauc-community.git"
-    branch: kirkstone
+    branch: scarthgap
     layers:
       meta-rauc-qemux86:
   meta-rauc:
     url: "https://github.com/rauc/meta-rauc.git"
-    branch: kirkstone
+    branch: scarthgap
   meta-kanto:
     url: "https://github.com/eclipse-kanto/meta-kanto.git"
-    branch: kirkstone
+    branch: scarthgap
   meta-virtualization:
     url: "https://git.yoctoproject.org/meta-virtualization"
-    branch: kirkstone
+    branch: scarthgap
   meta-openembedded:
     url: "https://git.openembedded.org/meta-openembedded"
-    branch: kirkstone
+    branch: scarthgap
     layers:
       meta-oe:
       meta-filesystems:
@@ -94,3 +101,4 @@ repos:
       meta-leda-components:
       meta-leda-distro:
       meta-leda-distro-container:
+      meta-leda-score:
