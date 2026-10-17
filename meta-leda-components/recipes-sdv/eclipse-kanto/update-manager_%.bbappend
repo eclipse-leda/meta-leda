@@ -16,4 +16,4 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/files/update-manager:"
 SRC_URI += "file://config.json \
            "
 
-SRCREV="${AUTOREV}"
+SRCREV = "${AUTOREV}"

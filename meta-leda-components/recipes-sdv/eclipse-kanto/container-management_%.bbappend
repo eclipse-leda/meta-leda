@@ -22,7 +22,7 @@ SRC_URI += "file://service.template \
             file://config.json \
            "
 
-SRCREV="${AUTOREV}"
+SRCREV = "${AUTOREV}"
 
 do_install:append() {
 

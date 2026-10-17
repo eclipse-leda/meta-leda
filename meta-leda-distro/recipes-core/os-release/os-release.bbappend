@@ -38,7 +38,7 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/${BPN}:"
 DEPENDS = "git-native"
 
 # Always regenerate the /etc/os-release file to keep the metadata up to date
-do_compile[nostamp]="1"
+do_compile[nostamp] = "1"
 
 def exec_git_run(cmd, path):
     (output, error) = bb.process.run(cmd, cwd=path)

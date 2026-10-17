@@ -25,7 +25,7 @@ SRC_URI[json.sha256sum] = "eaf21f23ec1461660a55202ea64a49eba1a9dc082f188b22788d6
 SRC_URI[yaml.sha256sum] = "3d57fde11174f43974f719ef27d3c4d6a9ec1a25fe2f9a878f53411fd4d43763"
 
 SRCREV = "${AUTOREV}"
-S = "${WORKDIR}"
+S = "${UNPACKDIR}"
 
 PACKAGES += " vss-spec3"
 

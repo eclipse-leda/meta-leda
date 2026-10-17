@@ -24,12 +24,12 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57"
 
 # Define image to be pulled
-SDV_IMAGE_REF="ghcr.io/eclipse/kuksa.val.services/hvac_service"
-SDV_IMAGE_TAG="v0.1.0"
+SDV_IMAGE_REF = "ghcr.io/eclipse/kuksa.val.services/hvac_service"
+SDV_IMAGE_TAG = "v0.1.0"
 
 # Override container architecture. If not set, recipe tries autodetection for target machine architecture.
-#CONTAINER_ARCH="arm64"
+#CONTAINER_ARCH = "arm64"
 
 # Skip pre-caching of a container if target architecture does not exist
-CONTAINER_SKIP_MISSING_ARCH="1"
+CONTAINER_SKIP_MISSING_ARCH = "1"
 

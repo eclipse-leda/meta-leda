@@ -25,14 +25,14 @@ LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${WORKDIR}/git/LICENSE;md5=4c512a2a4a9c2efd5e63d5865e1e9fcb"
 
 # Define image to be pulled
-SDV_IMAGE_REF="hello-world"
-SDV_IMAGE_TAG="latest"
+SDV_IMAGE_REF = "hello-world"
+SDV_IMAGE_TAG = "latest"
 
 # Override container architecture. If not set, recipe tries autodetection for target machine architecture.
-#CONTAINER_ARCH="arm64"
+#CONTAINER_ARCH = "arm64"
 
 # This is a public available container
 CONTAINER_REGISTRY_REQUIRES_AUTH = "0"
 
 # Skip pre-caching of a container if target architecture does not exist
-CONTAINER_SKIP_MISSING_ARCH="1"
+CONTAINER_SKIP_MISSING_ARCH = "1"

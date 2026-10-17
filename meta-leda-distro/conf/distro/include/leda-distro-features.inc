@@ -26,7 +26,7 @@ DISTRO_FEATURES:append = " wifi"
 # Enable systemd as init process
 DISTRO_FEATURES:append = " systemd"
 VIRTUAL-RUNTIME_init_manager = "systemd"
-DISTRO_FEATURES_BACKFILL_CONSIDERED = "sysvinit"
+DISTRO_FEATURES_OPTED_OUT = "sysvinit"
 
 # Disable unneeded distro features inherited from poky.
 DISTRO_FEATURES:remove = "alsa"

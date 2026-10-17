@@ -30,7 +30,7 @@ CLOUDCONNECTOR_CERTIFICATE_KEYFILE[doc] = "Specify the source filename of the in
 SRC_URI += "file://cloud-connector/${CLOUDCONNECTOR_EXAMPLE_CERTFILE}"
 SRC_URI += "file://cloud-connector/${CLOUDCONNECTOR_EXAMPLE_KEYFILE}"
 
-S = "${WORKDIR}"
+S = "${UNPACKDIR}"
 
 # Runtime configuration in /var/containers/manifests/cloudconnector.json
 CLOUDCONNECTOR_CERTIFICATE_DIR ?= "/var/certificates"

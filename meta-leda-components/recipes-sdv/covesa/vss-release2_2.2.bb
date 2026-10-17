@@ -23,7 +23,7 @@ SRC_URI = "git://github.com/COVESA/vehicle_signal_specification.git;protocol=htt
 SRC_URI[json.sha256sum] = "405d57cd7c01223c45da6e3b1f0a13276abd1b2c11bc7419cf4d348efdfed36e"
 
 SRCREV = "${AUTOREV}"
-S = "${WORKDIR}"
+S = "${UNPACKDIR}"
 
 PACKAGES += " vss-spec2"
 
