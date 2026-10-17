@@ -8,7 +8,7 @@ Clone Poky and switch to the branch under test:
 
     git clone git://git.yoctoproject.org/meta-poky poky
     cd poky
-    git checkout -t origin/scarthgap -b scarthgap
+    git checkout -t origin/wrynose -b wrynose
 
 Pull updates if necessary:
 
@@ -26,10 +26,10 @@ Dry-run a build of the Linux Kernel recipe using BitBake:
 Check out dependencies for the meta-leda metalayer:
 
     cd ${CODESPACE_VSCODE_FOLDER}
-    git clone -b scarthgap https://github.com/rauc/meta-rauc.git meta-rauc
-    git clone -b scarthgap https://github.com/rauc/meta-rauc-community.git meta-rauc-community
-    git clone -b scarthgap https://git.yoctoproject.org/meta-virtualization meta-virtualization
-    git clone -b scarthgap https://git.openembedded.org/meta-openembedded meta-openembedded
+    git clone -b wrynose https://github.com/rauc/meta-rauc.git meta-rauc
+    git clone -b wrynose https://github.com/rauc/meta-rauc-community.git meta-rauc-community
+    git clone -b wrynose https://git.yoctoproject.org/meta-virtualization meta-virtualization
+    git clone -b wrynose https://git.openembedded.org/meta-openembedded meta-openembedded
 
 From the `poky/build` directory, add the meta-leda Layer to the BBLAYERS configuration:
 

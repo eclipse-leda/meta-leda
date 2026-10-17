@@ -35,27 +35,27 @@ The repository contains an example configuration (`.config.yaml`) for [kas](http
 This layer depends on
 - BitBake
   - URI: https://github.com/openembedded/bitbake.git
-  - Tag: yocto-5.0.20
+  - Tag: yocto-6.0.3
 - poky
   - URI: https://git.yoctoproject.org/meta-yocto
-  - Branch: scarthgap
+  - Branch: wrynose
 - meta-rauc-community
   - URI: https://github.com/rauc/meta-rauc-community.git
-  - Branch: scarthgap
+  - Branch: wrynose
   - Layers:
     - meta-rauc-qemux86
 - meta-rauc:
   - URI: https://github.com/rauc/meta-rauc.git
-  - Branch: scarthgap
+  - Branch: wrynose
 - meta-kanto:
   - URI: https://github.com/eclipse-kanto/meta-kanto.git
-  - Branch: scarthgap
+  - Branch: wrynose
 - meta-virtualization:
   - URI: https://git.yoctoproject.org/meta-virtualization
-  - Branch: scarthgap
+  - Branch: wrynose
 - meta-openembedded:
-  - URI: https://git.openembedded.org/meta-openembedded
-  - Tag: yocto-5.0.20
+  - URI: https://github.com/openembedded/openembedded-core.git
+  - tag: yocto-6.0.3
   - Layers:
     -  meta-oe
     -  meta-filesystems
@@ -63,7 +63,7 @@ This layer depends on
     -  meta-networking
 - meta-clang:
   - URI:: https://github.com/kraj/meta-clang
-    - Branch: scarthgap
+    - Branch: wrynose
 
 # License and Copyright
 

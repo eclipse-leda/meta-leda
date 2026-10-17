@@ -19,12 +19,12 @@ To build a specific target, recipe or image, execute this:
 
 To use a downloads and hashserv mirror, include the mirror configuration:
 
-    kas build kas/.config-scarthgap.yaml:kas/mirrors.yaml
+    kas build kas/.config-wrynose.yaml:kas/mirrors.yaml
 
 To perform a dry-run of the build:
 
-    kas build kas/.config-scarthgap.yaml:kas/mirrors.yaml -- --dryrun
+    kas build kas/.config-wrynose.yaml:kas/mirrors.yaml -- --dryrun
 
 To execute QEMU:
 
-    kas shell -c "runqemu slirp kvm ovmf nographic" kas/.config-scarthgap.yaml
+    kas shell -c "runqemu slirp kvm ovmf nographic" kas/.config-wrynose.yaml

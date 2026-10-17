@@ -30,7 +30,7 @@ local_conf_header:
     INHERIT:remove = " cve-check"
     INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
     KANTO_MANIFESTS_DIR = "/data/var/containers/manifests"
-    KAD_LOCK_PATH="/data/var/lib/kanto-auto-deployer/KAD.enabled"
+    KAD_LOCK_PATH = "/data/var/lib/kanto-auto-deployer/KAD.enabled"
     BLUEPRINTS_DIR = "/data/var/containers/blueprints"
     # Set the values to the default value, to prevent user warnings during our build
     CLOUDCONNECTOR_CERTIFICATE_CERTFILE = "${S}/cloud-connector/example-device.crt"
@@ -48,47 +48,47 @@ repos:
   # bblayers.conf:
   bitbake:
     url: https://github.com/openembedded/bitbake.git
-    tag: yocto-5.0.20
-    commit: cff3be6f664f8f07a40727ff63eeeb24d6f5e00b
+    tag: yocto-6.0.3
+    commit: fae9db3168dbff1b8c76fe9c6726a9687ff97514
     layers: {}
   openembedded-core:
     url: https://github.com/openembedded/openembedded-core.git
-    tag: yocto-5.0.20
-    commit: 70dc15941dd33270a92d1001174efb3093e79bdf
+    tag: yocto-6.0.3
+    commit: ef022bf82d79015802309d14c28b13373ebe53f5
     layers:
       meta:
   poky:
     url: "https://git.yoctoproject.org/meta-yocto/"
-    branch: scarthgap
+    branch: wrynose
     layers:
       meta-poky:
       meta-yocto-bsp:
   meta-lts-mixins-rust:
     url: "https://git.yoctoproject.org/git/meta-lts-mixins"
-    branch: scarthgap/rust
+    branch: wrynose/rust
   meta-lts-mixins-go:
     url: "https://git.yoctoproject.org/git/meta-lts-mixins"
-    branch: scarthgap/go
+    branch: wrynose/go
   meta-clang:
     url: https://github.com/kraj/meta-clang
-    branch: scarthgap
+    branch: wrynose
   meta-rauc-community:
     url: "https://github.com/rauc/meta-rauc-community.git"
-    branch: scarthgap
+    branch: master
     layers:
       meta-rauc-qemux86:
   meta-rauc:
     url: "https://github.com/rauc/meta-rauc.git"
-    branch: scarthgap
+    branch: wrynose
   meta-kanto:
     url: "https://github.com/eclipse-kanto/meta-kanto.git"
-    branch: scarthgap
+    branch: main
   meta-virtualization:
     url: "https://git.yoctoproject.org/meta-virtualization"
-    branch: scarthgap
+    branch: wrynose
   meta-openembedded:
     url: "https://git.openembedded.org/meta-openembedded"
-    branch: scarthgap
+    branch: wrynose
     layers:
       meta-oe:
       meta-filesystems:
