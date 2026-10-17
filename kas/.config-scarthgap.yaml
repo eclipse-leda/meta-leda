@@ -1,0 +1,104 @@
+# /********************************************************************************
+# * Copyright (c) 2022-2026 Contributors to the Eclipse Foundation
+# *
+# * See the NOTICE file(s) distributed with this work for additional
+# * information regarding copyright ownership.
+# *
+# * This program and the accompanying materials are made available under the
+# * terms of the Apache License 2.0 which is available at
+# * https://www.apache.org/licenses/LICENSE-2.0
+# *
+# * SPDX-License-Identifier: Apache-2.0
+# ********************************************************************************/
+# Every file needs to contain a header, that provides kas with information
+# about the context of this file.
+header:
+  # The `version` entry in the header describes for which configuration
+  # format version this file was created for. It is used by kas to figure
+  # out if it is compatible with this file. The version is an integer that
+  # is increased on every format change.
+  version: 12
+# The machine as it is written into the `local.conf` of bitbake.
+machine: qemux86-64
+# The distro name as it is written into the `local.conf` of bitbake.
+distro: leda
+target: sdv-image-all
+local_conf_header:
+  meta-leda: |
+    INHERIT:append = " rm_work"
+    INHERIT:remove = " archiver"
+    INHERIT:remove = " cve-check"
+    INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
+    KANTO_MANIFESTS_DIR = "/data/var/containers/manifests"
+    KAD_LOCK_PATH="/data/var/lib/kanto-auto-deployer/KAD.enabled"
+    BLUEPRINTS_DIR = "/data/var/containers/blueprints"
+    # Set the values to the default value, to prevent user warnings during our build
+    CLOUDCONNECTOR_CERTIFICATE_CERTFILE = "${S}/cloud-connector/example-device.crt"
+    CLOUDCONNECTOR_CERTIFICATE_KEYFILE = "${S}/cloud-connector/example-device.key"
+    DISTRO_FEATURES += " wifi usrmerge"
+  sign_conf: |
+    RAUC_KEY_FILE = "${TOPDIR}/../examples/rauc/development-1.key.pem"
+    RAUC_CERT_FILE = "${TOPDIR}/../examples/rauc/development-1.cert.pem"
+    RAUC_KEYRING_URI = "file://${TOPDIR}/../examples/rauc/ca.cert.pem"
+    RAUC_KEYRING_FILE = "${TOPDIR}/../examples/rauc/ca.cert.pem"
+repos:
+  # This entry includes the repository where the config file is located
+  # to the bblayers.conf:
+  # Here we include a list of layers from the poky repository to the
+  # bblayers.conf:
+  bitbake:
+    url: https://github.com/openembedded/bitbake.git
+    tag: yocto-5.0.20
+    commit: cff3be6f664f8f07a40727ff63eeeb24d6f5e00b
+    layers: {}
+  openembedded-core:
+    url: https://github.com/openembedded/openembedded-core.git
+    tag: yocto-5.0.20
+    commit: 70dc15941dd33270a92d1001174efb3093e79bdf
+    layers:
+      meta:
+  poky:
+    url: "https://git.yoctoproject.org/meta-yocto/"
+    branch: scarthgap
+    layers:
+      meta-poky:
+      meta-yocto-bsp:
+  meta-lts-mixins-rust:
+    url: "https://git.yoctoproject.org/git/meta-lts-mixins"
+    branch: scarthgap/rust
+  meta-lts-mixins-go:
+    url: "https://git.yoctoproject.org/git/meta-lts-mixins"
+    branch: scarthgap/go
+  meta-clang:
+    url: https://github.com/kraj/meta-clang
+    branch: scarthgap
+  meta-rauc-community:
+    url: "https://github.com/rauc/meta-rauc-community.git"
+    branch: scarthgap
+    layers:
+      meta-rauc-qemux86:
+  meta-rauc:
+    url: "https://github.com/rauc/meta-rauc.git"
+    branch: scarthgap
+  meta-kanto:
+    url: "https://github.com/eclipse-kanto/meta-kanto.git"
+    branch: scarthgap
+  meta-virtualization:
+    url: "https://git.yoctoproject.org/meta-virtualization"
+    branch: scarthgap
+  meta-openembedded:
+    url: "https://git.openembedded.org/meta-openembedded"
+    branch: scarthgap
+    layers:
+      meta-oe:
+      meta-filesystems:
+      meta-python:
+      meta-networking:
+  meta-leda:
+    path: ./
+    layers:
+      meta-leda-bsp:
+      meta-leda-components:
+      meta-leda-distro:
+      meta-leda-distro-container:
+      meta-leda-score:

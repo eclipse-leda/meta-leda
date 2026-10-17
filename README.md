@@ -1,6 +1,4 @@
-![GitHub Workflow Status (main/dev)](https://img.shields.io/github/actions/workflow/status/eclipse-leda/meta-leda/dryrun.yml?branch=main&label=main)
-![GitHub Workflow Status (kirkstone branch)](https://img.shields.io/github/actions/workflow/status/eclipse-leda/meta-leda/dryrun.yml?branch=kirkstone&label=kirkstone)
-![GitHub Workflow Status (honister branch)](https://img.shields.io/github/actions/workflow/status/eclipse-leda/meta-leda/dryrun.yml?branch=honister&label=honister)
+![GitHub Workflow Status (dry-run build)](https://img.shields.io/github/actions/workflow/status/eclipse-leda/meta-leda/dryrun.yml)
 
 # OpenEmbedded Meta-Layer for Software Defined Vehicles components
 
@@ -35,31 +33,37 @@ The repository contains an example configuration (`.config.yaml`) for [kas](http
 # Dependencies
 
 This layer depends on
+- BitBake
+  - URI: https://github.com/openembedded/bitbake.git
+  - Tag: yocto-5.0.20
 - poky
-  - URI: https://git.yoctoproject.org/git/poky
-  - Branch: kirkstone
+  - URI: https://git.yoctoproject.org/meta-yocto
+  - Branch: scarthgap
 - meta-rauc-community
   - URI: https://github.com/rauc/meta-rauc-community.git
-  - Branch: kirkstone
+  - Branch: scarthgap
   - Layers:
     - meta-rauc-qemux86
 - meta-rauc:
   - URI: https://github.com/rauc/meta-rauc.git
-  - Branch: kirkstone
+  - Branch: scarthgap
 - meta-kanto:
   - URI: https://github.com/eclipse-kanto/meta-kanto.git
-  - Branch: kirkstone
+  - Branch: scarthgap
 - meta-virtualization:
   - URI: https://git.yoctoproject.org/meta-virtualization
-  - Branch: kirkstone
+  - Branch: scarthgap
 - meta-openembedded:
   - URI: https://git.openembedded.org/meta-openembedded
-  - Branch: kirkstone
+  - Tag: yocto-5.0.20
   - Layers:
     -  meta-oe
     -  meta-filesystems
     -  meta-python
     -  meta-networking
+- meta-clang:
+  - URI:: https://github.com/kraj/meta-clang
+    - Branch: scarthgap
 
 # License and Copyright
 
