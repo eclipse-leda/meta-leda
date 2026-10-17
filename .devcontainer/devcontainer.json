@@ -23,9 +23,6 @@
 			"https_proxy": "${localEnv:https_proxy}"
 		}
 	},
-	"runArgs": [
-		"--network=host"
-	],
 	"hostRequirements": {
 		"cpus": 2,
 		"memory": "4gb",
@@ -56,7 +53,14 @@
 		"source=bitbake_download_cache,target=${containerWorkspaceFolder}/build/downloads,type=volume"
 	],
 	"features": {
-		"docker-in-docker": "latest",
-		"github-cli": "latest"
+		"github-cli": "latest",
+		"ghcr.io/devcontainers/features/docker-in-docker:4": {
+			"moby": true,
+			"azureDnsAutoDetection": true,
+			"installDockerBuildx": true,
+			"iptablesSwitchAtRuntime": true,
+			"version": "latest",
+			"dockerDashComposeVersion": "latest"
+		}
 	}
 }
