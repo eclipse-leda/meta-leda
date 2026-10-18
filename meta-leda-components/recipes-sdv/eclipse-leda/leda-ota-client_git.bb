@@ -23,7 +23,7 @@ SRC_URI += " \
     file://${PGM_NAME}/container-management-config.json.template \
 "
 
-S = "${WORKDIR}/${PGM_NAME}"
+S = "${UNPACKDIR}/${PGM_NAME}"
 
 FILES:${PN} += " \
     ${sysconfdir}/${PGM_NAME} \
