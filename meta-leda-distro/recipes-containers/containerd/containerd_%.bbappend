@@ -14,10 +14,10 @@ do_install:append() {
     if [ -n "${WITH_SYSTEMD}" ]
     then
         # when systemd is available, crun is installed, use that config
-        install -m 0644 ${WORKDIR}/config-crun.toml ${D}${sysconfdir}/containerd/config.toml    
+        install -m 0644 ${UNPACKDIR}/config-crun.toml ${D}${sysconfdir}/containerd/config.toml
     else
         # otherwise fall back to default runc one
-        install -m 0644 ${WORKDIR}/config-runc-default.toml ${D}${sysconfdir}/containerd/config.toml 
+        install -m 0644 ${UNPACKDIR}/config-runc-default.toml ${D}${sysconfdir}/containerd/config.toml
     fi
 
 }
