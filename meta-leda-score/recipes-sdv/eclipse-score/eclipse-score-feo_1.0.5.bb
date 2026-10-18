@@ -48,7 +48,7 @@ SRC_URI = "git://github.com/eclipse-score/feo.git;protocol=https;branch=main;nob
 SRCREV = "313b3d849c17881d3a11b6bf62aa2afab6565ef0"
 
 PV = "1.0.5"
-S = "${WORKDIR}/git"
+
 
 inherit bazel
 

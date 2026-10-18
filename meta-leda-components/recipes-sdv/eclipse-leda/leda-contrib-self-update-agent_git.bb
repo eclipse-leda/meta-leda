@@ -47,7 +47,7 @@ SRC_URI += " \
     file://self-update-agent/0004-Include-cstdint.patch \
 "
 
-S = "${WORKDIR}/git"
+
 
 inherit cmake pkgconfig systemd
 

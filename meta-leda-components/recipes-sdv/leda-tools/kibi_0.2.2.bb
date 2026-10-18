@@ -20,7 +20,6 @@ inherit cargo
 SRC_URI += "git://github.com/ilai-deutel/kibi.git;protocol=https;nobranch=1"
 SRCREV = "750daa33946502ab15e57cdb982787140f0e53d3"
 
-S = "${WORKDIR}/git"
 CARGO_SRC_DIR = ""
 PV:append = ".AUTOINC+750daa3394"
 

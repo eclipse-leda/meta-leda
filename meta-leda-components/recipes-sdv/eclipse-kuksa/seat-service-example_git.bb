@@ -25,7 +25,7 @@ SRC_URI = "git://github.com/eclipse/kuksa.val.services;protocol=https;branch=mai
 SRCREV = "0cb84b8c524e64160b3edf1e607bb4de67e93a11"
 PV = "0.2.0+git${SRCPV}"
 
-S = "${WORKDIR}/git"
+
 
 inherit cmake
 

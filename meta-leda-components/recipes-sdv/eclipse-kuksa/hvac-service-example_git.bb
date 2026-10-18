@@ -21,7 +21,7 @@ SRC_URI = "git://github.com/eclipse/kuksa.val.services;protocol=https;branch=mai
 SRCREV = "3a4fff12f2c9a6f96064e5382e4e3b03ea32090b"
 PV = "0.2.0+git${SRCPV}"
 
-S = "${WORKDIR}/git/hvac_service"
+S = "${UNPACKDIR}/git/hvac_service"
 
 inherit setuptools3
 

@@ -26,7 +26,7 @@ PV = "0.1+git${SRCPV}"
 GO_IMPORT = "github.com/eclipse-leda/leda-contrib-cloud-connector"
 PGM_NAME = "cloud-connector"
 
-S = "${WORKDIR}/git"
+
 
 do_compile[network] = "1"
 

@@ -19,7 +19,7 @@ SRC_URI = "gitsm://github.com/eclipse-cyclonedds/cyclonedds-python.git;protocol=
 SRCREV = "9cec1189a3d5a1407851dfe1f40899dd4a67f52d"
 PV = "0.10.2"
 
-S = "${WORKDIR}/git"
+
 CYCLONEDDS_EXAMPLE_DIR = "/usr/local/lib/cyclonedds-examples"
 
 RDEPENDS_${PN} += "python3-cyclonedds"

@@ -25,7 +25,7 @@ SRC_URI = "git://github.com/eclipse/kuksa.val.feeders.git;protocol=https;branch=
 PV = "1.0+git${SRCPV}"
 SRCREV = "1047b5230b5bf80c3794252288a9b8622a6b70d2"
 
-S = "${WORKDIR}/git/gps2val"
+S = "${UNPACKDIR}/gps2val"
 
 RDEPENDS:${PN} = " \
     python3-kuksa-client (>= 0.4a4) \

@@ -22,7 +22,7 @@ PV = "0.1+git${SRCPV}"
 
 GO_IMPORT = "github.com/eclipse-leda/leda-contrib-vehicle-update-manager"
 
-S = "${WORKDIR}/git"
+
 
 inherit go-mod
 

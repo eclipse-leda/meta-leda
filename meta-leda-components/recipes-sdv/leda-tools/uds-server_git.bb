@@ -21,7 +21,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=2c1c00f9d3ed9e24fa69b932b7e7aff2"
 SRC_URI += "git://github.com/zombieCraig/${BPN}.git;protocol=https;branch=master"
 SRCREV = "231227e2785b99c1bc81e78da848750e67d30097"
 SRC_URI[sha256sum] = "a6fbc86ed3c6d0758b256fd00f18961644f0ed1bdc7784cad828f163e76051bc"
-S = "${WORKDIR}/git"
+
 TARGET_CC_ARCH += "${LDFLAGS}"
 
 do_compile() {

@@ -43,7 +43,7 @@ SRC_URI = "git://github.com/eclipse-score/baselibs.git;protocol=https;branch=mai
 SRCREV = "158fe6a7b791c58f6eac5f7e4662b8db0cf9ac6e"
 
 PV = "0.2.4"
-S = "${WORKDIR}/git"
+
 
 inherit bazel
 

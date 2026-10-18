@@ -19,7 +19,7 @@ SRC_URI = "gitsm://github.com/eclipse-cyclonedds/cyclonedds.git;protocol=https;b
 SRCREV = "9995905bce6c4cf9f740d6438bbf7fcfd1c83dfd"
 PV = "0.10.2"
 
-S = "${WORKDIR}/git"
+
 
 # NOTE: iceoryx dependency not included for simplicity - there's no recipe for that, yet.
 # DEPENDS = "bison-native openssl eclipse-iceoryx"

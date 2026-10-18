@@ -24,7 +24,7 @@ inherit cargo
 SRC_URI += "git://github.com/eclipse-ankaios/ankaios.git;protocol=https;branch=main"
 SRCREV = "1a84057f3b46ef88b4674d7b7f791a86e0c3f446"
 PV = "0.4.0"
-S = "${WORKDIR}/git"
+
 CARGO_SRC_DIR = "ank"
 
 DEPENDS += "protobuf protobuf-native"

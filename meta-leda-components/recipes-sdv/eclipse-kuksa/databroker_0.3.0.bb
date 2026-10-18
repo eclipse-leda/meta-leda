@@ -20,7 +20,7 @@ inherit cargo
 
 SRC_URI += "gitsm://github.com/eclipse/kuksa.val.git;protocol=https;nobranch=1;branch=master"
 SRCREV = "dc8be056d96d60cdb6b60db04ab79b0d4ef86c54"
-S = "${WORKDIR}/git"
+
 CARGO_SRC_DIR = "kuksa_databroker/databroker"
 
 SRC_URI += " \

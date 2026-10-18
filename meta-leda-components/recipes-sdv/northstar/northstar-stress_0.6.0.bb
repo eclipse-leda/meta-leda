@@ -21,7 +21,7 @@ inherit cargo
 # SRC_URI += "crate://crates.io/northstar-stress/0.6.0"
 SRC_URI += "git://github.com/esrlabs/northstar;protocol=https;nobranch=1;branch=main"
 SRCREV = "6001e9f470a051b67a7a15ff4290243dd7c134d0"
-S = "${WORKDIR}/git"
+
 CARGO_SRC_DIR = "northstar-stress"
 PV:append = ".AUTOINC+6001e9f470"
 

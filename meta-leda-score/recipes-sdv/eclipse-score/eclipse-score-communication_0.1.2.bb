@@ -51,7 +51,7 @@ SRC_URI = "git://github.com/eclipse-score/communication.git;protocol=https;branc
 SRCREV = "d5414f75bfd4fc116572091ccca305d9e4b39338"
 
 PV = "0.1.2"
-S = "${WORKDIR}/git"
+
 
 inherit bazel
 

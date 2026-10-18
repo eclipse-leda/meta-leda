@@ -21,7 +21,7 @@ inherit cargo
 # SRC_URI += "crate://crates.io/databroker-cli/0.6.1"
 SRC_URI += "git://github.com/eclipse-kuksa/kuksa-databroker.git;protocol=https;nobranch=1"
 SRCREV = "dd9cb5d1c2da2543dd3b3aa7e5fb350d07412c66"
-S = "${WORKDIR}/git"
+
 CARGO_SRC_DIR = "databroker-cli"
 CARGO_BUILD_FLAGS += "-p databroker-cli"
 
