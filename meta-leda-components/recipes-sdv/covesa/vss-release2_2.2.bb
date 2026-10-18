@@ -36,5 +36,5 @@ do_install:append() {
     install -m 0644 ${S}/vss_rel_${PV}.* ${D}${datadir}/vss
 
     install -d ${D}${datadir}/vss/spec/${PV}
-    cp -R --no-preserve=ownership ${S}/git/spec/* ${D}${datadir}/vss/spec/${PV}
+    cp -R --no-preserve=ownership ${S}/${BP}/spec/* ${D}${datadir}/vss/spec/${PV}
 }
