@@ -24,7 +24,7 @@ require conf/image-uefi.conf
 do_configure:append:qemux86-64() {
     sed -e 's/@@KERNEL_IMAGETYPE@@/${KERNEL_IMAGETYPE}/' \
     -e 's/@@KERNEL_BOOTCMD@@/${KERNEL_BOOTCMD}/' \
-    "${WORKDIR}/boot.cmd.in" > "${WORKDIR}/boot.cmd"
+    "${UNPACKDIR}/boot.cmd.in" > "${WORKDIR}/boot.cmd"
 }
 
 do_compile:append:qemux86-64() {
@@ -36,7 +36,7 @@ do_install:qemux86-64() {
     install -m 755 ${B}/u-boot-payload.efi ${D}${EFI_FILES_PATH}/${EFI_BOOT_IMAGE}
 
     install -d ${D}${sysconfdir}
-    install -m 0644 ${WORKDIR}/fw_env.config ${D}${sysconfdir}/fw_env.config
+    install -m 0644 ${UNPACKDIR}/fw_env.config ${D}${sysconfdir}/fw_env.config
 }
 
 do_deploy:append:qemux86-64() {
