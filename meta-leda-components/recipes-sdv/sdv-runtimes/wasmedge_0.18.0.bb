@@ -1,5 +1,5 @@
 # /********************************************************************************
-# * Copyright (c) 2023 Contributors to the Eclipse Foundation
+# * Copyright (c) 2026 Contributors to the Eclipse Foundation
 # *
 # * See the NOTICE file(s) distributed with this work for additional
 # * information regarding copyright ownership.
@@ -15,13 +15,12 @@ DESCRIPTION = "WasmEdge is a lightweight, high-performance, and extensible WebAs
 
 inherit cmake
 
-SRC_URI += "gitsm://github.com/WasmEdge/WasmEdge.git;protocol=https;nobranch=1;branch=main"
-SRCREV = "acd72bc07e02bd87f01f547f28700f2557eb5ba9"
-SRC_URI += "file://0001-Support-modern-LLVM.patch"
+SRC_URI = "git://github.com/WasmEdge/WasmEdge.git;protocol=https;nobranch=1"
+SRCREV = "1ebe13e9a0483892dd97c77747a3ef57fead3c22"
 
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${S}/LICENSE;md5=86d3f3a95c324c9479bd8986968f4327"
 
-DEPENDS += " boost spdlog clang"
+DEPENDS += " boost spdlog clang lld"
 
 EXTRA_OECMAKE = "-DCMAKE_BUILD_TYPE=Release"

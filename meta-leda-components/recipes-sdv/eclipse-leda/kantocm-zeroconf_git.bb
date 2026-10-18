@@ -15,7 +15,7 @@ SUMMARY = "KantoCM Zeroconf"
 DESCRIPTION = "System service to publish services on running containers dynamically with Zeroconf"
 
 SRC_URI = "git://github.com/eclipse-leda/leda-utils;protocol=https;branch=main \
-           git://github.com/eclipse-kanto/container-management;name=kanto;protocol=https;branch=main;subdir=git/kanto_cm/api;subpath=containerm/api \
+           git://github.com/eclipse-kanto/container-management;name=kanto;protocol=https;branch=main;subdir=${BP}/kanto_cm/api;subpath=containerm/api \
            "
 SRCREV_FORMAT = "default_kanto"
 SRCREV = "10ca9031a2f6cf0f1981c411f02fbbb73827ead3"
