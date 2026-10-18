@@ -36,6 +36,7 @@ local_conf_header:
     CLOUDCONNECTOR_CERTIFICATE_CERTFILE = "${S}/cloud-connector/example-device.crt"
     CLOUDCONNECTOR_CERTIFICATE_KEYFILE = "${S}/cloud-connector/example-device.key"
     DISTRO_FEATURES += " wifi usrmerge"
+    PREFERRED_RPROVIDER_libnss-mdns += " avahi-libnss-mdns"
   sign_conf: |
     RAUC_KEY_FILE = "${TOPDIR}/../examples/rauc/development-1.key.pem"
     RAUC_CERT_FILE = "${TOPDIR}/../examples/rauc/development-1.cert.pem"
