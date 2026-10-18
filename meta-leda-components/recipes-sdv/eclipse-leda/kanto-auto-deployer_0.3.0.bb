@@ -17,7 +17,7 @@ inherit cargo
 
 SRC_URI += "gitsm://github.com/eclipse-leda/leda-utils.git;protocol=https;nobranch=1;branch=main"
 SRCREV = "4c9963a1872464fec48b09ef4b24137d76911684"
-S = "${WORKDIR}/git"
+
 CARGO_SRC_DIR = "src/rust/kanto-auto-deployer"
 
 DEPENDS += "protobuf-native"

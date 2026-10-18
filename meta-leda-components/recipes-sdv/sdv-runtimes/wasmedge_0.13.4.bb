@@ -18,7 +18,6 @@ inherit cmake
 SRC_URI += "gitsm://github.com/WasmEdge/WasmEdge.git;protocol=https;nobranch=1;branch=main"
 SRCREV = "acd72bc07e02bd87f01f547f28700f2557eb5ba9"
 SRC_URI += "file://0001-Support-modern-LLVM.patch"
-S = "${WORKDIR}/git"
 
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${S}/LICENSE;md5=86d3f3a95c324c9479bd8986968f4327"

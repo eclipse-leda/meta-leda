@@ -19,7 +19,7 @@ SRCREV = "1e3be710e1b84fc17cc5b63097881917803dfc3e"
 
 # According to https://wiki.yoctoproject.org/wiki/License_Infrastructure_Interest_Group
 LICENSE = "Apache-2.0"
-LIC_FILES_CHKSUM = "file://${WORKDIR}/git/LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57"
 
 RDEPENDS:${PN} += "mosquitto-clients iproute2 jq"
 

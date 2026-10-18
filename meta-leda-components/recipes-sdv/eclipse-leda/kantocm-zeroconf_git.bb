@@ -26,7 +26,6 @@ LIC_FILES_CHKSUM = "file://${WORKDIR}/git/LICENSE;md5=3b83ef96387f14655fc854ddc3
 
 PACKAGES = "${PN}"
 
-S = "${WORKDIR}/git"
 B = "${WORKDIR}/build"
 
 inherit python3native python3-dir
