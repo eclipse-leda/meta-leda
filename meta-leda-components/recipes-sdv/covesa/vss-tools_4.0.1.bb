@@ -26,6 +26,6 @@ SRC_URI[sha512sum] = "9640fa88af856eef1f447e2e7ed3df4cc450cb7d572a4c244757112d81
 
 PYPI_PACKAGE = "vss-tools"
 
-inherit pypi setuptools3
+inherit pypi python_setuptools_build_meta
 
 RDEPENDS:${PN} += "python3-anytree python3-deprecation python3-graphql-core python3-pyyaml"

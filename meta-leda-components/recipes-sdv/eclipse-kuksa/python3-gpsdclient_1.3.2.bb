@@ -19,4 +19,4 @@ LIC_FILES_CHKSUM = "file://LICENSE.txt;md5=899c824b3a6926844787ad42a3e5df56"
 
 SRC_URI[sha256sum] = "70a496550a9747dff5e0e50b3c95a6e1dcab9d842860997e95120767e2060a7a"
 
-inherit pypi setuptools3
+inherit pypi python_poetry_core

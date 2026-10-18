@@ -1,0 +1,21 @@
+From: Copilot <223556219+Copilot@users.noreply.github.com>
+Subject: [PATCH] Use current Poetry build backend
+
+Allow the Poetry Core version supplied by Wrynose. Setuptools is not
+needed for this pure-Python package when using its declared Poetry
+backend instead of the legacy setup.py build.
+
+Upstream-Status: Inappropriate [distribution build-tool compatibility]
+Signed-off-by: Copilot <223556219+Copilot@users.noreply.github.com>
+---
+ pyproject.toml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/pyproject.toml b/pyproject.toml
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -87,3 +87,3 @@
+ [build-system]
+-requires = ["poetry_core>=1,<2", "setuptools>=59,<70"]
++requires = ["poetry-core>=1"]
+ build-backend = "poetry.core.masonry.api"

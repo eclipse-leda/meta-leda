@@ -22,6 +22,7 @@ SRC_URI[sha256sum] = "548efd32ab5c4f0004f922b36eba88f1dc8c374bf3c599f1337b6b74e0
 
 DEPENDS += " \
     python3-grpcio-tools-native \
+    python3-setuptools-git-versioning-native \
 "
 
 RDEPENDS:${PN} = " \
@@ -31,4 +32,4 @@ RDEPENDS:${PN} = " \
     python3-websockets \
 "
 
-inherit pypi setuptools3
+inherit pypi python_setuptools_build_meta

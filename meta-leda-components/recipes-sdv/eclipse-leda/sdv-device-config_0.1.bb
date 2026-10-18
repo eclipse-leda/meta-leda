@@ -17,6 +17,8 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 SRC_URI += "file://sdv-device-config/"
 
+S = "${UNPACKDIR}/sdv-device-config"
+
 FILES:${PN} += " \
     ${sbindir}/sdv-generate-deviceid.sh \
     ${sbindir}/sdv-set-hostname.sh \

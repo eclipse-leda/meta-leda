@@ -19,8 +19,10 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=73706fb002de2debc52328afd1688817"
 
 SRC_URI[sha256sum] = "06d2aad0ac723e35b1cb47885d3e5c45e956a53bc1b209a9fc5369007fe46676"
 
+SRC_URI += "file://0001-Use-current-Poetry-build-backend.patch"
+
 PYPI_PACKAGE = "graphql-core"
 
-inherit pypi setuptools3
+inherit pypi python_poetry_core
 
 BBCLASSEXTEND = "native"
