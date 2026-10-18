@@ -14,6 +14,7 @@
 inherit kanto-auto-deployer
 
 DESCRIPTION = "SDV Edge Core Containers"
+S = "${UNPACKDIR}"
 SRC_URI += "file://LICENSE"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${UNPACKDIR}/LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57"

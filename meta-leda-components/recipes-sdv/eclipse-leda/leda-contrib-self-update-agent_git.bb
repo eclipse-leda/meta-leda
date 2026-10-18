@@ -18,15 +18,15 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=a832eda17114b48ae16cda6a500941c2"
 SRCREV_FORMAT = "sua_pahoc_pahocpp_yaml_curl_googletest_glib_spdlog_openssl_json"
 
 SRC_URI += "git://github.com/eclipse-leda/leda-contrib-self-update-agent.git;name=sua;protocol=https;branch=main \
-            git://github.com/eclipse/paho.mqtt.c.git;protocol=https;name=pahoc;branch=master;destsuffix=git/3rdparty/paho.mqtt.c \
-            git://github.com/eclipse/paho.mqtt.cpp.git;protocol=https;name=pahocpp;branch=master;destsuffix=git/3rdparty/paho.mqtt.cpp \
-            git://github.com/jimmiebergmann/mini-yaml.git;protocol=https;name=yaml;branch=master;destsuffix=git/3rdparty/mini-yaml \
-            git://github.com/curl/curl.git;protocol=https;name=curl;branch=master;destsuffix=git/3rdparty/curl \
-            git://github.com/google/googletest.git;protocol=https;name=googletest;branch=main;destsuffix=git/3rdparty/googletest \
-            git://github.com/GNOME/glib.git;protocol=https;name=glib;branch=main;destsuffix=git/3rdparty/glib \
-            git://github.com/gabime/spdlog.git;protocol=https;name=spdlog;branch=v1.x;destsuffix=git/3rdparty/spdlog \
-            git://github.com/openssl/openssl.git;protocol=https;name=openssl;branch=master;destsuffix=git/3rdparty/openssl \
-            git://github.com/nlohmann/json.git;protocol=https;name=json;branch=develop;destsuffix=git/3rdparty/nlohmann-json \
+            git://github.com/eclipse/paho.mqtt.c.git;protocol=https;name=pahoc;branch=master;destsuffix=${BP}/3rdparty/paho.mqtt.c \
+            git://github.com/eclipse/paho.mqtt.cpp.git;protocol=https;name=pahocpp;branch=master;destsuffix=${BP}/3rdparty/paho.mqtt.cpp \
+            git://github.com/jimmiebergmann/mini-yaml.git;protocol=https;name=yaml;branch=master;destsuffix=${BP}/3rdparty/mini-yaml \
+            git://github.com/curl/curl.git;protocol=https;name=curl;branch=master;destsuffix=${BP}/3rdparty/curl \
+            git://github.com/google/googletest.git;protocol=https;name=googletest;branch=main;destsuffix=${BP}/3rdparty/googletest \
+            git://github.com/GNOME/glib.git;protocol=https;name=glib;branch=main;destsuffix=${BP}/3rdparty/glib \
+            git://github.com/gabime/spdlog.git;protocol=https;name=spdlog;branch=v1.x;destsuffix=${BP}/3rdparty/spdlog \
+            git://github.com/openssl/openssl.git;protocol=https;name=openssl;branch=master;destsuffix=${BP}/3rdparty/openssl \
+            git://github.com/nlohmann/json.git;protocol=https;name=json;branch=develop;destsuffix=${BP}/3rdparty/nlohmann-json \
             "
 SRCREV_sua = "f37df38cde19ef7974a8ceeb2b4f4dbbf288f43f"
 SRCREV_pahoc = "556cd568345e47b70da603edc92f11ff94a6161f"

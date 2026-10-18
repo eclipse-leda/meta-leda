@@ -7,7 +7,8 @@ Upstream-Status: Inappropriate [oe specific]
 -project(sdv-self-update-agent)
 +project(self-update-agent)
  
- set(CMAKE_CXX_STANDARD 14)
+-set(CMAKE_CXX_STANDARD 14)
++set(CMAKE_CXX_STANDARD 17)
  
 -set(CMAKE_SKIP_BUILD_RPATH TRUE)
 -set(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)

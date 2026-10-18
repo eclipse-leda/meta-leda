@@ -17,7 +17,7 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://src/${GO_IMPORT}/LICENSE;md5=2b42edef8fa55315f34f2370b4715ca9"
 
 SRC_URI = " \
-  git://${GO_IMPORT}.git;protocol=https;branch=main \
+  git://${GO_IMPORT}.git;protocol=https;branch=main;destsuffix=${GO_SRCURI_DESTSUFFIX} \
   file://cloud-connector/ \
 "
 SRCREV = "6240d8ef1fc24339f2c97f4dde98cc463b24681d"

@@ -3,6 +3,7 @@ From: Guenther Meyer <g.meyer@signum-media.de>
 Date: Mon, 7 Aug 2023 15:26:01 +0200
 Subject: [PATCH] Fix container entrypoint script
 
+Upstream-Status: Inappropriate [distribution-specific installed script path]
 
 diff --git a/gps2val/entrypoint.sh b/gps2val/entrypoint.sh
 index 44f0aac..74bc327 100755
@@ -19,4 +20,3 @@ index 44f0aac..74bc327 100755
 
 --
 2.41.0
-

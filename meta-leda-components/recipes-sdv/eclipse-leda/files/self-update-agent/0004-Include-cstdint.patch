@@ -1,12 +1,19 @@
 From: Contributors to the Eclipse Foundation
-Subject: [PATCH] Include cstdint for uint64_t in MQTT JSON protocol
+Subject: [PATCH] Include cstdint for uint64_t declarations
 
 The protocol header declares epochTime() using uint64_t, but relies on
 transitive includes to define that type. Include cstdint directly so the
 header also compiles with toolchains that no longer provide it indirectly.
+The shared context header also declares uint64_t fields and needs the same
+explicit include.
 
 Upstream-Status: Pending
 
+--- a/src/Context.h
++++ b/src/Context.h
+@@ -27 +27,2 @@
++#include <cstdint>
+ #include <memory>
 --- a/src/Mqtt/MqttMessagingProtocolJSON.h
 +++ b/src/Mqtt/MqttMessagingProtocolJSON.h
 @@ -18,6 +18,8 @@

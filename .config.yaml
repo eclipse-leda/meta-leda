@@ -25,6 +25,8 @@ distro: leda
 target: sdv-image-all
 bblayers_conf_header:
   meta-kanto: |
+    # FIXME: Remove once meta-kanto officially supports wrynose and we don't
+    # need to use the fork anymore.
     LAYERSERIES_COMPAT_meta-kanto:append = " wrynose "
 local_conf_header:
   meta-leda: |
@@ -39,7 +41,7 @@ local_conf_header:
     CLOUDCONNECTOR_CERTIFICATE_CERTFILE = "${S}/cloud-connector/example-device.crt"
     CLOUDCONNECTOR_CERTIFICATE_KEYFILE = "${S}/cloud-connector/example-device.key"
     DISTRO_FEATURES += " wifi usrmerge"
-    PREFERRED_RPROVIDER_libnss-mdns += " avahi-libnss-mdns"
+    PREFERRED_RPROVIDER_libnss-mdns ?= "avahi-libnss-mdns"
   sign_conf: |
     RAUC_KEY_FILE = "${TOPDIR}/../examples/rauc/development-1.key.pem"
     RAUC_CERT_FILE = "${TOPDIR}/../examples/rauc/development-1.cert.pem"
@@ -84,6 +86,8 @@ repos:
   meta-rauc:
     url: "https://github.com/rauc/meta-rauc.git"
     branch: wrynose
+  # FIXME: Temporarily switch to a fork which supports wrynose.
+  # Switch back to github.com/meta-kanto/meta-kanto.git once it officially supports wrynose.
   meta-kanto:
     url: "https://github.com/mikehaller/meta-kanto.git"
     branch: wrynose

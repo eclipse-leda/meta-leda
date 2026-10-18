@@ -17,6 +17,7 @@ DESCRIPTION = "SDV Example Bluprints that can be deployed with blueprints select
 SRC_URI += "git://github.com/eclipse-leda/leda-utils.git;protocol=https;nobranch=1;branch=main;name=bluerpintsSelectorRepo;destsuffix=selector"
 SRCREV_bluerpintsSelectorRepo = "1f933716a8500c9f464537d60dfd33c8cdc0a850"
 SRCREV_FORMAT = "bluerpintsSelectorRepo_"
+S = "${UNPACKDIR}/selector"
 BLUEPRINTS_SELECTOR_EXAMPLES = "${UNPACKDIR}/selector/src/rust/blueprint-selector/example_blueprints" 
 
 SRC_URI += "file://LICENSE"
@@ -41,5 +42,4 @@ FILES:${PN} += "${BLUEPRINTS_LOCAL_DIR}"
 FILES:${PN} += "${BLUEPRINTS_LOCAL_DIR}/leda_default.blueprint.json"
 FILES:${PN} += "${BLUEPRINTS_LOCAL_DIR}/fleet_management.blueprint.json"
 FILES:${PN} += "${BLUEPRINTS_LOCAL_DIR}/databroker_only.blueprint.json"
-
 
