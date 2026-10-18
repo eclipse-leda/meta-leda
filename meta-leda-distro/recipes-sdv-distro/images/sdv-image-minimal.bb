@@ -25,11 +25,11 @@ IMAGE_INSTALL:append:raspberrypi4-64 = " ${@bb.utils.contains("DISTRO_FEATURES",
 
 IMAGE_LINGUAS = " "
 
-
 # Debug tweaks
-IMAGE_FEATURES:append = " debug-tweaks"
+IMAGE_FEATURES:append = " allow-root-login"
 IMAGE_FEATURES:append = " allow-empty-password"
 IMAGE_FEATURES:append = " empty-root-password"
+IMAGE_FEATURES:append = " post-install-logging"
 
 inherit core-image
 

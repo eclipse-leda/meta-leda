@@ -22,5 +22,5 @@ local_conf_header:
   user: |
     IMAGE_INSTALL:append = " packagegroup-sdv-core"
     DISTRO_FEATURES += " sdv rauc virtualization"
-    EXTRA_IMAGE_FEATURES += "debug-tweaks"
+    EXTRA_IMAGE_FEATURES += "allow-empty-password allow-root-login empty-root-password post-install-logging"
 machine: qemux86-64

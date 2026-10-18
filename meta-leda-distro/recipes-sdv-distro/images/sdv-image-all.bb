@@ -15,9 +15,10 @@ SUMMARY = "A full quickstart image with all features and convenience tools enabl
 LICENSE = "Apache-2.0"
 
 # Debug tweaks
-IMAGE_FEATURES:append = " debug-tweaks"
+IMAGE_FEATURES:append = " allow-root-login"
 IMAGE_FEATURES:append = " allow-empty-password"
 IMAGE_FEATURES:append = " empty-root-password"
+IMAGE_FEATURES:append = " post-install-logging"
 
 # The image dependencies are actually both types: build-time and run-time dependency
 RDEPENDS:${PN} = " \
