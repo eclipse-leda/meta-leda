@@ -15,7 +15,7 @@ SUMMARY = "Covesa VSS Release ${PV}"
 HOMEPAGE = "https://github.com/COVESA/vehicle_signal_specification"
 
 LICENSE = "MPL-2.0"
-LIC_FILES_CHKSUM = "file://git/LICENSE;md5=9741c346eef56131163e13b9db1241b3"
+LIC_FILES_CHKSUM = "file://vss-release3-3.1.1/LICENSE;md5=9741c346eef56131163e13b9db1241b3"
 
 SRC_URI = "git://github.com/COVESA/vehicle_signal_specification.git;protocol=https;nobranch=1;branch=release/3.1 \
            https://github.com/COVESA/vehicle_signal_specification/releases/download/v${PV}/vss_rel_${PV}.json;name=json \
