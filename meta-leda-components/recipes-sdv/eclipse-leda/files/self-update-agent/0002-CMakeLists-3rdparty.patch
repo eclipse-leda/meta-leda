@@ -1,3 +1,5 @@
+Upstream-Status: Inappropriate [oe specific]
+---
 --- a/3rdparty/CMakeLists.txt
 +++ b/3rdparty/CMakeLists.txt
 @@ -1,27 +1,2 @@

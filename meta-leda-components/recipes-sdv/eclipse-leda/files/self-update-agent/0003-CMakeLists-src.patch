@@ -1,3 +1,5 @@
+Upstream-Status: Inappropriate [oe specific]
+---
 --- a/src/CMakeLists.txt
 +++ b/src/CMakeLists.txt
 @@ -1,67 +1,38 @@
