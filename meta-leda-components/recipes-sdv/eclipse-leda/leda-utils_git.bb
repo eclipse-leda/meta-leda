@@ -27,16 +27,16 @@ do_install() {
     install -d ${D}${bindir}
     install -d ${D}${sysconfdir}/sdv
 
-    install -m 0755 ${WORKDIR}/git/src/sh/can-forward ${D}${bindir}
-    install -m 0755 ${WORKDIR}/git/src/sh/sdv-device-info ${D}${bindir}
-    install -m 0755 ${WORKDIR}/git/src/sh/sdv-health ${D}${bindir}
-    install -m 0755 ${WORKDIR}/git/src/sh/sdv-help ${D}${bindir}
-    install -m 0755 ${WORKDIR}/git/src/sh/sdv-motd ${D}${bindir}
-    install -m 0755 ${WORKDIR}/git/src/sh/sdv-provision ${D}${bindir}
-    install -m 0755 ${WORKDIR}/git/src/sh/sdv-ctr-exec ${D}${bindir}
-    install -m 0755 ${WORKDIR}/git/src/sh/sdv-kanto-ctl ${D}${bindir}
+    install -m 0755 ${S}/src/sh/can-forward ${D}${bindir}
+    install -m 0755 ${S}/src/sh/sdv-device-info ${D}${bindir}
+    install -m 0755 ${S}/src/sh/sdv-health ${D}${bindir}
+    install -m 0755 ${S}/src/sh/sdv-help ${D}${bindir}
+    install -m 0755 ${S}/src/sh/sdv-motd ${D}${bindir}
+    install -m 0755 ${S}/src/sh/sdv-provision ${D}${bindir}
+    install -m 0755 ${S}/src/sh/sdv-ctr-exec ${D}${bindir}
+    install -m 0755 ${S}/src/sh/sdv-kanto-ctl ${D}${bindir}
 
-    install -m 0644 ${WORKDIR}/git/src/sh/sdv.conf ${D}/etc/sdv/
+    install -m 0644 ${S}/src/sh/sdv.conf ${D}/etc/sdv/
 
     install -d ${D}${sysconfdir}/profile.d
     ln -sf ${bindir}/sdv-motd ${D}${sysconfdir}/profile.d/sdv-motd.sh
