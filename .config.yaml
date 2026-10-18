@@ -23,6 +23,9 @@ machine: qemux86-64
 # The distro name as it is written into the `local.conf` of bitbake.
 distro: leda
 target: sdv-image-all
+bblayers_conf_header:
+  meta-kanto: |
+    LAYERSERIES_COMPAT_meta-kanto:append = " wrynose "
 local_conf_header:
   meta-leda: |
     INHERIT:append = " rm_work"
@@ -82,8 +85,8 @@ repos:
     url: "https://github.com/rauc/meta-rauc.git"
     branch: wrynose
   meta-kanto:
-    url: "https://github.com/eclipse-kanto/meta-kanto.git"
-    branch: main
+    url: "https://github.com/mikehaller/meta-kanto.git"
+    branch: wrynose
   meta-virtualization:
     url: "https://git.yoctoproject.org/meta-virtualization"
     branch: wrynose
