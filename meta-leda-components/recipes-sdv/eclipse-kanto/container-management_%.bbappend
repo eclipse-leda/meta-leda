@@ -30,7 +30,7 @@ do_install:append() {
 
         # config.json
         install -d ${D}${CM_CFG_DD}/container-management
-        install -m 0644 ${WORKDIR}/config.json ${D}${CM_CFG_DD}/container-management/config.json
+        install -m 0644 ${UNPACKDIR}/config.json ${D}${CM_CFG_DD}/container-management/config.json
 
         # fill in the config.json template with the custom configs provided
         sed -e 's,@CM_LOD_DD@,${CM_LOD_DD},g' \
@@ -39,7 +39,7 @@ do_install:append() {
 
         # service.template as service
         install -d ${D}/${systemd_unitdir}/system
-        install -m 0644 ${WORKDIR}/service.template ${D}${systemd_unitdir}/system/container-management.service
+        install -m 0644 ${UNPACKDIR}/service.template ${D}${systemd_unitdir}/system/container-management.service
         # fill in the container management service template with the result configurations
         sed -e 's,@CM_BIN_DD@,${bindir},g' \
             -e 's,@CM_CFG_DD@,${sysconfdir},g' \

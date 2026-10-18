@@ -18,4 +18,4 @@ SRC_URI = "git://github.com/tmux/tmux.git;protocol=https;branch=master"
 SRCREV = "310f0a960ca64fa3809545badc629c0c166c6cd2"
 
 
-B = "${WORKDIR}/build"
+B = "${UNPACKDIR}/build"

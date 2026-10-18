@@ -46,9 +46,9 @@ do_compile[noexec] = "1"
 
 do_install() {
     install -d "${D}${bindir}"
-    install -m 755 "${WORKDIR}/bazel" "${D}${bindir}/bazel"
+    install -m 755 "${UNPACKDIR}/bazel" "${D}${bindir}/bazel"
     install -d "${D}${datadir}/bazel"
-    install -m 644 "${WORKDIR}/LICENSE" "${D}${datadir}/bazel/LICENSE"
+    install -m 644 "${UNPACKDIR}/LICENSE" "${D}${datadir}/bazel/LICENSE"
 }
 
 FILES:${PN} += "${datadir}/bazel"

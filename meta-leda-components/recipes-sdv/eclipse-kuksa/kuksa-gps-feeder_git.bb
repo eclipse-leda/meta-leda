@@ -44,5 +44,5 @@ do_install () {
     install -m 0755 ${S}/entrypoint.sh ${D}${bindir}/entrypoint_gps_feeder.sh
 
     install -d ${D}${sysconfdir}
-    install -m 0644 ${WORKDIR}/gpsd_feeder.ini ${D}${sysconfdir}/gpsd_feeder.ini
+    install -m 0644 ${UNPACKDIR}/gpsd_feeder.ini ${D}${sysconfdir}/gpsd_feeder.ini
 }

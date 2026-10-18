@@ -24,8 +24,8 @@ FILES:${PN} += " \
 
 do_install() {
     install -d ${D}${sbindir}
-    install -m 755 ${WORKDIR}/sdv-device-config/sdv-generate-deviceid.sh ${D}${sbindir}/
-    install -m 755 ${WORKDIR}/sdv-device-config/sdv-set-hostname.sh ${D}${sbindir}/
+    install -m 755 ${UNPACKDIR}/sdv-device-config/sdv-generate-deviceid.sh ${D}${sbindir}/
+    install -m 755 ${UNPACKDIR}/sdv-device-config/sdv-set-hostname.sh ${D}${sbindir}/
 }
 
 pkg_postinst_ontarget:${PN} () {

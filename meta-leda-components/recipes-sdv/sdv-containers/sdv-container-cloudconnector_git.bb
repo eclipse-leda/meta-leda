@@ -22,7 +22,7 @@ SRCREV = "${AUTOREV}"
 
 # According to https://wiki.yoctoproject.org/wiki/License_Infrastructure_Interest_Group
 LICENSE = "Apache-2.0"
-LIC_FILES_CHKSUM = "file://${WORKDIR}/git/LICENSE;md5=2b42edef8fa55315f34f2370b4715ca9"
+LIC_FILES_CHKSUM = "file://${UNPACKDIR}/git/LICENSE;md5=2b42edef8fa55315f34f2370b4715ca9"
 
 # Define image to be pulled
 SDV_IMAGE_REF = "ghcr.io/eclipse-leda/leda-contrib-cloud-connector/cloudconnector"

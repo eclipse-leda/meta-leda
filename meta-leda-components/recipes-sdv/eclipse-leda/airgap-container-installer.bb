@@ -32,7 +32,7 @@ AG_SERVICE_DIR = "${systemd_unitdir}/system"
 
 install_service() {
     install -d ${D}${AG_SERVICE_DIR}
-    install -m 0644 ${WORKDIR}/airgap-container-installer.service.template ${D}${AG_SERVICE_DIR}/airgap-container-installer.service
+    install -m 0644 ${UNPACKDIR}/airgap-container-installer.service.template ${D}${AG_SERVICE_DIR}/airgap-container-installer.service
     sed -e 's,@AG_BIN_DD@,${bindir},g' \
     -e 's,@AG_IMG_DD@,${PREINSTALLED_CTR_IMAGES_DIR},g' \
     -i ${D}${AG_SERVICE_DIR}/airgap-container-installer.service
@@ -40,7 +40,7 @@ install_service() {
 
 do_install() {
     install -d ${D}${bindir}
-    install -m 0755 ${WORKDIR}/airgap-container-installer ${D}${bindir}
+    install -m 0755 ${UNPACKDIR}/airgap-container-installer ${D}${bindir}
     install_service
 }
 

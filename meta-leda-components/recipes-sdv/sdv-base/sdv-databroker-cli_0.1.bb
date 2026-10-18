@@ -32,7 +32,7 @@ do_fetch() {
 
 # According to https://wiki.yoctoproject.org/wiki/License_Infrastructure_Interest_Group
 LICENSE = "Apache-2.0"
-LIC_FILES_CHKSUM = "file://${WORKDIR}/leda-incubator-vehicleapi-0.17.0/LICENSE;md5=2b42edef8fa55315f34f2370b4715ca9"
+LIC_FILES_CHKSUM = "file://${UNPACKDIR}/leda-incubator-vehicleapi-0.17.0/LICENSE;md5=2b42edef8fa55315f34f2370b4715ca9"
 
 INSANE_SKIP:${PN} = "already-stripped"
 
@@ -40,10 +40,10 @@ do_install () {
     install -d ${D}${bindir}
     case ${TARGET_ARCH} in
         aarch64*)    
-            install -m 0755 ${WORKDIR}/target/aarch64-unknown-linux-gnu/release/vehicle-data-cli ${D}${bindir}
+            install -m 0755 ${UNPACKDIR}/target/aarch64-unknown-linux-gnu/release/vehicle-data-cli ${D}${bindir}
             ;;
         x86_64*)
-            install -m 0755 ${WORKDIR}/target/release/vehicle-data-cli ${D}${bindir}
+            install -m 0755 ${UNPACKDIR}/target/release/vehicle-data-cli ${D}${bindir}
             ;;
         *)
             bbfatal "Recipe has no target-arch-to-vapi-release-arch mapping for '${TARGET_ARCH}'."

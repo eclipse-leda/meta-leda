@@ -24,14 +24,14 @@ DEPENDS:append:qemuarm64 = " bc-native dtc-native swig-native python3-native fle
 do_configure:append:qemuarm64() {
     sed -e 's/@@KERNEL_IMAGETYPE@@/${KERNEL_IMAGETYPE}/' \
     -e 's/@@KERNEL_BOOTCMD@@/${KERNEL_BOOTCMD}/' \
-    "${WORKDIR}/boot.cmd.in" > "${WORKDIR}/boot.cmd"
+    "${UNPACKDIR}/boot.cmd.in" > "${UNPACKDIR}/boot.cmd"
 }
 
 do_compile:append:qemuarm64() {
-    ${B}/tools/mkimage -C none -A ${UBOOT_ARCH} -T script -d "${WORKDIR}/boot.cmd" "${UBOOT_ENV}.${UBOOT_ENV_SUFFIX}"
+    ${B}/tools/mkimage -C none -A ${UBOOT_ARCH} -T script -d "${UNPACKDIR}/boot.cmd" "${UBOOT_ENV}.${UBOOT_ENV_SUFFIX}"
 }
 
 do_install:qemuarm64() {
     install -d ${D}${sysconfdir}
-    install -m 0644 ${WORKDIR}/fw_env.config ${D}${sysconfdir}/fw_env.config
+    install -m 0644 ${UNPACKDIR}/fw_env.config ${D}${sysconfdir}/fw_env.config
 }

@@ -83,16 +83,16 @@ BAZEL_OUTPUT_DIR ?= "bazel-bin"
 BAZEL_OUTPUT_FILES ?= ""
 
 # Bazel home directory (isolated per recipe)
-BAZEL_HOME = "${WORKDIR}/bazel-home"
+BAZEL_HOME = "${UNPACKDIR}/bazel-home"
 
 # Bazel output base (isolated per recipe)
-BAZEL_OUTPUT_BASE = "${WORKDIR}/bazel-output-base"
+BAZEL_OUTPUT_BASE = "${UNPACKDIR}/bazel-output-base"
 
 # Bazel repository cache (isolated per recipe)
-BAZEL_REPOSITORY_CACHE = "${WORKDIR}/bazel-repository-cache"
+BAZEL_REPOSITORY_CACHE = "${UNPACKDIR}/bazel-repository-cache"
 
 # Bazel disk cache for build artifacts
-BAZEL_DISK_CACHE = "${WORKDIR}/bazel-disk-cache"
+BAZEL_DISK_CACHE = "${UNPACKDIR}/bazel-disk-cache"
 
 # Set to "1" to vendor Bazel module dependencies into WORKDIR during fetch
 BAZEL_VENDOR_DIR ?= ""

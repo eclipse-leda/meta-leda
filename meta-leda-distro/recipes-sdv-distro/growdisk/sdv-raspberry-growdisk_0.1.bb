@@ -22,7 +22,7 @@ SRC_URI =  " \
     file://raspberry-growdisk/ \
 "
 
-LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=d9fc0efef5228704e7f5b37f27192723"
+LIC_FILES_CHKSUM = "file://${UNPACKDIR}/LICENSE;md5=d9fc0efef5228704e7f5b37f27192723"
 
 NATIVE_SYSTEMD_SUPPORT = "1"
 SYSTEMD_PACKAGES = "${PN}"
@@ -36,8 +36,8 @@ REQUIRED_DISTRO_FEATURES = "systemd"
 
 do_install:append () {
     install -d ${D}/${sbindir}
-    install -m 0755 ${WORKDIR}/raspberry-growdisk/raspberry-growdisk.sh ${D}/${sbindir}
+    install -m 0755 ${UNPACKDIR}/raspberry-growdisk/raspberry-growdisk.sh ${D}/${sbindir}
 
     install -d ${D}${systemd_unitdir}/system/
-    install -m 0644 ${WORKDIR}/raspberry-growdisk/raspberry-growdisk.service ${D}${systemd_system_unitdir}
+    install -m 0644 ${UNPACKDIR}/raspberry-growdisk/raspberry-growdisk.service ${D}${systemd_system_unitdir}
 }

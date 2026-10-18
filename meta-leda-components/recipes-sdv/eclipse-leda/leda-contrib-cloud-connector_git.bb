@@ -56,10 +56,10 @@ do_install() {
 
   if [ "${@bb.utils.filter('DISTRO_FEATURES', 'systemd', d)}" ]; then
     install -d ${D}${systemd_unitdir}/system/
-    install -m 0644 ${WORKDIR}/${PGM_NAME}/cloud-connector.service ${D}${systemd_system_unitdir}
+    install -m 0644 ${UNPACKDIR}/${PGM_NAME}/cloud-connector.service ${D}${systemd_system_unitdir}
   fi
 
   install -d "${D}/${sysconfdir}/${PGM_NAME}"
-  install -m 0644 "${WORKDIR}/${PGM_NAME}/config.json" "${D}${sysconfdir}/${PGM_NAME}"
+  install -m 0644 "${UNPACKDIR}/${PGM_NAME}/config.json" "${D}${sysconfdir}/${PGM_NAME}"
   install -m 0644 "${S}/src/${GO_IMPORT}/resources/iothub.crt" "${D}${sysconfdir}/${PGM_NAME}"
 }

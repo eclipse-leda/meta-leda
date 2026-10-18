@@ -41,18 +41,18 @@ FILES:${PN} += "${systemd_unitdir}/system/soft-hwclock-tick.timer"
 do_install:append() {
 
     install -d ${D}/opt/soft-hwclock
-    install -m 0755 ${WORKDIR}/soft-hwclock ${D}/opt/soft-hwclock
+    install -m 0755 ${UNPACKDIR}/soft-hwclock ${D}/opt/soft-hwclock
 
     CTIME=$(date +%s)
     echo "${CTIME}" > ${D}/opt/soft-hwclock/soft-hwclock.data
 
     install -d ${D}${systemd_unitdir}/system/
-    install -m 0644 ${WORKDIR}/soft-hwclock.service ${D}${systemd_unitdir}/system
-    install -m 0644 ${WORKDIR}/soft-hwclock-tick.service ${D}${systemd_unitdir}/system
-    install -m 0644 ${WORKDIR}/soft-hwclock-tick.timer ${D}${systemd_unitdir}/system
+    install -m 0644 ${UNPACKDIR}/soft-hwclock.service ${D}${systemd_unitdir}/system
+    install -m 0644 ${UNPACKDIR}/soft-hwclock-tick.service ${D}${systemd_unitdir}/system
+    install -m 0644 ${UNPACKDIR}/soft-hwclock-tick.timer ${D}${systemd_unitdir}/system
 
 }
 
 SRC_URI += "file://LICENSE"
 LICENSE = "MIT"
-LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=a109bd21357ed8a1fa56e8879764d28d"
+LIC_FILES_CHKSUM = "file://${UNPACKDIR}/LICENSE;md5=a109bd21357ed8a1fa56e8879764d28d"

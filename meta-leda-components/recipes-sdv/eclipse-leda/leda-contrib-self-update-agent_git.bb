@@ -83,7 +83,7 @@ FILES:${PN}-dbg += " \
 
 do_install() {
     install -d ${D}${systemd_unitdir}/system/
-    install -m 0644 ${WORKDIR}/self-update-agent/self-update-agent.service ${D}${systemd_unitdir}/system
+    install -m 0644 ${UNPACKDIR}/self-update-agent/self-update-agent.service ${D}${systemd_unitdir}/system
 
     install -d ${D}${bindir}
     install -m 755 ${B}/src/self-update-agent ${D}${bindir}

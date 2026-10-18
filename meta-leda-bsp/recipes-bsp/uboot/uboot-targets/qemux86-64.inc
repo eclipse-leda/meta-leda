@@ -24,11 +24,11 @@ require conf/image-uefi.conf
 do_configure:append:qemux86-64() {
     sed -e 's/@@KERNEL_IMAGETYPE@@/${KERNEL_IMAGETYPE}/' \
     -e 's/@@KERNEL_BOOTCMD@@/${KERNEL_BOOTCMD}/' \
-    "${UNPACKDIR}/boot.cmd.in" > "${WORKDIR}/boot.cmd"
+    "${UNPACKDIR}/boot.cmd.in" > "${UNPACKDIR}/boot.cmd"
 }
 
 do_compile:append:qemux86-64() {
-    ${B}/tools/mkimage -C none -A ${UBOOT_ARCH} -T script -d "${WORKDIR}/boot.cmd" "${UBOOT_ENV}.${UBOOT_ENV_SUFFIX}"
+    ${B}/tools/mkimage -C none -A ${UBOOT_ARCH} -T script -d "${UNPACKDIR}/boot.cmd" "${UBOOT_ENV}.${UBOOT_ENV_SUFFIX}"
 }
 
 do_install:qemux86-64() {
@@ -43,6 +43,6 @@ do_deploy:append:qemux86-64() {
     install -m 755 ${B}/u-boot-payload.efi ${DEPLOYDIR}
     ln -sf u-boot-payload.efi ${DEPLOYDIR}/${EFI_BOOT_IMAGE}
 
-    install -m 644 ${WORKDIR}/boot.cmd ${DEPLOYDIR}
+    install -m 644 ${UNPACKDIR}/boot.cmd ${DEPLOYDIR}
     install -m 644 ${B}/${UBOOT_ENV}.${UBOOT_ENV_SUFFIX} ${DEPLOYDIR}
 }

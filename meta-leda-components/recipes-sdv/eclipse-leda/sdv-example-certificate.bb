@@ -15,7 +15,7 @@
 DESCRIPTION = "Example Device Certificate"
 SRC_URI += "file://LICENSE"
 LICENSE = "Apache-2.0"
-LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57"
+LIC_FILES_CHKSUM = "file://${UNPACKDIR}/LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57"
 
 # Default example filenames (source filenames)
 CLOUDCONNECTOR_EXAMPLE_CERTFILE = "example-device.crt"

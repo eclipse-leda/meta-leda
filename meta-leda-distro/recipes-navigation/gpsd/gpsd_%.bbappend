@@ -20,10 +20,10 @@ SRC_URI:append = " \
 
 do_install:append() {
     install -d ${D}${sysconfdir}/default
-    install -m 0644 ${WORKDIR}/gpsd_default_config ${D}${sysconfdir}/default/gpsd.default
+    install -m 0644 ${UNPACKDIR}/gpsd_default_config ${D}${sysconfdir}/default/gpsd.default
 
     install -d ${D}${systemd_system_unitdir}
-    install -m 0644 ${WORKDIR}/gpsd_socket.service ${D}${systemd_system_unitdir}/gpsd.socket
+    install -m 0644 ${UNPACKDIR}/gpsd_socket.service ${D}${systemd_system_unitdir}/gpsd.socket
 }
 
 SYSTEMD_SERVICE:${PN} = "${BPN}.socket ${BPN}ctl@.service"
