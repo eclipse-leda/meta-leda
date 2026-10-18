@@ -21,5 +21,5 @@ SRC_URI += " file://can0.network"
 FILES:${PN} += " ${sysconfdir}/systemd/network/can0.network"
 
 do_install:append() {
-    install -D -m 0644 ${WORKDIR}/can0.network ${D}${systemd_unitdir}/network
+    install -D -m 0644 ${S}/can0.network ${D}${systemd_unitdir}/network
 }
