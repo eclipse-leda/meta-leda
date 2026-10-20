@@ -17,6 +17,8 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 SRC_URI:append = " file://wpa.service"
 SRC_URI:append = " file://wpa.sh"
 
+S = "${UNPACKDIR}"
+
 inherit systemd features_check
 
 NATIVE_SYSTEMD_SUPPORT = "1"
