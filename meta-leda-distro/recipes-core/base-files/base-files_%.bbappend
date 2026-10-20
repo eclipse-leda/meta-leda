@@ -48,3 +48,21 @@ do_install_basefilesissue:append() {
 }
 
 hostname = "leda-${MACHINE}"
+
+do_install:append() {
+    cat >> ${D}${sysconfdir}/profile <<'EOF'
+
+if [ -n "$ZSH_VERSION" ] && [ -n "$PS1" ]; then
+    setopt promptpercent
+    PS1='%n@%m:%~%# '
+fi
+EOF
+
+    cat >> ${D}${sysconfdir}/skel/.bashrc <<'EOF'
+
+if [ -n "$ZSH_VERSION" ]; then
+    setopt promptpercent
+    PS1='%n@%m:%~%# '
+fi
+EOF
+}
