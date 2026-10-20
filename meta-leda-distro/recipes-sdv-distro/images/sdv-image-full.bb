@@ -21,6 +21,7 @@ IMAGE_INSTALL:append = " kernel-image kernel-modules"
 
 IMAGE_INSTALL:append = " packagegroup-sdv-core"
 IMAGE_INSTALL:append = " packagegroup-sdv-additions"
+IMAGE_INSTALL:append = " packagegroup-sdv-yoriito"
 IMAGE_INSTALL:append = " packagegroup-sdv-tools"
 IMAGE_INSTALL:append = " packagegroup-sdv-examples"
 IMAGE_INSTALL:append = " zsh"
