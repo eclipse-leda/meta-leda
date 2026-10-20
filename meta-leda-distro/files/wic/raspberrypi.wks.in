@@ -18,11 +18,13 @@
 bootloader --ptable gpt --configfile="raspberrypi4-64.cfg"
 
 # /dev/mmcblk0p1 - Boot partition /boot
-part --source bootimg-partition --ondisk mmcblk0 --fstype=vfat --label boot --active --align 4096 --size 100
+# Forced to FAT32, see https://github.com/eclipse-leda/leda-distro/issues/151
+part --source bootimg-partition --ondisk mmcblk0 --fstype=vfat --label boot --active --align 4096 --size 100 --mkfs-extraopts "-F 32"
 
 # GRUB environment to store info about retries, mounted for showcase
 # /dev/mmcblk0p2 - Partition mounted to /grubenv
-part --fixed-size 10M --fstype=vfat --ondisk mmcblk0 --label grubenv --align 1024
+# Forced to FAT32, see https://github.com/eclipse-leda/leda-distro/issues/151
+part --fixed-size 10M --fstype=vfat --ondisk mmcblk0 --label grubenv --align 1024 --mkfs-extraopts "-F 32"
 
 # /dev/mmcblk0p3 - Rescue partition
 part --source rootfs --rootfs-dir=sdv-image-rescue --ondisk mmcblk0 --fstype=ext4 --label rescue --align 1024
