@@ -22,6 +22,8 @@ SRC_URI =  " \
     file://raspberry-growdisk/ \
 "
 
+S = "${UNPACKDIR}"
+
 LIC_FILES_CHKSUM = "file://${UNPACKDIR}/LICENSE;md5=d9fc0efef5228704e7f5b37f27192723"
 
 NATIVE_SYSTEMD_SUPPORT = "1"
