@@ -11,9 +11,11 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-SUMMARY = "SDV core Wifi packages for RPi4"
-DESCRIPTION = "WiFi firmware for Raspberry Pi 4 Model B"
+SUMMARY = "SDV core WiFi packages for Raspberry Pi 4 Model B"
+DESCRIPTION = "WiFi drivers and firmware for the Raspberry Pi 4 Model B BCM43455"
 
 inherit packagegroup
 
-RDEPENDS:${PN} = "linux-firmware-bcm43455"
+RDEPENDS:${PN} = "\
+    linux-firmware-bcm43455 \
+"

@@ -1,11 +1,17 @@
+Subject: [PATCH] qemuarm64: store the boot environment on the FAT partition
+
+Use the first virtio disk's FAT partition for the persistent boot environment
+and enable the commands used by the Leda boot scripts.
+
+Upstream-Status: Inappropriate [Leda-specific boot environment]
+
 diff --git a/configs/qemu_arm64_defconfig b/configs/qemu_arm64_defconfig
-index e8a6f752cd..82cfec1b29 100644
 --- a/configs/qemu_arm64_defconfig
 +++ b/configs/qemu_arm64_defconfig
-@@ -26,7 +26,12 @@ CONFIG_CMD_USB=y
+@@ -38,7 +38,12 @@ CONFIG_CMD_EFIDEBUG=y
  CONFIG_CMD_TPM=y
  CONFIG_CMD_MTDPARTS=y
- CONFIG_OF_BOARD=y
+ CONFIG_CMD_SPAWN=y
 -CONFIG_ENV_IS_IN_FLASH=y
 +CONFIG_ENV_IS_IN_FAT=y
 +CONFIG_ENV_FAT_INTERFACE="virtio"
@@ -13,6 +19,6 @@ index e8a6f752cd..82cfec1b29 100644
 +CONFIG_CMD_NVEDIT_LOAD=y
 +CONFIG_CMD_FAT=y
 +CONFIG_CMD_BOOTMENU=y
- CONFIG_ENV_ADDR=0x4000000
  CONFIG_SCSI_AHCI=y
  CONFIG_AHCI_PCI=y
+ CONFIG_DFU_TFTP=y
