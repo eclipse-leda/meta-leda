@@ -26,14 +26,16 @@ part --source bootimg-partition --ondisk mmcblk0 --fstype=vfat --label boot --ac
 # Forced to FAT32, see https://github.com/eclipse-leda/leda-distro/issues/151
 part --fixed-size 10M --fstype=vfat --ondisk mmcblk0 --label grubenv --align 1024 --mkfs-extraopts "-F 32"
 
+# BitBake's rootfs sizes already include overhead and 4 KiB alignment; avoid
+# applying WIC's default overhead factor a second time.
 # /dev/mmcblk0p3 - Rescue partition
-part --source rootfs --rootfs-dir=sdv-image-rescue --ondisk mmcblk0 --fstype=ext4 --label rescue --align 1024
+part --source rootfs --rootfs-dir=sdv-image-rescue --ondisk mmcblk0 --fstype=ext4 --label rescue --align 1024 --overhead-factor 1
 
 # /dev/mmcblk0p4 - SDV Full partition - mounted to "/"
-part --extra-space 50M --source rootfs --rootfs-dir=sdv-image-full --ondisk mmcblk0 --fstype=ext4 --label root_a --align 4096
+part --extra-space 50M --source rootfs --rootfs-dir=sdv-image-full --ondisk mmcblk0 --fstype=ext4 --label root_a --align 4096 --overhead-factor 1
 
 # /dev/mmcblk0p5 - SDV Minimal partition
-part --extra-space 50M --source rootfs --rootfs-dir=sdv-image-minimal --ondisk mmcblk0 --fstype=ext4 --label root_b --align 4096
+part --extra-space 50M --source rootfs --rootfs-dir=sdv-image-minimal --ondisk mmcblk0 --fstype=ext4 --label root_b --align 4096 --overhead-factor 1
 
 # /dev/mmcblk0p6 - Kanto Container Management Data partition mounted to "/data"
 part --fixed-size 2048M --source rootfs --rootfs-dir=sdv-image-data --ondisk mmcblk0 --fstype=ext4 --label data --align 4096 --fsoptions "x-systemd.growfs"

@@ -28,7 +28,9 @@ part --fixed-size 50M --ondisk vda --no-table
 # Empty partition
 part --fixed-size 10M --ondisk vda
 
-part --source rootfs --rootfs-dir=sdv-image-rescue --ondisk vda --fstype=ext4 --label rescue
-part --extra-space 50M --source rootfs --rootfs-dir=sdv-image-full --ondisk vda --fstype=ext4 --label root_a
-part --extra-space 50M --source rootfs --rootfs-dir=sdv-image-minimal --ondisk vda --fstype=ext4 --label root_b
+# BitBake's rootfs sizes already include overhead and 4 KiB alignment; avoid
+# applying WIC's default overhead factor a second time.
+part --source rootfs --rootfs-dir=sdv-image-rescue --ondisk vda --fstype=ext4 --label rescue --overhead-factor 1
+part --extra-space 50M --source rootfs --rootfs-dir=sdv-image-full --ondisk vda --fstype=ext4 --label root_a --overhead-factor 1
+part --extra-space 50M --source rootfs --rootfs-dir=sdv-image-minimal --ondisk vda --fstype=ext4 --label root_b --overhead-factor 1
 part --fixed-size 3072M --source rootfs --rootfs-dir=sdv-image-data --ondisk vda --fstype=ext4 --label data
