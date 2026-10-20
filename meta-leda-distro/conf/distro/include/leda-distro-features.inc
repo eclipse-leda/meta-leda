@@ -19,6 +19,7 @@ DISTRO_FEATURES:append = " security"
 DISTRO_FEATURES:append = " sdv"
 DISTRO_FEATURES:append = " ldconfig"
 DISTRO_FEATURES:append = " zeroconf"
+DISTRO_FEATURES:append = " airgap-containers"
 
 # Enable WiFi
 DISTRO_FEATURES:append = " wifi"

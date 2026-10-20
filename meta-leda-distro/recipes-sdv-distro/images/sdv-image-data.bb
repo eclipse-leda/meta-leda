@@ -14,10 +14,6 @@
 SUMMARY = "An image containing files for the SDV data partition."
 LICENSE = "Apache-2.0"
 
-# TODO: Temporarily disabled AirGap container installations
-# until projects have released containers
-# IMAGE_INSTALL:append = " packagegroup-sdv-airgap"
-
 IMAGE_INSTALL += "sdv-core-containers"
 IMAGE_INSTALL += "sdv-example-containers"
 IMAGE_INSTALL += "sdv-example-certificate"

@@ -37,9 +37,13 @@ do_install:append() {
     # Activated Containers
     install ${UNPACKDIR}/example/hvac.json ${D}${KANTO_MANIFESTS_LOCAL_DIR}
     install ${UNPACKDIR}/example/feedercan.json ${D}${KANTO_MANIFESTS_LOCAL_DIR}
-    install ${UNPACKDIR}/example/feedergps.json ${D}${KANTO_MANIFESTS_LOCAL_DIR}
     install ${UNPACKDIR}/example/seatservice.json ${D}${KANTO_MANIFESTS_LOCAL_DIR}
-    install ${UNPACKDIR}/example/node-red.json ${D}${KANTO_MANIFESTS_LOCAL_DIR}
+
+    # Do not auto-deploy images that are not part of the airgap image cache.
+    if ${@bb.utils.contains('DISTRO_FEATURES', 'airgap-containers', 'false', 'true', d)}; then
+        install ${UNPACKDIR}/example/feedergps.json ${D}${KANTO_MANIFESTS_LOCAL_DIR}
+        install ${UNPACKDIR}/example/node-red.json ${D}${KANTO_MANIFESTS_LOCAL_DIR}
+    fi
 
     # Deactivated Containers
     install ${UNPACKDIR}/example/seatadjuster-app.json.disabled ${D}${KANTO_MANIFESTS_LOCAL_DIR}
