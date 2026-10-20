@@ -11,13 +11,11 @@
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
 
-SUMMARY = "SDV core Wifi packages for RPi4"
-DESCRIPTION = "WiFi Drivers for working SDV system on RPi4"
+SUMMARY = "SDV core WiFi packages for Raspberry Pi 4 Model B"
+DESCRIPTION = "WiFi drivers and firmware for the Raspberry Pi 4 Model B BCM43455"
 
 inherit packagegroup
 
 RDEPENDS:${PN} = "\
-    linux-firmware-rpidistro-broadcom-license \
-    linux-firmware-rpidistro-bcm43455 \
-    linux-firmware-rpidistro-bcm43456 \
+    linux-firmware-bcm43455 \
 "
