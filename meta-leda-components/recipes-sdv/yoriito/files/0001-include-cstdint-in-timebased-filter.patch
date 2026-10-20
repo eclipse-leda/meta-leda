@@ -1,0 +1,24 @@
+From: Leda Integration <leda-integration@example.com>
+Subject: [PATCH] Include cstdint for TimeBasedFilter
+
+TimeBasedFilter uses uint32_t in its public interface and must include the
+standard header that defines it.
+
+Upstream-Status: Pending
+
+---
+ common/databroker/filter/timebased_filter.h | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/common/databroker/filter/timebased_filter.h b/common/databroker/filter/timebased_filter.h
+--- a/common/databroker/filter/timebased_filter.h
++++ b/common/databroker/filter/timebased_filter.h
+@@ -18,6 +18,8 @@
+ #ifndef YORIITO_VEHICLE_API_UTILITY_INC_DATABROKER_FILTER_TIMEBASED_FILTER_H_
+ #define YORIITO_VEHICLE_API_UTILITY_INC_DATABROKER_FILTER_TIMEBASED_FILTER_H_
+ 
++#include <cstdint>
++
+ /**
+  * @ingroup common
+  * @namespace yoriito::databroker::filter
