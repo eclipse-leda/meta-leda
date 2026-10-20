@@ -24,6 +24,8 @@ SRCREV = "a79e2420b319cedccd98298e2a75ee78cfca4b87"
 
 CARGO_SRC_DIR = "databroker-cli"
 CARGO_BUILD_FLAGS += "-p databroker-cli"
+# Let BitBake split debug symbols instead of Cargo stripping the binary.
+CARGO_BUILD_FLAGS += "--config profile.release.strip=false"
 
 
 # please note if you have entries that do not begin with crate://

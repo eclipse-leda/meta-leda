@@ -21,6 +21,8 @@ SRC_URI:append = " file://airgap-container-installer.service.template"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${THISDIR}/files/LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57"
 
+S = "${UNPACKDIR}"
+
 PREINSTALLED_CTR_IMAGES_DIR ??= "/var/containers/images"
 PREINSTALLED_CTR_IMAGES_DIR[doc] = "Sets the path to the directory where the downloaded container tar files are stored in the final image"
 
