@@ -19,6 +19,7 @@ IMAGE_INSTALL:append = " kernel-image kernel-modules"
 
 # Rescue system only contains self-update-agent and cloud connector
 IMAGE_INSTALL:append = " packagegroup-sdv-core-direct"
+IMAGE_INSTALL:append = " zsh"
 
 IMAGE_FEATURES:append = " read-only-rootfs"
 
