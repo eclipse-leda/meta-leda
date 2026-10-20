@@ -12,12 +12,8 @@
 # ********************************************************************************/
 
 SUMMARY = "SDV core Wifi packages for RPi4"
-DESCRIPTION = "WiFi Drivers for working SDV system on RPi4"
+DESCRIPTION = "WiFi firmware for Raspberry Pi 4 Model B"
 
 inherit packagegroup
 
-RDEPENDS:${PN} = "\
-    linux-firmware-rpidistro-broadcom-license \
-    linux-firmware-rpidistro-bcm43455 \
-    linux-firmware-rpidistro-bcm43456 \
-"
+RDEPENDS:${PN} = "linux-firmware-bcm43455"
