@@ -1,0 +1,20 @@
+{
+    "container_id": "kura",
+    "container_name": "kura",
+    "image": {
+        "name": "@KURA_IMAGE@"
+    },
+    "host_config": {
+        "network_mode": "host",
+        "privileged": false,
+        "restart_policy": {
+            "type": "unless-stopped",
+            "maximum_retry_count": 0,
+            "retry_timeout": 0
+        },
+        "runtime": "io.containerd.runc.v2"
+    },
+    "config": {
+        "cmd": []
+    }
+}

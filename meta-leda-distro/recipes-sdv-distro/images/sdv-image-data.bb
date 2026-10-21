@@ -18,6 +18,7 @@ IMAGE_INSTALL += "sdv-core-containers"
 IMAGE_INSTALL += "sdv-example-containers"
 IMAGE_INSTALL += "sdv-example-certificate"
 IMAGE_INSTALL += "sdv-example-blueprints"
+IMAGE_INSTALL:append = " ${@'sdv-kura-deployment sdv-container-kura' if d.getVar('LEDA_YORIITO_DEPLOYMENT') == 'container' else ''}"
 IMAGE_INSTALL:append = " zsh"
 IMAGE_INSTALL:append = " ${@bb.utils.contains("DISTRO_FEATURES", "airgap-containers", "packagegroup-sdv-airgap-containers", "", d)}"
 IMAGE_FSTYPES += "ext4.gz"
@@ -27,6 +28,11 @@ IMAGE_ROOTFS_SIZE ?= "2097152"
 IMAGE_PREPROCESS_COMMAND += "prepare_filesystem;"
 
 inherit image
+
+python () {
+    if d.getVar("LEDA_YORIITO_DEPLOYMENT") not in ("native", "container"):
+        bb.fatal("LEDA_YORIITO_DEPLOYMENT must be 'native' or 'container'")
+}
 
 # This data-only image does not run first-boot postinstall scripts.
 ROOTFS_BOOTSTRAP_INSTALL = ""

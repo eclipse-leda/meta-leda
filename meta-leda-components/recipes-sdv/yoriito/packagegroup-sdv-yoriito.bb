@@ -8,3 +8,5 @@ RDEPENDS:${PN} = " \
     packagegroup-yoriito-core \
     vshot \
 "
+
+RDEPENDS:${PN}:append = " ${@'airgap-container-installer' if d.getVar('LEDA_YORIITO_DEPLOYMENT') == 'container' else ''}"
