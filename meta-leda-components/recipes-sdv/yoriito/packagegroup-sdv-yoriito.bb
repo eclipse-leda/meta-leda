@@ -4,4 +4,7 @@ LICENSE = "Apache-2.0"
 
 inherit packagegroup
 
-RDEPENDS:${PN} = "packagegroup-yoriito-core"
+RDEPENDS:${PN} = " \
+    packagegroup-yoriito-core \
+    vshot \
+"
