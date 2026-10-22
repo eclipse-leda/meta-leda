@@ -21,6 +21,11 @@ and integrating them into the Eclipse Leda distribution.
 - `ssam-wrap_0.1.0.bb`: package creation tool (Docker/OCI image conversion)
 - `ssam_0.1.0.bb`: command line client talking to `ssamd` over gRPC
 - `ssam-crates.inc`: generated crate list + checksums, `require`d by all three recipes
+- `ssam-package-helloworld_1.0.0.bb`: example that builds an `.ssam` package at build
+  time with `ssam-wrap` and installs it into the daemon's package directory
+- `classes/ssam-package.bbclass` (in the layer root): reusable part of the above
+- `files/`: `LICENSE`, example RSA key pair (`private-key.pem`, `public-key.pem`) used
+  by that prototype — example only, integrators must generate their own
 
 All three are members of one Cargo workspace in the upstream monorepo, so each recipe
 checks out the same tree (`SRCREV` pinned to a commit) and builds one member via
@@ -68,6 +73,38 @@ the vendored crates stop matching the committed `Cargo.lock`.
 
 All three recipes build with the current Leda configuration and install `usr/bin/ssam`,
 `usr/bin/ssamd` and `usr/bin/ssam-wrap`.
+
+## Package creation at build time
+
+`classes/ssam-package.bbclass` builds an `.ssam` package with `ssam-wrap` on the build
+host and installs it into a package directory of the daemon. One recipe per package:
+
+```bitbake
+inherit ssam-package
+SSAM_PKG_NAME = "helloworld"
+SRC_URI += "file://private-key.pem"
+SSAM_PKG_ARGS = "/helloworld"          # entry point written into runtime.json
+do_prepare_pkgfs() {
+    # fill ${SSAM_PKG_WS}/pkgfs with the payload
+}
+```
+
+Things this needed, all verified on 2026-10-22:
+
+- `ssam-wrap_0.1.0.bb` sets `BBCLASSEXTEND = "native"` — native variants are not created
+  automatically, depending on `ssam-wrap-native` alone fails with “Nothing PROVIDES”.
+- custom tasks must declare their tool dependencies explicitly
+  (`do_build_package[depends] += "erofs-utils-native:do_populate_sysroot …"`), otherwise
+  the merged native sysroot is not created for them — see `staging_taskhandler`
+  in `openembedded-core/meta/classes-global/staging.bbclass`.
+- `ssam-wrap` calls `fakeroot`, which OE does not ship: OE uses pseudo
+  (`PREFERRED_PROVIDER_virtual/fakeroot-native ?= "pseudo-native"`). The class writes a
+  `fakeroot` wrapper running `${FAKEROOTENV} ${FAKEROOTCMD}` and depends on
+  `virtual/fakeroot-native`.
+- native tools are not in `PATH`; the class prepends `${STAGING_DIR_NATIVE}/usr/bin`.
+- result of the example: `data/var/lib/ssamd/builtin/helloworld.ssam` (≈2 MB, `erofs-lz4hc`,
+  signed, with a dm-verity table), `mac = false` in `config.toml`, entry point
+  `["/helloworld"]`, payload a static x86-64 binary.
 
 ## Runtime requirements
 

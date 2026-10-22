@@ -99,24 +99,36 @@ current image:
   resulting file into `package.dir.builtin`. The guest and the plain-host-tool routes
   are dropped.
   What that needs, and what is known so far:
-  - `DEPENDS += "ssam-wrap-native"`: native variants are created automatically from a
-    cross recipe when something depends on them (verified: `native.bbclass` comment
-    “Native packages are built indirectly via dependency”). **unverified:** that our
-    cargo-based recipe nativizes cleanly — OE does build native rust/cargo tools
-    (`cargo_common.bbclass` has `BASEDEPENDS:append = " cargo-native"`, and
-    `rust-native`/`cargo-native` recipes exist), but a run is needed.
+  - native variants are **not** created automatically: the base recipe must declare
+    `BBCLASSEXTEND = "native"` (added to `ssam-wrap_0.1.0.bb`); depending on
+    `ssam-wrap-native` alone gives “Nothing PROVIDES 'ssam-wrap-native'”. The native
+    build of the cargo recipe works.
+  - native tools are not in `PATH`; the task prepends `${STAGING_DIR_NATIVE}/usr/bin`
+    (same pattern as `perfetto.bb`, `opencv_*.bb`).
   - host tools for the filesystem step: `erofs-utils` (`mkfs.erofs`), `lz4`,
-    `cryptsetup`, `fakeroot` — all available as recipes in the vendored layers
+    `cryptsetup` — all available as native recipes in the vendored layers
     (`openembedded-core/meta/recipes-devtools/erofs-utils`,
     `openembedded-core/meta/recipes-support/lz4`,
-    `meta-openembedded/meta-oe/recipes-crypto/cryptsetup`, and bitbake already provides
-    `fakeroot`); `umoci` and `skopeo >= 1.15` only for Docker/OCI conversion
-    (`meta-virtualization/recipes-containers/{umoci,skopeo}`).
+    `meta-openembedded/meta-oe/recipes-crypto/cryptsetup`); `umoci` and `skopeo >= 1.15`
+    only for Docker/OCI conversion (`meta-virtualization/recipes-containers/...`).
+  - `fakeroot` is **not** available: OE uses `pseudo` as its fakeroot
+    implementation (`PREFERRED_PROVIDER_virtual/fakeroot-native ?= "pseudo-native"`,
+    `FAKEROOTCMD = ${PSEUDO_SYSROOT}…/pseudo`). The recipe depends on
+    `virtual/fakeroot-native` and writes a `fakeroot` wrapper that runs
+    `${FAKEROOTENV} ${FAKEROOTCMD}`.
   - the private signing key has to exist at build time → keep the example key in this
     recipe directory and pass `--private-key`; the public half is installed into the
     image (section 1).
   - the built `.ssam` file is installed into `package.dir.builtin`, which must exist
     before `ssamd` starts (section 2).
+  - **Done (prototype, 2026-10-22):** `classes/ssam-package.bbclass` (reusable) plus
+    `ssam-package-helloworld_1.0.0.bb` (example) build an `.ssam` package at build time
+    and install it into `package.dir.builtin`. `mkfs.erofs` (1.9) creates `pkgfs/dev`,
+    `proc`, `sys` itself; the package is signed and gets a dm-verity table
+    (`1 4096 4096 497 498 sha256 …`). Verified up to the packaged file
+    `data/var/lib/ssamd/builtin/helloworld.ssam`; not yet run in a guest.
+  - **open:** exercise the package at runtime (`ssam list`, start the package, check
+    `journalctl -u helloworld`) once the daemon configuration exists (sections 1–2).
   - Docker Hub access needs network at build time, which the sandboxed build does not
     have → prefer the “from scratch” variant, or fetch OCI content with a separate
     fetcher and feed `oci-archive:` to `--pkgfs-src`.
