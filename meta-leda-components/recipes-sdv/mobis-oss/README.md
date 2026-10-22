@@ -89,10 +89,10 @@ See `docs/agents-integrationtesting.md` for the procedure. Running it with
 - `ssam-wrap --prepare <name> <workspace>` generates `config.toml`, `runtime.json`,
   `seccomp.json` and a `pkgfs/` directory
 - `ssam-wrap <workspace>` needs a signing key (`-k`), it stops at “Private key file path is required”
-- `ssamd` needs a configuration file: it looks for `ssamd.toml` next to the binary and
-  fails with “Failed to load daemon configuration” when it is missing. The recipes do not
-  ship one yet — TODO: add a default config (and decide where it lives, `/usr/bin` is
-  unlikely to be the intended location)
+- `ssamd` needs a configuration file: it reads `ssamd.toml` only from the directory that
+  contains the binary (no CLI or environment override), so with `/usr/bin/ssamd` it looks
+  for `/usr/bin/ssamd.toml`. The recipes do not ship one yet — TODO: install a default
+  config there; integrators replace it with a same-named file in their own layer
 - `ssam` reports “Connection refused” while no daemon runs, which is expected for the gRPC client
 
 Follow-up work (signing keys, `ssamd.toml` defaults for the Leda `/data` layout, systemd
