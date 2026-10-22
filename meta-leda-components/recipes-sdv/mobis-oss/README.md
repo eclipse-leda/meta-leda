@@ -72,11 +72,31 @@ All three recipes build with the current Leda configuration and install `usr/bin
 ## Runtime requirements
 
 `ssamd` executes workloads as OCI containers and expects an OCI runtime plus the kernel
-features SSAM relies on. Not verified by a build yet, see the upstream README:
+features SSAM relies on. Partially checked in QEMU (see “Runtime test”), still not
+exercised end-to-end, see the upstream README:
 
-- `crun` (declared as `RDEPENDS` of `ssamd`, available from `meta-virtualization`)
+- `crun` (declared as `RDEPENDS` of `ssamd`, available from `meta-virtualization`) —
+  present in `sdv-image-full` and reports `crun version 1.26.0` with `+SECCOMP`
 - EROFS + dm-verity kernel support, loop mounts, filesystem quotas (`quotactl-rs`)
 - systemd / D-Bus for the `zbus_systemd` integration
+
+## Runtime test
+
+See `docs/agents-integrationtesting.md` for the procedure. Running it with
+`IMAGE_INSTALL:append = " ssamd ssam ssam-wrap"` on `sdv-image-full` (qemux86-64, 2026-10-22):
+
+- all three binaries install and run on the guest (x86-64)
+- `ssam-wrap --prepare <name> <workspace>` generates `config.toml`, `runtime.json`,
+  `seccomp.json` and a `pkgfs/` directory
+- `ssam-wrap <workspace>` needs a signing key (`-k`), it stops at “Private key file path is required”
+- `ssamd` needs a configuration file: it looks for `ssamd.toml` next to the binary and
+  fails with “Failed to load daemon configuration” when it is missing. The recipes do not
+  ship one yet — TODO: add a default config (and decide where it lives, `/usr/bin` is
+  unlikely to be the intended location)
+- `ssam` reports “Connection refused” while no daemon runs, which is expected for the gRPC client
+
+Follow-up work (signing keys, `ssamd.toml` defaults for the Leda `/data` layout, systemd
+service, building an SSAM package) is tracked in `TODO.md` in this directory.
 
 ## Integration
 
