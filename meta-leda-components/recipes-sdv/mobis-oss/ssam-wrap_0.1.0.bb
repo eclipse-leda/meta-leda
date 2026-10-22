@@ -41,3 +41,7 @@ DEPENDS += "protobuf-native zstd"
 # Crate list shared by all three workspace members of the SSAM monorepo.
 # Regenerate with: kas build --target ssam --cmd update_crates
 require ssam-crates.inc
+
+# Also build this tool for the build host, so that .ssam packages can be created
+# at build time (see ssam-package-helloworld_1.0.0.bb).
+BBCLASSEXTEND = "native"
