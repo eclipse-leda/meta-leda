@@ -38,11 +38,10 @@ Constraints verified in the runtime test and in `docs/reference/daemon-config.md
 - `ssamd` reads `ssamd.toml` **only from the directory that contains the binary**, and
   there is no CLI or environment override. With the binary at `/usr/bin/ssamd`, the
   config must be at `/usr/bin/ssamd.toml`.
-  **open:** how to let integrators override it with bbappend mechanisms while keeping
-  the upstream contract. Options to weigh: install the config next to the binary from a
-  package under `/etc` (copy at image build time), or ship a symlink
-  `/usr/bin/ssamd.toml → /etc/ssamd/ssamd.toml` (following symlinks is **not verified**
-  yet).
+  **Decision:** ship the default config as a file in this recipe directory
+  (`files/ssamd.toml`) and install it next to the binary. Integrators override it the
+  standard BitBake way — their own layer contains a same-named recipe/file earlier in
+  the layer search path — so no bbappend, no symlink indirection.
 - `ssamd` must run as root and signals readiness with `sd_notify`; upstream recommends a
   `Type=notify` unit. `gen_ssamd_conf.sh --gen-service-unit` generates a matching
   `ssamd.service` (and `--gen-apparmor-profile` generates the AppArmor profiles), so
@@ -95,13 +94,34 @@ current image:
   profile on the target; set `mac = false` for the sample.
 - Upstream copies `/etc/resolv.conf` into `pkgfs/etc/`; use the image's file, not the
   build host's.
-- **open:** where to run `ssam-wrap`. Options, in rough cost order:
-  1. in the QEMU guest, after adding the missing tools to the test image;
-  2. on the host via a `-native` recipe plus the same tool set on the build host;
-  3. a package/`.bb` (or bbclass) that produces `.ssam` files at build time, which is
-     the shape likely wanted long term.
-  The "from scratch" variant (static binary into `pkgfs/`) avoids skopeo/umoci and
-  network access, so it is the cheaper first test.
+- **Decision:** produce `.ssam` packages at build time — a recipe (or a small
+  `ssam-package.bbclass`) that runs `ssam-wrap` on the build host and installs the
+  resulting file into `package.dir.builtin`. The guest and the plain-host-tool routes
+  are dropped.
+  What that needs, and what is known so far:
+  - `DEPENDS += "ssam-wrap-native"`: native variants are created automatically from a
+    cross recipe when something depends on them (verified: `native.bbclass` comment
+    “Native packages are built indirectly via dependency”). **unverified:** that our
+    cargo-based recipe nativizes cleanly — OE does build native rust/cargo tools
+    (`cargo_common.bbclass` has `BASEDEPENDS:append = " cargo-native"`, and
+    `rust-native`/`cargo-native` recipes exist), but a run is needed.
+  - host tools for the filesystem step: `erofs-utils` (`mkfs.erofs`), `lz4`,
+    `cryptsetup`, `fakeroot` — all available as recipes in the vendored layers
+    (`openembedded-core/meta/recipes-devtools/erofs-utils`,
+    `openembedded-core/meta/recipes-support/lz4`,
+    `meta-openembedded/meta-oe/recipes-crypto/cryptsetup`, and bitbake already provides
+    `fakeroot`); `umoci` and `skopeo >= 1.15` only for Docker/OCI conversion
+    (`meta-virtualization/recipes-containers/{umoci,skopeo}`).
+  - the private signing key has to exist at build time → keep the example key in this
+    recipe directory and pass `--private-key`; the public half is installed into the
+    image (section 1).
+  - the built `.ssam` file is installed into `package.dir.builtin`, which must exist
+    before `ssamd` starts (section 2).
+  - Docker Hub access needs network at build time, which the sandboxed build does not
+    have → prefer the “from scratch” variant, or fetch OCI content with a separate
+    fetcher and feed `oci-archive:` to `--pkgfs-src`.
+  - keep `mac = false` in the generated `config.toml` unless an AppArmor profile is
+    shipped with the package.
 
 ## 4. Configure and start the daemon
 
