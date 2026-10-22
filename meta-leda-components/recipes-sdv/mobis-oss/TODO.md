@@ -1,68 +1,128 @@
-- Currently, `ssamd` looks for its config file in the same location as the binary, that is pretty unusual for a real installation.
-  Imho, we should change the default to `/etc/ssam/ssamd.toml` in the compiled version, so that the default installation rules can be applied.
+# Next steps for the SSAM integration
 
-Read `https://raw.githubusercontent.com/mobis-oss/ssam/refs/heads/main/README.md`
-Read `https://github.com/mobis-oss/ssam/blob/main/docs/guides/serving-ssam.md`
+Draft of the remaining work, checked against upstream docs and the runtime test run on
+2026-10-22 (see `docs/agents-integrationtesting.md`). Items marked **open** still need
+a decision or a run.
 
-Proceed with step 2 from quick start chapter, but acknowledge some modifications in the steps which are necessary to make it work in our BitBake / QEMU build environment:
+Upstream references (paths inside `https://github.com/mobis-oss/ssam`):
 
-1) Generate an example signing key pair
+- `README.md` (Quick start, steps 1–5)
+- `docs/guides/serving-ssam.md` (daemon setup, systemd, `gen_ssamd_conf.sh`)
+- `docs/reference/daemon-config.md` (`ssamd.toml` keys and defaults)
+- `docs/reference/ssam-wrap.md`, `docs/reference/ssam.md` (CLI references)
+- `ssamd/releasedata/gen_ssamd_conf.sh` (config + service unit generator)
 
-- Put the key files into `examples/ssam/`.
-- Add a very short README.md to explain what they are used for.
+## 1. Example signing key pair
 
-2) Implement the systemd integration of ssamd
+Every package is signed with an RSA private key; `ssamd` verifies it with the public
+half at `package.public_key` (default `/etc/ssamd/public.key`). Upstream generates:
 
-- Construct and install a default `ssamd.toml` in the image.
-- Put the default config into `meta-leda-components/recipes-sdv/mobis-oss/files/`
-- The default config is supposed to be overridden/customized by integrators (e.g. users of meta-leda) for their distro using bbappend mechanisms.
-- We need to adapt the default locations to make it work for Leda, as we have a different disk partition setup.
-  Data (container images are considered to be data and live on a larger partition - in theory, the rootfs is readonly on ECUs).
+```
+openssl genpkey -algorithm RSA -out private_key.pem -pkeyopt rsa_keygen_bits:2048
+openssl rsa -in private_key.pem -pubout -out public_key.pem
+```
 
-| Option | SSAM Default Path | New customized path for meta-leda |
+- Put both files in `examples/ssam/` with a short README saying they are an **example
+  only** — integrators must generate their own pair.
+- Upstream warns that the public key is the whole trust model: keep it on a read-only
+  / secure-boot protected path and restrict writes. `/etc/ssamd/public.key` is fine for
+  a first test, but flag it for review.
+- `openssl` is present in `sdv-image-full` (3.5.7), so keys can also be generated in
+  the guest; generating them on the host and installing them is simpler and
+  reproducible.
+
+## 2. systemd integration of `ssamd`
+
+Constraints verified in the runtime test and in `docs/reference/daemon-config.md`:
+
+- `ssamd` reads `ssamd.toml` **only from the directory that contains the binary**, and
+  there is no CLI or environment override. With the binary at `/usr/bin/ssamd`, the
+  config must be at `/usr/bin/ssamd.toml`.
+  **open:** how to let integrators override it with bbappend mechanisms while keeping
+  the upstream contract. Options to weigh: install the config next to the binary from a
+  package under `/etc` (copy at image build time), or ship a symlink
+  `/usr/bin/ssamd.toml → /etc/ssamd/ssamd.toml` (following symlinks is **not verified**
+  yet).
+- `ssamd` must run as root and signals readiness with `sd_notify`; upstream recommends a
+  `Type=notify` unit. `gen_ssamd_conf.sh --gen-service-unit` generates a matching
+  `ssamd.service` (and `--gen-apparmor-profile` generates the AppArmor profiles), so
+  generating both at build time is preferable to hand-writing them.
+  The script needs `bash` and lives at `ssamd/releasedata/gen_ssamd_conf.sh` in the
+  checkout; its path flags (`--builtin-pkgs-dir`, `--downloaded-pkgs-dir`,
+  `--pkgs-data-root`, `--oci-bundle-dir`, `--public-key-file`, `--ssamd-install-path`)
+  map to these TOML keys:
+
+| TOML key | upstream example value | proposed meta-leda value |
 | --- | --- | --- |
-| `--builtin-pkgs-dir` | `/var/lib/ssamd/builtin` | `/data/var/lib/ssamd/builtin` |
-| `--downloaded-pkgs-dir` | `/var/lib/ssamd/downloaded` | `/data/var/lib/ssamd/downloaded` |
-| `--pkgs-data-root` | `/var/lib/ssamd/data` | `/data/var/lib/ssamd/data` |
-| `--oci-bundle-dir` | `/var/run/ssamd/oci-bundle` | `/var/run/ssamd/oci-bundle` ?? Unclear, needs to be reviewed |
-| `--public-key-file` | `/etc/ssamd/public.key` | `/etc/ssamd/public.key` can be kept as is | 
+| `package.dir.builtin` | `/var/lib/ssamd/builtin` (config reference shows `/usr/share/ssamd/packages`) | `/data/var/lib/ssamd/builtin` |
+| `package.dir.downloaded` | `/var/lib/ssamd/downloaded` (config reference: `/var/lib/ssamd/packages`) | `/data/var/lib/ssamd/downloaded` |
+| `package.dir.data` | `/var/lib/ssamd/data` | `/data/var/lib/ssamd/data` |
+| `package.dir.oci_bundle` | `/var/run/ssamd/oci-bundle` | **open** — `/var/run` is a tmpfs at runtime; needs review |
+| `package.public_key` | `/etc/ssamd/public.key` | keep as is |
 
-- We may put the locations into the `ssamd.toml`, see https://github.com/mobis-oss/ssam/blob/main/docs/reference/daemon-config.md for the correct config keys.
+  (The two columns mix the config-reference defaults with the README/guide example
+  values; upstream does not ship a single "default" file — `releasedata/` contains only
+  the generator scripts.)
 
-3) Create a ssam package from the Docker helloworld OCI container
+- Directory rules from the guide: `package.dir.builtin` **must exist before startup**
+  (the daemon does not create it); `downloaded`, `data` and `oci_bundle` are created on
+  startup; `oci_bundle` must be an absolute path; none of these may live under a
+  writable directory shared by several users.
+- `/data` layout: `meta-leda-distro/files/wic/qemux86-64-uboot-efi.wks` has a 3 GB
+  ext4 partition labelled `data` built from `sdv-image-data`, whose content mirrors the
+  rootfs layout (`/data/var/lib/...`). Note the caveat for testing: `runqemu` on
+  `sdv-image-full` boots a single ext4 rootfs, so `/data` is a plain directory there;
+  the partitioned layout only exists when booting `sdv-image-all`.
+- ext4 project quota is only needed for packages setting `container.storage_limit`;
+  optional kernel feature.
 
-- Find out how to run "ssam-wrap" executable on build host
-  Alternatively, discuss whether we should build a BBCLASS for ssam-packages so that bitbake can actually run these steps to build an SSAM-formatted container.
-- Do NOT copy the build hosts `/etc/resolv.conf`, we need to use the one from the sdv-image-full image.
+## 3. Building an SSAM package (the "helloworld" example)
 
-3) Configure and start the daemon
+Upstream Quick start step 3 has two variants; both need tools that are **not** in the
+current image:
 
-These steps are explained in the readme as to be run on the host, but for BitBake / QEMU we need to split it up:
+- `ssam-wrap` needs `lz4`, `erofs-utils`, `fakeroot`, `cryptsetup`; Docker image
+  conversion additionally needs `umoci` and `skopeo >= 1.15`.
+  Checked in `sdv-image-full`: only `lz4` is present — `erofs-utils`, `cryptsetup`,
+  `fakeroot`, `umoci`, `skopeo` are missing.
+- Verified working already: `ssam-wrap --prepare <name> <workspace>` writes
+  `config.toml`, `runtime.json`, `seccomp.json` and `pkgfs/`.
+- Verified failing: `ssam-wrap <workspace>` stops at “Private key file path is
+  required” → pass `--private-key`.
+- For x86-64 the Docker path needs `--src-oci-arch amd64` (default is `arm64`,
+  confirmed in the guest's `--help` output) and network access to Docker Hub.
+- The generated `config.toml` defaults `mac = true`, which needs a matching AppArmor
+  profile on the target; set `mac = false` for the sample.
+- Upstream copies `/etc/resolv.conf` into `pkgfs/etc/`; use the image's file, not the
+  build host's.
+- **open:** where to run `ssam-wrap`. Options, in rough cost order:
+  1. in the QEMU guest, after adding the missing tools to the test image;
+  2. on the host via a `-native` recipe plus the same tool set on the build host;
+  3. a package/`.bb` (or bbclass) that produces `.ssam` files at build time, which is
+     the shape likely wanted long term.
+  The "from scratch" variant (static binary into `pkgfs/`) avoids skopeo/umoci and
+  network access, so it is the cheaper first test.
 
-- Generate the config on the host ir within a bb recipe
-- Install the ssam config into the image
-- Rebuild the image (kas build ...)
-- Start runqemu
-- Start the ssamd within qemu guest or have it installed as systemd service (preferred)
+## 4. Configure and start the daemon
 
-4) Update `meta-leda-components/recipes-sdv/mobis-oss/README.md`
+Split the upstream steps 4–5 for BitBake/QEMU:
 
-5) Smoketest
+- generate `ssamd.toml` (and optionally `ssamd.service`) at build time with
+  `gen_ssamd_conf.sh`, install both next to the binary;
+- install `/etc/ssamd/public.key` and create `package.dir.builtin`;
+- rebuild the image, boot QEMU, start the service (`systemctl start ssamd` or let the
+  unit autostart), then verify.
 
-- Start runqemu
-- Wait until systemd services are up and running
-- Verify `helloworld` got installed and is running by using `ssam list` command.
+## 5. Smoke test
 
-## Building SSAM packages
+- `ssam list` is the upstream verification command (expected output: package listed as
+  `Ready`).
+- Package containers run as systemd services named after the package; check
+  `journalctl --no-pager -u <package>`.
+- Guest caveats from the run: no `timeout` command, BusyBox `head` has no `-c`, login
+  shell is `zsh` on `sdv-image-full` — see `docs/agents-integrationtesting.md`.
 
-Read https://github.com/mobis-oss/ssam/blob/main/docs/reference/package-config.md
-Read https://github.com/mobis-oss/ssam/blob/main/docs/reference/ssam-wrap.md
+## 6. Update `meta-leda-components/recipes-sdv/mobis-oss/README.md`
 
-ssam-wrap and its dependencies are native tools for the build host, they are not supposed to be installed on the target machine.
-
-Generate a BitBake Class `ssam-container.bbclass` in `meta-leda-components/classes`
-Generate `ssam-container-helloworld.bb` into `meta-leda-components/recipes-sdv/mobis-oss-containers/` inheriting the `ssam-container` bbclass.
-The bbclass/recipe is supposed to package an OCI container from docker and convert it into a SSAM container package.
-
-
-
+Record what the runtime test showed (already added as a “Runtime test” section) and
+keep the packagegroup decision open.
