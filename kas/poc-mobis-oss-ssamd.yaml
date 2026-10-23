@@ -1,0 +1,27 @@
+# /********************************************************************************
+# * Copyright (c) 2026 Contributors to the Eclipse Foundation
+# *
+# * See the NOTICE file(s) distributed with this work for additional
+# * information regarding copyright ownership.
+# *
+# * This program and the accompanying materials are made available under the
+# * terms of the Apache License 2.0 which is available at
+# * https://www.apache.org/licenses/LICENSE-2.0
+# *
+# * SPDX-License-Identifier: Apache-2.0
+# ********************************************************************************/
+# Proof-of-concept config: installs the Eclipse SSAM components and one example
+# SSAM package into the image. Not part of the distributed configurations; the
+# components are not in a packagegroup yet (see the meta-leda-components README).
+#
+#   kas build .config.yaml:kas/poc-mobis-oss-ssamd.yaml --target sdv-image-full
+#
+header:
+  version: 12
+local_conf_header:
+  ssam: |
+    IMAGE_INSTALL:append = " ssamd ssam ssam-wrap ssam-package-helloworld"
+    # Keep work directories so that generated artifacts (the .ssam package,
+    # config.toml, runtime.json) can be inspected. The default config uses
+    # rm_work; the build host has enough disk space for this test.
+    INHERIT:remove = " rm_work"

@@ -14,4 +14,5 @@
 require sdv-canbus-modules.inc
 require sdv-misc-kernel-config.inc
 require sdv-qemu-virtio.inc
+require sdv-ssam-kernel-config.inc
 require sdv-wifi-kernel-config.inc

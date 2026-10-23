@@ -33,4 +33,4 @@ jobs:
     - name: Apply fix for Bitbake on Ubuntu 24
       run: sudo apparmor_parser -R /etc/apparmor.d/unprivileged_userns
     - name: Build leda-utils
-      run: kas build kas/.config-kirkstone.yaml --target leda-utils
+      run: kas build --target leda-utils
