@@ -16,14 +16,14 @@ echo "Enlarging SD Card partition"
 
 DEVICE=$(lsblk -l | grep part | tail -1 | awk '{print $1}' | sed 's/..$//')
 # Last partition on our image is supposed to be "6"
-LAST_PARTITION_NUMBER=$(lsblk -l | grep part | wc -l)
+LAST_PARTITION_NUMBER=$(lsblk -l | grep -c part)
 PARTITION="/dev/${DEVICE}p${LAST_PARTITION_NUMBER}"
 
-sgdisk /dev/$DEVICE --move-second-header
-partx -u -v /dev/$DEVICE
-e2fsck -f -y $PARTITION
-echo ',+' | sfdisk /dev/$DEVICE -N $LAST_PARTITION_NUMBER --force --lock --no-reread
-partx -u -v /dev/$DEVICE
-resize2fs $PARTITION
-e2fsck -f -y $PARTITION
-sfdisk -V /dev/$DEVICE
+sgdisk "/dev/$DEVICE" --move-second-header
+partx -u -v "/dev/$DEVICE"
+e2fsck -f -y "$PARTITION"
+echo ',+' | sfdisk "/dev/$DEVICE" -N "$LAST_PARTITION_NUMBER" --force --lock --no-reread
+partx -u -v "/dev/$DEVICE"
+resize2fs "$PARTITION"
+e2fsck -f -y "$PARTITION"
+sfdisk -V "/dev/$DEVICE"

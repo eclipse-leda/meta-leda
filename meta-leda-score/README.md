@@ -61,10 +61,12 @@ Integrating Bazel into a Yocto build environment has inherent challenges:
 2. **Hermetic builds**: For fully offline/hermetic Yocto builds, all Bazel
    module dependencies need to be vendored. Use Bazel's `vendor` command to
    pre-fetch dependencies:
+
    ```bash
    cd <source-dir>
    bazel vendor --vendor_dir=vendor //...
    ```
+
    Then set `BAZEL_EXTRA_ARGS += "--vendor_dir=${S}/vendor"` in your recipe.
 
 3. **Cross-compilation**: Bazel manages its own toolchains (GCC, LLVM, Rust)
@@ -85,6 +87,7 @@ The `bazel-native` recipe provides Bazel 8.6.0.
 ## Layer Dependencies
 
 This layer depends on:
+
 - `core` (from poky/meta)
 
 No additional layer dependencies are required.

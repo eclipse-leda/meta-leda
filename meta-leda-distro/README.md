@@ -12,7 +12,8 @@ It is based on the guidelines documented in the [Yocto Project Documentation](ht
 
 # Dependencies
 
-This layer depends on
+This layer depends on:
+
 - poky
 - meta-virtualization
 - meta-rauc
@@ -38,7 +39,7 @@ https://www.apache.org/licenses/LICENSE-2.0
 
 The project maintains the following source code repositories:
 
-* https://github.com/eclipse-leda/
+- https://github.com/eclipse-leda/
 
 ## Cryptography
 

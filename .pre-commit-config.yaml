@@ -18,20 +18,24 @@
 #     pip3 install pre-commit
 #     pre-commit install
 #
-# Check the full tree once (also useful in CI):
+# Check the whole tree once (also useful in CI):
 #
 #     pre-commit run --all-files
 #
-# What is validated:
-# - YAML syntax of the GitHub workflow files (.github/) and of the kas build
-#   configurations (kas/, .config.yaml)
-# - Markdown syntax of the top level documentation (./*.md) and of docs/
+# What is validated, using the tools shipped by the distribution or the
+# dev-container, no repository specific scripts:
 #
-# The linters are installed into a virtual environment by pre-commit on first
-# use, so only python3 and network access are needed. Style rules that only
-# affect prose formatting or that clash with the Eclipse boilerplate files
-# (long lines, bare URLs, multiple top level headings) are switched off so
-# that the checked-in tree stays clean.
+# - YAML syntax of the kas build configurations and GitHub workflow files
+# - Markdown syntax of all documentation
+# - JSON syntax of the Kanto container manifests and other configs
+# - TOML syntax of the containerd and Northstar configs
+# - patch syntax of the *.patch files carried for upstream fixes
+# - shell syntax of the installed shell scripts
+# - PEM syntax of the cloud-connector example certificate and key
+#
+# Not checked here: BitBake recipes and appends. They are parsed and their
+# dependency tree is resolved by the dry-run jobs in CI, see
+# docs/ci-build-matrix.md.
 #
 repos:
   - repo: local
@@ -42,12 +46,43 @@ repos:
           yamllint -d "{rules: {document-start: false, line-length: false}}"
         language: python
         additional_dependencies: [yamllint]
-        types: [yaml]
-        files: ^(\.config\.ya?ml|kas/.*\.ya?ml|\.github/.*\.ya?ml)$
+        files: ^(kas/.*|\.github/.*|\.config)\.ya?ml$
       - id: markdown-lint
-        name: Validate Markdown (README and docs/)
-        entry: pymarkdown --disable-rules MD013,MD030,MD034,MD041,MD025 scan
+        name: Validate Markdown
+        entry: >-
+          pymarkdown --disable-rules MD013,MD030,MD034,MD041,MD025 scan
         language: python
         additional_dependencies: [pymarkdownlnt]
-        types: [markdown]
-        files: ^([^/]+\.md|docs/.*\.md)$
+        files: .*\.md$
+      - id: json-syntax
+        name: Validate JSON (Kanto and container configs)
+        entry: jq empty
+        language: system
+        files: ^(meta-leda-[^/]+|examples)/.*\.json(\.disabled)?$
+        exclude: (\.json\.template|container-management/config\.json)$
+      - id: toml-syntax
+        name: Validate TOML (containerd and Northstar configs)
+        entry: >-
+          python3 -c "import tomllib,sys;[tomllib.load(open(p,'rb')) for p in sys.argv[1:]]"
+        language: system
+        files: ^(meta-leda-[^/]+|examples)/.*\.toml$
+      - id: patch-syntax
+        name: Validate patches (upstream fixes carried in the layers)
+        entry: git apply --summary
+        language: system
+        files: ^(meta-leda-[^/]+|examples)/.*\.patch$
+      - id: shell-syntax
+        name: Validate shell scripts
+        entry: shellcheck
+        language: system
+        files: ^(meta-leda-[^/]+|examples)/.*\.sh$
+      - id: pem-certificate
+        name: Validate PEM certificates
+        entry: openssl x509 -noout -in
+        language: system
+        files: ^(meta-leda-[^/]+|examples)/.*\.crt$
+      - id: pem-key
+        name: Validate PEM private keys
+        entry: openssl rsa -noout -in
+        language: system
+        files: ^(meta-leda-[^/]+|examples)/.*\.key$

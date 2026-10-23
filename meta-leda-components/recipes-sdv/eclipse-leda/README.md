@@ -16,8 +16,6 @@ cargo build --release
 
 Run as root so you can bind to the socket!!
 
-
-
 ```bash
 sudo target/release/kanto-auto-deployer [path to json files]
 ```
