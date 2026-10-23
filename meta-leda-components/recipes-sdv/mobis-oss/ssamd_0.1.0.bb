@@ -15,7 +15,7 @@
 # the checksums are taken from the Cargo.lock committed in the upstream tree.
 # Upstream has no tags or releases yet, hence SRCREV is pinned to a commit.
 
-inherit cargo cargo-update-recipe-crates pkgconfig
+inherit cargo cargo-update-recipe-crates pkgconfig systemd features_check
 
 SUMMARY = "SSAM daemon - package management and container runtime for SSAM"
 DESCRIPTION = "SSAM is a daemon that manages SSAM packages, configures the container \
@@ -45,6 +45,33 @@ DEPENDS += "protobuf-native clang-native zstd"
 
 # ssamd executes workloads in OCI containers.
 RDEPENDS:${PN} += "crun"
+
+# Default daemon configuration, service unit and package directories. ssamd reads
+# ssamd.toml from the directory that contains the binary (no CLI or environment
+# override), so the file belongs next to /usr/bin/ssamd. Integrators replace it
+# by shipping a file of the same name in their own layer.
+SRC_URI += "file://ssamd.toml"
+SRC_URI += "file://ssamd.service"
+SRC_URI += "file://public-key.pem"
+
+NATIVE_SYSTEMD_SUPPORT = "1"
+SYSTEMD_PACKAGES = "${PN}"
+SYSTEMD_SERVICE:${PN} = "${@bb.utils.contains('DISTRO_FEATURES','systemd','ssamd.service','',d)}"
+SYSTEMD_AUTO_ENABLE:${PN} = "enable"
+REQUIRED_DISTRO_FEATURES = "systemd"
+
+do_install:append() {
+    install -m 0644 ${UNPACKDIR}/ssamd.toml ${D}${bindir}
+    install -d -m 0755 ${D}${systemd_unitdir}/system
+    install -m 0644 ${UNPACKDIR}/ssamd.service ${D}${systemd_unitdir}/system
+    install -d -m 0755 ${D}/etc/ssamd
+    install -m 0644 ${UNPACKDIR}/public-key.pem ${D}/etc/ssamd/public.key
+    # package.dir.builtin must exist before ssamd starts; the daemon does not
+    # create it.
+    install -d -m 0755 ${D}/data/var/lib/ssamd/builtin
+}
+
+FILES:${PN} += "/data/var/lib/ssamd/builtin"
 
 # Crate list shared by all three workspace members of the SSAM monorepo.
 # Regenerate with: kas build --target ssam --cmd update_crates

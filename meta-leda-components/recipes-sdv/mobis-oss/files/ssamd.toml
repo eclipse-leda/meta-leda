@@ -1,0 +1,35 @@
+# Default ssamd configuration for Eclipse Leda.
+#
+# ssamd reads this file from the directory that contains the ssamd binary, i.e.
+# /usr/bin/ssamd.toml; there is no command line or environment override.
+# Integrators replace this file by shipping a file of the same name in their own
+# layer (see docs/new-rust-recipes.md and the meta-leda-components README).
+#
+# Key and directory locations follow the upstream contract in
+# docs/reference/daemon-config.md of the SSAM repository.
+
+[package]
+extension = "ssam"
+cgroup = ""
+public_key = "/etc/ssamd/public.key"
+
+[package.dir]
+builtin = "/data/var/lib/ssamd/builtin"
+downloaded = "/data/var/lib/ssamd/downloaded"
+oci_bundle = "/data/var/lib/ssamd/oci-bundle"
+data = "/data/var/lib/ssamd/data"
+
+[debug]
+pkgfs_overlay_dir = ""
+disable_pkgfs_integrity = false
+disable_package_verify = false
+
+[network.bridge]
+enabled = false
+
+[network.bridge.addr_pool]
+base = "172.20.0.0/16"
+size = 29
+
+[rpc]
+allowed_gids = []

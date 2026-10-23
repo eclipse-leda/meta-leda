@@ -24,8 +24,10 @@ and integrating them into the Eclipse Leda distribution.
 - `ssam-package-helloworld_1.0.0.bb`: example that builds an `.ssam` package at build
   time with `ssam-wrap` and installs it into the daemon's package directory
 - `classes/ssam-package.bbclass` (in the layer root): reusable part of the above
-- `files/`: `LICENSE`, example RSA key pair (`private-key.pem`, `public-key.pem`) used
-  by that prototype — example only, integrators must generate their own
+- `files/`: `LICENSE`, example RSA key pair (`private-key.pem`, `public-key.pem`),
+  `ssamd.toml` and `ssamd.service`, installed by `ssamd_0.1.0.bb` as the daemon defaults.
+  Integrators replace them by shipping a file of the same name in their own layer.
+  The key pair is an example only, integrators must generate their own
 
 All three are members of one Cargo workspace in the upstream monorepo, so each recipe
 checks out the same tree (`SRCREV` pinned to a commit) and builds one member via
@@ -114,26 +116,41 @@ exercised end-to-end, see the upstream README:
 
 - `crun` (declared as `RDEPENDS` of `ssamd`, available from `meta-virtualization`) —
   present in `sdv-image-full` and reports `crun version 1.26.0` with `+SECCOMP`
-- EROFS + dm-verity kernel support, loop mounts, filesystem quotas (`quotactl-rs`)
+- EROFS + dm-verity kernel support, loop mounts, filesystem quotas (`quotactl-rs`):
+  `CONFIG_DM_VERITY` is enabled in the Leda kernel, `CONFIG_EROFS_FS` is not by default.
+  `meta-leda-distro/recipes-kernel/linux/sdv-ssam-kernel-config.inc` adds it through the
+  `ssam-erofs.cfg` config fragment, required by `linux-yocto_%.bbappend`.
 - systemd / D-Bus for the `zbus_systemd` integration
 
 ## Runtime test
 
-See `docs/agents-integrationtesting.md` for the procedure. Running it with
-`IMAGE_INSTALL:append = " ssamd ssam ssam-wrap"` on `sdv-image-full` (qemux86-64, 2026-10-22):
+See `docs/agents-integrationtesting.md` for the procedure.
 
-- all three binaries install and run on the guest (x86-64)
-- `ssam-wrap --prepare <name> <workspace>` generates `config.toml`, `runtime.json`,
-  `seccomp.json` and a `pkgfs/` directory
-- `ssam-wrap <workspace>` needs a signing key (`-k`), it stops at “Private key file path is required”
-- `ssamd` needs a configuration file: it reads `ssamd.toml` only from the directory that
-  contains the binary (no CLI or environment override), so with `/usr/bin/ssamd` it looks
-  for `/usr/bin/ssamd.toml`. The recipes do not ship one yet — TODO: install a default
-  config there; integrators replace it with a same-named file in their own layer
-- `ssam` reports “Connection refused” while no daemon runs, which is expected for the gRPC client
+2026-10-22, `IMAGE_INSTALL:append = " ssamd ssam ssam-wrap"` on `sdv-image-full`
+(qemux86-64): the three binaries install and run; `ssam-wrap --prepare <name> <workspace>`
+generates `config.toml`, `runtime.json`, `seccomp.json` and a `pkgfs/` directory; `ssam-wrap`
+stops at “Private key file path is required” without a key; `ssamd` fails because it reads
+`ssamd.toml` only from the directory that contains the binary (no CLI or environment
+override) and none was shipped; `ssam` reports “Connection refused”, which is expected while
+no daemon runs.
 
-Follow-up work (signing keys, `ssamd.toml` defaults for the Leda `/data` layout, systemd
-service, building an SSAM package) is tracked in `TODO.md` in this directory.
+2026-10-23, with the daemon configuration, the service unit and `ssam-package-helloworld`
+also installed, the whole flow works on the same guest:
+
+- `ssamd.service` is enabled and starts (`Type=notify`, `Main PID: … (/usr/bin/ssamd)`);
+  it creates `downloaded`, `data` and `oci-bundle` under `package.dir` at startup
+- `/usr/bin/ssamd.toml`, `/etc/ssamd/public.key` and
+  `/usr/lib/systemd/system/ssamd.service` are installed
+- `ssam list` reports `helloworld  Ready`: the EROFS image of the package root is mounted
+  read-only through a dm-verity device on a loop device
+- `ssam start helloworld` reports `[OK] helloworld`; systemd starts
+  `helloworld.service` (the package's `config.toml` description is used as the unit
+  description) and `journalctl --no-pager -u helloworld` shows
+  `crun[…]: Hello from SSAM!` followed by `helloworld.service: Deactivated successfully`
+- the package also autostarts at boot (`autostart` defaults to true in `config.toml`)
+
+Follow-up work (see `TODO.md` in this directory): the `oci_bundle` location on the
+partitioned `/data` layout, and turning the example into packages of real workloads.
 
 ## Integration
 

@@ -1,0 +1,22 @@
+# Default ssamd service unit for Eclipse Leda.
+#
+# Follows the unit template of ssamd/releasedata/gen_ssamd_conf.sh in the SSAM
+# repository: ssamd runs as root, signals start-up completion with sd_notify and
+# deploys packages as its own systemd services.
+#
+# Enable RequiresMountsFor on targets where the package directories live on a
+# separate mount (Eclipse Leda puts /data on its own partition). It is left
+# commented out here so that the unit also starts on single-rootfs images.
+
+[Unit]
+Description=SSAM Daemon
+DefaultDependencies=no
+#RequiresMountsFor=/data /data/var/lib/ssamd/builtin /data/var/lib/ssamd/downloaded /data/var/lib/ssamd/data /data/var/lib/ssamd/oci-bundle
+After=dbus.socket
+
+[Service]
+Type=notify
+ExecStart=/usr/bin/ssamd
+
+[Install]
+WantedBy=multi-user.target

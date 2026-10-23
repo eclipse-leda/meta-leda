@@ -36,8 +36,9 @@ SSAM_PKG_ARGS = "/${SSAM_PKG_NAME}"
 
 do_prepare_pkgfs() {
     # The package root is only the pkgfs tree, so the entry point must not need
-    # shared libraries.
+    # shared libraries. Strip it: ssam-wrap sizes the pkgfs image from the source
+    # directory with a small overhead only.
     printf '#include <stdio.h>\nint main(void)\n{\n        puts("Hello from SSAM!");\n        return 0;\n}\n' > ${WORKDIR}/hello.c
     ${CC} -static -o ${WORKDIR}/hello ${WORKDIR}/hello.c
-    install -m 0755 ${WORKDIR}/hello ${SSAM_PKG_WS}/pkgfs/${SSAM_PKG_NAME}
+    install -s -m 0755 ${WORKDIR}/hello ${SSAM_PKG_WS}/pkgfs/${SSAM_PKG_NAME}
 }

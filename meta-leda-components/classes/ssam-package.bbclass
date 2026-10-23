@@ -21,7 +21,9 @@
 # The public half of the signing key belongs to the daemon configuration, not to
 # the package, and is installed by the recipe that sets up ssamd.
 
-DEPENDS += "ssam-wrap-native erofs-utils-native lz4-native cryptsetup-native virtual/fakeroot-native"
+# erofs-* needs erofs-utils + lz4, ext4 needs e2fsprogs; both are already part
+# of an image build that uses these filesystems.
+DEPENDS += "ssam-wrap-native erofs-utils-native lz4-native e2fsprogs-native cryptsetup-native virtual/fakeroot-native"
 
 # ssam-wrap runs on the build host; its -native variant comes from the ssam
 # recipe in this layer (BBCLASSEXTEND = "native").
@@ -66,7 +68,7 @@ SSAM_MAC[doc] = "Value for the 'mac' key of the generated config.toml"
 # only merges the native sysroot for tasks that declare one (same pattern as
 # classes/sdv-container-cache.bbclass).
 do_ssam_prepare[depends] += "ssam-wrap-native:do_populate_sysroot"
-do_build_package[depends] += "erofs-utils-native:do_populate_sysroot lz4-native:do_populate_sysroot cryptsetup-native:do_populate_sysroot virtual/fakeroot-native:do_populate_sysroot"
+do_build_package[depends] += "erofs-utils-native:do_populate_sysroot lz4-native:do_populate_sysroot e2fsprogs-native:do_populate_sysroot cryptsetup-native:do_populate_sysroot virtual/fakeroot-native:do_populate_sysroot"
 
 # ssam-wrap calls external tools by name. Native tools are not in the default
 # PATH, and OE has no fakeroot: it uses pseudo (see PREFERRED_PROVIDER_virtual/fakeroot-native

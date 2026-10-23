@@ -22,8 +22,8 @@ openssl genpkey -algorithm RSA -out private_key.pem -pkeyopt rsa_keygen_bits:204
 openssl rsa -in private_key.pem -pubout -out public_key.pem
 ```
 
-- Put both files in `examples/ssam/` with a short README saying they are an **example
-  only** — integrators must generate their own pair.
+- **Done (2026-10-22):** both files are in `files/` of this recipe directory (not
+  `examples/ssam/`), with the README saying they are an example only.
 - Upstream warns that the public key is the whole trust model: keep it on a read-only
   / secure-boot protected path and restrict writes. `/etc/ssamd/public.key` is fine for
   a first test, but flag it for review.
@@ -42,14 +42,16 @@ Constraints verified in the runtime test and in `docs/reference/daemon-config.md
   (`files/ssamd.toml`) and install it next to the binary. Integrators override it the
   standard BitBake way — their own layer contains a same-named recipe/file earlier in
   the layer search path — so no bbappend, no symlink indirection.
-- `ssamd` must run as root and signals readiness with `sd_notify`; upstream recommends a
-  `Type=notify` unit. `gen_ssamd_conf.sh --gen-service-unit` generates a matching
-  `ssamd.service` (and `--gen-apparmor-profile` generates the AppArmor profiles), so
-  generating both at build time is preferable to hand-writing them.
-  The script needs `bash` and lives at `ssamd/releasedata/gen_ssamd_conf.sh` in the
-  checkout; its path flags (`--builtin-pkgs-dir`, `--downloaded-pkgs-dir`,
-  `--pkgs-data-root`, `--oci-bundle-dir`, `--public-key-file`, `--ssamd-install-path`)
-  map to these TOML keys:
+- **Done (2026-10-23):** `files/ssamd.toml` and `files/ssamd.service` are installed by
+  `ssamd_0.1.0.bb` (`/usr/bin/ssamd.toml`, `/etc/ssamd/public.key`,
+  `/usr/lib/systemd/system/ssamd.service`, `SYSTEMD_AUTO_ENABLE = enable`). The unit and
+  the config are written to match the templates of `gen_ssamd_conf.sh` rather than
+  generated at build time: the generator needs `bash` from the checkout and only writes
+  the same static content, so keeping them as plain files makes the “override with a
+  same-named file in your own layer” route work directly.
+  `RequiresMountsFor` is left commented out in the unit — with a single-rootfs `runqemu`
+  boot there is no `data.mount` unit and the dependency would be unsatisfiable; enable it
+  on the partitioned `/data` layout.
 
 | TOML key | upstream example value | proposed meta-leda value |
 | --- | --- | --- |
@@ -127,8 +129,15 @@ current image:
     `proc`, `sys` itself; the package is signed and gets a dm-verity table
     (`1 4096 4096 497 498 sha256 …`). Verified up to the packaged file
     `data/var/lib/ssamd/builtin/helloworld.ssam`; not yet run in a guest.
-  - **open:** exercise the package at runtime (`ssam list`, start the package, check
-    `journalctl -u helloworld`) once the daemon configuration exists (sections 1–2).
+  - **Done (runtime, 2026-10-23):** with the daemon configured, `ssam list` shows
+    `helloworld  Ready` (EROFS image mounted read-only through a dm-verity device on a
+    loop device), `ssam start helloworld` reports `[OK] helloworld`, and
+    `journalctl --no-pager -u helloworld` shows `crun[…]: Hello from SSAM!` followed by
+    `helloworld.service: Deactivated successfully`. The package also autostarts at boot
+    (`autostart` defaults to true in `config.toml`).
+  - **open:** `ext4` pkgfs fails at runtime (`Failed to load table: … Argument list too
+    long (os error 7)` while creating the dm-verity device), so `erofs*` is the format to
+    use; the class default stays `erofs-lz4hc`.
   - Docker Hub access needs network at build time, which the sandboxed build does not
     have → prefer the “from scratch” variant, or fetch OCI content with a separate
     fetcher and feed `oci-archive:` to `--pkgfs-src`.
@@ -137,24 +146,38 @@ current image:
 
 ## 4. Configure and start the daemon
 
-Split the upstream steps 4–5 for BitBake/QEMU:
-
-- generate `ssamd.toml` (and optionally `ssamd.service`) at build time with
-  `gen_ssamd_conf.sh`, install both next to the binary;
-- install `/etc/ssamd/public.key` and create `package.dir.builtin`;
-- rebuild the image, boot QEMU, start the service (`systemctl start ssamd` or let the
-  unit autostart), then verify.
+**Done (2026-10-23)** — see the “Runtime test” section of the README for the result.
 
 ## 5. Smoke test
 
-- `ssam list` is the upstream verification command (expected output: package listed as
-  `Ready`).
-- Package containers run as systemd services named after the package; check
-  `journalctl --no-pager -u <package>`.
-- Guest caveats from the run: no `timeout` command, BusyBox `head` has no `-c`, login
-  shell is `zsh` on `sdv-image-full` — see `docs/agents-integrationtesting.md`.
+Done: `ssam list` lists the package as `Ready`, the package container runs as the
+systemd service `helloworld.service` and its output appears in
+`journalctl --no-pager -u helloworld`. CLI commands available (from `ssam --help` in the
+guest): `start`, `stop`, `list`, `install`, `remove`, `wipe-data`, `timeline-info`,
+`pkg-info`.
+
+Guest caveats from the run: no `timeout` command, BusyBox `head` has no `-c`, login
+shell is `zsh` on `sdv-image-full` — see `docs/agents-integrationtesting.md`.
 
 ## 6. Update `meta-leda-components/recipes-sdv/mobis-oss/README.md`
 
 Record what the runtime test showed (already added as a “Runtime test” section) and
 keep the packagegroup decision open.
+
+## 7. Three ways to trust a SSAM package's contents
+
+Read https://github.com/mobis-oss/ssam/blob/559a9346032b5b69290c91aafda3dbd6055dfe57/docs/guides/package-integrity.md
+
+- Kernel options in the built Leda qemux86-64 kernel (6.18.39):
+  `CONFIG_BLK_DEV_DM=y`, `CONFIG_DM_VERITY=y`, `CONFIG_EROFS_FS=y` (added by
+  `meta-leda-distro/recipes-kernel/linux/sdv-ssam-kernel-config.inc` →
+  `linux-yocto/ssam-erofs.cfg`).
+
+## 8. Container Isolation
+
+Read https://github.com/mobis-oss/ssam/blob/559a9346032b5b69290c91aafda3dbd6055dfe57/docs/guides/container-isolation.md
+
+- Kernel options in the built Leda qemux86-64 kernel (6.18.39):
+  `CONFIG_EXT4_FS=y` (already set), `CONFIG_QUOTA is not set` (**open** — needed only
+  for packages setting `container.storage_limit`), `CONFIG_QFMT_V2` is the XFS quota
+  format and is not configurable while `CONFIG_QUOTA` is off. 

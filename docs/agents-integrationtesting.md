@@ -190,3 +190,25 @@ With `IMAGE_INSTALL:append = " ssamd ssam ssam-wrap"` on `sdv-image-full`:
   a default config in the package before the daemon can be started
 - `ssam` runs and fails with “Connection refused” while no daemon is running, which is
   the expected behaviour for the gRPC client
+
+## 10. Observed with the SSAM recipes (2026-10-23)
+
+Same procedure, with `ssam-package-helloworld` added to `IMAGE_INSTALL`, the default
+`ssamd.toml` + `ssamd.service` shipped by `ssamd_0.1.0.bb`, and `CONFIG_EROFS_FS=y`
+enabled through `meta-leda-distro/recipes-kernel/linux/sdv-ssam-kernel-config.inc`
+(`CONFIG_EROFS_FS` is not set in the Leda kernel by default, and mounting an `ext4`
+pkgfs fails with `Failed to load table: … Argument list too long (os error 7)`):
+
+- `systemctl status ssamd`: `loaded … enabled; preset: enabled`, `active (running)`,
+  `Main PID: … (ssamd)`; the daemon creates `downloaded`, `data` and `oci-bundle`
+  under its package directories at startup, `builtin` comes from the image
+- `ssam list` prints `helloworld  Ready`
+- `ssam start helloworld` prints `Starting package(s): helloworld` / `[OK] helloworld`
+- `journalctl --no-pager -u helloworld` shows
+  `systemd[1]: Started A short description of the package.` (the unit description comes
+  from the package `config.toml`), `crun[…]: Hello from SSAM!`,
+  `helloworld.service: Deactivated successfully` — the package container runs through
+  `crun` and exits, as `service_type = simple` means
+- the package also autostarts at boot: `autostart` defaults to true in `config.toml`
+- `ssam --help` lists `start`, `stop`, `list`, `install`, `remove`, `wipe-data`,
+  `timeline-info`, `pkg-info`
