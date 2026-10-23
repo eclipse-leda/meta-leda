@@ -80,6 +80,7 @@ The sources pinned by `kas/.config-wrynose.yaml` are:
 - meta-kanto
   - URI: https://github.com/mikehaller/meta-kanto.git
   - Branch: wrynose
+  - Commit: 171b7da7942dd7d18ef45076a99c37f838c47ed1
   - Note: temporary fork until https://github.com/eclipse-kanto/meta-kanto supports wrynose
 - meta-lts-mixins, only for images that use Rust or Go content
   - URI: https://git.yoctoproject.org/git/meta-lts-mixins

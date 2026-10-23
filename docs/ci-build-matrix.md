@@ -42,8 +42,7 @@ BitBake reads has changed:
   machine configuration files (`conf/layer.conf`, `conf/distro/*.conf`,
   `conf/machine/*.conf`) and the kernel and machine config fragments.
 - `kas/**`, `.config*.yaml` - the kas build configurations, including the
-  BitBake variables that are set in their `local_conf_header` and
-  `bblayers_conf_header` blocks.
+  BitBake variables that are set in their `local_conf_header` blocks.
 - `.github/workflows/**` - this workflow itself, for example when a matrix
   entry adds a kas config or switches the machine with `KAS_MACHINE`.
 

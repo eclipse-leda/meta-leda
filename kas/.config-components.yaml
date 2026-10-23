@@ -69,6 +69,7 @@ repos:
   meta-kanto:
     url: "https://github.com/mikehaller/meta-kanto.git"
     branch: wrynose
+    commit: 171b7da7942dd7d18ef45076a99c37f838c47ed1
   meta-virtualization:
     url: "https://git.yoctoproject.org/meta-virtualization"
     branch: wrynose
