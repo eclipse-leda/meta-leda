@@ -130,8 +130,9 @@ Markdown of the documentation. Enable them in your checkout with `pre-commit
 install`, see [docs/pre-commit.md](docs/pre-commit.md).
 
 The same hooks also run in CI: the `Linting` job checks the whole tree on
-every push and pull request, so a merge cannot bring a file that does not
-parse into the repository.
+pull requests and on manual `workflow_dispatch` runs, so a merge cannot bring
+a file that does not parse into the repository. A direct push to a release
+branch is not checked; run `pre-commit run --all-files` locally before pushing.
 
 The dry-run job that CI runs, and which Yocto releases and machines are
 supported at all, are described in [docs/ci-build-matrix.md](docs/ci-build-matrix.md).

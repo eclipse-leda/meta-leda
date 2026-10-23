@@ -45,24 +45,29 @@ The sources pinned by `kas/.config-wrynose.yaml` are:
   - URI: https://github.com/openembedded/bitbake.git
   - Tag: yocto-6.0.3
 - poky
-  - URI: https://git.yoctoproject.org/git/poky
+  - URI: https://git.yoctoproject.org/meta-yocto/
   - Branch: wrynose
+  - Layers:
+    - meta-poky
+    - meta-yocto-bsp
 - openembedded-core
   - URI: https://github.com/openembedded/openembedded-core.git
   - Tag: yocto-6.0.3
+  - Layers:
+    - meta
+- meta-openembedded
+  - URI: https://github.com/openembedded/meta-openembedded.git
+  - Branch: wrynose
   - Layers:
     - meta-oe
     - meta-filesystems
     - meta-python
     - meta-networking
-- meta-openembedded
-  - URI: https://github.com/openembedded/meta-openembedded.git
-  - Branch: wrynose
 - meta-clang
   - URI: https://github.com/kraj/meta-clang.git
   - Branch: wrynose
 - meta-virtualization
-  - URI: https://github.com/openembedded/meta-virtualization.git
+  - URI: https://git.yoctoproject.org/meta-virtualization
   - Branch: wrynose
 - meta-rauc
   - URI: https://github.com/rauc/meta-rauc.git
@@ -75,8 +80,9 @@ The sources pinned by `kas/.config-wrynose.yaml` are:
 - meta-kanto
   - URI: https://github.com/mikehaller/meta-kanto.git
   - Branch: wrynose
+  - Note: temporary fork until https://github.com/eclipse-kanto/meta-kanto supports wrynose
 - meta-lts-mixins, only for images that use Rust or Go content
-  - URI: https://github.com/Meta-LTS-Mixins/meta-lts-mixins.git
+  - URI: https://git.yoctoproject.org/git/meta-lts-mixins
   - Branch: wrynose/rust and wrynose/go
 
 `kas/.config-wrynose-rpi4.yaml` adds `meta-raspberrypi` and the
