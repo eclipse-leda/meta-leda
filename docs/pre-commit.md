@@ -72,7 +72,35 @@ pre-commit run --all-files
 ```
 
 The job installs the tools that the `language: system` hooks need from apt
-(`jq`, `shellcheck`, `openssl`) and installs `pre-commit` itself from pip.
+(`jq`, `shellcheck`, `openssl`), then delegates installing `pre-commit` and
+running it to the upstream action:
+
+```yaml
+- name: Set up Python
+  uses: actions/setup-python@v5
+- name: Run the hooks over the whole tree
+  uses: pre-commit/action@v3.0.1
+```
+
+The action runs `pre-commit run --all-files` (`--all-files` is its default
+`extra_args`), and caches `~/.cache/pre-commit` keyed on
+`.pre-commit-config.yaml`. It is a third-party action, so the org has to
+have it in the allow-list of the Actions settings.
+
+`pre-commit` is installed under the interpreter of `actions/setup-python`
+rather than with `sudo pip3 install` on the runner: pip on Debian and Ubuntu
+is patched to uninstall the packages the distribution ships before installing
+a newer copy of them, and `pre-commit` depends on `packaging`, which the
+distribution ships as `python3-packaging`. That uninstall is impossible when
+the distro package has no `RECORD` file, and pip then exits with an error:
+
+```text
+Attempting uninstall: packaging
+    Found existing installation: packaging 24.0
+ERROR: Cannot uninstall packaging 24.0, RECORD file not found.
+Hint: The package was installed by debian.
+```
+
 `pre-commit` then installs `yamllint` and `pymarkdownlnt` into a virtual
 environment of its own, from the `additional_dependencies` of the hooks, so
 those two do not have to be installed separately.
