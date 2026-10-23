@@ -32,7 +32,8 @@ The repository contains an example configuration (`.config.yaml`) for [kas](http
 
 # Dependencies
 
-This layer depends on
+This layer depends on:
+
 - BitBake
   - URI: https://github.com/openembedded/bitbake.git
   - Tag: yocto-6.0.3
@@ -57,10 +58,10 @@ This layer depends on
   - URI: https://github.com/openembedded/openembedded-core.git
   - tag: yocto-6.0.3
   - Layers:
-    -  meta-oe
-    -  meta-filesystems
-    -  meta-python
-    -  meta-networking
+    - meta-oe
+    - meta-filesystems
+    - meta-python
+    - meta-networking
 - meta-clang:
   - URI:: https://github.com/kraj/meta-clang
     - Branch: wrynose
@@ -83,7 +84,7 @@ https://www.apache.org/licenses/LICENSE-2.0
 
 The project maintains the following source code repositories:
 
-* https://github.com/eclipse-leda/meta-leda
+- https://github.com/eclipse-leda/meta-leda
 
 ## Cryptography
 

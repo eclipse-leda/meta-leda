@@ -14,4 +14,3 @@ To verify the correct structure of the metalayer, use `yocto-check-layer`:
         ../../meta-openembedded/meta-filesystems/ \
         ../../meta-openembedded/meta-python/ \
         ../../meta-openembedded/meta-networking/
-

@@ -13,10 +13,10 @@ them play together coherently an form a functional portfolio.
 As a first step towards that goal, Eclipse Leda provides an "SDV distribution" that pulls
 together individual contributor pieces from SDV and the larger OSS community, to
 deliver a functional and always-available Linux-based image/distribution with
-two primary goals: 
+two primary goals:
 
 1. being the crystalization point for functionally integrating
-diverse SDV-scope projects into a working whole 
+diverse SDV-scope projects into a working whole
 2. delivering a continuously
 available, always working starting image for developers interested in getting
 going with the SDV tech stack
@@ -127,4 +127,3 @@ https://www.eclipse.org/projects/handbook/#resources-commit
 Contact the project developers via the project's "dev" list.
 
 * https://accounts.eclipse.org/mailing-list/leda-dev
-
