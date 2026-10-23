@@ -122,6 +122,16 @@ fulfills the DCO's requirement that you sign-off on your contributions.
 For more information, please see the Eclipse Committer Handbook:
 https://www.eclipse.org/projects/handbook/#resources-commit
 
+## Repository tooling
+
+The repository carries git hooks in `.pre-commit-config.yaml` that validate the
+YAML of the kas build configurations and the GitHub workflow files, and the
+Markdown of the documentation. Enable them in your checkout with `pre-commit
+install`, see [docs/pre-commit.md](docs/pre-commit.md).
+
+The dry-run jobs that CI runs, and which Yocto releases and machines are
+supported at all, are described in [docs/ci-build-matrix.md](docs/ci-build-matrix.md).
+
 ## Contact
 
 Contact the project developers via the project's "dev" list.
