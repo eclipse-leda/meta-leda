@@ -51,10 +51,15 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
-    # The language: system hooks of .pre-commit-config.yaml need these from
-    # the distribution, see docs/pre-commit.md.
-    - name: Install hook tools
-      run: sudo apt-get update -y && sudo apt-get install -y --no-install-recommends jq shellcheck openssl
+    # The language: system hooks of .pre-commit-config.yaml need jq, shellcheck
+    # and openssl from the distribution, see docs/pre-commit.md. chrpath and
+    # diffstat are in the required HOSTTOOLS list of oe-core bitbake.conf and
+    # are not on ubuntu-latest; bitbake stops with a fatal error at parse
+    # time when one of them is missing. Everything else of that list is
+    # already on the image, so do not add more packages unless bitbake
+    # names them.
+    - name: Install tools
+      run: sudo apt-get update -y && sudo apt-get install -y --no-install-recommends jq shellcheck openssl chrpath diffstat
     # The cheap check first: the hooks of .pre-commit-config.yaml over the
     # whole tree, the same command the contributors run locally, see
     # docs/pre-commit.md. A failing step fails the job, so the expensive

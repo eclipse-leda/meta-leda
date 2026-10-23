@@ -68,11 +68,15 @@ not resolving, and that is the part the free runners are bad at:
   every pin in the kas configs is the tip of a branch or a tag; a pin to
   an older commit cannot be fetched shallow, so raise `KAS_CLONE_DEPTH`
   or drop the pin if a pin ever moves off a tip.
-- The job installs nothing but `kas` and the three tools the `language:
-  system` hooks need. Everything else a dry-run needs is already on
-  `ubuntu-latest`. The full Yocto host list (the C/C++ toolchains, qemu,
-  libvirt, squashfs, rauc, skopeo, ruby) is not installed, a dry-run never
-  uses it.
+- The job installs nothing but `kas` and the tools that are missing on
+  `ubuntu-latest`: `jq`, `shellcheck` and `openssl` for the `language:
+  system` hooks, and `chrpath` and `diffstat` for the required `HOSTTOOLS`
+  list of `oe-core/meta/conf/bitbake.conf`, which stops bitbake with a
+  fatal error at parse time when one of those is not in `PATH`. Everything
+  else of that list is on the image, so the full Yocto host list (the C/C++
+  toolchains, qemu, libvirt, squashfs, rauc, skopeo, ruby) is not
+  installed and a dry-run never uses it. If bitbake names more missing
+  tools, add exactly those, do not install the whole host list.
 
 What remains is parsing the ~3300 recipes and resolving the dependency
 graph per machine, which is the part that cannot be avoided. If that ever
