@@ -30,41 +30,57 @@ The repository contains an example configuration (`.config.yaml`) for [kas](http
 
     kas build
 
+## Supported Yocto releases
+
+The images in this repository are built against **Wrynose**, the current
+development release of Yocto. Earlier releases are end of life and are not
+supported by this layer any more, see
+[docs/ci-build-matrix.md](docs/ci-build-matrix.md).
+
 # Dependencies
 
-This layer depends on:
+The sources pinned by `kas/.config-wrynose.yaml` are:
 
 - BitBake
   - URI: https://github.com/openembedded/bitbake.git
   - Tag: yocto-6.0.3
 - poky
-  - URI: https://git.yoctoproject.org/meta-yocto
+  - URI: https://git.yoctoproject.org/git/poky
   - Branch: wrynose
-- meta-rauc-community
-  - URI: https://github.com/rauc/meta-rauc-community.git
-  - Branch: wrynose
-  - Layers:
-    - meta-rauc-qemux86
-- meta-rauc:
-  - URI: https://github.com/rauc/meta-rauc.git
-  - Branch: wrynose
-- meta-kanto:
-  - URI: https://github.com/eclipse-kanto/meta-kanto.git
-  - Branch: wrynose
-- meta-virtualization:
-  - URI: https://git.yoctoproject.org/meta-virtualization
-  - Branch: wrynose
-- meta-openembedded:
+- openembedded-core
   - URI: https://github.com/openembedded/openembedded-core.git
-  - tag: yocto-6.0.3
+  - Tag: yocto-6.0.3
   - Layers:
     - meta-oe
     - meta-filesystems
     - meta-python
     - meta-networking
-- meta-clang:
-  - URI:: https://github.com/kraj/meta-clang
-    - Branch: wrynose
+- meta-openembedded
+  - URI: https://github.com/openembedded/meta-openembedded.git
+  - Branch: wrynose
+- meta-clang
+  - URI: https://github.com/kraj/meta-clang.git
+  - Branch: wrynose
+- meta-virtualization
+  - URI: https://github.com/openembedded/meta-virtualization.git
+  - Branch: wrynose
+- meta-rauc
+  - URI: https://github.com/rauc/meta-rauc.git
+  - Branch: wrynose
+- meta-rauc-community
+  - URI: https://github.com/rauc/meta-rauc-community.git
+  - Branch: master
+  - Layers:
+    - meta-rauc-qemux86
+- meta-kanto
+  - URI: https://github.com/mikehaller/meta-kanto.git
+  - Branch: wrynose
+- meta-lts-mixins, only for images that use Rust or Go content
+  - URI: https://github.com/Meta-LTS-Mixins/meta-lts-mixins.git
+  - Branch: wrynose/rust and wrynose/go
+
+`kas/.config-wrynose-rpi4.yaml` adds `meta-raspberrypi` and the
+`meta-rauc-raspberrypi` layer for the `raspberrypi4-64` machine.
 
 # License and Copyright
 

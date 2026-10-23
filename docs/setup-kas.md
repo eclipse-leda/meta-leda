@@ -1,6 +1,6 @@
 # Installing Kas
 
-If you are using a dev-contaier, kas is already installed. Otherwise use:
+If you are using a dev-container, kas is already installed. Otherwise use:
 
     pip3 install kas
 
@@ -11,9 +11,8 @@ Run the following command in the root of the project to check out all dependenci
     kas build
 
 For building another supported Yocto release, use the matching `kas/.config-*.yaml`
-file in the same way:
-
-    kas build kas/.config-scarthgap.yaml
+file in the same way. Only Wrynose is supported today, see
+[ci-build-matrix.md](ci-build-matrix.md) for the release and machine matrix.
 
 To build for another machine, either use the machine specific configuration or
 override the machine of a configuration:
