@@ -18,14 +18,16 @@
 #     pre-commit run --all-files
 #
 # The hooks only look at the committed files (YAML, Markdown, JSON, TOML,
-# patches, shell, PEM) and finish in seconds, so this job runs on every push
-# and pull request. It is not path scoped, unlike the BitBake dry-run job,
-# which only run for changes that BitBake actually reads, see
-# docs/ci-build-matrix.md.
+# patches, shell, PEM) and finish in seconds, so this job is not path scoped,
+# unlike the BitBake dry-run job, which only runs for changes that BitBake
+# reads, see docs/ci-build-matrix.md.
+#
+# Pull requests and manual runs only: a direct push to a release branch is
+# not checked here, a maintainer who pushes runs the same command locally
+# first, see docs/pre-commit.md.
 #
 name: Linting
 on:
-  push:
   pull_request:
   workflow_dispatch:
 

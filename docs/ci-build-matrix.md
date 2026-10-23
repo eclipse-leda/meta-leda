@@ -49,12 +49,16 @@ BitBake reads has changed:
 
 A change to `README.md`, to the files in `docs/`, to `.gitignore` or to
 `.pre-commit-config.yaml` does not affect the dependency graph, so it does
-not start the dry-runs. Those changes are still checked by the `Linting`
-job, which runs the repository hooks over the whole tree, see
-[pre-commit.md](pre-commit.md).
+not start the dry-runs. Those changes are still checked by the `Linting` job
+of the same pull request, which runs the repository hooks over the whole tree,
+see [pre-commit.md](pre-commit.md).
 
 `workflow_dispatch` runs are never filtered: a manual run always runs, so a
 contributor can start a dry-run for any branch.
+
+Neither the dry-runs nor the `Linting` job run for a direct push to a release
+branch (`main`, `wrynose`, `scarthgap`, ...): both workflows only listen to
+pull requests and to manual runs, see [pre-commit.md](pre-commit.md).
 
 ## Naming convention for kas configs
 

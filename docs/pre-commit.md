@@ -65,7 +65,7 @@ This is also what the `Linting` job in CI runs, see
 ## Running the hooks in CI
 
 `.github/workflows/linting.yml` runs exactly that command over the whole
-committed tree on every push and pull request:
+committed tree for pull requests and for manual runs:
 
 ```sh
 pre-commit run --all-files
@@ -108,6 +108,12 @@ those two do not have to be installed separately.
 The job is not scoped to file paths: the hooks only look at the committed
 files and finish in seconds. The BitBake dry-run job is scoped, because
 they are expensive, see [ci-build-matrix.md](ci-build-matrix.md).
+
+Neither workflow runs for a direct push to a release branch (`main`,
+`wrynose`, `scarthgap`, ...): a maintainer who pushes runs the same
+commands locally before pushing, and the change is checked by the next
+pull request that touches it. `workflow_dispatch` starts a run on demand
+for any branch.
 
 ## Tuning the rules
 
