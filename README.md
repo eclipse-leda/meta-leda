@@ -1,4 +1,4 @@
-[![Linting](https://img.shields.io/github/actions/workflow/status/eclipse-leda/meta-leda/linting.yml)](https://github.com/eclipse-leda/meta-leda/actions/workflows/linting.yml) [![BitBake DryRun](https://img.shields.io/github/actions/workflow/status/eclipse-leda/meta-leda/dryrun.yml)](https://github.com/eclipse-leda/meta-leda/actions/workflows/dryrun.yml)
+[![CI](https://img.shields.io/github/actions/workflow/status/eclipse-leda/meta-leda/ci.yml)](https://github.com/eclipse-leda/meta-leda/actions/workflows/ci.yml)
 
 # OpenEmbedded Meta-Layer for Software Defined Vehicles components
 
@@ -82,6 +82,15 @@ The sources pinned by `kas/.config-wrynose.yaml` are:
   - Branch: wrynose
   - Commit: 171b7da7942dd7d18ef45076a99c37f838c47ed1
   - Note: temporary fork until https://github.com/eclipse-kanto/meta-kanto supports wrynose
+- meta-yoriito, provides the `kura_git` and `yoriito-common-library` base recipes
+  - URI: https://github.com/mikehaller/meta-yoriito.git
+  - Branch: leda-integration
+  - Commit: da3825239bdae9d4bdec6da69959a9ac7a040a85
+  - Note: pinned to the wrynose-ready branch, `main` is scarthgap-only
+- meta-rust-bin, required by meta-yoriito's `LAYERDEPENDS`
+  - URI: https://github.com/rust-embedded/meta-rust-bin.git
+  - Branch: master
+  - Commit: eaea247f32f247ab525112d2fbc16e16a553d880
 - meta-lts-mixins, only for images that use Rust or Go content
   - URI: https://git.yoctoproject.org/git/meta-lts-mixins
   - Branch: wrynose/rust and wrynose/go

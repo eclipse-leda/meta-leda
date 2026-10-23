@@ -1,0 +1,124 @@
+# /********************************************************************************
+# * Copyright (c) 2022-2026 Contributors to the Eclipse Foundation
+# *
+# * See the NOTICE FILEs distributed with this work for additional
+# * information regarding copyright ownership.
+# *
+# * This program and the accompanying materials are made available under the
+# * terms of the Apache License 2.0 which is available at
+# * https://www.apache.org/licenses/LICENSE-2.0
+# *
+# * SPDX-License-Identifier: Apache-2.0
+# ********************************************************************************/
+#
+# One workflow, everything in one job, in order:
+#
+#   pre-commit linting -> cache download -> the parse checks and the full
+#   dry-run -> cache upload
+#
+# The cheap check runs first and a failing step fails the job, so the
+# expensive steps never start for a tree that does not even parse. GitHub
+# has no dependency between workflows, which is why this is one workflow.
+#
+# The dry-runs parse all recipes and let BitBake resolve the dependency
+# tree of the default target for every machine of the matrix. No task is
+# executed, a full build does not fit into the limits of the free GitHub
+# runners, see docs/ci-build-matrix.md.
+#
+# The machines are steps of one job on one runner: they share the build
+# directory, so the parse cache of the first machine is reused by the next
+# ones, and they cost one runner slot instead of three.
+#
+# The two cache steps carry the parse cache (build/cache, ~15 MB) and the
+# repository mirrors of the next runs (KAS_REPO_REF_DIR) over to the next
+# run of the matrix, which is what makes the second run fast.
+#
+name: CI
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  ci:
+    name: Lint and BitBake dry-runs
+    runs-on: ubuntu-latest
+    env:
+      # The dry-runs only need the pinned trees, never their history.
+      KAS_CLONE_DEPTH: 1
+      # Bare mirrors of the layer repositories, kept in this directory and
+      # carried over by the cache steps. kas clones from the mirror instead
+      # of the network, which is the difference between minutes and seconds.
+      KAS_REPO_REF_DIR: .kas-repo-ref
+    steps:
+    # The majors of the upstream actions are pinned to the ones that run on
+    # the Node version of the current runners: the older ones still target
+    # Node 20 and the runner only warns that it forces them onto a newer
+    # one. Keep the inputs to the minimum, they differ between majors.
+    - name: Checkout
+      uses: actions/checkout@v7
+    # The tools that are missing on ubuntu-latest. The fast path installs
+    # from the index of the pre-generated image, the fallback refreshes the
+    # index first, which costs a minute but works on a stale one.
+    - name: Install tools
+      run: |
+        sudo apt-get install -y --no-install-recommends jq shellcheck openssl chrpath diffstat ||
+        { sudo apt-get update -y && sudo apt-get install -y --no-install-recommends jq shellcheck openssl chrpath diffstat; }
+    # The cheap check first: the hooks of .pre-commit-config.yaml over the
+    # whole tree, the same command the contributors run locally, see
+    # docs/pre-commit.md. A failing step fails the job, so the expensive
+    # steps below never start for a tree that does not even parse.
+    # The upstream action needs the interpreter from actions/setup-python,
+    # not the one of the distribution, see docs/pre-commit.md.
+    # The interpreter for the pre-commit action. The version is pinned to
+    # the one ubuntu-latest ships, so that the hooks run on the same
+    # interpreter in every run and the action does not warn about looking
+    # for a .python-version file.
+    - name: Set up Python
+      uses: actions/setup-python@v7
+      with:
+        python-version: '3.12'
+    - name: Pre-commit linting
+      uses: pre-commit/action@v3.0.1
+    # kas is not on the runner, the other tools a dry-run needs already
+    # are. The apparmor fix is needed on Ubuntu 24.04, see
+    # https://bugs.launchpad.net/ubuntu/+source/apparmor/+bug/2056555
+    - name: Install kas
+      run: |
+        sudo pip3 install kas
+        sudo apparmor_parser -R /etc/apparmor.d/unprivileged_userns
+    # The parse cache and the repository mirrors of the previous run. The
+    # pinned restore and save actions are used instead of the action:
+    # input, which the current version of actions/cache does not accept.
+    # restore-keys matches an older version of the key, so bumping the
+    # version of the matrix does not throw away the cache of the old one.
+    - name: Cache download
+      uses: actions/cache/restore@v6
+      with:
+        key: kas-wrynose-v1
+        restore-keys: kas-wrynose-
+        path: |
+          build/cache
+          .kas-repo-ref
+    # The cheap checks first, so that a tree that does not even parse costs
+    # seconds and never spends the ten minutes of the full resolve. Parsing
+    # every recipe is what catches the machine-specific breakage: a syntax
+    # error, a bad machine or kernel config, a dangling bbappend. All of
+    # those are raised while parsing, see docs/ci-build-matrix.md.
+    - name: ParseOnly wrynose (qemuarm64)
+      env:
+        KAS_MACHINE: qemuarm64
+      run: kas build kas/.config-wrynose.yaml -- -p
+    # The machine with the extra layers, parsed with its own config.
+    - name: ParseOnly wrynose (raspberrypi4-64)
+      run: kas build kas/.config-wrynose-rpi4.yaml -- -p
+    # The full resolve runs once, for the default machine: it is the only
+    # check that proves every dependency of the image has a provider.
+    - name: DryRun wrynose (qemux86-64)
+      run: kas build kas/.config-wrynose.yaml -- --dry-run
+    - name: Cache upload
+      uses: actions/cache/save@v6
+      with:
+        key: kas-wrynose-v1
+        path: |
+          build/cache
+          .kas-repo-ref

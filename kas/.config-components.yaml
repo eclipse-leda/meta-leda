@@ -70,6 +70,17 @@ repos:
     url: "https://github.com/mikehaller/meta-kanto.git"
     branch: wrynose
     commit: 171b7da7942dd7d18ef45076a99c37f838c47ed1
+  # Community layer providing the kura_git / yoriito-common-library base
+  # recipes; pinned to the wrynose-ready branch (main is scarthgap-only).
+  meta-yoriito:
+    url: "https://github.com/mikehaller/meta-yoriito.git"
+    branch: leda-integration
+    commit: da3825239bdae9d4bdec6da69959a9ac7a040a85
+  # meta-yoriito's layer.conf declares LAYERDEPENDS "rust-bin-layer".
+  meta-rust-bin:
+    url: "https://github.com/rust-embedded/meta-rust-bin.git"
+    branch: master
+    commit: eaea247f32f247ab525112d2fbc16e16a553d880
   meta-virtualization:
     url: "https://git.yoctoproject.org/meta-virtualization"
     branch: wrynose

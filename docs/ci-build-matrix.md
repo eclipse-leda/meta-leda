@@ -6,35 +6,150 @@ every recipe and resolve the full dependency tree of the image. That catches
 exactly the failures that matter for this layer - missing providers, dangling
 `*.bbappend`s, unresolvable dependencies - without building anything.
 
+Only one machine of the matrix pays the full resolve, the other machines
+parse: see [Full dry-run for one machine, parse-only for the
+rest](#full-dry-run-for-one-machine-parse-only-for-the-rest).
+
 The matrix has two dimensions: the Yocto release and the target machine.
 
 ## Supported matrix
 
-| Yocto release | Machine            | kas config                      | Step in `dryrun.yml`                   |
+| Yocto release | Machine            | kas config                      | Step in `ci.yml`                       |
 | ------------- | ------------------ | ------------------------------- | -------------------------------------- |
 | wrynose       | `qemux86-64`       | `kas/.config-wrynose.yaml`      | `DryRun wrynose (qemux86-64)`          |
-| wrynose       | `qemuarm64`        | `kas/.config-wrynose.yaml`      | `DryRun wrynose (qemuarm64)`          |
-| wrynose       | `raspberrypi4-64`  | `kas/.config-wrynose-rpi4.yaml` | `DryRun wrynose (raspberrypi4-64)`   |
+| wrynose       | `qemuarm64`        | `kas/.config-wrynose.yaml`      | `ParseOnly wrynose (qemuarm64)`        |
+| wrynose       | `raspberrypi4-64`  | `kas/.config-wrynose-rpi4.yaml` | `ParseOnly wrynose (raspberrypi4-64)`  |
 
 ## One workflow, one step per machine
 
-The whole matrix runs as a single workflow, `.github/workflows/dryrun.yml`,
-as one job with one step per machine. The steps run one after another on a
-single runner and share the kas build directory, so the parse cache of the
-first machine is reused by the next ones. That is faster than three
-workflows that each check out the sources, install the tools and parse the
-whole tree from scratch, and it takes one runner slot instead of three,
-which matters on the free GitHub runners.
+The whole matrix runs as a single workflow, `.github/workflows/ci.yml`,
+as one job: the pre-commit hooks first, then one step per machine. The steps
+run one after another on a single runner and share the build directory, so
+the parse cache of the first machine is reused by the next ones. That is
+faster than three workflows that each check out the sources, install the
+tools and parse the whole tree from scratch, and it takes one runner slot
+instead of three, which matters on the free GitHub runners.
 
-The job stops at the first machine that does not resolve, which is the
-failure a contributor has to fix first. Add `continue-on-error: true` to a
-step if all machines have to be reported at once.
+The steps are ordered cheap first: the checks that cost seconds run before
+the ones that cost minutes, so a pull request that breaks the parse fails
+without spending the time of the full resolve. The job stops at the first
+step that fails. Add `continue-on-error: true` to a step if all machines
+have to be reported at once.
 
-## When the dry-runs run
+## Full dry-run for one machine, parse-only for the rest
 
-The dry-runs are the expensive part of CI, so the workflow is scoped with a
-`paths` filter on the `pull_request` trigger. It only runs when a file that
-BitBake reads has changed:
+A full dry-run costs about ten minutes on a GitHub runner, so it runs once,
+for the default machine `qemux86-64`. It is the only check that proves the
+dependency graph of the image has a provider for every dependency, and that
+is a property of the whole tree, not of one machine.
+
+The other machines run `bitbake -p` through kas (`-- -p`): they parse every
+recipe of their own configuration, including the machine and kernel config
+files and the extra layers, and they stop at the errors that machine- or
+layer-specific breakage actually produces:
+
+- a syntax error in a recipe, an include or a config file
+- a `.bbappend` whose base recipe is not in that configuration
+- a machine or kernel config that cannot be parsed
+
+All of these are raised while parsing, before any dependency is resolved.
+That was verified locally: adding a `zz-not-there_%.bbappend` to a layer
+makes the parse-only run exit with code 2 and print `ERROR: No recipes in
+default available for:`, the same error the full dry-run prints.
+
+What parse-only does not check is the dependency graph: a missing provider
+or an unresolvable `DEPENDS` chain that only breaks on one of those
+machines is not caught. The cheap way to add that coverage back is a target
+for the packagegroups of the layer instead of the image, see the numbers
+below.
+
+Measured on the local machine with a warm parse cache:
+
+| check | time | tasks attempted |
+| ----- | ---- | --------------- |
+| `bitbake -p`, parse only | 10.5 s | - |
+| the 8 SDV packagegroups as targets | 43.6 s | 6683 |
+| `sdv-image-all`, the full image | 57.7 s | 8145 |
+
+Targeting the packagegroups instead of the image is not the lever it looks
+like: the packagegroups pull 6683 of the 8145 tasks, because the bulk of
+any task graph is the shared toolchain and kernel subtree. Cutting the
+number of full resolves is what pays.
+
+## Linting first, in the same job
+
+The hooks of `.pre-commit-config.yaml` run as the first steps of the job,
+over the whole tree, with the same command the contributors run locally,
+see [pre-commit.md](pre-commit.md). A failing step fails the job, so the
+expensive steps of the same job never start for a tree that does not even
+parse: a pull request with a syntax error costs seconds instead of a
+runner hour.
+
+This is one workflow and not two. GitHub has no dependency between
+workflows and none between jobs, so a second workflow could only guess when
+the first one finished. Putting the cheap check in front of the expensive
+steps in one job gets the order for free and costs one runner slot instead
+of two.
+
+## Keeping the setup cheap
+
+Neither a dry-run nor a parse-only run executes a task, so `downloads/`
+and `sstate-cache` stay empty: there is no source fetch, no unpack and no
+compile to cache. The only network traffic in the job is the git fetch of
+the layer repositories, and that is the part that is worth attacking:
+
+- The layer repositories are fetched into bare mirrors under
+  `.kas-repo-ref`, the directory of `KAS_REPO_REF_DIR`, and the working
+  clones of the metalayers hardlink from them: `.git/objects/info/alternates`
+  of a metalayer points into the mirror directory. Fetching the pinned set
+  once costs about 385 MB, re-cloning from the mirror costs seconds.
+- Both the mirrors and the parse cache (`build/cache`, ~15 MB) are carried
+  over between runs with `actions/cache`, keyed on the version of the
+  matrix. The first run of a matrix fetches everything, every later run
+  only re-clones from a mirror that was restored from the cache. Measured
+  on the local machine: a dry-run that had to create the mirrors from the
+  network took 1m31s, the same dry-run with the mirrors in place took 1m3s.
+- The layer repositories are cloned with `KAS_CLONE_DEPTH=1`. The full
+  history of the pinned sources is several hundred MB and takes minutes to
+  fetch, `openembedded-core` alone is 67k commits and 259 MB, while the
+  shallow clone of the same tree is a few seconds. This works because
+  every pin in the kas configs is the tip of a branch or a tag; a pin to
+  an older commit cannot be fetched shallow, so raise `KAS_CLONE_DEPTH`
+  or drop the pin if a pin ever moves off a tip.
+- The job installs nothing but `kas` and the tools that are missing on
+  `ubuntu-latest`: `jq`, `shellcheck` and `openssl` for the `language:
+  system` hooks, and `chrpath` and `diffstat` for the required `HOSTTOOLS`
+  list of `oe-core/meta/conf/bitbake.conf`, which stops bitbake with a
+  fatal error at parse time when one of those is not in `PATH`. Everything
+  else of that list is on the image, so the full Yocto host list (the C/C++
+  toolchains, qemu, libvirt, squashfs, rauc, skopeo, ruby) is not
+  installed and a dry-run never uses it. If bitbake names more missing
+  tools, add exactly those, do not install the whole host list. The
+  install tries the index of the pre-generated image first and only
+  refreshes the index when that fails, which costs a minute.
+
+What remains is parsing the ~3300 recipes and resolving the dependency
+graph per machine, which is the part that cannot be avoided. If that ever
+costs too much, the alternative that actually pays is running the matrix
+on own hardware and reporting the result to GitHub as a check run, which
+costs no runner slot at all.
+
+## When the workflow runs
+
+The workflow is not path scoped: it runs for every pull request and for
+manual runs. The linting has to run for every pull request, including the
+ones that only touch documentation, and the checks are one job, so scoping
+the job would scope the linting as well. The dry-runs of a docs-only pull
+request are cheap now that the parse cache and the mirrors come from the
+cache of the previous run.
+
+If that ever costs too much, the way to scope the matrix again is a
+`paths` filter on the `pull_request` trigger, but then the linting of the
+filtered-out pull requests has to come back as a second, cheap workflow.
+
+## Files that affect the dependency graph
+
+A dry-run can only fail because of a change to a file BitBake reads:
 
 - `**/*.bb`, `**/*.bbappend`, `**/*.bbclass` - the recipes, the appends and
   the BitBake classes carried in the layers.
@@ -47,17 +162,16 @@ BitBake reads has changed:
   entry adds a kas config or switches the machine with `KAS_MACHINE`.
 
 A change to `README.md`, to the files in `docs/`, to `.gitignore` or to
-`.pre-commit-config.yaml` does not affect the dependency graph, so it does
-not start the dry-runs. Those changes are still checked by the `Linting` job
-of the same pull request, which runs the repository hooks over the whole tree,
+`.pre-commit-config.yaml` cannot change the dependency graph, so it cannot
+make a dry-run fail. Those changes are still checked by the hooks over the
+whole tree, see [pre-commit.md](pre-commit.md).
+
+`workflow_dispatch` runs always run the whole matrix: a manual run is never
+filtered, so a contributor can start a dry-run for any branch.
+
+The workflow only listens to pull requests and to manual runs, so a direct
+push to a release branch (`main`, `wrynose`, `scarthgap`, ...) runs nothing,
 see [pre-commit.md](pre-commit.md).
-
-`workflow_dispatch` runs are never filtered: a manual run always runs, so a
-contributor can start a dry-run for any branch.
-
-Neither the dry-runs nor the `Linting` job run for a direct push to a release
-branch (`main`, `wrynose`, `scarthgap`, ...): both workflows only listen to
-pull requests and to manual runs, see [pre-commit.md](pre-commit.md).
 
 ## Naming convention for kas configs
 
@@ -98,7 +212,7 @@ To add a release or a machine:
 2. Only add it to the matrix if the dry-run is clean. `BB_DANGLINGAPPENDS_WARNONLY`
    can turn the dangling-append error into a warning, but the dependency errors
    still have to be resolved.
-3. Add one step to `.github/workflows/dryrun.yml`, following the steps of
+3. Add one step to `.github/workflows/ci.yml`, following the steps of
    the machines that are already in the matrix. The `README.md` badge covers
    the whole workflow, there is one badge for the matrix, not one per
    machine.

@@ -1,0 +1,37 @@
+From: Mike Haller <mike.robin.haller@gmail.com>
+Subject: [PATCH] Replace removed distutils strtobool import
+
+Python 3.14 no longer provides distutils. Use the equivalent helper shipped
+with the vshot package.
+
+Upstream-Status: Pending
+
+---
+ vshot/client/headless_app_client.py | 2 +-
+ vshot/client/pal_client.py          | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/vshot/client/headless_app_client.py b/vshot/client/headless_app_client.py
+--- a/vshot/client/headless_app_client.py
++++ b/vshot/client/headless_app_client.py
+@@ -19,7 +19,7 @@
+ import socket
+ import threading
+ import dataclasses
+-from distutils.util import strtobool
++from vshot.bool_utils import strtobool
+ from enum import Enum
+ from vshot.yoriito.viss.v1.consumer_pb2_grpc import VISSStub
+ 
+diff --git a/vshot/client/pal_client.py b/vshot/client/pal_client.py
+--- a/vshot/client/pal_client.py
++++ b/vshot/client/pal_client.py
+@@ -19,7 +19,7 @@
+ import socket
+ import threading
+ import dataclasses
+-from distutils.util import strtobool
++from vshot.bool_utils import strtobool
+ from enum import Enum
+ from vshot.yoriito.viss.v1.producer_pb2_grpc import VISSStub
+ from google.protobuf.struct_pb2 import Struct

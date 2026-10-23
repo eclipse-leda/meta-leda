@@ -29,6 +29,8 @@ meta-rauc-community
 meta-virtualization
 meta-raspberrypi
 meta-rust
+meta-rust-bin
+meta-yoriito
 meta-clang
 poky
 bitbake
@@ -39,3 +41,6 @@ openembedded-core
 bitbake
 hashserv.db*
 .kas_shell_history
+
+# Bare repository mirrors, created by "kas build" with KAS_REPO_REF_DIR
+.kas-repo-ref
