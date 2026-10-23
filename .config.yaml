@@ -23,11 +23,6 @@ machine: qemux86-64
 # The distro name as it is written into the `local.conf` of bitbake.
 distro: leda
 target: sdv-image-all
-bblayers_conf_header:
-  meta-kanto: |
-    # FIXME: Remove once meta-kanto officially supports wrynose and we don't
-    # need to use the fork anymore.
-    LAYERSERIES_COMPAT_meta-kanto:append = " wrynose "
 local_conf_header:
   meta-leda: |
     INHERIT:append = " rm_work"
@@ -87,10 +82,11 @@ repos:
     url: "https://github.com/rauc/meta-rauc.git"
     branch: wrynose
   # FIXME: Temporarily switch to a fork which supports wrynose.
-  # Switch back to github.com/meta-kanto/meta-kanto.git once it officially supports wrynose.
+  # Switch back to github.com/eclipse-kanto/meta-kanto.git once it officially supports wrynose.
   meta-kanto:
     url: "https://github.com/mikehaller/meta-kanto.git"
     branch: wrynose
+    commit: 171b7da7942dd7d18ef45076a99c37f838c47ed1
   meta-virtualization:
     url: "https://git.yoctoproject.org/meta-virtualization"
     branch: wrynose

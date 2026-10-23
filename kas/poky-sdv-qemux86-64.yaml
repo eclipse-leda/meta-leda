@@ -1,5 +1,5 @@
 # /********************************************************************************
-# * Copyright (c) 2023 Contributors to the Eclipse Foundation
+# * Copyright (c) 2023-2026 Contributors to the Eclipse Foundation
 # *
 # * See the NOTICE file(s) distributed with this work for additional
 # * information regarding copyright ownership.
@@ -15,7 +15,7 @@
 header:
   version: 12
   includes:
-  - .config-components.yaml
+  - kas/.config-components.yaml
 distro: poky
 target: core-image-minimal
 local_conf_header:

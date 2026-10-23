@@ -1,0 +1,60 @@
+# /********************************************************************************
+# * Copyright (c) 2026 Contributors to the Eclipse Foundation
+# *
+# * See the NOTICE file(s) distributed with this work for additional
+# * information regarding copyright ownership.
+# *
+# * This program and the accompanying materials are made available under the
+# * terms of the Apache License 2.0 which is available at
+# * https://www.apache.org/licenses/LICENSE-2.0
+# *
+# * SPDX-License-Identifier: Apache-2.0
+# ********************************************************************************/
+#
+# Run the repository hooks from .pre-commit-config.yaml over the whole tree.
+# This is the same command the contributors run locally, see
+# docs/pre-commit.md:
+#
+#     pre-commit run --all-files
+#
+# The hooks only look at the committed files (YAML, Markdown, JSON, TOML,
+# patches, shell, PEM) and finish in seconds, so this job is not path scoped,
+# unlike the BitBake dry-run job, which only runs for changes that BitBake
+# reads, see docs/ci-build-matrix.md.
+#
+# Pull requests and manual runs only: a direct push to a release branch is
+# not checked here, a maintainer who pushes runs the same command locally
+# first, see docs/pre-commit.md.
+#
+name: Linting
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  lint:
+    name: pre-commit hooks
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Update apt
+      run: sudo apt-get update -y
+    # The hooks that run with `language: system` need these tools on the
+    # runner: jq (JSON), shellcheck (shell), openssl (PEM), git (patches).
+    - name: Install tools
+      run: sudo apt-get install -y --no-install-recommends jq shellcheck openssl
+    # Installing pre-commit and running it is left to the upstream action:
+    # it installs pre-commit, runs `pre-commit run --all-files` (its default
+    # `extra_args`), and caches `~/.cache/pre-commit` keyed on
+    # `.pre-commit-config.yaml`. It installs into the interpreter of
+    # `actions/setup-python` rather than the one of the distribution, which
+    # matters: pip on Debian and Ubuntu is patched to uninstall the packages
+    # the distribution ships before installing a newer copy of them, and
+    # pre-commit depends on `packaging`, which Ubuntu ships as
+    # python3-packaging. That uninstall fails when the distro package has no
+    # RECORD file, and pip then aborts the job, see docs/pre-commit.md.
+    - name: Set up Python
+      uses: actions/setup-python@v5
+    - name: Run the hooks over the whole tree
+      uses: pre-commit/action@v3.0.1

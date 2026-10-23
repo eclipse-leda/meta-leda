@@ -1,5 +1,5 @@
 # /********************************************************************************
-# * Copyright (c) 2022 Contributors to the Eclipse Foundation
+# * Copyright (c) 2022-2026 Contributors to the Eclipse Foundation
 # *
 # * See the NOTICE file(s) distributed with this work for additional
 # * information regarding copyright ownership.
@@ -10,15 +10,49 @@
 # *
 # * SPDX-License-Identifier: Apache-2.0
 # ********************************************************************************/
-
+#
+# Parse all recipes and let BitBake resolve the dependency tree for the
+# default target (sdv-image-all) for every machine of the matrix.
+# No task is executed: a full build does not fit into the limits of the
+# free GitHub runners, so we only dry-run here.
+#
+# The machines are steps in one single job, run one after another on one
+# runner: they share the kas build directory, so the parse cache of the
+# first machine is reused by the next ones. That is faster and takes fewer
+# runner slots than one workflow per machine in parallel, see
+# docs/ci-build-matrix.md.
+#
+# The steps run in order and the job stops at the first machine that does
+# not resolve, which is the failure a contributor has to fix first. Add
+# `continue-on-error: true` to a step to check the remaining machines as
+# well.
+#
 name: BitBake DryRun
 on:
   pull_request:
+    # Only run the dry-runs when a file that BitBake reads has changed: the
+    # recipes, appends and classes (*.bb, *.bbappend, *.bbclass), the BitBake
+    # includes and configuration files (*.inc, *.conf, conf/layer.conf, *.cfg
+    # fragments), the kas build configurations and the BitBake variables set
+    # in them (kas/**, .config*.yaml), and this workflow itself
+    # (.github/workflows/**). A change to README.md, the docs or .gitignore
+    # does not affect the dependency graph, so it must not start the
+    # dry-runs. workflow_dispatch runs are never filtered.
+    paths:
+      - '**/*.bb'
+      - '**/*.bbappend'
+      - '**/*.bbclass'
+      - '**/*.inc'
+      - '**/*.conf'
+      - '**/*.cfg'
+      - 'kas/**'
+      - '.config*.yaml'
+      - '.github/workflows/**'
   workflow_dispatch:
 
 jobs:
-  mybranch:
-    name: Yocto (This Branch)
+  dryrun:
+    name: Yocto Wrynose (all machines)
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -29,34 +63,17 @@ jobs:
       run: sudo apt-get install -y --no-install-recommends socat file gawk wget git diffstat unzip texinfo gcc build-essential chrpath socat cpio python3 python3-pip python3-pexpect xz-utils debianutils iputils-ping python3-git python3-jinja2  libsdl1.2-dev pylint xterm python3-subunit mesa-common-dev zstd liblz4-tool tmux mc skopeo fdisk ruby-full jq libvirt-clients libvirt-daemon-system qemu-system-x86 qemu-system-arm qemu-kvm squashfs-tools rauc python3-newt ca-certificates curl gnupg lsb-release
     - name: Install kas
       run: sudo pip3 install kas
-    - name: Cache Downloads
-      id: cache-downloads
-      uses: actions/cache@v3
-      with:
-        path: build/downloads
-        key: bb-downloads
-    - name: Cache SState
-      id: cache-sstate
-      uses: actions/cache@v3
-      with:
-        path: build/sstate-cache
-        key: bb-sstate-cache
-    - name: Cache Local
-      id: cache-local
-      uses: actions/cache@v3
-      with:
-        path: build/cache
-        key: bb-cache-local
       # See https://bugs.launchpad.net/ubuntu/+source/apparmor/+bug/2056555
     - name: Apply fix for Bitbake on Ubuntu 24
       run: sudo apparmor_parser -R /etc/apparmor.d/unprivileged_userns
-    - name: DryRun default (qemux86_64)
-      run: kas build -- --dry-run
-    - name: DryRun Raspberry Pi 4
-      run: kas build kas/.config-kirkstone-rpi4.yaml -- --dry-run
-    - name: DryRun Kirkstone (qemux86-64)
-      run: kas build kas/.config-kirkstone.yaml -- --dry-run
-    - name: DryRun Kirkstone (qemuarm64)
-      env: 
+    # The default machine of kas/.config-wrynose.yaml.
+    - name: DryRun wrynose (qemux86-64)
+      run: kas build kas/.config-wrynose.yaml -- --dry-run
+    # The same config, the machine is switched with the kas variable.
+    - name: DryRun wrynose (qemuarm64)
+      env:
         KAS_MACHINE: qemuarm64
-      run: kas build kas/.config-kirkstone.yaml -- --dry-run
+      run: kas build kas/.config-wrynose.yaml -- --dry-run
+    # The machine that needs the extra layers, so it has its own config.
+    - name: DryRun wrynose (raspberrypi4-64)
+      run: kas build kas/.config-wrynose-rpi4.yaml -- --dry-run

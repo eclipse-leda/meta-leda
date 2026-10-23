@@ -13,10 +13,10 @@ them play together coherently an form a functional portfolio.
 As a first step towards that goal, Eclipse Leda provides an "SDV distribution" that pulls
 together individual contributor pieces from SDV and the larger OSS community, to
 deliver a functional and always-available Linux-based image/distribution with
-two primary goals: 
+two primary goals:
 
 1. being the crystalization point for functionally integrating
-diverse SDV-scope projects into a working whole 
+diverse SDV-scope projects into a working whole
 2. delivering a continuously
 available, always working starting image for developers interested in getting
 going with the SDV tech stack
@@ -122,9 +122,25 @@ fulfills the DCO's requirement that you sign-off on your contributions.
 For more information, please see the Eclipse Committer Handbook:
 https://www.eclipse.org/projects/handbook/#resources-commit
 
+## Repository tooling
+
+The repository carries git hooks in `.pre-commit-config.yaml` that validate the
+YAML of the kas build configurations and the GitHub workflow files, and the
+Markdown of the documentation. Enable them in your checkout with `pre-commit
+install`, see [docs/pre-commit.md](docs/pre-commit.md).
+
+The same hooks also run in CI: the `Linting` job checks the whole tree on
+pull requests and on manual `workflow_dispatch` runs, so a merge cannot bring
+a file that does not parse into the repository. A direct push to a release
+branch is not checked; run `pre-commit run --all-files` locally before pushing.
+
+The dry-run job that CI runs, and which Yocto releases and machines are
+supported at all, are described in [docs/ci-build-matrix.md](docs/ci-build-matrix.md).
+The dry-runs are scoped to the files that BitBake reads, so a documentation
+change does not start them.
+
 ## Contact
 
 Contact the project developers via the project's "dev" list.
 
 * https://accounts.eclipse.org/mailing-list/leda-dev
-

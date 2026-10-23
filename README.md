@@ -1,4 +1,4 @@
-![GitHub Workflow Status (dry-run build)](https://img.shields.io/github/actions/workflow/status/eclipse-leda/meta-leda/dryrun.yml)
+[![Linting](https://img.shields.io/github/actions/workflow/status/eclipse-leda/meta-leda/linting.yml)](https://github.com/eclipse-leda/meta-leda/actions/workflows/linting.yml) [![BitBake DryRun](https://img.shields.io/github/actions/workflow/status/eclipse-leda/meta-leda/dryrun.yml)](https://github.com/eclipse-leda/meta-leda/actions/workflows/dryrun.yml)
 
 # OpenEmbedded Meta-Layer for Software Defined Vehicles components
 
@@ -30,40 +30,64 @@ The repository contains an example configuration (`.config.yaml`) for [kas](http
 
     kas build
 
+## Supported Yocto releases
+
+The images in this repository are built against **Wrynose**, the current
+development release of Yocto. Earlier releases are end of life and are not
+supported by this layer any more, see
+[docs/ci-build-matrix.md](docs/ci-build-matrix.md).
+
 # Dependencies
 
-This layer depends on
+The sources pinned by `kas/.config-wrynose.yaml` are:
+
 - BitBake
   - URI: https://github.com/openembedded/bitbake.git
   - Tag: yocto-6.0.3
 - poky
-  - URI: https://git.yoctoproject.org/meta-yocto
+  - URI: https://git.yoctoproject.org/meta-yocto/
+  - Branch: wrynose
+  - Layers:
+    - meta-poky
+    - meta-yocto-bsp
+- openembedded-core
+  - URI: https://github.com/openembedded/openembedded-core.git
+  - Tag: yocto-6.0.3
+  - Layers:
+    - meta
+- meta-openembedded
+  - URI: https://github.com/openembedded/meta-openembedded.git
+  - Branch: wrynose
+  - Layers:
+    - meta-oe
+    - meta-filesystems
+    - meta-python
+    - meta-networking
+- meta-clang
+  - URI: https://github.com/kraj/meta-clang.git
+  - Branch: wrynose
+- meta-virtualization
+  - URI: https://git.yoctoproject.org/meta-virtualization
+  - Branch: wrynose
+- meta-rauc
+  - URI: https://github.com/rauc/meta-rauc.git
   - Branch: wrynose
 - meta-rauc-community
   - URI: https://github.com/rauc/meta-rauc-community.git
-  - Branch: wrynose
+  - Branch: master
   - Layers:
     - meta-rauc-qemux86
-- meta-rauc:
-  - URI: https://github.com/rauc/meta-rauc.git
+- meta-kanto
+  - URI: https://github.com/mikehaller/meta-kanto.git
   - Branch: wrynose
-- meta-kanto:
-  - URI: https://github.com/eclipse-kanto/meta-kanto.git
-  - Branch: wrynose
-- meta-virtualization:
-  - URI: https://git.yoctoproject.org/meta-virtualization
-  - Branch: wrynose
-- meta-openembedded:
-  - URI: https://github.com/openembedded/openembedded-core.git
-  - tag: yocto-6.0.3
-  - Layers:
-    -  meta-oe
-    -  meta-filesystems
-    -  meta-python
-    -  meta-networking
-- meta-clang:
-  - URI:: https://github.com/kraj/meta-clang
-    - Branch: wrynose
+  - Commit: 171b7da7942dd7d18ef45076a99c37f838c47ed1
+  - Note: temporary fork until https://github.com/eclipse-kanto/meta-kanto supports wrynose
+- meta-lts-mixins, only for images that use Rust or Go content
+  - URI: https://git.yoctoproject.org/git/meta-lts-mixins
+  - Branch: wrynose/rust and wrynose/go
+
+`kas/.config-wrynose-rpi4.yaml` adds `meta-raspberrypi` and the
+`meta-rauc-raspberrypi` layer for the `raspberrypi4-64` machine.
 
 # License and Copyright
 
@@ -83,7 +107,7 @@ https://www.apache.org/licenses/LICENSE-2.0
 
 The project maintains the following source code repositories:
 
-* https://github.com/eclipse-leda/meta-leda
+- https://github.com/eclipse-leda/meta-leda
 
 ## Cryptography
 

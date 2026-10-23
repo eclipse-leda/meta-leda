@@ -10,7 +10,7 @@ They are provided here for developer convenience and for the automated tests.
 
 When replacing the example certificates, the BitBake (`local.conf`) or kas configurations need to reference the new locations.
 
-Please see `kas/.config-kirkstone.yaml` for an example:
+Please see `kas/.config-wrynose.yaml` for an example:
 
         RAUC_KEY_FILE="${TOPDIR}/../examples/rauc/development-1.key.pem"
         RAUC_CERT_FILE="${TOPDIR}/../examples/rauc/development-1.cert.pem"

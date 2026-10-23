@@ -1,5 +1,5 @@
 # /********************************************************************************
-# * Copyright (c) 2022 Contributors to the Eclipse Foundation
+# * Copyright (c) 2022-2026 Contributors to the Eclipse Foundation
 # *
 # * See the NOTICE file(s) distributed with this work for additional
 # * information regarding copyright ownership.
@@ -19,7 +19,7 @@ header:
   # is increased on every format change.
   version: 12
 # The machine as it is written into the `local.conf` of bitbake.
-machine: qemux86-64
+machine: raspberrypi4-64
 # The distro name as it is written into the `local.conf` of bitbake.
 distro: leda
 target: sdv-image-all
@@ -30,63 +30,82 @@ local_conf_header:
     INHERIT:remove = " cve-check"
     INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
     KANTO_MANIFESTS_DIR = "/data/var/containers/manifests"
-    KAD_LOCK_PATH="/data/var/lib/kanto-auto-deployer/KAD.enabled"
+    KAD_LOCK_PATH = "/data/var/lib/kanto-auto-deployer/KAD.enabled"
     BLUEPRINTS_DIR = "/data/var/containers/blueprints"
     # Set the values to the default value, to prevent user warnings during our build
     CLOUDCONNECTOR_CERTIFICATE_CERTFILE = "${S}/cloud-connector/example-device.crt"
     CLOUDCONNECTOR_CERTIFICATE_KEYFILE = "${S}/cloud-connector/example-device.key"
     DISTRO_FEATURES += " wifi"
+    PREFERRED_RPROVIDER_libnss-mdns ?= "avahi-libnss-mdns"
+  ipcompliance: |
+    # meta-raspberrypi recommends wifi/bt firmware blobs with a license that
+    # can act as a legal killswitch. Accept it here, see:
+    # meta-raspberrypi: docs/ipcompliance.md
+    LICENSE_FLAGS_ACCEPTED = "synaptics-killswitch"
   sign_conf: |
     RAUC_KEY_FILE = "${TOPDIR}/../examples/rauc/development-1.key.pem"
     RAUC_CERT_FILE = "${TOPDIR}/../examples/rauc/development-1.cert.pem"
     RAUC_KEYRING_URI = "file://${TOPDIR}/../examples/rauc/ca.cert.pem"
     RAUC_KEYRING_FILE = "${TOPDIR}/../examples/rauc/ca.cert.pem"
-  meta-clang: |
-    # mask the llvm recipe provided by kirkstone to avoid warnings:
-    BBMASK += "/poky/meta/recipes-devtools/llvm/"
 repos:
   # This entry includes the repository where the config file is located
   # to the bblayers.conf:
   # Here we include a list of layers from the poky repository to the
   # bblayers.conf:
-  poky:
-    url: "https://git.yoctoproject.org/git/poky"
-    branch: master
+  bitbake:
+    url: https://github.com/openembedded/bitbake.git
+    tag: yocto-6.0.3
+    commit: fae9db3168dbff1b8c76fe9c6726a9687ff97514
+    layers: {}
+  openembedded-core:
+    url: https://github.com/openembedded/openembedded-core.git
+    tag: yocto-6.0.3
+    commit: ef022bf82d79015802309d14c28b13373ebe53f5
     layers:
       meta:
+  poky:
+    url: "https://git.yoctoproject.org/meta-yocto/"
+    branch: wrynose
+    layers:
       meta-poky:
       meta-yocto-bsp:
   meta-lts-mixins-rust:
     url: "https://git.yoctoproject.org/git/meta-lts-mixins"
-    branch: kirkstone/rust-1.68
+    branch: wrynose/rust
   meta-lts-mixins-go:
     url: "https://git.yoctoproject.org/git/meta-lts-mixins"
-    branch: kirkstone/go
+    branch: wrynose/go
   meta-clang:
     url: https://github.com/kraj/meta-clang
-    branch: kirkstone
+    branch: wrynose
   meta-rauc-community:
     url: "https://github.com/rauc/meta-rauc-community.git"
     branch: master
     layers:
-      meta-rauc-qemux86:
+      meta-rauc-raspberrypi:
   meta-rauc:
     url: "https://github.com/rauc/meta-rauc.git"
-    branch: master
+    branch: wrynose
+  # FIXME: Temporarily switch to a fork which supports wrynose.
+  # Switch back to github.com/eclipse-kanto/meta-kanto.git once it officially supports wrynose.
   meta-kanto:
-    url: "https://github.com/eclipse-kanto/meta-kanto.git"
-    branch: main
+    url: "https://github.com/mikehaller/meta-kanto.git"
+    branch: wrynose
+    commit: 171b7da7942dd7d18ef45076a99c37f838c47ed1
   meta-virtualization:
     url: "https://git.yoctoproject.org/meta-virtualization"
-    branch: master
+    branch: wrynose
   meta-openembedded:
     url: "https://git.openembedded.org/meta-openembedded"
-    branch: master
+    branch: wrynose
     layers:
       meta-oe:
       meta-filesystems:
       meta-python:
       meta-networking:
+  meta-raspberrypi:
+    url: "https://git.yoctoproject.org/meta-raspberrypi"
+    branch: wrynose
   meta-leda:
     path: ./
     layers:

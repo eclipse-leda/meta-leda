@@ -38,5 +38,4 @@ openembedded-core
 # BitBake Hash Equivalence Server database
 bitbake
 hashserv.db*
-azure-sstate-cache
-azure-downloads-cache
+.kas_shell_history

@@ -1,0 +1,139 @@
+# Validating the repository files with pre-commit
+
+`.pre-commit-config.yaml` holds git hooks that check the files that are
+committed to this repository:
+
+| Hook               | Files checked                                          | Tool       |
+| ------------------- | ------------------------------------------------------ | ---------- |
+| `yaml-syntax`       | `.config.yaml`, `kas/*.yaml`, `.github/**/*.yml`        | `yamllint` |
+| `markdown-lint`     | all `*.md` (root, `docs/`, layer READMEs)              | `pymarkdown` |
+| `json-syntax`       | `*.json` and `*.json.disabled` in the layers           | `jq`       |
+| `toml-syntax`       | `*.toml` in the layers                                 | `python3`  |
+| `patch-syntax`      | `*.patch` in the layers                                | `git`      |
+| `shell-syntax`      | `*.sh` in the layers                                   | `shellcheck` |
+| `pem-certificate`   | `*.crt` in the layers                                  | `openssl`  |
+| `pem-key`           | `*.key` in the layers                                  | `openssl`  |
+
+The checks catch the mistakes that break this repository most often: a
+kas configuration that no longer parses, a workflow file with a broken
+indentation, a container manifest with a stray comma, a carried upstream
+patch that got truncated, a shell script with unquoted variables.
+
+Not checked here are the BitBake recipes and appends. They are parsed and
+their dependency tree is resolved by the dry-run jobs in CI, see
+[ci-build-matrix.md](ci-build-matrix.md). The evaluation of the BitBake linter
+`oelint-adv`, which is not part of these hooks, is documented in
+[oelint-adv-eval/README.md](oelint-adv-eval/README.md).
+
+## Installing the tools
+
+The dev-container already installs `shellcheck`, `jq` and `openssl`, see
+`.devcontainer/Dockerfile`. On another host, install them from your
+distribution:
+
+```sh
+apt-get install shellcheck jq openssl
+```
+
+`pre-commit` itself and the two Python linters come from pip. `pre-commit`
+installs the linters into a virtual environment on first use, so they do not
+have to be installed separately:
+
+```sh
+pip3 install pre-commit yamllint pymarkdownlnt
+```
+
+## Enabling the hooks
+
+```sh
+pip3 install pre-commit
+pre-commit install
+```
+
+`pre-commit install` writes a `.git/hooks/pre-commit` script into your
+checkout, so every `git commit` runs the checks on the files you stage.
+
+## Checking the whole tree
+
+```sh
+pre-commit run --all-files
+```
+
+This is also what the `Linting` job in CI runs, see
+[Running the hooks in CI](#running-the-hooks-in-ci).
+
+## Running the hooks in CI
+
+`.github/workflows/linting.yml` runs exactly that command over the whole
+committed tree for pull requests and for manual runs:
+
+```sh
+pre-commit run --all-files
+```
+
+The job installs the tools that the `language: system` hooks need from apt
+(`jq`, `shellcheck`, `openssl`), then delegates installing `pre-commit` and
+running it to the upstream action:
+
+```yaml
+- name: Set up Python
+  uses: actions/setup-python@v5
+- name: Run the hooks over the whole tree
+  uses: pre-commit/action@v3.0.1
+```
+
+The action runs `pre-commit run --all-files` (`--all-files` is its default
+`extra_args`), and caches `~/.cache/pre-commit` keyed on
+`.pre-commit-config.yaml`. It is a third-party action, so the org has to
+have it in the allow-list of the Actions settings.
+
+`pre-commit` is installed under the interpreter of `actions/setup-python`
+rather than with `sudo pip3 install` on the runner: pip on Debian and Ubuntu
+is patched to uninstall the packages the distribution ships before installing
+a newer copy of them, and `pre-commit` depends on `packaging`, which the
+distribution ships as `python3-packaging`. That uninstall is impossible when
+the distro package has no `RECORD` file, and pip then exits with an error:
+
+```text
+Attempting uninstall: packaging
+    Found existing installation: packaging 24.0
+ERROR: Cannot uninstall packaging 24.0, RECORD file not found.
+Hint: The package was installed by debian.
+```
+
+`pre-commit` then installs `yamllint` and `pymarkdownlnt` into a virtual
+environment of its own, from the `additional_dependencies` of the hooks, so
+those two do not have to be installed separately.
+
+The job is not scoped to file paths: the hooks only look at the committed
+files and finish in seconds. The BitBake dry-run job is scoped, because
+they are expensive, see [ci-build-matrix.md](ci-build-matrix.md).
+
+Neither workflow runs for a direct push to a release branch (`main`,
+`wrynose`, `scarthgap`, ...): a maintainer who pushes runs the same
+commands locally before pushing, and the change is checked by the next
+pull request that touches it. `workflow_dispatch` starts a run on demand
+for any branch.
+
+## Tuning the rules
+
+Style rules that only affect prose formatting, or that clash with the
+Eclipse boilerplate files, are switched off in `.pre-commit-config.yaml`:
+
+- `line-length` and `document-start` for YAML, because the Eclipse license
+  header wraps long lines and is not a YAML document start.
+- `MD013` (line length), `MD030` (trailing spaces in code blocks), `MD034`
+  (list marker style), `MD041` (first level heading), `MD025` (heading
+  spacing) for Markdown.
+
+Only structural problems fail a check: broken YAML, malformed JSON or TOML,
+a truncated patch, invalid shell syntax. Add or re-enable rules in
+`.pre-commit-config.yaml` if you prefer a stricter documentation style.
+
+## Excluded on purpose
+
+- `*.json.template` and `meta-leda-components/recipes-sdv/eclipse-kanto/files/container-management/config.json`
+  contain `@PLACEHOLDER@` values that are substituted at install time, so they
+  are not valid JSON in the repository.
+- `.devcontainer/devcontainer.json` and `.vscode/settings.json` use JSON with
+  comments, which `jq` does not accept.
