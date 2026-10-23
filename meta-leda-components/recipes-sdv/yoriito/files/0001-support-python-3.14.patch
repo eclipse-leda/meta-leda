@@ -1,4 +1,4 @@
-From: Leda Integration <leda-integration@example.com>
+From: Mike Haller <mike.robin.haller@gmail.com>
 Subject: [PATCH] Replace removed distutils strtobool import
 
 Python 3.14 no longer provides distutils. Use the equivalent helper shipped
@@ -26,7 +26,7 @@ diff --git a/vshot/client/headless_app_client.py b/vshot/client/headless_app_cli
 diff --git a/vshot/client/pal_client.py b/vshot/client/pal_client.py
 --- a/vshot/client/pal_client.py
 +++ b/vshot/client/pal_client.py
-@@ -19,8 +19,8 @@
+@@ -19,7 +19,7 @@
  import socket
  import threading
  import dataclasses

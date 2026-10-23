@@ -1,4 +1,4 @@
-From: Leda Integration <leda-integration@example.com>
+From: Mike Haller <mike.robin.haller@gmail.com>
 Subject: [PATCH] Include cstdint for TimeBasedFilter
 
 TimeBasedFilter uses uint32_t in its public interface and must include the
