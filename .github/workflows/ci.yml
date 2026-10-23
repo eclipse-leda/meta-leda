@@ -51,15 +51,13 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
-    # The language: system hooks of .pre-commit-config.yaml need jq, shellcheck
-    # and openssl from the distribution, see docs/pre-commit.md. chrpath and
-    # diffstat are in the required HOSTTOOLS list of oe-core bitbake.conf and
-    # are not on ubuntu-latest; bitbake stops with a fatal error at parse
-    # time when one of them is missing. Everything else of that list is
-    # already on the image, so do not add more packages unless bitbake
-    # names them.
+    # The tools that are missing on ubuntu-latest. The fast path installs
+    # from the index of the pre-generated image, the fallback refreshes the
+    # index first, which costs a minute but works on a stale one.
     - name: Install tools
-      run: sudo apt-get update -y && sudo apt-get install -y --no-install-recommends jq shellcheck openssl chrpath diffstat
+      run: |
+        sudo apt-get install -y --no-install-recommends jq shellcheck openssl chrpath diffstat ||
+        { sudo apt-get update -y && sudo apt-get install -y --no-install-recommends jq shellcheck openssl chrpath diffstat; }
     # The cheap check first: the hooks of .pre-commit-config.yaml over the
     # whole tree, the same command the contributors run locally, see
     # docs/pre-commit.md. A failing step fails the job, so the expensive
@@ -85,17 +83,22 @@ jobs:
         path: |
           build/cache
           .kas-repo-ref
-    # The default machine of kas/.config-wrynose.yaml.
-    - name: DryRun wrynose (qemux86-64)
-      run: kas build kas/.config-wrynose.yaml -- --dry-run
-    # The same config, the machine is switched with the kas variable.
-    - name: DryRun wrynose (qemuarm64)
+    # The cheap checks first, so that a tree that does not even parse costs
+    # seconds and never spends the ten minutes of the full resolve. Parsing
+    # every recipe is what catches the machine-specific breakage: a syntax
+    # error, a bad machine or kernel config, a dangling bbappend. All of
+    # those are raised while parsing, see docs/ci-build-matrix.md.
+    - name: ParseOnly wrynose (qemuarm64)
       env:
         KAS_MACHINE: qemuarm64
+      run: kas build kas/.config-wrynose.yaml -- -p
+    # The machine with the extra layers, parsed with its own config.
+    - name: ParseOnly wrynose (raspberrypi4-64)
+      run: kas build kas/.config-wrynose-rpi4.yaml -- -p
+    # The full resolve runs once, for the default machine: it is the only
+    # check that proves every dependency of the image has a provider.
+    - name: DryRun wrynose (qemux86-64)
       run: kas build kas/.config-wrynose.yaml -- --dry-run
-    # The machine that needs the extra layers, so it has its own config.
-    - name: DryRun wrynose (raspberrypi4-64)
-      run: kas build kas/.config-wrynose-rpi4.yaml -- --dry-run
     - name: Cache upload
       uses: actions/cache@v3
       with:

@@ -6,6 +6,10 @@ every recipe and resolve the full dependency tree of the image. That catches
 exactly the failures that matter for this layer - missing providers, dangling
 `*.bbappend`s, unresolvable dependencies - without building anything.
 
+Only one machine of the matrix pays the full resolve, the other machines
+parse: see [Full dry-run for one machine, parse-only for the
+rest](#full-dry-run-for-one-machine-parse-only-for-the-rest).
+
 The matrix has two dimensions: the Yocto release and the target machine.
 
 ## Supported matrix
@@ -13,8 +17,8 @@ The matrix has two dimensions: the Yocto release and the target machine.
 | Yocto release | Machine            | kas config                      | Step in `ci.yml`                       |
 | ------------- | ------------------ | ------------------------------- | -------------------------------------- |
 | wrynose       | `qemux86-64`       | `kas/.config-wrynose.yaml`      | `DryRun wrynose (qemux86-64)`          |
-| wrynose       | `qemuarm64`        | `kas/.config-wrynose.yaml`      | `DryRun wrynose (qemuarm64)`          |
-| wrynose       | `raspberrypi4-64`  | `kas/.config-wrynose-rpi4.yaml` | `DryRun wrynose (raspberrypi4-64)`   |
+| wrynose       | `qemuarm64`        | `kas/.config-wrynose.yaml`      | `ParseOnly wrynose (qemuarm64)`        |
+| wrynose       | `raspberrypi4-64`  | `kas/.config-wrynose-rpi4.yaml` | `ParseOnly wrynose (raspberrypi4-64)`  |
 
 ## One workflow, one step per machine
 
@@ -26,9 +30,51 @@ faster than three workflows that each check out the sources, install the
 tools and parse the whole tree from scratch, and it takes one runner slot
 instead of three, which matters on the free GitHub runners.
 
-The job stops at the first machine that does not resolve, which is the
-failure a contributor has to fix first. Add `continue-on-error: true` to a
-step if all machines have to be reported at once.
+The steps are ordered cheap first: the checks that cost seconds run before
+the ones that cost minutes, so a pull request that breaks the parse fails
+without spending the time of the full resolve. The job stops at the first
+step that fails. Add `continue-on-error: true` to a step if all machines
+have to be reported at once.
+
+## Full dry-run for one machine, parse-only for the rest
+
+A full dry-run costs about ten minutes on a GitHub runner, so it runs once,
+for the default machine `qemux86-64`. It is the only check that proves the
+dependency graph of the image has a provider for every dependency, and that
+is a property of the whole tree, not of one machine.
+
+The other machines run `bitbake -p` through kas (`-- -p`): they parse every
+recipe of their own configuration, including the machine and kernel config
+files and the extra layers, and they stop at the errors that machine- or
+layer-specific breakage actually produces:
+
+- a syntax error in a recipe, an include or a config file
+- a `.bbappend` whose base recipe is not in that configuration
+- a machine or kernel config that cannot be parsed
+
+All of these are raised while parsing, before any dependency is resolved.
+That was verified locally: adding a `zz-not-there_%.bbappend` to a layer
+makes the parse-only run exit with code 2 and print `ERROR: No recipes in
+default available for:`, the same error the full dry-run prints.
+
+What parse-only does not check is the dependency graph: a missing provider
+or an unresolvable `DEPENDS` chain that only breaks on one of those
+machines is not caught. The cheap way to add that coverage back is a target
+for the packagegroups of the layer instead of the image, see the numbers
+below.
+
+Measured on the local machine with a warm parse cache:
+
+| check | time | tasks attempted |
+| ----- | ---- | --------------- |
+| `bitbake -p`, parse only | 10.5 s | - |
+| the 8 SDV packagegroups as targets | 43.6 s | 6683 |
+| `sdv-image-all`, the full image | 57.7 s | 8145 |
+
+Targeting the packagegroups instead of the image is not the lever it looks
+like: the packagegroups pull 6683 of the 8145 tasks, because the bulk of
+any task graph is the shared toolchain and kernel subtree. Cutting the
+number of full resolves is what pays.
 
 ## Linting first, in the same job
 
@@ -47,8 +93,10 @@ of two.
 
 ## Keeping the setup cheap
 
-The dry-runs spend most of their time fetching the sources and parsing them,
-not resolving, and that is the part the free runners are bad at:
+Neither a dry-run nor a parse-only run executes a task, so `downloads/`
+and `sstate-cache` stay empty: there is no source fetch, no unpack and no
+compile to cache. The only network traffic in the job is the git fetch of
+the layer repositories, and that is the part that is worth attacking:
 
 - The layer repositories are fetched into bare mirrors under
   `.kas-repo-ref`, the directory of `KAS_REPO_REF_DIR`, and the working
@@ -76,7 +124,9 @@ not resolving, and that is the part the free runners are bad at:
   else of that list is on the image, so the full Yocto host list (the C/C++
   toolchains, qemu, libvirt, squashfs, rauc, skopeo, ruby) is not
   installed and a dry-run never uses it. If bitbake names more missing
-  tools, add exactly those, do not install the whole host list.
+  tools, add exactly those, do not install the whole host list. The
+  install tries the index of the pre-generated image first and only
+  refreshes the index when that fails, which costs a minute.
 
 What remains is parsing the ~3300 recipes and resolving the dependency
 graph per machine, which is the part that cannot be avoided. If that ever
