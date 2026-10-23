@@ -1,0 +1,12 @@
+{
+  "oelint.newline.eof": "error",
+  "oelint.vars.dependsappend": "error",
+  "oelint.vars.duplicate": "error",
+  "oelint.vars.srcurichecksum": "error",
+  "oelint.vars.srcurimutualex": "error",
+  "oelint.task.nomkdir": "error",
+  "oelint.task.nocopy": "error",
+  "oelint.vars.autorev": "warning",
+  "oelint.vars.mispell": "warning",
+  "oelint.vars.licfileprefix": "warning"
+}

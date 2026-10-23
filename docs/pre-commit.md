@@ -21,7 +21,9 @@ patch that got truncated, a shell script with unquoted variables.
 
 Not checked here are the BitBake recipes and appends. They are parsed and
 their dependency tree is resolved by the dry-run jobs in CI, see
-[ci-build-matrix.md](ci-build-matrix.md).
+[ci-build-matrix.md](ci-build-matrix.md). The evaluation of the BitBake linter
+`oelint-adv`, which is not part of these hooks, is documented in
+[oelint-adv-eval/README.md](oelint-adv-eval/README.md).
 
 ## Installing the tools
 

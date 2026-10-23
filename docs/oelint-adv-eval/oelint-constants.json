@@ -1,0 +1,29 @@
+{
+  "variables": {
+    "known": [
+      "BAZEL_TEST_TARGETS",
+      "BAZEL_VENDOR_DIR",
+      "BAZEL_VERSION",
+      "IMAGE_CONTAINER_NO_DUMMY",
+      "KANTO_MANIFESTS_DIR",
+      "NATIVE_SYSTEMD_SUPPORT",
+      "OCI_IMAGE_ENTRYPOINT",
+      "OCI_IMAGE_ENTRYPOINT_ARGS",
+      "OCI_IMAGE_ENV_VARS",
+      "OCI_IMAGE_PORTS",
+      "OCI_IMAGE_TAG",
+      "QB_FSINFO",
+      "QB_KERNEL_ROOT",
+      "QB_ROOTFS_OPT",
+      "RAUC_BUNDLE_COMPATIBLE",
+      "RAUC_BUNDLE_FORMAT",
+      "RAUC_BUNDLE_SLOTS",
+      "RAUC_BUNDLE_VERSION",
+      "RAUC_SLOT_rescue",
+      "RAUC_SLOT_rootfs",
+      "dirs755",
+      "do_image_wic",
+      "hostname"
+    ]
+  }
+}
