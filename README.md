@@ -1,4 +1,4 @@
-![GitHub Workflow Status (dry-run build)](https://img.shields.io/github/actions/workflow/status/eclipse-leda/meta-leda/dryrun.yml)
+[![BitBake DryRun qemux86-64](https://img.shields.io/github/actions/workflow/status/eclipse-leda/meta-leda/dryrun-qemux86-64.yml)](https://github.com/eclipse-leda/meta-leda/actions/workflows/dryrun-qemux86-64.yml) [![BitBake DryRun qemuarm64](https://img.shields.io/github/actions/workflow/status/eclipse-leda/meta-leda/dryrun-qemuarm64.yml)](https://github.com/eclipse-leda/meta-leda/actions/workflows/dryrun-qemuarm64.yml) [![BitBake DryRun raspberrypi4-64](https://img.shields.io/github/actions/workflow/status/eclipse-leda/meta-leda/dryrun-raspberrypi4-64.yml)](https://github.com/eclipse-leda/meta-leda/actions/workflows/dryrun-raspberrypi4-64.yml)
 
 # OpenEmbedded Meta-Layer for Software Defined Vehicles components
 

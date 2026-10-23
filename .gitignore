@@ -40,3 +40,4 @@ bitbake
 hashserv.db*
 azure-sstate-cache
 azure-downloads-cache
+.kas_shell_history

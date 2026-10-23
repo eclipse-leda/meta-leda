@@ -9,21 +9,25 @@ Run the following command in the root of the project to check out all dependenci
 
     kas build
 
-For building other Yocto releases, different `kas/.config-*.yaml` files can be used in same way:
+For building another supported Yocto release, use the matching `kas/.config-*.yaml`
+file in the same way:
 
-    kas build kas/.config-master.yaml
+    kas build kas/.config-scarthgap.yaml
+
+To build for another machine, either use the machine specific configuration or
+override the machine of a configuration:
+
+    kas build kas/.config-wrynose-rpi4.yaml
+    KAS_MACHINE=qemuarm64 kas build kas/.config-wrynose.yaml
 
 To build a specific target, recipe or image, execute this:
 
     kas build --target packagegroup-sdv-core
 
-To use a downloads and hashserv mirror, include the mirror configuration:
+To perform a dry-run of the build (parse recipes and resolve the dependency
+tree without running any task):
 
-    kas build kas/.config-wrynose.yaml:kas/mirrors.yaml
-
-To perform a dry-run of the build:
-
-    kas build kas/.config-wrynose.yaml:kas/mirrors.yaml -- --dryrun
+    kas build kas/.config-wrynose.yaml -- --dry-run
 
 To execute QEMU:
 

@@ -27,7 +27,7 @@ Check out dependencies for the meta-leda metalayer:
 
     cd ${CODESPACE_VSCODE_FOLDER}
     git clone -b wrynose https://github.com/rauc/meta-rauc.git meta-rauc
-    git clone -b wrynose https://github.com/rauc/meta-rauc-community.git meta-rauc-community
+    git clone -b master https://github.com/rauc/meta-rauc-community.git meta-rauc-community
     git clone -b wrynose https://git.yoctoproject.org/meta-virtualization meta-virtualization
     git clone -b wrynose https://git.openembedded.org/meta-openembedded meta-openembedded
 
@@ -52,6 +52,8 @@ Perform a real build of one of the targets, e.g. the Eclipse Kanto Container Man
 
     DISTRO=leda bitbake container-management
 
-To build a specific machine, set the KAS_MACHINE environment variable:
+To build a specific machine, use the machine specific configuration or set the
+KAS_MACHINE environment variable:
 
-    KAS_MACHINE=raspberrypi4-64 kas build kas/.config-kirkstone-rpi4.yaml --target sdv-raspberry-growdisk
+    kas build kas/.config-wrynose-rpi4.yaml --target sdv-raspberry-growdisk
+    KAS_MACHINE=qemuarm64 kas build kas/.config-wrynose.yaml --target sdv-image-all

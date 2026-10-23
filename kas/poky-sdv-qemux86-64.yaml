@@ -15,7 +15,7 @@
 header:
   version: 12
   includes:
-  - .config-components.yaml
+  - kas/.config-components.yaml
 distro: poky
 target: core-image-minimal
 local_conf_header:
