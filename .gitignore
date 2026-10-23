@@ -41,3 +41,6 @@ openembedded-core
 bitbake
 hashserv.db*
 .kas_shell_history
+
+# Bare repository mirrors, created by "kas build" with KAS_REPO_REF_DIR
+.kas-repo-ref

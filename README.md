@@ -1,4 +1,4 @@
-[![Linting](https://img.shields.io/github/actions/workflow/status/eclipse-leda/meta-leda/linting.yml)](https://github.com/eclipse-leda/meta-leda/actions/workflows/linting.yml) [![BitBake DryRun](https://img.shields.io/github/actions/workflow/status/eclipse-leda/meta-leda/dryrun.yml)](https://github.com/eclipse-leda/meta-leda/actions/workflows/dryrun.yml)
+[![CI](https://img.shields.io/github/actions/workflow/status/eclipse-leda/meta-leda/ci.yml)](https://github.com/eclipse-leda/meta-leda/actions/workflows/ci.yml)
 
 # OpenEmbedded Meta-Layer for Software Defined Vehicles components
 

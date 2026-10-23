@@ -59,13 +59,15 @@ checkout, so every `git commit` runs the checks on the files you stage.
 pre-commit run --all-files
 ```
 
-This is also what the `Linting` job in CI runs, see
+This is also what the CI job runs first, see
 [Running the hooks in CI](#running-the-hooks-in-ci).
 
 ## Running the hooks in CI
 
-`.github/workflows/linting.yml` runs exactly that command over the whole
-committed tree for pull requests and for manual runs:
+`.github/workflows/ci.yml` runs exactly that command over the whole
+committed tree for pull requests and for manual runs, as the first steps of
+the job that also runs the BitBake dry-runs. A failing hook fails the job,
+so the expensive steps of the same job do not start:
 
 ```sh
 pre-commit run --all-files
