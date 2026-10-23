@@ -13,7 +13,8 @@
 #
 # One workflow, everything in one job, in order:
 #
-#   pre-commit linting -> cache download -> the three dry-runs -> cache upload
+#   pre-commit linting -> cache download -> the parse checks and the full
+#   dry-run -> cache upload
 #
 # The cheap check runs first and a failing step fails the job, so the
 # expensive steps never start for a tree that does not even parse. GitHub
@@ -75,11 +76,16 @@ jobs:
       run: |
         sudo pip3 install kas
         sudo apparmor_parser -R /etc/apparmor.d/unprivileged_userns
+    # The parse cache and the repository mirrors of the previous run. The
+    # pinned restore and save actions are used instead of the action:
+    # input, which the current version of actions/cache does not accept.
+    # restore-keys matches an older version of the key, so bumping the
+    # version of the matrix does not throw away the cache of the old one.
     - name: Cache download
-      uses: actions/cache@v3
+      uses: actions/cache/restore@v4
       with:
-        action: restore
         key: kas-wrynose-v1
+        restore-keys: kas-wrynose-
         path: |
           build/cache
           .kas-repo-ref
@@ -100,9 +106,8 @@ jobs:
     - name: DryRun wrynose (qemux86-64)
       run: kas build kas/.config-wrynose.yaml -- --dry-run
     - name: Cache upload
-      uses: actions/cache@v3
+      uses: actions/cache/save@v4
       with:
-        action: create
         key: kas-wrynose-v1
         path: |
           build/cache
