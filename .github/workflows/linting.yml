@@ -1,0 +1,51 @@
+# /********************************************************************************
+# * Copyright (c) 2026 Contributors to the Eclipse Foundation
+# *
+# * See the NOTICE file(s) distributed with this work for additional
+# * information regarding copyright ownership.
+# *
+# * This program and the accompanying materials are made available under the
+# * terms of the Apache License 2.0 which is available at
+# * https://www.apache.org/licenses/LICENSE-2.0
+# *
+# * SPDX-License-Identifier: Apache-2.0
+# ********************************************************************************/
+#
+# Run the repository hooks from .pre-commit-config.yaml over the whole tree.
+# This is the same command the contributors run locally, see
+# docs/pre-commit.md:
+#
+#     pre-commit run --all-files
+#
+# The hooks only look at the committed files (YAML, Markdown, JSON, TOML,
+# patches, shell, PEM) and finish in seconds, so this job runs on every push
+# and pull request. It is not path scoped, unlike the BitBake dry-run job,
+# which only run for changes that BitBake actually reads, see
+# docs/ci-build-matrix.md.
+#
+name: Linting
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  lint:
+    name: pre-commit hooks
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Update apt
+      run: sudo apt-get update -y
+    # The hooks that run with `language: system` need these tools on the
+    # runner: jq (JSON), shellcheck (shell), openssl (PEM), git (patches).
+    - name: Install tools
+      run: sudo apt-get install -y --no-install-recommends jq shellcheck openssl
+    # pre-commit installs yamllint and pymarkdownlnt into its own
+    # virtual environment on first use (`additional_dependencies`), so only
+    # pre-commit itself has to come from pip.
+    - name: Install pre-commit
+      run: sudo pip3 install pre-commit
+    - name: Run the hooks over the whole tree
+      run: pre-commit run --all-files

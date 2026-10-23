@@ -34,7 +34,7 @@
 # - PEM syntax of the cloud-connector example certificate and key
 #
 # Not checked here: BitBake recipes and appends. They are parsed and their
-# dependency tree is resolved by the dry-run jobs in CI, see
+# dependency tree is resolved by the dry-run job in CI, see
 # docs/ci-build-matrix.md.
 #
 repos:

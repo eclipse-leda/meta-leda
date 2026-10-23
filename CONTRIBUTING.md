@@ -129,8 +129,14 @@ YAML of the kas build configurations and the GitHub workflow files, and the
 Markdown of the documentation. Enable them in your checkout with `pre-commit
 install`, see [docs/pre-commit.md](docs/pre-commit.md).
 
-The dry-run jobs that CI runs, and which Yocto releases and machines are
+The same hooks also run in CI: the `Linting` job checks the whole tree on
+every push and pull request, so a merge cannot bring a file that does not
+parse into the repository.
+
+The dry-run job that CI runs, and which Yocto releases and machines are
 supported at all, are described in [docs/ci-build-matrix.md](docs/ci-build-matrix.md).
+The dry-runs are scoped to the files that BitBake reads, so a documentation
+change does not start them.
 
 ## Contact
 

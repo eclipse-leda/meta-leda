@@ -59,7 +59,27 @@ checkout, so every `git commit` runs the checks on the files you stage.
 pre-commit run --all-files
 ```
 
-This is also what a CI job would run, if you want to add such a job.
+This is also what the `Linting` job in CI runs, see
+[Running the hooks in CI](#running-the-hooks-in-ci).
+
+## Running the hooks in CI
+
+`.github/workflows/linting.yml` runs exactly that command over the whole
+committed tree on every push and pull request:
+
+```sh
+pre-commit run --all-files
+```
+
+The job installs the tools that the `language: system` hooks need from apt
+(`jq`, `shellcheck`, `openssl`) and installs `pre-commit` itself from pip.
+`pre-commit` then installs `yamllint` and `pymarkdownlnt` into a virtual
+environment of its own, from the `additional_dependencies` of the hooks, so
+those two do not have to be installed separately.
+
+The job is not scoped to file paths: the hooks only look at the committed
+files and finish in seconds. The BitBake dry-run job is scoped, because
+they are expensive, see [ci-build-matrix.md](ci-build-matrix.md).
 
 ## Tuning the rules
 

@@ -12,18 +12,47 @@
 # ********************************************************************************/
 #
 # Parse all recipes and let BitBake resolve the dependency tree for the
-# default target (sdv-image-all) for the qemuarm64 machine.
+# default target (sdv-image-all) for every machine of the matrix.
 # No task is executed: a full build does not fit into the limits of the
 # free GitHub runners, so we only dry-run here.
 #
-name: BitBake DryRun (qemuarm64)
+# The machines are steps in one single job, run one after another on one
+# runner: they share the kas build directory, so the parse cache of the
+# first machine is reused by the next ones. That is faster and takes fewer
+# runner slots than one workflow per machine in parallel, see
+# docs/ci-build-matrix.md.
+#
+# The steps run in order and the job stops at the first machine that does
+# not resolve, which is the failure a contributor has to fix first. Add
+# `continue-on-error: true` to a step to check the remaining machines as
+# well.
+#
+name: BitBake DryRun
 on:
   pull_request:
+    # Only run the dry-runs when a file that BitBake reads has changed: the
+    # recipes, appends and classes (*.bb, *.bbappend, *.bbclass), the BitBake
+    # includes and configuration files (*.inc, *.conf, conf/layer.conf, *.cfg
+    # fragments), the kas build configurations and the BitBake variables set
+    # in them (kas/**, .config*.yaml), and this workflow itself
+    # (.github/workflows/**). A change to README.md, the docs or .gitignore
+    # does not affect the dependency graph, so it must not start the
+    # dry-runs. workflow_dispatch runs are never filtered.
+    paths:
+      - '**/*.bb'
+      - '**/*.bbappend'
+      - '**/*.bbclass'
+      - '**/*.inc'
+      - '**/*.conf'
+      - '**/*.cfg'
+      - 'kas/**'
+      - '.config*.yaml'
+      - '.github/workflows/**'
   workflow_dispatch:
 
 jobs:
   dryrun:
-    name: Yocto Wrynose (qemuarm64)
+    name: Yocto Wrynose (all machines)
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -37,7 +66,14 @@ jobs:
       # See https://bugs.launchpad.net/ubuntu/+source/apparmor/+bug/2056555
     - name: Apply fix for Bitbake on Ubuntu 24
       run: sudo apparmor_parser -R /etc/apparmor.d/unprivileged_userns
+    # The default machine of kas/.config-wrynose.yaml.
+    - name: DryRun wrynose (qemux86-64)
+      run: kas build kas/.config-wrynose.yaml -- --dry-run
+    # The same config, the machine is switched with the kas variable.
     - name: DryRun wrynose (qemuarm64)
       env:
         KAS_MACHINE: qemuarm64
       run: kas build kas/.config-wrynose.yaml -- --dry-run
+    # The machine that needs the extra layers, so it has its own config.
+    - name: DryRun wrynose (raspberrypi4-64)
+      run: kas build kas/.config-wrynose-rpi4.yaml -- --dry-run
