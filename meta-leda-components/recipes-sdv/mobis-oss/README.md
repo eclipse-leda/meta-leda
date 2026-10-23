@@ -124,7 +124,13 @@ exercised end-to-end, see the upstream README:
 
 ## Runtime test
 
-See `docs/agents-integrationtesting.md` for the procedure.
+See `docs/agents-integrationtesting.md` for the procedure and `kas/poc-mobis-oss-ssamd.yaml`
+for the config that installs these components (a proof-of-concept config, not part of the
+distributed configurations):
+
+```
+kas build .config.yaml:kas/poc-mobis-oss-ssamd.yaml --target sdv-image-full
+```
 
 2026-10-22, `IMAGE_INSTALL:append = " ssamd ssam ssam-wrap"` on `sdv-image-full`
 (qemux86-64): the three binaries install and run; `ssam-wrap --prepare <name> <workspace>`
@@ -160,6 +166,8 @@ machine config:
 ```
 IMAGE_INSTALL:append = " ssamd ssam ssam-wrap"
 ```
+
+Or use the proof-of-concept config in `kas/` (see “Runtime test” for what it produces).
 
 TODO for maintainers: decide whether these belong in a packagegroup. Adding them to
 `packagegroup-sdv-additions` changes `sdv-image-full`, which `sdv-image-all` (the default

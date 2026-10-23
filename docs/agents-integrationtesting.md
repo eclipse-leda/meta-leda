@@ -8,14 +8,15 @@ section for what was observed.
 ## 1. Install the new recipe into an image
 
 New recipes are not part of any image by default, so first pull them into the rootfs.
-Create a temporary kas config (e.g. `new_recipe_install.yaml`) that only appends to
-`local.conf`:
+Create a kas config that only appends to `local.conf` — name the `local_conf_header`
+section after the feature, e.g. `ssam`. The SSAM proof-of-concept is already in the
+repository at `kas/poc-mobis-oss-ssamd.yaml`; for another feature copy it:
 
 ```yaml
 header:
   version: 12
 local_conf_header:
-  integrationtesting: |
+  ssam: |
     IMAGE_INSTALL:append = " <recipe-name>"
 ```
 
@@ -26,13 +27,13 @@ Check the merged configuration before building (verified: `kas dump` expands and
 the final config without running bitbake):
 
 ```
-kas dump .config.yaml:new_recipe_install.yaml
+kas dump .config.yaml:kas/poc-mobis-oss-ssamd.yaml
 ```
 
 ## 2. Build the image
 
 ```
-kas build .config.yaml:new_recipe_install.yaml
+kas build .config.yaml:kas/poc-mobis-oss-ssamd.yaml
 ```
 
 Use the same config arguments for every step below; a different config means a
@@ -71,7 +72,7 @@ and prints a hint). So the image from step 2 must already exist.
 (verified), so:
 
 ```
-kas shell -c "runqemu slirp kvm ovmf nographic" .config.yaml:new_recipe_install.yaml
+kas shell -c "runqemu slirp kvm ovmf nographic" .config.yaml:kas/poc-mobis-oss-ssamd.yaml
 ```
 
 Notes:
@@ -80,7 +81,7 @@ Notes:
   takes the newest `*.qemuboot.conf` (verified: `ls -t` fallback in `scripts/runqemu`):
 
   ```
-  kas shell -c "runqemu tmp/deploy/images/qemux86-64/sdv-image-full-qemux86-64.rootfs.qemuboot.conf slirp kvm ovmf nographic" .config.yaml:new_recipe_install.yaml
+  kas shell -c "runqemu tmp/deploy/images/qemux86-64/sdv-image-full-qemux86-64.rootfs.qemuboot.conf slirp kvm ovmf nographic" .config.yaml:kas/poc-mobis-oss-ssamd.yaml
   ```
 
 - `ovmf` is needed for the Leda qemux86-64 machines: they boot via EFI/u-boot
